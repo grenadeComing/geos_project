@@ -1,0 +1,1 @@
+      m_Cu+2	     m_CuCO3	   m_CuHCO3+	     m_CuOH+	   m_Cu(OH)2	  m_Cu(OH)3-	 m_Cu(OH)4-2	     m_CuSO4	     m_CuCl+	     m_CuCl2	    m_CuCl3-	   m_CuCl4-2	

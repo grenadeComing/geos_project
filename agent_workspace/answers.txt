@@ -1,0 +1,6 @@
+questions.txt
+1) A 5.711e-03  
+2) C Ca+2, CaSO4, CaHSO4+, CaOH+  
+3) C 9.179  
+4) C Goethite, Hematite  
+5) C 6
