@@ -26,7 +26,7 @@ def chat_fn(user_text, history):
 
 
 def build_ui():
-    BaseTool.allowed_root = os.path.join(os.getcwd(), "workspace")
+    BaseTool.allowed_root = os.path.join(os.getcwd(), "work_space")
 
     demo = gr.ChatInterface(
         fn=chat_fn,

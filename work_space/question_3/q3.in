@@ -1,0 +1,18 @@
+TITLE q3 CO2(g) 3 atm with Cu2+ and Fe3+ at 100C
+SOLUTION 1
+    temp 100
+    pH 7 charge
+    -water 1
+    Cu 0.5
+    Fe 0.25
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 3
+    CO2(g) 1
+EQUILIBRIUM_PHASES 1
+    # none
+SELECTED_OUTPUT
+    -file q3.sel
+    -reset false
+    -pH true
+END

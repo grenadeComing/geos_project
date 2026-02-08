@@ -1,0 +1,9 @@
+Scenario:
+CO2 gas at 3 atmospheres is placed in equilibrium with a water solution of initial pH 7 at 100 degrees C, with 0.5 molal of Cu(2) and 0.25 molal of Fe(3).
+
+Question: How many species of Cu(2) are present with a concentration above 1e-10?
+
+A.) 2
+B.) 4
+C.) 6
+D.) 9

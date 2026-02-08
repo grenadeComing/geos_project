@@ -1,0 +1,14 @@
+TITLE q1 gypsum+anhydrite equilibrium with pure water at 100C
+SOLUTION 1
+    temp 100
+    pH 7 charge
+    units mol/kgw
+    -water 1
+EQUILIBRIUM_PHASES 1
+    Gypsum 0 1
+    Anhydrite 0 1
+SELECTED_OUTPUT
+    -file q1_sel.txt
+    -reset false
+    -molalities Ca
+END

@@ -1,0 +1,9 @@
+Scenario:
+CO2 gas at 3 atmospheres is placed in equilibrium with a water solution of initial pH 7 at 100 degrees C, with 0.5 molal of Cu(2) and 0.25 molal of Fe(3).
+
+Question: What is the equilibrium pH of the final solution?
+
+A.) 6.453
+B.) 5.145
+C.) 9.179
+D.) 7.00
