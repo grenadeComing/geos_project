@@ -24,7 +24,8 @@ class ExecutePHREEQCTool(BaseTool):
             if not os.path.isfile(self.DEFAULT_DB):
                 return {"ok": False, "error": f"PHREEQC database not found: {self.DEFAULT_DB}"}
 
-            in_path = Path(input_path).expanduser().resolve()
+            # Resolve relative paths within the currently allowed workspace.
+            in_path = Path(self.validate_path(input_path))
             if not in_path.exists():
                 return {"ok": False, "error": f"Input file not found: {in_path}"}
 

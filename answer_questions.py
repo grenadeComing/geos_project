@@ -11,18 +11,15 @@ from agent import run_agent
 
 
 def build_prompt(file_name: str) -> str:
-    return (
-        "Answer the question in the file below.\n"
-        "Return only the final answer.\n"
-        "Format:\n"
-        "1) <letter> <short answer>\n"
-        "2) <letter> <short answer>\n"
-        "\n"
-        f"File: {file_name}\n"
-        "Use read_questions to load the file content.\n"
-        "Use only relative file paths for tool.\n"
-    )
+    return f"""Answer the multiple-choice question in the file below.
+    File: {file_name}
 
+    Steps:
+    1) Use read_questions to read the question file.
+    2) Solve it and determine X in {{A, B, C, D}}.
+    3) Use write_file to create or overwrite final_answer.txt in the current workspace.
+       The file content must be exactly: <<< X >>> followed by a newline.
+"""
 
 def _workspace_name_for(question_file: Path) -> str:
     stem = question_file.stem.strip()
@@ -49,7 +46,6 @@ def main() -> None:
     if not question_files:
         raise FileNotFoundError(f"No question files found in: {questions_dir}")
 
-    results = []
     for path in question_files:
         content = path.read_text(encoding="utf-8")
         if not content.strip():
@@ -60,24 +56,12 @@ def main() -> None:
         BaseTool.allowed_root = str(question_workspace)
 
         prompt = build_prompt(path.name)
-        answer, _ = run_agent([{"role": "user", "content": prompt}])
-        answer_text = answer.strip()
-
-        (question_workspace / "final_answer.txt").write_text(
-            answer_text + "\n", encoding="utf-8"
-        )
-        results.append(
-            "\n".join(
-                [
-                    f"{path.name}",
-                    f"workspace: {question_workspace.relative_to(BASE_DIR)}",
-                    answer_text,
-                ]
+        run_agent([{"role": "user", "content": prompt}])
+        final_answer_path = question_workspace / "final_answer.txt"
+        if not final_answer_path.exists():
+            raise RuntimeError(
+                f"Agent did not write final_answer.txt for {path.name} in {question_workspace}"
             )
-        )
-
-    output_path = workspace_root / "answers.txt"
-    output_path.write_text("\n\n".join(results) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

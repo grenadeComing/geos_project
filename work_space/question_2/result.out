@@ -1,4 +1,4 @@
-   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_2/q2.in
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_2/gypsum_anhydrite_100C.inp
   Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_2/result.out
 Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
 
@@ -21,25 +21,31 @@ Reading data base.
 Reading input data for simulation 1.
 ------------------------------------
 
-	SOLUTION 1
-	  temp 100
-	  pH 7 charge
-	  water 1
+	TITLE Gypsum + Anhydrite in pure water, pH 7, 100C
+	SOLUTION 1 Pure water
+	    temp 100
+	    pH 7 charge
+	    units mol/kgw
+	    water 1
 	EQUILIBRIUM_PHASES 1
-	  Gypsum 0 1
-	  Anhydrite 0 1
+	    Gypsum     0 1
+	    Anhydrite  0 1
 	SELECTED_OUTPUT
-	  file q2_sel.txt
-	  reset false
-	USER_PUNCH
-	  headings Ca+2 CaSO4 CaHSO4+ CaOH+
-	  10 PUNCH MOL("Ca+2"), MOL("CaSO4"), MOL("CaHSO4+"), MOL("CaOH+")
+	    file gypsum_anhydrite_100C.sel
+	    reset false
+	    high_precision true
 	END
+-----
+TITLE
+-----
+
+ Gypsum + Anhydrite in pure water, pH 7, 100C
+
 -------------------------------------------
 Beginning of initial solution calculations.
 -------------------------------------------
 
-Initial solution 1.	
+Initial solution 1.	Pure water
 
 -----------------------------Solution composition------------------------------
 
@@ -58,11 +64,11 @@ Initial solution 1.
                         Activity of water  =   1.000
                  Ionic strength (mol/kgw)  =   7.610e-07
                        Mass of water (kg)  =   1.000e+00
-                 Total alkalinity (eq/kg)  =  -1.160e-16
+                 Total alkalinity (eq/kg)  =  -3.176e-21
                          Temperature (°C)  = 100.00
-                  Electrical balance (eq)  =   1.160e-16
+                  Electrical balance (eq)  =   3.176e-21
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
-                               Iterations  =   5
+                               Iterations  =   6
                                   Total H  = 1.110124e+02
                                   Total O  = 5.550622e+01
 
@@ -96,7 +102,7 @@ Beginning of batch-reaction calculations.
 
 Reaction step 1.
 
-Using solution 1.	
+Using solution 1.	Pure water
 Using pure phase assemblage 1.	
 
 -------------------------------Phase assemblage--------------------------------
@@ -117,7 +123,7 @@ Gypsum           -0.41    -5.26     -4.85    1.000e+00           0  -1.000e+00
 ----------------------------Description of solution----------------------------
 
                                        pH  =   6.333      Charge balance
-                                       pe  =   6.607      Adjusted to redox equilibrium
+                                       pe  =   6.606      Adjusted to redox equilibrium
       Specific Conductance (µS/cm, 100°C)  = 3099
                           Density (g/cm³)  =   0.95909
                                Volume (L)  =   1.08106
@@ -125,11 +131,11 @@ Gypsum           -0.41    -5.26     -4.85    1.000e+00           0  -1.000e+00
                         Activity of water  =   1.000
                  Ionic strength (mol/kgw)  =   1.677e-02
                        Mass of water (kg)  =   1.036e+00
-                 Total alkalinity (eq/kg)  =  -1.150e-16
+                 Total alkalinity (eq/kg)  =  -1.960e-19
                          Temperature (°C)  = 100.00
-                  Electrical balance (eq)  =   2.544e-14
- Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
-                               Iterations  =  16
+                  Electrical balance (eq)  =  -1.041e-17
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  -0.00
+                               Iterations  =  18
                                   Total H  = 1.150124e+02
                                   Total O  = 5.752989e+01
 
@@ -146,15 +152,15 @@ Ca            5.712e-03
    CaSO4           1.519e-03   1.525e-03    -2.818    -2.817     0.002      8.86
    CaHSO4+         2.545e-08   2.187e-08    -7.594    -7.660    -0.066     (0)  
    CaOH+           9.771e-10   8.398e-10    -9.010    -9.076    -0.066     (0)  
-H(0)          1.020e-29
-   H2              5.102e-30   5.122e-30   -29.292   -29.291     0.002     28.57
-O(0)          6.916e-15
-   O2              3.458e-15   3.471e-15   -14.461   -14.460     0.002     33.90
+H(0)          1.025e-29
+   H2              5.123e-30   5.143e-30   -29.290   -29.289     0.002     28.57
+O(0)          6.858e-15
+   O2              3.429e-15   3.442e-15   -14.465   -14.463     0.002     33.90
 S(-2)         0.000e+00
-   H2S             0.000e+00   0.000e+00   -87.516   -87.514     0.002     46.17
-   HS-             0.000e+00   0.000e+00   -87.634   -87.702    -0.067     20.02
-   S-2             0.000e+00   0.000e+00   -92.249   -92.504    -0.254     (0)  
-   (H2S)2          0.000e+00   0.000e+00  -175.864  -175.862     0.002     24.22
+   H2S             0.000e+00   0.000e+00   -87.509   -87.507     0.002     46.17
+   HS-             0.000e+00   0.000e+00   -87.627   -87.694    -0.067     20.02
+   S-2             0.000e+00   0.000e+00   -92.242   -92.496    -0.254     (0)  
+   (H2S)2          0.000e+00   0.000e+00  -175.849  -175.847     0.002     24.22
 S(6)          5.712e-03
    SO4-2           4.192e-03   2.330e-03    -2.378    -2.633    -0.255     16.38
    CaSO4           1.519e-03   1.525e-03    -2.818    -2.817     0.002      8.86
@@ -169,9 +175,9 @@ S(6)          5.712e-03
   Gypsum           -0.41     -5.26   -4.85  CaSO4:2H2O
   H2(g)           -26.19    -29.29   -3.10  H2
   H2O(g)           -0.01     -0.00    0.00  H2O
-  H2S(g)          -86.03    -94.04   -8.00  H2S
-  O2(g)           -11.34    -14.46   -3.11  O2
-  Sulfur          -65.12    -61.63    3.48  S
+  H2S(g)          -86.02    -94.03   -8.00  H2S
+  O2(g)           -11.35    -14.46   -3.11  O2
+  Sulfur          -65.11    -61.63    3.48  S
 
 **For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
   For ideal gases, phi = 1.
@@ -184,7 +190,19 @@ End of simulation.
 Reading input data for simulation 2.
 ------------------------------------
 
+	USER_PUNCH
+	    headings Ca+2 CaSO4 CaHSO4+ CaOH+
+	10  PUNCH MOL("Ca+2"), MOL("CaSO4"), MOL("CaHSO4+"), MOL("CaOH+")
+	END
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 3.
+------------------------------------
+
 ----------------------------------
-End of Run after 0.007462 Seconds.
+End of Run after 0.008716 Seconds.
 ----------------------------------
 

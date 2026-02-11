@@ -1,5 +1,5 @@
-   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_1/q1.inp
-  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_1/result.out
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_1/inputs/q1.in.txt
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_1/inputs/result.out
 Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
 
 ------------------
@@ -21,17 +21,17 @@ Reading data base.
 Reading input data for simulation 1.
 ------------------------------------
 
-	TITLE q1 gypsum+anhydrite equilibrium with pure water at 100C
+	TITLE Q1: Gypsum + Anhydrite equilibrium with pure water, pH 7, 100 C
 	SOLUTION 1
 	    temp 100
 	    pH 7 charge
 	    units mol/kgw
 	    water 1
 	EQUILIBRIUM_PHASES 1
-	    Gypsum 0 1
-	    Anhydrite 0 1
+	    Gypsum      0 1
+	    Anhydrite   0 1
 	SELECTED_OUTPUT
-	    file q1_sel.txt
+	    file q1.sel.txt
 	    reset false
 	    molalities Ca
 	END
@@ -39,7 +39,7 @@ Reading input data for simulation 1.
 TITLE
 -----
 
- q1 gypsum+anhydrite equilibrium with pure water at 100C
+ Q1: Gypsum + Anhydrite equilibrium with pure water, pH 7, 100 C
 
 WARNING: Did not find species, Ca.
 -------------------------------------------
@@ -192,6 +192,6 @@ Reading input data for simulation 2.
 ------------------------------------
 
 ----------------------------------
-End of Run after 0.012802 Seconds.
+End of Run after 0.004275 Seconds.
 ----------------------------------
 

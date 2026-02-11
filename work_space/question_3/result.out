@@ -1,4 +1,4 @@
-   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_3/q3.in
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_3/q3.phr
   Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/question_3/result.out
 Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
 
@@ -21,18 +21,14 @@ Reading data base.
 Reading input data for simulation 1.
 ------------------------------------
 
-	TITLE q3 CO2(g) 3 atm with Cu2+ and Fe3+ at 100C
+	TITLE Q3 CO2 3 atm with Cu2+ 0.5 m, Fe3+ 0.25 m, initial pH 7, 100C
 	SOLUTION 1
 	    temp 100
 	    pH 7 charge
-	    water 1
 	    Cu 0.5
 	    Fe 0.25
-	GAS_PHASE 1
-	    fixed_pressure
-	    pressure 3
-	    CO2(g) 1
 	EQUILIBRIUM_PHASES 1
+	    CO2(g) -0.52287874528 10  # log10(3 atm)
 	SELECTED_OUTPUT
 	    file q3.sel
 	    reset false
@@ -42,7 +38,7 @@ Reading input data for simulation 1.
 TITLE
 -----
 
- q3 CO2(g) 3 atm with Cu2+ and Fe3+ at 100C
+ Q3 CO2 3 atm with Cu2+ 0.5 m, Fe3+ 0.25 m, initial pH 7, 100C
 
 -------------------------------------------
 Beginning of initial solution calculations.
@@ -133,115 +129,107 @@ Reaction step 1.
 
 Using solution 1.	
 Using pure phase assemblage 1.	
-Using gas phase 1.	
 
------------------------------------Gas phase-----------------------------------
+-------------------------------Phase assemblage--------------------------------
 
-Total pressure:  3.00      atmospheres          (Peng-Robinson calculation)
-    Gas volume:   8.69e-02 liters
-  Molar volume:   1.01e+01 liters/mole
-   P * Vm / RT:  0.99193  (Compressibility Factor Z) 
+                                                      Moles in assemblage
+Phase               SI  log IAP  log K(T, P)   Initial       Final       Delta
 
-                                                        Moles in gas
-                                            ----------------------------------
-Component         log P           P    phi     Initial       Final       Delta
-
-CO2(g)             0.48   3.000e+00  0.992   4.110e-02   8.588e-03  -3.251e-02
+CO2(g)           -0.52    -2.50     -1.98    1.000e+01   9.996e+00  -3.976e-03
 
 -----------------------------Solution composition------------------------------
 
 	Elements           Molality       Moles
 
-	C                 3.251e-02   3.251e-02
+	C                 3.976e-03   3.976e-03
 	Cu                5.000e-04   5.000e-04
 	Fe                2.500e-04   2.500e-04
 
 ----------------------------Description of solution----------------------------
 
-                                       pH  =   4.933      Charge balance
-                                       pe  =   8.625      Adjusted to redox equilibrium
-      Specific Conductance (µS/cm, 100°C)  = 250
-                          Density (g/cm³)  =   0.95875
-                               Volume (L)  =   1.04459
-                        Viscosity (mPa s)  =   0.28383
-                        Activity of water  =   0.999
-                 Ionic strength (mol/kgw)  =   1.389e-03
+                                       pH  =   5.790      Charge balance
+                                       pe  =   6.844      Adjusted to redox equilibrium
+      Specific Conductance (µS/cm, 100°C)  = 155
+                          Density (g/cm³)  =   0.95846
+                               Volume (L)  =   1.04360
+                        Viscosity (mPa s)  =   0.28291
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   1.050e-03
                        Mass of water (kg)  =   1.000e+00
                  Total alkalinity (eq/kg)  =   1.250e-03
-                       Total CO2 (mol/kg)  =   3.251e-02
+                       Total CO2 (mol/kg)  =   3.976e-03
                          Temperature (°C)  = 100.00
-                           Pressure (atm)  =  3.00
-                  Electrical balance (eq)  =   8.835e-17
+                  Electrical balance (eq)  =   2.980e-16
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
-                               Iterations  =  10
+                               Iterations  =  13
                                   Total H  = 1.110142e+02
-                                  Total O  = 5.557299e+01
+                                  Total O  = 5.551592e+01
 
 ----------------------------Distribution of species----------------------------
 
                                                Log       Log       Log    mole V
    Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
 
-   H+              1.222e-05   1.167e-05    -4.913    -4.933    -0.020      0.00
-   OH-             5.205e-08   4.955e-08    -7.284    -7.305    -0.021     -5.89
-   H2O             5.551e+01   9.994e-01     1.744    -0.000     0.000     18.80
+   H+              1.690e-06   1.623e-06    -5.772    -5.790    -0.018      0.00
+   OH-             3.716e-07   3.560e-07    -6.430    -6.449    -0.019     -5.89
+   H2O             5.551e+01   9.999e-01     1.744    -0.000     0.000     18.80
 C(-4)         0.000e+00
-   CH4             0.000e+00   0.000e+00   -94.476   -94.476     0.000     41.06
-C(4)          3.251e-02
-   CO2             3.113e-02   3.114e-02    -1.507    -1.507     0.000     38.89
-   HCO3-           1.050e-03   1.001e-03    -2.979    -3.000    -0.021     23.73
-   CuHCO3+         1.422e-04   1.354e-04    -3.847    -3.868    -0.021     (0)  
-   (CO2)2          8.996e-05   8.999e-05    -4.046    -4.046     0.000     77.77
-   CuCO3           8.692e-06   8.695e-06    -5.061    -5.061     0.000     (0)  
-   CO3-2           7.288e-09   6.010e-09    -8.137    -8.221    -0.084     -8.74
-   FeHCO3+         3.912e-09   3.725e-09    -8.408    -8.429    -0.021     (0)  
-   Cu(CO3)2-2      8.001e-11   6.575e-11   -10.097   -10.182    -0.085     (0)  
-   FeCO3           5.354e-12   5.355e-12   -11.271   -11.271     0.000     (0)  
-Cu(1)         6.168e-10
-   Cu+             6.168e-10   5.868e-10    -9.210    -9.232    -0.022     (0)  
+   CH4             0.000e+00   0.000e+00   -88.073   -88.073     0.000     41.06
+C(4)          3.976e-03
+   CO2             3.144e-03   3.145e-03    -2.503    -2.502     0.000     38.89
+   HCO3-           7.569e-04   7.256e-04    -3.121    -3.139    -0.018     23.70
+   CuHCO3+         5.050e-05   4.838e-05    -4.297    -4.315    -0.019     (0)  
+   CuCO3           2.234e-05   2.234e-05    -4.651    -4.651     0.000     (0)  
+   (CO2)2          9.175e-07   9.177e-07    -6.037    -6.037     0.000     77.78
+   CO3-2           3.703e-08   3.128e-08    -7.431    -7.505    -0.073     -8.81
+   FeHCO3+         1.862e-09   1.783e-09    -8.730    -8.749    -0.019     (0)  
+   Cu(CO3)2-2      1.045e-09   8.797e-10    -8.981    -9.056    -0.075     (0)  
+   FeCO3           1.844e-11   1.844e-11   -10.734   -10.734     0.000     (0)  
+Cu(1)         1.829e-08
+   Cu+             1.829e-08   1.751e-08    -7.738    -7.757    -0.019     (0)  
 Cu(2)         5.000e-04
-   Cu+2            3.270e-04   2.701e-04    -3.485    -3.569    -0.083    -29.55
-   CuHCO3+         1.422e-04   1.354e-04    -3.847    -3.868    -0.021     (0)  
-   Cu2(OH)2+2      1.091e-05   8.966e-06    -4.962    -5.047    -0.085     (0)  
-   CuCO3           8.692e-06   8.695e-06    -5.061    -5.061     0.000     (0)  
-   CuOH+           2.427e-07   2.311e-07    -6.615    -6.636    -0.021     (0)  
-   Cu(OH)2         4.139e-08   4.140e-08    -7.383    -7.383     0.000     (0)  
-   Cu(CO3)2-2      8.001e-11   6.575e-11   -10.097   -10.182    -0.085     (0)  
-   Cu(OH)3-        2.247e-16   2.139e-16   -15.648   -15.670    -0.021     (0)  
-   Cu(OH)4-2       4.453e-24   3.659e-24   -23.351   -23.437    -0.085     (0)  
-Fe(2)         4.907e-08
-   Fe+2            4.506e-08   3.721e-08    -7.346    -7.429    -0.083    -20.30
-   FeHCO3+         3.912e-09   3.725e-09    -8.408    -8.429    -0.021     (0)  
-   FeOH+           9.312e-11   8.872e-11   -10.031   -10.052    -0.021     (0)  
-   FeCO3           5.354e-12   5.355e-12   -11.271   -11.271     0.000     (0)  
-   Fe(OH)2         1.188e-14   1.188e-14   -13.925   -13.925     0.000     (0)  
-   Fe(OH)3-        7.156e-20   6.818e-20   -19.145   -19.166    -0.021     (0)  
+   Cu+2            1.573e-04   1.330e-04    -3.803    -3.876    -0.073    -29.60
+   Cu2(OH)2+2      1.339e-04   1.128e-04    -3.873    -3.948    -0.075     (0)  
+   CuHCO3+         5.050e-05   4.838e-05    -4.297    -4.315    -0.019     (0)  
+   CuCO3           2.234e-05   2.234e-05    -4.651    -4.651     0.000     (0)  
+   Cu(OH)2         1.055e-06   1.055e-06    -5.977    -5.977     0.000     (0)  
+   CuOH+           8.557e-07   8.198e-07    -6.068    -6.086    -0.019     (0)  
+   Cu(CO3)2-2      1.045e-09   8.797e-10    -8.981    -9.056    -0.075     (0)  
+   Cu(OH)3-        4.091e-14   3.919e-14   -13.388   -13.407    -0.019     (0)  
+   Cu(OH)4-2       5.721e-21   4.818e-21   -20.243   -20.317    -0.075     (0)  
+Fe(2)         3.139e-08
+   Fe+2            2.907e-08   2.458e-08    -7.537    -7.609    -0.073    -20.35
+   FeHCO3+         1.862e-09   1.783e-09    -8.730    -8.749    -0.019     (0)  
+   FeOH+           4.399e-10   4.217e-10    -9.357    -9.375    -0.018     (0)  
+   FeCO3           1.844e-11   1.844e-11   -10.734   -10.734     0.000     (0)  
+   Fe(OH)2         4.057e-13   4.058e-13   -12.392   -12.392     0.000     (0)  
+   Fe(OH)3-        1.746e-17   1.674e-17   -16.758   -16.776    -0.018     (0)  
 Fe(3)         2.500e-04
-   Fe(OH)2+        2.178e-04   2.075e-04    -3.662    -3.683    -0.021     (0)  
-   Fe(OH)3         3.123e-05   3.124e-05    -4.505    -4.505     0.000     (0)  
-   FeOH+2          9.139e-07   7.531e-07    -6.039    -6.123    -0.084     (0)  
-   Fe(OH)4-        2.850e-08   2.716e-08    -7.545    -7.566    -0.021     (0)  
-   Fe+3            6.054e-11   3.995e-11   -10.218   -10.399    -0.181     (0)  
-   Fe2(OH)2+4      2.813e-12   1.283e-12   -11.551   -11.892    -0.341     (0)  
-   Fe3(OH)4+5      7.527e-16   2.208e-16   -15.123   -15.656    -0.533     (0)  
-H(0)          5.952e-31
-   H2              2.976e-31   2.977e-31   -30.526   -30.526     0.000     28.57
-O(0)          2.046e-12
-   O2              1.023e-12   1.023e-12   -11.990   -11.990     0.000     33.89
+   Fe(OH)3         1.268e-04   1.268e-04    -3.897    -3.897     0.000     (0)  
+   Fe(OH)2+        1.223e-04   1.172e-04    -3.913    -3.931    -0.018     (0)  
+   Fe(OH)4-        8.265e-07   7.923e-07    -6.083    -6.101    -0.018     (0)  
+   FeOH+2          7.013e-08   5.919e-08    -7.154    -7.228    -0.074     (0)  
+   Fe+3            6.301e-13   4.369e-13   -12.201   -12.360    -0.159     (0)  
+   Fe2(OH)2+4      1.575e-14   7.925e-15   -13.803   -14.101    -0.298     (0)  
+   Fe3(OH)4+5      2.253e-18   7.704e-19   -17.647   -18.113    -0.466     (0)  
+H(0)          4.216e-29
+   H2              2.108e-29   2.108e-29   -28.676   -28.676     0.000     28.57
+O(0)          4.097e-16
+   O2              2.048e-16   2.049e-16   -15.689   -15.689     0.000     33.90
 
 ------------------------------Saturation indices-------------------------------
 
-  Phase               SI** log IAP   log K(373 K,   3 atm)
+  Phase               SI** log IAP   log K(373 K,   1 atm)
 
-  CH4(g)          -91.47    -94.48   -3.01  CH4
-  CO2(g)            0.47     -1.51   -1.98  CO2	 Pressure   3.0 atm, phi 0.992
-  Fe(OH)3(a)       -0.49      4.40    4.89  Fe(OH)3
-  Goethite          7.53      4.40   -3.13  FeOOH
-  H2(g)           -27.42    -30.53   -3.10  H2
-  H2O(g)           -0.00     -0.00    0.00  H2O
-  Hematite         17.35      8.80   -8.55  Fe2O3
-  O2(g)            -8.87    -11.99   -3.12  O2
-  Siderite         -4.40    -15.65  -11.25  FeCO3
+  CH4(g)          -85.07    -88.07   -3.00  CH4
+  CO2(g)           -0.52     -2.50   -1.98  CO2	 Pressure   0.3 atm, phi 0.999
+  Fe(OH)3(a)        0.12      5.01    4.89  Fe(OH)3
+  Goethite          8.14      5.01   -3.13  FeOOH
+  H2(g)           -25.58    -28.68   -3.10  H2
+  H2O(g)           -0.01     -0.00    0.00  H2O
+  Hematite         18.57     10.02   -8.55  Fe2O3
+  O2(g)           -12.57    -15.69   -3.11  O2
+  Siderite         -3.86    -15.11  -11.26  FeCO3
 
 **For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
   For ideal gases, phi = 1.
@@ -255,6 +243,6 @@ Reading input data for simulation 2.
 ------------------------------------
 
 ----------------------------------
-End of Run after 0.010562 Seconds.
+End of Run after 0.011217 Seconds.
 ----------------------------------
 

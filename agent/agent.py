@@ -89,7 +89,7 @@ def _log_event(log_path: Path, action: str, **data):
 def run_agent(
     messages: List[Dict[str, Any]],
     log_path: Path | None = None,
-    max_steps: int = 12,
+    max_steps: int = 24,
 ) -> Tuple[str, List[Dict[str, Any]]]:
     """
     One-tool-at-a-time agent loop:
@@ -106,8 +106,6 @@ def run_agent(
         log_path = _make_log_path()
 
     _log_event(log_path, "run_start", model=MODEL, max_steps=max_steps)
-    tool_used = False
-    no_tool_guard_tripped = 0
 
     # log the latest user message if present
     for m in reversed(messages):
@@ -156,20 +154,6 @@ def run_agent(
 
         # ✅ STOP CONDITION: no tools requested
         if first_tc is None:
-            if not tool_used and no_tool_guard_tripped < 2:
-                # Enforce tool usage for PHREEQC tasks before finalizing.
-                messages.append(
-                    {
-                        "role": "system",
-                        "content": (
-                            "You must use tools to compute answers. "
-                            "Create a PHREEQC input with write_file and run it with execute_phreeqc "
-                            "before responding."
-                        ),
-                    }
-                )
-                no_tool_guard_tripped += 1
-                continue
             _log_event(log_path, "run_end", status="answered", step=step)
             return assistant_msg.content or "", messages
 
@@ -215,7 +199,6 @@ def run_agent(
             args=args_for_log,
             result=result,
         )
-        tool_used = True
 
         # continue loop: model sees tool result and decides next action
 
