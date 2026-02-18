@@ -1,0 +1,16 @@
+SOLUTION 1 Salton
+    temp 25
+    pH 8 charge
+    units mol/kgw
+    HCO3 3.690e-3
+    CO3 8.552e-5
+    CO2 5.231e-5
+EQUILIBRIUM_PHASES 1
+    CO2(g) 0 10
+SELECTED_OUTPUT
+    -file salton.sel
+    -reset false
+USER_PUNCH
+    -headings log10_pCO2  SI_CO2g
+    10 PUNCH LOG10(GAS("CO2")), SI("CO2(g)")
+END

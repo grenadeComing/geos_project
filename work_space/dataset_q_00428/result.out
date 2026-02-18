@@ -1,0 +1,52 @@
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00428/pyrite_calcite.in
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00428/result.out
+Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
+
+------------------
+Reading data base.
+------------------
+
+	SOLUTION_MASTER_SPECIES
+	SOLUTION_SPECIES
+	PHASES
+	GAS_BINARY_PARAMETERS
+	EXCHANGE_MASTER_SPECIES
+	EXCHANGE_SPECIES
+	SURFACE_MASTER_SPECIES
+	SURFACE_SPECIES
+	MEAN_GAMMAS
+	RATES
+	END
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	SOLUTION 1 Pure water
+	    temp 25
+	    pH 7 charge
+	    units mol/kgw
+	    water 1
+	EQUILIBRIUM_PHASES 1
+	    Pyrite 0 0
+	    Goethite 0 0
+	    Calcite 0 0
+	    CO2(g) -2 10
+	    Gypsum 0 0
+	REACTION 1
+	    O2 1
+	    0 0.00002 in 101 steps
+ERROR: To define equal increments, only one reaction increment should be defined.
+	    NaCl 1
+	    0 0.1 in 101 steps
+ERROR: To define equal increments, only one reaction increment should be defined.
+	INCREMENTAL_REACTIONS true
+	SELECTED_OUTPUT
+	    file selected.csv
+	    reset false
+	    ph true
+	    totals Fe S(6) Ca C(4) Na Cl
+	    si Calcite Gypsum
+	    equilibrium_phases Pyrite Goethite Calcite CO2(g) Gypsum
+	END
+ERROR: Calculations terminating due to input errors.
+Stopping.

@@ -1,0 +1,205 @@
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00282/h2_ch4_quartz_10C_pH10.in
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00282/result.out
+Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
+
+------------------
+Reading data base.
+------------------
+
+	SOLUTION_MASTER_SPECIES
+	SOLUTION_SPECIES
+	PHASES
+	GAS_BINARY_PARAMETERS
+	EXCHANGE_MASTER_SPECIES
+	EXCHANGE_SPECIES
+	SURFACE_MASTER_SPECIES
+	SURFACE_SPECIES
+	MEAN_GAMMAS
+	RATES
+	END
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	TITLE H2(aq) molality at 10C, pH 10, equil with quartz and fixed gas (H2+CH4)
+	SOLUTION 1
+	    temp 10
+	    pH   10 charge
+	    water 1
+	EQUILIBRIUM_PHASES 1
+	    Quartz 0 0
+	GAS_PHASE 1
+	    fixed_pressure true
+	    pressure 1
+	    temperature 10
+	    H2(g) 0.5
+	    CH4(g) 0.5
+	SELECTED_OUTPUT
+	    file sel.txt
+	    molalities H2
+	END
+-----
+TITLE
+-----
+
+ H2(aq) molality at 10C, pH 10, equil with quartz and fixed gas (H2+CH4)
+
+-------------------------------------------
+Beginning of initial solution calculations.
+-------------------------------------------
+
+Initial solution 1.	
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Pure water     
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   7.266      Charge balance
+                                       pe  =   4.000    
+      Specific Conductance (µS/cm,  10°C)  = 0
+                          Density (g/cm³)  =   0.99970
+                               Volume (L)  =   1.00030
+                        Viscosity (mPa s)  =   1.30591
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   5.425e-08
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =  -1.691e-16
+                         Temperature (°C)  =  10.00
+                  Electrical balance (eq)  =   1.691e-16
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
+                               Iterations  =   9
+                                  Total H  = 1.110124e+02
+                                  Total O  = 5.550622e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+              5.425e-08   5.424e-08    -7.266    -7.266    -0.000      0.00
+   OH-             5.425e-08   5.424e-08    -7.266    -7.266    -0.000     -5.04
+   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.02
+H(0)          4.874e-26
+   H2              2.437e-26   2.437e-26   -25.613   -25.613     0.000     28.63
+O(0)          0.000e+00
+   O2              0.000e+00   0.000e+00   -46.251   -46.251     0.000     28.95
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(283 K,   1 atm)
+
+  H2(g)           -22.56    -25.61   -3.05  H2	 Pressure   0.5 atm, phi 1.001
+  H2O(g)           -1.91     -0.00    1.91  H2O
+  O2(g)           -43.49    -46.25   -2.77  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+-----------------------------------------
+Beginning of batch-reaction calculations.
+-----------------------------------------
+
+Reaction step 1.
+
+WARNING: Element Si is contained in Quartz (which has 0.0 mass),	
+but is not in solution or other phases.
+Using solution 1.	
+Using pure phase assemblage 1.	
+Using gas phase 1.	
+
+-----------------------------------Gas phase-----------------------------------
+
+Total pressure:  1.00      atmospheres          (Peng-Robinson calculation)
+    Gas volume:   9.63e-01 liters
+  Molar volume:   2.32e+01 liters/mole
+   P * Vm / RT:  0.99922  (Compressibility Factor Z) 
+
+                                                        Moles in gas
+                                            ----------------------------------
+Component         log P           P    phi     Initial       Final       Delta
+
+CH4(g)            -0.31   4.916e-01  0.998   2.154e-02   2.039e-02  -1.146e-03
+H2(g)             -0.29   5.084e-01  1.001   2.154e-02   2.109e-02  -4.483e-04
+
+-------------------------------Phase assemblage--------------------------------
+
+                                                      Moles in assemblage
+Phase               SI  log IAP  log K(T, P)   Initial       Final       Delta
+
+Quartz               Element not present.    0.000e+00           0   0.000e+00
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	C                 1.146e-03   1.146e-03
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   7.266      Charge balance
+                                       pe  =  -7.132      Adjusted to redox equilibrium
+      Specific Conductance (µS/cm,  10°C)  = 0
+                          Density (g/cm³)  =   0.99967
+                               Volume (L)  =   1.00035
+                        Viscosity (mPa s)  =   1.30591
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   5.425e-08
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =  -1.691e-16
+                       Total CO2 (mol/kg)  =   3.179e-28
+                         Temperature (°C)  =  10.00
+                  Electrical balance (eq)  =   1.691e-16
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
+                               Iterations  =  36
+                                  Total H  = 1.110179e+02
+                                  Total O  = 5.550622e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+              5.425e-08   5.424e-08    -7.266    -7.266    -0.000      0.00
+   OH-             5.425e-08   5.424e-08    -7.266    -7.266    -0.000     -5.04
+   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.02
+C(-4)         1.146e-03
+   CH4             1.146e-03   1.146e-03    -2.941    -2.941     0.000     33.98
+C(4)          3.179e-28
+   HCO3-           2.745e-28   2.744e-28   -27.561   -27.562    -0.000     22.83
+   CO2             4.326e-29   4.326e-29   -28.364   -28.364     0.000     33.66
+   CO3-2           1.647e-31   1.645e-31   -30.783   -30.784    -0.000     -6.36
+   (CO2)2          0.000e+00   0.000e+00   -58.699   -58.699     0.000     67.32
+H(0)          8.966e-04
+   H2              4.483e-04   4.483e-04    -3.348    -3.348     0.000     28.63
+O(0)          0.000e+00
+   O2              0.000e+00   0.000e+00   -90.780   -90.780     0.000     28.95
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(283 K,   1 atm)
+
+  CH4(g)           -0.31     -2.94   -2.63  CH4	 Pressure   0.5 atm, phi 0.998
+  CO2(g)          -27.09    -28.36   -1.27  CO2
+  H2(g)            -0.29     -3.35   -3.05  H2	 Pressure   0.5 atm, phi 1.001
+  H2O(g)           -1.91     -0.00    1.91  H2O
+  O2(g)           -88.01    -90.78   -2.77  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 2.
+------------------------------------
+
+----------------------------------
+End of Run after 0.010309 Seconds.
+----------------------------------
+

@@ -1,0 +1,44 @@
+SOLUTION_MASTER_SPECIES
+    U      UO2+2   238.0289  U  238.0289
+
+SOLUTION_SPECIES
+UO2+2 = UO2+2
+    log_k 0
+
+UO2+2 + CO3-2 = UO2CO3
+    log_k 10
+
+UO2+2 + 2 CO3-2 = UO2(CO3)2-2
+    log_k 20
+
+UO2+2 + 3 CO3-2 = UO2(CO3)3-4
+    log_k 30
+
+SOLUTION 1 Seawater
+    temp 25
+    pH 8.22
+    pe 8.451 O(0)/O(-2)
+    -density 1.023
+    units ppm
+    Ca 412.3
+    Mg 1291.8
+    Na 10768
+    K 399.1
+    Fe 0.002
+    Mn 0.0002
+    Si 4.28
+    Cl 19353
+    Alkalinity 141.682 as HCO3
+    S(6) 2712
+    N(5) 0.29
+    N(-3) 0.03 as NH4
+    U 0.0033
+
+SELECTED_OUTPUT
+    -file selected.txt
+    -reset false
+
+USER_PUNCH
+    -headings UO2+2 UO2CO3 UO2(CO3)2-2 UO2(CO3)3-4
+    10 PUNCH MOL("UO2+2"), MOL("UO2CO3"), MOL("UO2(CO3)2-2"), MOL("UO2(CO3)3-4")
+END

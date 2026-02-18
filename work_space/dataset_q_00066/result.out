@@ -1,0 +1,100 @@
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00066/phreeqc.in
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00066/result.out
+Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
+
+------------------
+Reading data base.
+------------------
+
+	SOLUTION_MASTER_SPECIES
+	SOLUTION_SPECIES
+	PHASES
+	GAS_BINARY_PARAMETERS
+	EXCHANGE_MASTER_SPECIES
+	EXCHANGE_SPECIES
+	SURFACE_MASTER_SPECIES
+	SURFACE_SPECIES
+	MEAN_GAMMAS
+	RATES
+	END
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	SOLUTION 1 Pure water at 85C
+	    temp 85
+	    pH 7 charge
+	    units mol/kgw
+	    water 1
+	SELECTED_OUTPUT
+	    file selected.txt
+	    reset false
+	    ph true
+	END
+-------------------------------------------
+Beginning of initial solution calculations.
+-------------------------------------------
+
+Initial solution 1.	Pure water at 85C
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Pure water     
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   6.247      Charge balance
+                                       pe  =   4.000    
+      Specific Conductance (µS/cm,  85°C)  = 0
+                          Density (g/cm³)  =   0.96861
+                               Volume (L)  =   1.03241
+                        Viscosity (mPa s)  =   0.33307
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   5.665e-07
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =  -6.490e-20
+                         Temperature (°C)  =  85.00
+                  Electrical balance (eq)  =   6.490e-20
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
+                               Iterations  =   5
+                                  Total H  = 1.110124e+02
+                                  Total O  = 5.550622e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+              5.665e-07   5.659e-07    -6.247    -6.247    -0.000      0.00
+   OH-             5.665e-07   5.659e-07    -6.247    -6.247    -0.000     -4.97
+   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.60
+H(0)          2.758e-24
+   H2              1.379e-24   1.379e-24   -23.861   -23.861     0.000     28.57
+O(0)          5.776e-29
+   O2              2.888e-29   2.888e-29   -28.539   -28.539     0.000     33.36
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(358 K,   1 atm)
+
+  H2(g)           -20.74    -23.86   -3.12  H2
+  H2O(g)           -0.25     -0.00    0.25  H2O
+  O2(g)           -25.43    -28.54   -3.11  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 2.
+------------------------------------
+
+----------------------------------
+End of Run after 0.009449 Seconds.
+----------------------------------
+

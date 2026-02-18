@@ -1,0 +1,16 @@
+SOLUTION 1
+    temp 100
+    pH 4
+    units mmol/kgw
+    C(4) 100
+    Cu 10
+
+GAS_PHASE 1 Fixed
+    -fixed_pressure true
+    -pressure 1
+    CO2(g) 1
+
+EQUILIBRIUM_PHASES 1
+    CO2(g) 1
+
+END

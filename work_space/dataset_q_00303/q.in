@@ -1,0 +1,18 @@
+SOLUTION 1
+    temp 25
+    pH 7
+    units mmol/kgw
+    Ca 10
+    Cl 10
+    Ntg 10
+    O(0) 10
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 20
+    H2O(g) 0
+    H2(g) 10
+END
+SELECTED_OUTPUT
+    -file selected.csv
+    -pH true
+END

@@ -1,0 +1,47 @@
+TITLE Albite kinetic dissolution with Fe(III)/Fe(II) and fixed H2S(g)
+
+SOLUTION 1
+    temp 200
+    pH 2 charge
+    units mmol/kgw
+    Fe(3) 4
+    Fe(2) 4
+
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 5
+    H2S(g) 1
+
+RATES
+Albite
+-start
+ 10 k = PARM(1)
+ 20 SSA = PARM(2)
+ 30 moles = k * SSA * TIME
+ 40 SAVE moles
+END
+
+KINETICS 1
+    Albite
+        -m0 1
+        -parms 10 1
+        -formula NaAlSi3O8 1
+        -steps 1000 in 100 steps
+
+USER_PUNCH
+    -headings n_Si_species
+-start
+ 10 cnt = 0
+ 20 FOR i = 1 TO SYS("count_s")
+ 30   sp$ = SYS("s", i)
+ 40   IF (INSTR(sp$, "Si") > 0) THEN cnt = cnt + 1
+ 50 NEXT i
+ 60 PUNCH cnt
+-end
+
+SELECTED_OUTPUT
+    -file selected.csv
+    -reset false
+    -high_precision true
+    -user_punch true
+END

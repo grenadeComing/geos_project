@@ -1,0 +1,22 @@
+TITLE H2 + fixed-pressure H2O gas phase; find PH2O after equilibration
+SOLUTION 1
+    temp 25
+    pH 7
+    units mmol/kgw
+    Ca 10
+    Cl 10
+    Ntg 10
+    O(0) 10
+    -water 1
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 20
+    -temperature 25
+    H2(g) 10
+    H2O(g) 0
+END
+SELECTED_OUTPUT
+    -file selected.sel
+    -reset false
+    -gas_phase true
+END

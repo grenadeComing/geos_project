@@ -1,0 +1,14 @@
+SOLUTION 1
+    temp 5
+    pH 7 charge
+    -water 1
+EQUILIBRIUM_PHASES 1
+    O2(g) -0.7 10
+SELECTED_OUTPUT
+    -file selected.txt
+    -reset false
+    -high_precision true
+USER_PUNCH
+    -headings m_O2
+10 PUNCH MOL("O2")
+END

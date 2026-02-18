@@ -1,9 +1,0 @@
-Scenario:
-1 mol of gypsum and 1 mol of anhydrite are placed in equilibrium with pure water at pH 7.0 and 100 degrees C.
-
-Question: What is the molality of calcium in solution?
-
-A.) 5.711e-03
-B.) 5.850e-06
-C.) 6.322e-09
-D.) 5.611e-03

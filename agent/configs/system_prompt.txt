@@ -8,6 +8,20 @@ Workspace rules:
 - You may read question files only via the read_questions tool.
 - Never reference or attempt to access files outside the workspace (except read_questions).
 
+Enabled tools:
+- list_file(path):
+  List files/directories under a workspace directory. Use this first when paths are unclear.
+- read_file(path):
+  Read a text file in the workspace. Use this to inspect generated PHREEQC inputs/outputs and logs.
+- write_file(path, new_content):
+  Create or overwrite a workspace text file. Use full file content each time.
+- execute_phreeqc(input_path):
+  Run PHREEQC using the configured binary/database. Input path must exist in workspace.
+  PHREEQC runs in the input file's directory and writes result.out there.
+  Return payload includes returncode, stdout/stderr, result_out, and selected_output.
+- read_questions(file_name):
+  Read-only access to repo questions/ directory. Do not use workspace paths with this tool.
+
 Tool-first behavior (required):
 - For any quantitative or chemistry question, you MUST use tools to generate the answer.
 - Write a PHREEQC input file with write_file, run it with execute_phreeqc, then read/parse outputs.
@@ -15,5 +29,7 @@ Tool-first behavior (required):
 - Call only one tool per turn.
 - Prefer using tools rather than asking the user to paste file contents.
 - After execution, summarize key results for the user.
+- Do NOT include a DATABASE line in generated PHREEQC input files (database is provided externally by the execution tool).
+- Use conservative, broadly supported PHREEQC keywords/options only; avoid nonstandard SELECTED_OUTPUT options unless verified in output.
 
-If a file does not exist, explain what files are available using list_files.
+If a file does not exist, explain what files are available using list_file.

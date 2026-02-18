@@ -1,0 +1,33 @@
+TITLE Fe(II) oxidation kinetics, constant O2(g), 1 day
+SOLUTION 1
+    temp 25
+    pH 7 charge
+    pe 4
+    units mmol/kgw
+    Na 10
+    Cl 10
+    Fe_di 0.1
+    Fe_tri 0
+EQUILIBRIUM_PHASES 1
+    O2(g) -0.7 10
+RATES
+Fe_ox
+-start
+10 k = 1e-6
+20 mFe = TOT("Fe_di")
+30 if (mFe <= 0) then goto 100
+40 rate = k * mFe
+50 moles = rate * TIME
+60 SAVE moles
+100 end
+-end
+KINETICS 1
+    Fe_ox
+        -formula Fe_di -1 Fe_tri 1
+        -steps 86400 in 1 steps
+SELECTED_OUTPUT
+    -file selected.sel
+    -reset false
+    -time true
+    -totals Fe_di Fe_tri
+END

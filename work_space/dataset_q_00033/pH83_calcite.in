@@ -1,0 +1,17 @@
+SOLUTION 1 seawater_like_pH83
+    temp 25
+    pH 8.3
+    units mol/L
+    Na 1.380e-03
+    Ca 3.091e-04
+    C(13) 2.000e-03 0
+    C(14) 2.000e-03 0
+    O(18) 55.508 0
+    H(2) 111.016 0
+EQUILIBRIUM_PHASES 1
+    Calcite 0 0
+SELECTED_OUTPUT
+    -reset false
+    -high_precision true
+    -equilibrium_phases Calcite
+END

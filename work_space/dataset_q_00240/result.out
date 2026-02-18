@@ -1,0 +1,38 @@
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00240/q.in
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00240/result.out
+Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
+
+------------------
+Reading data base.
+------------------
+
+	SOLUTION_MASTER_SPECIES
+	SOLUTION_SPECIES
+	PHASES
+	GAS_BINARY_PARAMETERS
+	EXCHANGE_MASTER_SPECIES
+	EXCHANGE_SPECIES
+	SURFACE_MASTER_SPECIES
+	SURFACE_SPECIES
+	MEAN_GAMMAS
+	RATES
+	END
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	SOLUTION 1
+	    temp 150
+	    pH 7
+	    pe 4
+	    units kgw
+	    water 1
+	GAS_PHASE 1
+	    fixed_pressure
+	    pressure 1
+	    temperature 150
+	    CO2(g) 10
+	    NH3(g) 5
+	END
+ERROR: Calculations terminating due to input errors.
+Stopping.

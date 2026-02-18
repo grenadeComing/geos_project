@@ -1,0 +1,231 @@
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00278/cu1_species.in
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00278/result.out
+Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
+
+------------------
+Reading data base.
+------------------
+
+	SOLUTION_MASTER_SPECIES
+	SOLUTION_SPECIES
+	PHASES
+	GAS_BINARY_PARAMETERS
+	EXCHANGE_MASTER_SPECIES
+	EXCHANGE_SPECIES
+	SURFACE_MASTER_SPECIES
+	SURFACE_SPECIES
+	MEAN_GAMMAS
+	RATES
+	END
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	SOLUTION 1
+	    temp 100
+	    pH 4
+	    units mmol/kgw
+	    C(4) 100
+	    Cu 10
+	GAS_PHASE 1 Fixed
+	    fixed_pressure true
+	    pressure 1
+	    CO2(g) 1
+	EQUILIBRIUM_PHASES 1
+	    CO2(g) 1
+	END
+-------------------------------------------
+Beginning of initial solution calculations.
+-------------------------------------------
+
+Initial solution 1.	
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	C(4)              1.000e-01   1.000e-01
+	Cu                1.000e-02   1.000e-02
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   4.000    
+                                       pe  =   4.000    
+      Specific Conductance (µS/cm, 100°C)  = 2283
+                          Density (g/cm³)  =   0.95989
+                               Volume (L)  =   1.04707
+                        Viscosity (mPa s)  =   0.28360
+                        Activity of water  =   0.998
+                 Ionic strength (mol/kgw)  =   1.786e-02
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =   1.451e-03
+                       Total CO2 (mol/kg)  =   1.000e-01
+                         Temperature (°C)  = 100.00
+                  Electrical balance (eq)  =   1.804e-02
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  95.54
+                               Iterations  =   9
+                                  Total H  = 1.110141e+02
+                                  Total O  = 5.570778e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+              1.140e-04   1.000e-04    -3.943    -4.000    -0.057      0.00
+   OH-             6.761e-09   5.766e-09    -8.170    -8.239    -0.069     -5.67
+   H2O             5.551e+01   9.982e-01     1.744    -0.001     0.000     18.80
+C(4)          1.000e-01
+   CO2             9.684e-02   9.710e-02    -1.014    -1.013     0.001     38.89
+   CuHCO3+         9.944e-04   8.512e-04    -3.002    -3.070    -0.068     (0)  
+   (CO2)2          8.715e-04   8.750e-04    -3.060    -3.058     0.002     77.78
+   HCO3-           4.208e-04   3.629e-04    -3.376    -3.440    -0.064     23.92
+   CuCO3           6.353e-06   6.379e-06    -5.197    -5.195     0.002     (0)  
+   CO3-2           4.590e-10   2.538e-10    -9.338    -9.595    -0.257     -8.02
+   Cu(CO3)2-2      3.797e-12   2.039e-12   -11.421   -11.691    -0.270     (0)  
+Cu(1)         5.073e-04
+   Cu+             5.073e-04   4.298e-04    -3.295    -3.367    -0.072     (0)  
+Cu(2)         9.493e-03
+   Cu+2            8.355e-03   4.680e-03    -2.078    -2.330    -0.252    -28.99
+   CuHCO3+         9.944e-04   8.512e-04    -3.002    -3.070    -0.068     (0)  
+   Cu2(OH)2+2      6.823e-05   3.663e-05    -4.166    -4.436    -0.270     (0)  
+   CuCO3           6.353e-06   6.379e-06    -5.197    -5.195     0.002     (0)  
+   CuOH+           5.460e-07   4.671e-07    -6.263    -6.331    -0.068     (0)  
+   Cu(OH)2         9.701e-09   9.741e-09    -8.013    -8.011     0.002     (0)  
+   Cu(CO3)2-2      3.797e-12   2.039e-12   -11.421   -11.691    -0.270     (0)  
+   Cu(OH)3-        6.845e-18   5.859e-18   -17.165   -17.232    -0.068     (0)  
+   Cu(OH)4-2       2.173e-26   1.167e-26   -25.663   -25.933    -0.270     (0)  
+H(0)          7.764e-20
+   H2              3.882e-20   3.898e-20   -19.411   -19.409     0.002     28.57
+O(0)          1.190e-34
+   O2              5.948e-35   5.972e-35   -34.226   -34.224     0.002     33.90
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(373 K,   1 atm)
+
+  CO2(g)            0.97     -1.01   -1.98  CO2	 Pressure   1.0 atm, phi 0.994
+  H2(g)           -16.31    -19.41   -3.10  H2
+  H2O(g)           -0.01     -0.00    0.00  H2O
+  O2(g)           -31.11    -34.22   -3.11  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+-----------------------------------------
+Beginning of batch-reaction calculations.
+-----------------------------------------
+
+Reaction step 1.
+
+Using solution 1.	
+Using pure phase assemblage 1.	
+Using gas phase 1.	Fixed
+
+-----------------------------------Gas phase-----------------------------------
+
+Total pressure:  1.00      atmospheres          (Peng-Robinson calculation)
+    Gas volume:   3.09e+02 liters
+  Molar volume:   3.05e+01 liters/mole
+   P * Vm / RT:  0.99731  (Compressibility Factor Z) 
+
+                                                        Moles in gas
+                                            ----------------------------------
+Component         log P           P    phi     Initial       Final       Delta
+
+CO2(g)             0.00   1.000e+00  0.997   4.110e-02   1.013e+01   1.009e+01
+
+-------------------------------Phase assemblage--------------------------------
+
+                                                      Moles in assemblage
+Phase               SI  log IAP  log K(T, P)   Initial       Final       Delta
+
+CO2(g)           -0.00    -1.98     -1.98    1.000e+01           0  -1.000e+01
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	C                 1.089e-02   1.089e-02
+	Cu                1.000e-02   1.000e-02
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   4.454      Charge balance
+                                       pe  =   3.989      Adjusted to redox equilibrium
+      Specific Conductance (µS/cm, 100°C)  = 2177
+                          Density (g/cm³)  =   0.95928
+                               Volume (L)  =   1.04364
+                        Viscosity (mPa s)  =   0.28267
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   1.781e-02
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =   1.451e-03
+                       Total CO2 (mol/kg)  =   1.089e-02
+                         Temperature (°C)  = 100.00
+                  Electrical balance (eq)  =   1.804e-02
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  98.59
+                               Iterations  =  21
+                                  Total H  = 1.110141e+02
+                                  Total O  = 5.552955e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   H+              4.005e-05   3.514e-05    -4.397    -4.454    -0.057      0.00
+   OH-             1.927e-08   1.643e-08    -7.715    -7.784    -0.069     -5.67
+   H2O             5.551e+01   9.997e-01     1.744    -0.000     0.000     18.80
+C(-4)         0.000e+00
+   CH4             0.000e+00   0.000e+00   -54.028   -54.027     0.002     41.06
+C(4)          1.089e-02
+   CO2             1.043e-02   1.046e-02    -1.982    -1.980     0.001     38.89
+   CuHCO3+         2.975e-04   2.547e-04    -3.527    -3.594    -0.067     (0)  
+   HCO3-           1.292e-04   1.114e-04    -3.889    -3.953    -0.064     23.91
+   (CO2)2          1.012e-05   1.016e-05    -4.995    -4.993     0.002     77.78
+   CuCO3           5.410e-06   5.433e-06    -5.267    -5.265     0.002     (0)  
+   CO3-2           4.009e-10   2.218e-10    -9.397    -9.654    -0.257     -8.02
+   Cu(CO3)2-2      2.824e-12   1.517e-12   -11.549   -11.819    -0.270     (0)  
+Cu(1)         5.073e-04
+   Cu+             5.073e-04   4.299e-04    -3.295    -3.367    -0.072     (0)  
+Cu(2)         9.493e-03
+   Cu+2            8.136e-03   4.560e-03    -2.090    -2.341    -0.251    -28.99
+   Cu2(OH)2+2      5.259e-04   2.825e-04    -3.279    -3.549    -0.270     (0)  
+   CuHCO3+         2.975e-04   2.547e-04    -3.527    -3.594    -0.067     (0)  
+   CuCO3           5.410e-06   5.433e-06    -5.267    -5.265     0.002     (0)  
+   CuOH+           1.516e-06   1.297e-06    -5.819    -5.887    -0.068     (0)  
+   Cu(OH)2         7.679e-08   7.711e-08    -7.115    -7.113     0.002     (0)  
+   Cu(CO3)2-2      2.824e-12   1.517e-12   -11.549   -11.819    -0.270     (0)  
+   Cu(OH)3-        1.544e-16   1.322e-16   -15.811   -15.879    -0.067     (0)  
+   Cu(OH)4-2       1.396e-24   7.503e-25   -23.855   -24.125    -0.270     (0)  
+H(0)          1.010e-20
+   H2              5.050e-21   5.071e-21   -20.297   -20.295     0.002     28.57
+O(0)          7.051e-33
+   O2              3.526e-33   3.540e-33   -32.453   -32.451     0.002     33.90
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(373 K,   1 atm)
+
+  CH4(g)          -51.02    -54.03   -3.00  CH4
+  CO2(g)           -0.00     -1.98   -1.98  CO2	 Pressure   1.0 atm, phi 0.997
+  H2(g)           -17.19    -20.29   -3.10  H2
+  H2O(g)           -0.01     -0.00    0.00  H2O
+  O2(g)           -29.34    -32.45   -3.11  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 2.
+------------------------------------
+
+----------------------------------
+End of Run after 0.010263 Seconds.
+----------------------------------
+

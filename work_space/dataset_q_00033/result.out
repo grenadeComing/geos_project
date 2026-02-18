@@ -1,0 +1,194 @@
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00033/pH83_calcite.in
+  Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00033/result.out
+Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
+
+------------------
+Reading data base.
+------------------
+
+	SOLUTION_MASTER_SPECIES
+	SOLUTION_SPECIES
+	PHASES
+	GAS_BINARY_PARAMETERS
+	EXCHANGE_MASTER_SPECIES
+	EXCHANGE_SPECIES
+	SURFACE_MASTER_SPECIES
+	SURFACE_SPECIES
+	MEAN_GAMMAS
+	RATES
+	END
+------------------------------------
+Reading input data for simulation 1.
+------------------------------------
+
+	SOLUTION 1 seawater_like_pH83
+	    temp 25
+	    pH 8.3
+	    units mol/L
+	    Na 1.380e-03
+	    Ca 3.091e-04
+	    C(13) 2.000e-03 0
+	    C(14) 2.000e-03 0
+	    O(18) 55.508 0
+	    H(2) 111.016 0
+	EQUILIBRIUM_PHASES 1
+	    Calcite 0 0
+	SELECTED_OUTPUT
+	    reset false
+	    high_precision true
+	    equilibrium_phases Calcite
+	END
+WARNING: Could not find element in database, C(13).
+	Concentration is set to zero.
+WARNING: Could not find element in database, C(14).
+	Concentration is set to zero.
+WARNING: Could not find element in database, H(2).
+	Concentration is set to zero.
+WARNING: Could not find element in database, O(18).
+	Concentration is set to zero.
+-------------------------------------------
+Beginning of initial solution calculations.
+-------------------------------------------
+
+Initial solution 1.	seawater_like_pH83
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Ca                3.091e-04   3.091e-04
+	Na                1.380e-03   1.380e-03
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   8.300    
+                                       pe  =   4.000    
+      Specific Conductance (µS/cm,  25°C)  = 104
+                          Density (g/cm³)  =   0.99709
+                               Volume (L)  =   1.00296
+                        Viscosity (mPa s)  =   0.89045
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   1.309e-03
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =   2.107e-06
+                         Temperature (°C)  =  25.00
+                  Electrical balance (eq)  =   1.996e-03
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  99.79
+                               Iterations  =   4
+                                  Total H  = 1.110124e+02
+                                  Total O  = 5.550622e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   OH-             2.104e-06   2.019e-06    -5.677    -5.695    -0.018     -4.10
+   H+              5.208e-09   5.012e-09    -8.283    -8.300    -0.017      0.00
+   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.07
+Ca            3.091e-04
+   Ca+2            3.091e-04   2.634e-04    -3.510    -3.579    -0.069    -18.13
+   CaOH+           9.083e-09   8.722e-09    -8.042    -8.059    -0.018     (0)  
+H(0)          3.555e-28
+   H2              1.778e-28   1.778e-28   -27.750   -27.750     0.000     28.61
+Na            1.380e-03
+   Na+             1.380e-03   1.326e-03    -2.860    -2.878    -0.017     -1.47
+O(0)          2.636e-37
+   O2              1.318e-37   1.318e-37   -36.880   -36.880     0.000     30.40
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(298 K,   1 atm)
+
+  H2(g)           -24.65    -27.75   -3.10  H2
+  H2O(g)           -1.50     -0.00    1.50  H2O
+  O2(g)           -33.99    -36.88   -2.89  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+-----------------------------------------
+Beginning of batch-reaction calculations.
+-----------------------------------------
+
+Reaction step 1.
+
+WARNING: Element C is contained in Calcite (which has 0.0 mass),	
+but is not in solution or other phases.
+Using solution 1.	seawater_like_pH83
+Using pure phase assemblage 1.	
+
+-------------------------------Phase assemblage--------------------------------
+
+                                                      Moles in assemblage
+Phase               SI  log IAP  log K(T, P)   Initial       Final       Delta
+
+Calcite              Element not present.    0.000e+00           0   0.000e+00
+
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Ca                3.091e-04   3.091e-04
+	Na                1.380e-03   1.380e-03
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   8.300      Charge balance
+                                       pe  =   3.000      Adjusted to redox equilibrium
+      Specific Conductance (µS/cm,  25°C)  = 104
+                          Density (g/cm³)  =   0.99709
+                               Volume (L)  =   1.00296
+                        Viscosity (mPa s)  =   0.89045
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   1.309e-03
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =   2.107e-06
+                         Temperature (°C)  =  25.00
+                  Electrical balance (eq)  =   1.996e-03
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  99.79
+                               Iterations  =   1
+                                  Total H  = 1.110124e+02
+                                  Total O  = 5.550622e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   OH-             2.104e-06   2.019e-06    -5.677    -5.695    -0.018     -4.10
+   H+              5.208e-09   5.012e-09    -8.283    -8.300    -0.017      0.00
+   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.07
+Ca            3.091e-04
+   Ca+2            3.091e-04   2.634e-04    -3.510    -3.579    -0.069    -18.13
+   CaOH+           9.083e-09   8.722e-09    -8.042    -8.059    -0.018     (0)  
+H(0)          3.555e-26
+   H2              1.778e-26   1.778e-26   -25.750   -25.750     0.000     28.61
+Na            1.380e-03
+   Na+             1.380e-03   1.326e-03    -2.860    -2.878    -0.017     -1.47
+O(0)          0.000e+00
+   O2              0.000e+00   0.000e+00   -40.880   -40.880     0.000     30.40
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(298 K,   1 atm)
+
+  H2(g)           -22.65    -25.75   -3.10  H2
+  H2O(g)           -1.50     -0.00    1.50  H2O
+  O2(g)           -37.99    -40.88   -2.89  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+------------------
+End of simulation.
+------------------
+
+------------------------------------
+Reading input data for simulation 2.
+------------------------------------
+
+----------------------------------
+End of Run after 0.009587 Seconds.
+----------------------------------
+

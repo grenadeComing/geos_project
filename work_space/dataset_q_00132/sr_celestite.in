@@ -1,0 +1,15 @@
+SOLUTION 1
+    temp 25
+    pH 7.2
+    units mol/kgw
+    Cl 0.16
+    S(6) 0.024 as SO4
+    Ca 1.186e-2
+    Mg 8.816e-3
+    Sr 1e-20
+EQUILIBRIUM_PHASES 1
+    Celestite 0 10
+SELECTED_OUTPUT
+    -file sr_sel.txt
+    -totals Sr
+END
