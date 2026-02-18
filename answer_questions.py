@@ -144,7 +144,7 @@ def main() -> None:
             if truth not in {"A", "B", "C", "D"}:
                 truth = None
 
-            workspace_name = f"dataset_q_{idx:05d}"
+            workspace_name = f"dataset_q_{idx + 1:05d}"
             question_workspace = WORKSPACE_ROOT / workspace_name
             question_workspace.mkdir(parents=True, exist_ok=True)
             BaseTool.allowed_root = str(question_workspace)
