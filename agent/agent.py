@@ -1,33 +1,28 @@
 import json
 import logging
 import os
+import time
+from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, List, Tuple
+
 from openai import OpenAI
 
 from tools.base_tool import BaseTool
 from tools.executation_tool import ExecutePHREEQCTool
 from tools.read_file_tool import ReadFileTool
-from tools.read_questions_tool import ReadQuestionsTool
 from tools.write_file_tool import WriteFileTool
 from tools.list_file_tool import ListFileTool
 
-import time
-from datetime import datetime
-from pathlib import Path
-
-
 logger = logging.getLogger(__name__)
-from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 SYSTEM_PROMPT = (BASE_DIR / "configs" / "system_prompt.txt").read_text(encoding="utf-8").strip()
 
-MODEL = os.getenv("OPENAI_MODEL", "gpt-5.2")
-MAX_TOOL_ROUNDS = 6
+MODEL = "gpt-5.2"
 
 TOOLS: Dict[str, Any] = {
     "read_file": ReadFileTool(),
-    "read_questions": ReadQuestionsTool(),
     "write_file": WriteFileTool(),
     "execute_phreeqc": ExecutePHREEQCTool(),
     "list_file": ListFileTool(),
@@ -86,6 +81,9 @@ def _log_event(log_path: Path, action: str, **data):
         f.write(json.dumps(event, ensure_ascii=False) + "\n")
 
 
+WORKSPACE_ROOT = Path(__file__).resolve().parents[1] / "work_space"
+
+
 def run_agent(
     messages: List[Dict[str, Any]],
     log_path: Path | None = None,
@@ -96,6 +94,15 @@ def run_agent(
     - If assistant returns no tools -> return its message.
     - If assistant returns tool call -> execute ONLY the first tool, append tool result, continue.
     """
+    if not BaseTool.allowed_root:
+        raise RuntimeError("BaseTool.allowed_root must be set before calling run_agent.")
+    resolved_root = Path(BaseTool.allowed_root).resolve()
+    ws_root = WORKSPACE_ROOT.resolve()
+    if ws_root not in (resolved_root, *resolved_root.parents):
+        raise RuntimeError(
+            f"allowed_root ({resolved_root}) is not inside work_space ({ws_root})."
+        )
+
     client = OpenAI()
     tool_specs = [_tool_spec(tool) for tool in TOOLS.values()]
 
@@ -114,12 +121,24 @@ def run_agent(
             break
 
     for step in range(1, max_steps + 1):
-        response = client.chat.completions.create(
-            model=MODEL,
-            messages=messages,
-            tools=tool_specs,
-            tool_choice="auto",
-        )
+        for attempt in range(1, 4):
+            try:
+                response = client.chat.completions.create(
+                    model=MODEL,
+                    messages=messages,
+                    tools=tool_specs,
+                    tool_choice="auto",
+                    parallel_tool_calls=False,
+                )
+                break
+            except Exception as api_err:
+                err_str = str(api_err)
+                is_transient = any(k in err_str for k in ("429", "500", "502", "503", "timeout", "connection"))
+                if not is_transient or attempt == 3:
+                    _log_event(log_path, "run_end", status="api_error", step=step, error=err_str)
+                    raise
+                logger.warning("API call failed (attempt %d/3, retrying): %s", attempt, api_err)
+                time.sleep(2 ** attempt)
 
         assistant_msg = response.choices[0].message
         tool_calls = assistant_msg.tool_calls or []

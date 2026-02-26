@@ -1,4 +1,4 @@
-#agent_workspace/
+work_space/
 __pycache__/
 *.pyc
 .DS_Store
