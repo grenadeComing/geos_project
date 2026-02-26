@@ -1,4 +1,4 @@
-   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00282/h2_ch4_quartz_10C_pH10.in
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00282/ch4.in
   Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00282/result.out
 Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
 
@@ -21,28 +21,27 @@ Reading data base.
 Reading input data for simulation 1.
 ------------------------------------
 
-	TITLE H2(aq) molality at 10C, pH 10, equil with quartz and fixed gas (H2+CH4)
+	TITLE CH4(aq) molality at 10 C, pH 10
+	 pure water equilibrated with quartz and fixed-pressure H2/CH4 gas
 	SOLUTION 1
 	    temp 10
 	    pH   10 charge
+	    units mol/kgw
 	    water 1
 	EQUILIBRIUM_PHASES 1
 	    Quartz 0 0
 	GAS_PHASE 1
-	    fixed_pressure true
+	    fixed_pressure
 	    pressure 1
 	    temperature 10
-	    H2(g) 0.5
+	    H2(g)  0.5
 	    CH4(g) 0.5
-	SELECTED_OUTPUT
-	    file sel.txt
-	    molalities H2
 	END
 -----
 TITLE
 -----
 
- H2(aq) molality at 10C, pH 10, equil with quartz and fixed gas (H2+CH4)
+ CH4(aq) molality at 10 C, pH 10
 
 -------------------------------------------
 Beginning of initial solution calculations.
@@ -200,6 +199,6 @@ Reading input data for simulation 2.
 ------------------------------------
 
 ----------------------------------
-End of Run after 0.010309 Seconds.
+End of Run after 0.004235 Seconds.
 ----------------------------------
 

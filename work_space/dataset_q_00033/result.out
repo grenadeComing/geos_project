@@ -1,4 +1,4 @@
-   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00033/pH83_calcite.in
+   Input file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00033/q.in
   Output file: /Users/kezhang/Desktop/projects/geos/geos_github/work_space/dataset_q_00033/result.out
 Database file: /Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat
 
@@ -21,37 +21,101 @@ Reading data base.
 Reading input data for simulation 1.
 ------------------------------------
 
-	SOLUTION 1 seawater_like_pH83
+	SOLUTION 1 seawater_like_pH82
+	    temp 25
+	    pH 8.2
+	    units mol/L
+	    C(13) 2.000e-03 0
+	    Ca 3.091e-04
+	    Na 1.380e-03
+	EQUILIBRIUM_PHASES 1
+	    Calcite 0 0
+	SAVE solution 1
+	SOLUTION 2 seawater_like_pH83
 	    temp 25
 	    pH 8.3
 	    units mol/L
-	    Na 1.380e-03
-	    Ca 3.091e-04
 	    C(13) 2.000e-03 0
-	    C(14) 2.000e-03 0
-	    O(18) 55.508 0
-	    H(2) 111.016 0
-	EQUILIBRIUM_PHASES 1
+	    Ca 3.091e-04
+	    Na 1.380e-03
+	EQUILIBRIUM_PHASES 2
 	    Calcite 0 0
 	SELECTED_OUTPUT
+	    file sel.txt
 	    reset false
-	    high_precision true
-	    equilibrium_phases Calcite
+	USER_PUNCH
+	    headings pH d13C_CO2aq
+	10  PUNCH -LA("H+"), SR("CO2")
 	END
 WARNING: Could not find element in database, C(13).
 	Concentration is set to zero.
-WARNING: Could not find element in database, C(14).
-	Concentration is set to zero.
-WARNING: Could not find element in database, H(2).
-	Concentration is set to zero.
-WARNING: Could not find element in database, O(18).
+WARNING: Could not find element in database, C(13).
 	Concentration is set to zero.
 -------------------------------------------
 Beginning of initial solution calculations.
 -------------------------------------------
 
-Initial solution 1.	seawater_like_pH83
+Initial solution 1.	seawater_like_pH82
 
+WARNING: Mineral CO2, not found.
+-----------------------------Solution composition------------------------------
+
+	Elements           Molality       Moles
+
+	Ca                3.091e-04   3.091e-04
+	Na                1.380e-03   1.380e-03
+
+----------------------------Description of solution----------------------------
+
+                                       pH  =   8.200    
+                                       pe  =   4.000    
+      Specific Conductance (µS/cm,  25°C)  = 104
+                          Density (g/cm³)  =   0.99709
+                               Volume (L)  =   1.00296
+                        Viscosity (mPa s)  =   0.89045
+                        Activity of water  =   1.000
+                 Ionic strength (mol/kgw)  =   1.309e-03
+                       Mass of water (kg)  =   1.000e+00
+                 Total alkalinity (eq/kg)  =   1.672e-06
+                         Temperature (°C)  =  25.00
+                  Electrical balance (eq)  =   1.997e-03
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  99.83
+                               Iterations  =   4
+                                  Total H  = 1.110124e+02
+                                  Total O  = 5.550622e+01
+
+----------------------------Distribution of species----------------------------
+
+                                               Log       Log       Log    mole V
+   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
+
+   OH-             1.671e-06   1.604e-06    -5.777    -5.795    -0.018     -4.10
+   H+              6.556e-09   6.310e-09    -8.183    -8.200    -0.017      0.00
+   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.07
+Ca            3.091e-04
+   Ca+2            3.091e-04   2.634e-04    -3.510    -3.579    -0.069    -18.13
+   CaOH+           7.215e-09   6.928e-09    -8.142    -8.159    -0.018     (0)  
+H(0)          5.635e-28
+   H2              2.818e-28   2.818e-28   -27.550   -27.550     0.000     28.61
+Na            1.380e-03
+   Na+             1.380e-03   1.326e-03    -2.860    -2.878    -0.017     -1.47
+O(0)          1.049e-37
+   O2              5.246e-38   5.248e-38   -37.280   -37.280     0.000     30.40
+
+------------------------------Saturation indices-------------------------------
+
+  Phase               SI** log IAP   log K(298 K,   1 atm)
+
+  H2(g)           -24.45    -27.55   -3.10  H2
+  H2O(g)           -1.50     -0.00    1.50  H2O
+  O2(g)           -34.39    -37.28   -2.89  O2
+
+**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
+  For ideal gases, phi = 1.
+
+Initial solution 2.	seawater_like_pH83
+
+WARNING: Mineral CO2, not found.
 -----------------------------Solution composition------------------------------
 
 	Elements           Molality       Moles
@@ -74,7 +138,7 @@ Initial solution 1.	seawater_like_pH83
                          Temperature (°C)  =  25.00
                   Electrical balance (eq)  =   1.996e-03
  Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  99.79
-                               Iterations  =   4
+                               Iterations  =   4 (8 overall)
                                   Total H  = 1.110124e+02
                                   Total O  = 5.550622e+01
 
@@ -115,7 +179,8 @@ Reaction step 1.
 
 WARNING: Element C is contained in Calcite (which has 0.0 mass),	
 but is not in solution or other phases.
-Using solution 1.	seawater_like_pH83
+WARNING: Mineral CO2, not found.
+Using solution 1.	seawater_like_pH82
 Using pure phase assemblage 1.	
 
 -------------------------------Phase assemblage--------------------------------
@@ -134,7 +199,7 @@ Calcite              Element not present.    0.000e+00           0   0.000e+00
 
 ----------------------------Description of solution----------------------------
 
-                                       pH  =   8.300      Charge balance
+                                       pH  =   8.200      Charge balance
                                        pe  =   3.000      Adjusted to redox equilibrium
       Specific Conductance (µS/cm,  25°C)  = 104
                           Density (g/cm³)  =   0.99709
@@ -143,10 +208,10 @@ Calcite              Element not present.    0.000e+00           0   0.000e+00
                         Activity of water  =   1.000
                  Ionic strength (mol/kgw)  =   1.309e-03
                        Mass of water (kg)  =   1.000e+00
-                 Total alkalinity (eq/kg)  =   2.107e-06
+                 Total alkalinity (eq/kg)  =   1.672e-06
                          Temperature (°C)  =  25.00
-                  Electrical balance (eq)  =   1.996e-03
- Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  99.79
+                  Electrical balance (eq)  =   1.997e-03
+ Percent error, 100*(Cat-|An|)/(Cat+|An|)  =  99.83
                                Iterations  =   1
                                   Total H  = 1.110124e+02
                                   Total O  = 5.550622e+01
@@ -156,26 +221,26 @@ Calcite              Element not present.    0.000e+00           0   0.000e+00
                                                Log       Log       Log    mole V
    Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
 
-   OH-             2.104e-06   2.019e-06    -5.677    -5.695    -0.018     -4.10
-   H+              5.208e-09   5.012e-09    -8.283    -8.300    -0.017      0.00
+   OH-             1.671e-06   1.604e-06    -5.777    -5.795    -0.018     -4.10
+   H+              6.556e-09   6.310e-09    -8.183    -8.200    -0.017      0.00
    H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.07
 Ca            3.091e-04
    Ca+2            3.091e-04   2.634e-04    -3.510    -3.579    -0.069    -18.13
-   CaOH+           9.083e-09   8.722e-09    -8.042    -8.059    -0.018     (0)  
-H(0)          3.555e-26
-   H2              1.778e-26   1.778e-26   -25.750   -25.750     0.000     28.61
+   CaOH+           7.215e-09   6.928e-09    -8.142    -8.159    -0.018     (0)  
+H(0)          5.635e-26
+   H2              2.818e-26   2.818e-26   -25.550   -25.550     0.000     28.61
 Na            1.380e-03
    Na+             1.380e-03   1.326e-03    -2.860    -2.878    -0.017     -1.47
 O(0)          0.000e+00
-   O2              0.000e+00   0.000e+00   -40.880   -40.880     0.000     30.40
+   O2              0.000e+00   0.000e+00   -41.280   -41.280     0.000     30.40
 
 ------------------------------Saturation indices-------------------------------
 
   Phase               SI** log IAP   log K(298 K,   1 atm)
 
-  H2(g)           -22.65    -25.75   -3.10  H2
+  H2(g)           -22.45    -25.55   -3.10  H2
   H2O(g)           -1.50     -0.00    1.50  H2O
-  O2(g)           -37.99    -40.88   -2.89  O2
+  O2(g)           -38.39    -41.28   -2.89  O2
 
 **For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
   For ideal gases, phi = 1.
@@ -189,6 +254,6 @@ Reading input data for simulation 2.
 ------------------------------------
 
 ----------------------------------
-End of Run after 0.009587 Seconds.
+End of Run after 0.010574 Seconds.
 ----------------------------------
 

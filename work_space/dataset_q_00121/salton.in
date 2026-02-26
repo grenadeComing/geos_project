@@ -1,16 +1,14 @@
-SOLUTION 1 Salton
+TITLE Salton Sea brine charge balance
+SOLUTION 1
     temp 25
-    pH 8 charge
-    units mol/kgw
-    HCO3 3.690e-3
-    CO3 8.552e-5
-    CO2 5.231e-5
-EQUILIBRIUM_PHASES 1
-    CO2(g) 0 10
-SELECTED_OUTPUT
-    -file salton.sel
-    -reset false
-USER_PUNCH
-    -headings log10_pCO2  SI_CO2g
-    10 PUNCH LOG10(GAS("CO2")), SI("CO2(g)")
+    pH 8.0
+    density 1.08
+    units mg/kg
+    Ca 505
+    Mg 581
+    Na 6249
+    K 112
+    Cl 9033
+    S 4139 as SO4
+    Alkalinity 232 as HCO3
 END

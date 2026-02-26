@@ -21,167 +21,25 @@ Reading data base.
 Reading input data for simulation 1.
 ------------------------------------
 
-	SOLUTION 1 Salton
+	TITLE Salton Sea brine charge balance
+	SOLUTION 1
 	    temp 25
-	    pH 8 charge
-	    units mol/kgw
-	    HCO3 3.690e-3
-	    CO3 8.552e-5
-	    CO2 5.231e-5
-	EQUILIBRIUM_PHASES 1
-	    CO2(g) 0 10
-	SELECTED_OUTPUT
-	    file salton.sel
-	    reset false
-	USER_PUNCH
-	    headings log10_pCO2  SI_CO2g
-	    10 PUNCH LOG10(GAS("CO2")), SI("CO2(g)")
+	    pH 8.0
+	    density 1.08
+	    units mg/kg
+	    Ca 505
+	    Mg 581
+	    Na 6249
+	    K 112
+	    Cl 9033
+	    S 4139 as SO4
+	    Alkalinity 232 as HCO3
 	END
-WARNING: Could not find element in database, CO2.
-	Concentration is set to zero.
-WARNING: Could not find element in database, CO3.
-	Concentration is set to zero.
-WARNING: Could not find element in database, HCO3.
-	Concentration is set to zero.
--------------------------------------------
-Beginning of initial solution calculations.
--------------------------------------------
+-----
+TITLE
+-----
 
-Initial solution 1.	Salton
+ Salton Sea brine charge balance
 
------------------------------Solution composition------------------------------
-
-	Elements           Molality       Moles
-
-	Pure water     
-
-----------------------------Description of solution----------------------------
-
-                                       pH  =   6.997      Charge balance
-                                       pe  =   4.000    
-      Specific Conductance (µS/cm,  25°C)  = 0
-                          Density (g/cm³)  =   0.99704
-                               Volume (L)  =   1.00297
-                        Viscosity (mPa s)  =   0.89002
-                        Activity of water  =   1.000
-                 Ionic strength (mol/kgw)  =   1.006e-07
-                       Mass of water (kg)  =   1.000e+00
-                 Total alkalinity (eq/kg)  =  -4.848e-16
-                         Temperature (°C)  =  25.00
-                  Electrical balance (eq)  =   4.848e-16
- Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
-                               Iterations  =   5
-                                  Total H  = 1.110124e+02
-                                  Total O  = 5.550622e+01
-
-----------------------------Distribution of species----------------------------
-
-                                               Log       Log       Log    mole V
-   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
-
-   H+              1.006e-07   1.006e-07    -6.997    -6.997    -0.000      0.00
-   OH-             1.006e-07   1.006e-07    -6.997    -6.997    -0.000     -4.14
-   H2O             5.551e+01   1.000e+00     1.744    -0.000     0.000     18.07
-H(0)          1.433e-25
-   H2              7.166e-26   7.166e-26   -25.145   -25.145     0.000     28.61
-O(0)          0.000e+00
-   O2              0.000e+00   0.000e+00   -42.090   -42.090     0.000     30.40
-
-------------------------------Saturation indices-------------------------------
-
-  Phase               SI** log IAP   log K(298 K,   1 atm)
-
-  H2(g)           -22.04    -25.14   -3.10  H2
-  H2O(g)           -1.50     -0.00    1.50  H2O
-  O2(g)           -39.20    -42.09   -2.89  O2
-
-**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
-  For ideal gases, phi = 1.
-
------------------------------------------
-Beginning of batch-reaction calculations.
------------------------------------------
-
-Reaction step 1.
-
-Using solution 1.	Salton
-Using pure phase assemblage 1.	
-
--------------------------------Phase assemblage--------------------------------
-
-                                                      Moles in assemblage
-Phase               SI  log IAP  log K(T, P)   Initial       Final       Delta
-
-CO2(g)           -0.00    -1.47     -1.47    1.000e+01   9.966e+00  -3.401e-02
-
------------------------------Solution composition------------------------------
-
-	Elements           Molality       Moles
-
-	C                 3.401e-02   3.401e-02
-
-----------------------------Description of solution----------------------------
-
-                                       pH  =   3.911      Charge balance
-                                       pe  =   1.756      Adjusted to redox equilibrium
-      Specific Conductance (µS/cm,  25°C)  = 48
-                          Density (g/cm³)  =   0.99737
-                               Volume (L)  =   1.00413
-                        Viscosity (mPa s)  =   0.89261
-                        Activity of water  =   0.999
-                 Ionic strength (mol/kgw)  =   1.242e-04
-                       Mass of water (kg)  =   1.000e+00
-                 Total alkalinity (eq/kg)  =  -4.741e-16
-                       Total CO2 (mol/kg)  =   3.401e-02
-                         Temperature (°C)  =  25.00
-                  Electrical balance (eq)  =   4.741e-16
- Percent error, 100*(Cat-|An|)/(Cat+|An|)  =   0.00
-                               Iterations  =  14
-                                  Total H  = 1.110124e+02
-                                  Total O  = 5.557423e+01
-
-----------------------------Distribution of species----------------------------
-
-                                               Log       Log       Log    mole V
-   Species          Molality    Activity  Molality  Activity     Gamma   cm³/mol
-
-   H+              1.242e-04   1.227e-04    -3.906    -3.911    -0.006      0.00
-   OH-             8.354e-11   8.247e-11   -10.078   -10.084    -0.006     -4.13
-   H2O             5.551e+01   9.994e-01     1.744    -0.000     0.000     18.07
-C(-4)         3.852e-23
-   CH4             3.852e-23   3.852e-23   -22.414   -22.414     0.000     35.46
-C(4)          3.401e-02
-   CO2             3.384e-02   3.384e-02    -1.471    -1.471     0.000     34.43
-   HCO3-           1.242e-04   1.226e-04    -3.906    -3.911    -0.006     24.56
-   (CO2)2          2.102e-05   2.102e-05    -4.677    -4.677     0.000     68.87
-   CO3-2           4.936e-11   4.689e-11   -10.307   -10.329    -0.022     -4.01
-H(0)          6.567e-15
-   H2              3.284e-15   3.284e-15   -14.484   -14.484     0.000     28.61
-O(0)          0.000e+00
-   O2              0.000e+00   0.000e+00   -63.413   -63.413     0.000     30.40
-
-------------------------------Saturation indices-------------------------------
-
-  Phase               SI** log IAP   log K(298 K,   1 atm)
-
-  CH4(g)          -19.61    -22.41   -2.80  CH4
-  CO2(g)           -0.00     -1.47   -1.47  CO2	 Pressure   1.0 atm, phi 0.994
-  H2(g)           -11.38    -14.48   -3.10  H2
-  H2O(g)           -1.50     -0.00    1.50  H2O
-  O2(g)           -60.52    -63.41   -2.89  O2
-
-**For a gas, SI = log10(fugacity). Fugacity = pressure * phi / 1 atm.
-  For ideal gases, phi = 1.
-
-------------------
-End of simulation.
-------------------
-
-------------------------------------
-Reading input data for simulation 2.
-------------------------------------
-
-----------------------------------
-End of Run after 0.009438 Seconds.
-----------------------------------
-
+ERROR: Calculations terminating due to input errors.
+Stopping.
