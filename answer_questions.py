@@ -1,8 +1,10 @@
 import argparse
 import json
+import multiprocessing
 import re
 import sys
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +13,8 @@ AGENT_DIR = BASE_DIR / "agent"
 sys.path.insert(0, str(AGENT_DIR))
 
 from tools.base_tool import BaseTool
-from agent import run_agent
+from agent import run_agent as run_agent_openai
+from agent_anthropic import run_agent as run_agent_anthropic
 
 try:
     from tqdm import tqdm
@@ -19,11 +22,8 @@ except ImportError:
     tqdm = None
 
 
-DATASET_ID = "grenadeComing/Phreeqc_MCQ"
-RESULTS_FILE = "hf_eval_results.jsonl"
-SUMMARY_FILE = "hf_eval_summary.json"
-HF_CACHE_DIR = BASE_DIR / "hf_cache"
-WORKSPACE_ROOT = BASE_DIR / "work_space"
+DATASET_FILE = BASE_DIR / "dataset_S+J.jsonl"
+RESULT_ROOT = BASE_DIR / "result"
 
 
 def _parse_choice(text: str | None) -> str | None:
@@ -50,23 +50,69 @@ Steps:
 """
 
 
-def _process_one_question(row: dict[str, Any]) -> dict[str, Any]:
-    """Process a single question in a worker process. Returns a result dict."""
+def _run_in_process(row: dict[str, Any], result_queue: multiprocessing.Queue, ws_root: str, model: str | None = None, provider: str = "openai") -> None:
+    """Target function that runs inside an isolated process."""
+    try:
+        idx = row["index"]
+        question_text = row["question"]
+
+        workspace_name = f"dataset_q_{idx + 1:05d}"
+        question_workspace = Path(ws_root) / workspace_name
+        question_workspace.mkdir(parents=True, exist_ok=True)
+        BaseTool.allowed_root = str(question_workspace)
+
+        prompt = build_prompt(question_text)
+        if provider == "anthropic":
+            run_agent_anthropic([{"role": "user", "content": prompt}], model=model)
+        else:
+            run_agent_openai([{"role": "user", "content": prompt}], model=model, provider=provider)
+    except Exception as e:
+        result_queue.put({"error": str(e)})
+        return
+
+    result_queue.put({"ok": True})
+
+
+def _process_one_question(row: dict[str, Any], ws_root: str, model: str | None = None, provider: str = "openai") -> dict[str, Any]:
+    """Spawn an isolated process for one question. If it crashes, only this question fails."""
     idx = row["index"]
-    question_text = row["question"]
     truth_raw = row["answer"]
     truth = str(truth_raw).strip().upper()
     if truth not in {"A", "B", "C", "D"}:
         truth = None
 
-    workspace_name = f"dataset_q_{idx + 1:05d}"
-    question_workspace = WORKSPACE_ROOT / workspace_name
-    question_workspace.mkdir(parents=True, exist_ok=True)
-    BaseTool.allowed_root = str(question_workspace)
+    result_queue: multiprocessing.Queue = multiprocessing.Queue()
+    proc = multiprocessing.Process(target=_run_in_process, args=(row, result_queue, ws_root, model, provider))
+    proc.start()
+    timeout = 600 if provider == "anthropic" else 300
+    proc.join(timeout=timeout)
 
-    prompt = build_prompt(question_text)
-    run_agent([{"role": "user", "content": prompt}])
+    if proc.is_alive():
+        proc.kill()
+        proc.join()
+        return {
+            "index": idx + 1,
+            "truth": truth,
+            "prediction": None,
+            "is_correct": None,
+            "error": "Timed out after 300 seconds",
+        }
 
+    if proc.exitcode != 0:
+        error_msg = "Process crashed"
+        if not result_queue.empty():
+            msg = result_queue.get_nowait()
+            if isinstance(msg, dict) and msg.get("error"):
+                error_msg = msg["error"]
+        return {
+            "index": idx + 1,
+            "truth": truth,
+            "prediction": None,
+            "is_correct": None,
+            "error": f"{error_msg} (exit code {proc.exitcode})",
+        }
+
+    question_workspace = Path(ws_root) / f"dataset_q_{idx + 1:05d}"
     final_answer_path = question_workspace / "final_answer.txt"
     final_answer_text = (
         final_answer_path.read_text(encoding="utf-8")
@@ -83,42 +129,31 @@ def _process_one_question(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _load_dataset(dataset_id: str) -> list[dict[str, Any]]:
-    try:
-        from datasets import load_dataset
-    except ImportError as exc:
-        raise RuntimeError(
-            "Missing dependency 'datasets'. Install it with: pip install datasets"
-        ) from exc
+def _load_dataset(dataset_path: Path) -> list[dict[str, Any]]:
+    if not dataset_path.exists():
+        raise RuntimeError(f"Dataset file not found: {dataset_path}")
 
-    HF_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    dataset_obj = load_dataset(dataset_id, cache_dir=str(HF_CACHE_DIR))
-    if isinstance(dataset_obj, dict):
-        if not dataset_obj:
-            raise RuntimeError(f"No splits found in dataset '{dataset_id}'.")
-        first_split = next(iter(dataset_obj.keys()))
-        dataset = dataset_obj[first_split]
-    else:
-        dataset = dataset_obj
     records: list[dict[str, Any]] = []
-
-    for idx, row in enumerate(dataset):
-        question = row.get("question")
-        answer = row.get("answer")
-        if not question or answer is None:
-            continue
-        records.append(
-            {
-                "index": idx,
-                "question": str(question),
-                "answer": str(answer),
-            }
-        )
+    with dataset_path.open("r", encoding="utf-8") as f:
+        for idx, line in enumerate(f):
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            question = row.get("question")
+            answer = row.get("answer")
+            if not question or answer is None:
+                continue
+            records.append(
+                {
+                    "index": idx,
+                    "question": str(question),
+                    "answer": str(answer),
+                }
+            )
 
     if not records:
-        raise RuntimeError(
-            f"No usable rows found in dataset '{dataset_id}'."
-        )
+        raise RuntimeError(f"No usable rows found in {dataset_path}.")
     return records
 
 
@@ -126,70 +161,98 @@ def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run PHREEQC agent over Hugging Face MCQ dataset and evaluate answers."
     )
-    parser.add_argument("--dataset", default=DATASET_ID, help="Hugging Face dataset id")
+    parser.add_argument("--dataset", default=str(DATASET_FILE), help="Path to dataset JSONL file")
+    parser.add_argument("--provider", default="openai", choices=["openai", "google", "anthropic"], help="API provider")
+    parser.add_argument("--model", default=None, help="Model name (default: gpt-5.2)")
+    parser.add_argument("--name", default=None, help="Run name for the result subfolder (default: auto timestamp)")
+    parser.add_argument("--resume", action="store_true", help="Skip questions that already have final_answer.txt")
     parser.add_argument(
         "--workers",
         type=int,
         default=6,
-        help="Number of parallel workers (default: 1). Use >1 for parallel processing.",
+        help="Number of parallel workers (default: 6). Use >1 for parallel processing.",
     )
     return parser.parse_args()
 
 
 def main() -> None:
+    global WORKSPACE_ROOT
+
     args = _parse_args()
+    records = _load_dataset(Path(args.dataset))
+
+    run_name = args.name or f"agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    run_dir = RESULT_ROOT / run_name
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    WORKSPACE_ROOT = run_dir / "work_space"
     WORKSPACE_ROOT.mkdir(parents=True, exist_ok=True)
 
-    records = _load_dataset(args.dataset)
-
-    results_path = BASE_DIR / RESULTS_FILE
-    summary_path = BASE_DIR / SUMMARY_FILE
+    results_path = run_dir / "results.jsonl"
+    summary_path = run_dir / "summary.json"
 
     workers = max(1, args.workers)
     results_list: list[dict[str, Any]] = []
+    ws_root = str(WORKSPACE_ROOT)
 
+    records_to_run = records
+    if args.resume:
+        skipped = 0
+        remaining = []
+        for row in records:
+            idx = row["index"]
+            truth_raw = row["answer"]
+            truth = str(truth_raw).strip().upper()
+            if truth not in {"A", "B", "C", "D"}:
+                truth = None
+            fa_path = WORKSPACE_ROOT / f"dataset_q_{idx + 1:05d}" / "final_answer.txt"
+            if fa_path.exists():
+                pred = _parse_choice(fa_path.read_text(encoding="utf-8"))
+                results_list.append({
+                    "index": idx + 1,
+                    "truth": truth,
+                    "prediction": pred,
+                    "is_correct": (pred == truth) if pred is not None and truth is not None else None,
+                })
+                skipped += 1
+            else:
+                remaining.append(row)
+        records_to_run = remaining
+        print(f"Resuming: {skipped} already done, {len(remaining)} remaining.")
+
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = {executor.submit(_process_one_question, row, ws_root, args.model, args.provider): row for row in records_to_run}
+        iterator = (
+            tqdm(as_completed(futures), total=len(futures), desc="Evaluating", unit="q")
+            if tqdm is not None
+            else as_completed(futures)
+        )
+        for future in iterator:
+            result_row = future.result()
+            results_list.append(result_row)
+
+    results_list.sort(key=lambda r: r["index"])
     with results_path.open("w", encoding="utf-8") as out:
-        with ProcessPoolExecutor(max_workers=workers) as executor:
-            futures = {executor.submit(_process_one_question, row): row for row in records}
-            iterator = (
-                tqdm(as_completed(futures), total=len(futures), desc="Evaluating", unit="q")
-                if tqdm is not None
-                else as_completed(futures)
-            )
-            for future in iterator:
-                try:
-                    result_row = future.result()
-                    results_list.append(result_row)
-                except Exception as e:
-                    row = futures[future]
-                    results_list.append({
-                        "index": row["index"] + 1,
-                        "truth": str(row.get("answer", "")).strip().upper() or None,
-                        "prediction": None,
-                        "is_correct": None,
-                        "error": str(e),
-                    })
-
-        # Write results in index order for stable output
-        results_list.sort(key=lambda r: r["index"])
         for result_row in results_list:
             out.write(json.dumps(result_row, ensure_ascii=False) + "\n")
 
     total = len(results_list)
-    parsed = sum(1 for r in results_list if r.get("prediction") is not None and r.get("truth") is not None)
     correct = sum(1 for r in results_list if r.get("is_correct") is True)
-    accuracy = (correct / parsed) if parsed else 0.0
+    accuracy = (correct / total) if total else 0.0
     summary = {
-        "dataset": args.dataset,
+        "dataset": str(Path(args.dataset).name),
+        "provider": args.provider,
+        "model": args.model or {"openai": "gpt-5.2", "google": "gemini-2.5-pro", "anthropic": "claude-sonnet-4-20250514"}.get(args.provider, "gpt-5.2"),
+        "method": "agent",
+        "run_name": run_name,
         "workers": workers,
         "total_rows": total,
-        "parsed_rows": parsed,
         "correct_rows": correct,
         "accuracy": accuracy,
-        "results_file": str(results_path),
     }
     summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
+    print(f"Results saved to: {run_dir}")
     print(json.dumps(summary, indent=2))
 
 

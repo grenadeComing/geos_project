@@ -35,9 +35,14 @@ class ExecutePHREEQCTool(BaseTool):
                     result.append(str(full))
         return result
 
+    MAX_TOC_ENTRIES = 50
+
     @staticmethod
     def _build_toc(filepath: Path) -> List[Dict[str, Any]]:
-        """Scan result.out for section delimiters and return a table of contents."""
+        """Scan result.out for section delimiters and return a table of contents.
+        If there are too many sections (e.g. transport simulations with thousands
+        of time steps), keep only the first and last entries so the agent can
+        find the setup and final results."""
         toc: List[Dict[str, Any]] = []
         try:
             with open(filepath, "r", encoding="utf-8", errors="replace") as f:
@@ -47,7 +52,6 @@ class ExecutePHREEQCTool(BaseTool):
                     if not stripped:
                         continue
                     is_dashes = bool(re.match(r"^-{3,}$", stripped))
-                    # "----Saturation indices----" — label embedded between dashes
                     m = re.match(r"^-{3,}\s*([A-Za-z].+?)\s*-{3,}\s*$", stripped)
                     if m:
                         toc.append({"line": lineno, "section": m.group(1).strip()})
@@ -63,6 +67,12 @@ class ExecutePHREEQCTool(BaseTool):
                         prev_dashes_line = 0
         except Exception:
             pass
+
+        limit = ExecutePHREEQCTool.MAX_TOC_ENTRIES
+        if len(toc) > limit:
+            half = limit // 2
+            trimmed = toc[:half] + [{"line": -1, "section": f"... {len(toc) - limit} sections omitted ..."}] + toc[-half:]
+            return trimmed
         return toc
 
     def run(self, input_path: str) -> Dict[str, Any]:
@@ -85,17 +95,37 @@ class ExecutePHREEQCTool(BaseTool):
 
             output_files = self._collect_output_files(workdir, files_before)
 
-            toc = self._build_toc(out_file) if out_file.exists() else []
+            MAX_TOC_SIZE = 50 * 1024 * 1024  # 50 MB
+            toc = []
+            toc_skipped = False
+            if out_file.exists():
+                if out_file.stat().st_size <= MAX_TOC_SIZE:
+                    toc = self._build_toc(out_file)
+                else:
+                    toc_skipped = True
 
-            return {
+            file_sizes = {}
+            for f in output_files:
+                full = Path(self.allowed_root) / f
+                if full.exists():
+                    file_sizes[f] = full.stat().st_size
+
+            result = {
                 "ok": p.returncode == 0,
                 "returncode": p.returncode,
                 "stdout": p.stdout[-4000:],
                 "stderr": p.stderr[-4000:],
                 "output_files": output_files,
+                "file_sizes": file_sizes,
                 "result_out_toc": toc,
-                "hint": "Use read_file with start_line/end_line to read specific sections from the TOC above.",
+                "hint": "Use read_file with start_line/end_line to read specific sections.",
             }
+            if toc_skipped:
+                result["warning"] = (
+                    f"result.out is very large ({out_file.stat().st_size / 1e6:.0f} MB). "
+                    "TOC scan skipped. Use read_file to inspect the tail of the file for final results."
+                )
+            return result
 
         except Exception as e:
             return {"ok": False, "error": f"{type(e).__name__}: {e}"}

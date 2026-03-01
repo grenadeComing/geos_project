@@ -9,6 +9,20 @@ from typing import Any, Dict, List, Tuple
 from openai import OpenAI
 
 from tools.base_tool import BaseTool
+
+PROVIDER_ENDPOINTS = {
+    "openai": None,
+    "google": "https://generativelanguage.googleapis.com/v1beta/openai/",
+}
+
+
+def _make_client(provider: str = "openai") -> OpenAI:
+    if provider == "google":
+        return OpenAI(
+            api_key=os.environ["GOOGLE_API_KEY"],
+            base_url=PROVIDER_ENDPOINTS["google"],
+        )
+    return OpenAI()
 from tools.executation_tool import ExecutePHREEQCTool
 from tools.read_file_tool import ReadFileTool
 from tools.write_file_tool import WriteFileTool
@@ -81,13 +95,15 @@ def _log_event(log_path: Path, action: str, **data):
         f.write(json.dumps(event, ensure_ascii=False) + "\n")
 
 
-WORKSPACE_ROOT = Path(__file__).resolve().parents[1] / "work_space"
+RESULT_ROOT = Path(__file__).resolve().parents[1] / "result"
 
 
 def run_agent(
     messages: List[Dict[str, Any]],
     log_path: Path | None = None,
     max_steps: int = 24,
+    model: str | None = None,
+    provider: str = "openai",
 ) -> Tuple[str, List[Dict[str, Any]]]:
     """
     One-tool-at-a-time agent loop:
@@ -97,13 +113,15 @@ def run_agent(
     if not BaseTool.allowed_root:
         raise RuntimeError("BaseTool.allowed_root must be set before calling run_agent.")
     resolved_root = Path(BaseTool.allowed_root).resolve()
-    ws_root = WORKSPACE_ROOT.resolve()
-    if ws_root not in (resolved_root, *resolved_root.parents):
+    result_root = RESULT_ROOT.resolve()
+    if result_root not in (resolved_root, *resolved_root.parents):
         raise RuntimeError(
-            f"allowed_root ({resolved_root}) is not inside work_space ({ws_root})."
+            f"allowed_root ({resolved_root}) is not inside result ({result_root})."
         )
 
-    client = OpenAI()
+    use_model = model or MODEL
+
+    client = _make_client(provider)
     tool_specs = [_tool_spec(tool) for tool in TOOLS.values()]
 
     if not messages or messages[0].get("role") != "system":
@@ -112,7 +130,7 @@ def run_agent(
     if log_path is None:
         log_path = _make_log_path()
 
-    _log_event(log_path, "run_start", model=MODEL, max_steps=max_steps)
+    _log_event(log_path, "run_start", model=use_model, max_steps=max_steps)
 
     # log the latest user message if present
     for m in reversed(messages):
@@ -124,7 +142,7 @@ def run_agent(
         for attempt in range(1, 4):
             try:
                 response = client.chat.completions.create(
-                    model=MODEL,
+                    model=use_model,
                     messages=messages,
                     tools=tool_specs,
                     tool_choice="auto",

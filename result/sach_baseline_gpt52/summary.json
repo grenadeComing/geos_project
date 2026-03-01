@@ -1,0 +1,10 @@
+{
+  "model": "gpt-5.2",
+  "method": "one_shot_no_tools",
+  "dataset": "dataset_sach.jsonl",
+  "run_name": "sach_baseline_gpt52",
+  "total_rows": 100,
+  "correct_rows": 36,
+  "error_rows": 0,
+  "accuracy": 0.36
+}

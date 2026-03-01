@@ -1,0 +1,10 @@
+{
+  "dataset": "dataset_sach.jsonl",
+  "model": "gpt-5.1",
+  "method": "agent",
+  "run_name": "sach_agent_gpt51",
+  "workers": 6,
+  "total_rows": 100,
+  "correct_rows": 59,
+  "accuracy": 0.59
+}

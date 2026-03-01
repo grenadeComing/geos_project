@@ -1,0 +1,10 @@
+{
+  "model": "gpt-5.2",
+  "method": "one_shot_no_tools",
+  "dataset": "dataset_S+J.jsonl",
+  "run_name": "sj_baseline_gpt52",
+  "total_rows": 200,
+  "correct_rows": 110,
+  "error_rows": 0,
+  "accuracy": 0.55
+}

@@ -1,0 +1,9 @@
+{
+  "dataset": "dataset_sach.jsonl",
+  "method": "agent",
+  "run_name": "sach_agent",
+  "workers": 6,
+  "total_rows": 100,
+  "correct_rows": 59,
+  "accuracy": 0.59
+}
