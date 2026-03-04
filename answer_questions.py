@@ -2,6 +2,7 @@ import argparse
 import json
 import multiprocessing
 import re
+import shutil
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -60,6 +61,10 @@ def _run_in_process(row: dict[str, Any], result_queue: multiprocessing.Queue, ws
         question_workspace = Path(ws_root) / workspace_name
         question_workspace.mkdir(parents=True, exist_ok=True)
         BaseTool.allowed_root = str(question_workspace)
+
+        db_ref = BASE_DIR / "database_reference.txt"
+        if db_ref.exists():
+            shutil.copy(db_ref, question_workspace / "database_reference.txt")
 
         prompt = build_prompt(question_text)
         if provider == "anthropic":

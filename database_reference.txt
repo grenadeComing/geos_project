@@ -1,0 +1,323 @@
+========================================================================
+PHREEQC DATABASE REFERENCE (phreeqc.dat)
+Compact listing of all valid identifiers for writing input files.
+========================================================================
+
+------------------------------------------------------------------------
+SOLUTION_MASTER_SPECIES
+Valid element names and their master species.
+------------------------------------------------------------------------
+Element          Master species   GFW formula      Element GFW
+H                H+               H                1.008
+H(0)             H2               H                
+H(1)             H+               H                
+E                e-               0                0
+O                H2O              O                16
+O(0)             O2               O                
+O(-2)            H2O              0                
+Ca               Ca+2             Ca               40.08
+Mg               Mg+2             Mg               24.312
+Na               Na+              Na               22.9898
+K                K+               K                39.102
+Fe               Fe+2             Fe               55.847
+Fe(+2)           Fe+2             Fe               
+Fe(+3)           Fe+3             Fe               
+Mn               Mn+2             Mn               54.938
+Mn(+2)           Mn+2             Mn               
+Mn(+3)           Mn+3             Mn               
+Al               Al+3             Al               26.9815
+Ba               Ba+2             Ba               137.34
+Sr               Sr+2             Sr               87.62
+Si               H4SiO4           SiO2             28.0843
+Cl               Cl-              Cl               35.453
+C                CO3-2            HCO3             12.0111
+C(+4)            CO3-2            HCO3             
+C(-4)            CH4              CH4              
+Alkalinity       CO3-2            Ca0.5(CO3)0.5    50.05
+S                SO4-2            SO4              32.064
+S(6)             SO4-2            SO4              
+S(-2)            HS-              S                
+N                NO3-             N                14.0067
+N(+5)            NO3-             N                
+N(+3)            NO2-             N                
+N(0)             N2               N                
+N(-3)            NH4+             N                14.0067
+B                H3BO3            B                10.81
+P                PO4-3            P                30.9738
+F                F-               F                18.9984
+Li               Li+              Li               6.939
+Br               Br-              Br               79.904
+Zn               Zn+2             Zn               65.37
+Cd               Cd+2             Cd               112.4
+Pb               Pb+2             Pb               207.19
+Cu               Cu+2             Cu               63.546
+Cu(+2)           Cu+2             Cu               
+Cu(+1)           Cu+1             Cu               
+Hdg              Hdg              Hdg              2.016
+Oxg              Oxg              Oxg              32
+Mtg              Mtg              Mtg              16.032
+Sg               H2Sg             H2Sg             32.064
+Ntg              Ntg              Ntg              28.0134
+
+------------------------------------------------------------------------
+PHASES -- MINERALS
+Valid mineral names for EQUILIBRIUM_PHASES and SI calculations.
+------------------------------------------------------------------------
+Mineral                  Dissolution reaction
+Calcite                  CaCO3 = CO3-2 + Ca+2
+Aragonite                CaCO3 = CO3-2 + Ca+2
+Dolomite                 CaMg(CO3)2 = Ca+2 + Mg+2 + 2 CO3-2
+Siderite                 FeCO3 = Fe+2 + CO3-2
+Rhodochrosite            MnCO3 = Mn+2 + CO3-2
+Strontianite             SrCO3 = Sr+2 + CO3-2
+Witherite                BaCO3 = Ba+2 + CO3-2
+Gypsum                   CaSO4:2H2O = Ca+2 + SO4-2 + 2 H2O
+Anhydrite                CaSO4 = Ca+2 + SO4-2
+Celestite                SrSO4 = Sr+2 + SO4-2
+Barite                   BaSO4 = Ba+2 + SO4-2
+Arcanite                 K2SO4 = SO4-2 + 2 K+
+Mirabilite               Na2SO4:10H2O = SO4-2 + 2 Na+ + 10 H2O
+Thenardite               Na2SO4 = 2 Na+ + SO4-2
+Epsomite                 MgSO4:7H2O = Mg+2 + SO4-2 + 7 H2O
+Hexahydrite              MgSO4:6H2O = Mg+2 + SO4-2 + 6 H2O
+Kieserite                MgSO4:H2O = Mg+2 + SO4-2 + H2O
+Hydroxyapatite           Ca5(PO4)3OH + 4 H+ = H2O + 3 HPO4-2 + 5 Ca+2
+Fluorite                 CaF2 = Ca+2 + 2 F-
+SiO2(a)                  SiO2 + 2 H2O = H4SiO4
+Chalcedony               SiO2 + 2 H2O = H4SiO4
+Quartz                   SiO2 + 2 H2O = H4SiO4
+Gibbsite                 Al(OH)3 + 3 H+ = Al+3 + 3 H2O
+Al(OH)3(a)               Al(OH)3 + 3 H+ = Al+3 + 3 H2O
+Kaolinite                Al2Si2O5(OH)4 + 6 H+ = H2O + 2 H4SiO4 + 2 Al+3
+Albite                   NaAlSi3O8 + 8 H2O = Na+ + Al(OH)4- + 3 H4SiO4
+Anorthite                CaAl2Si2O8 + 8 H2O = Ca+2 + 2 Al(OH)4- + 2 H4SiO4
+K-feldspar               KAlSi3O8 + 8 H2O = K+ + Al(OH)4- + 3 H4SiO4
+K-mica                   KAl3Si3O10(OH)2 + 10 H+ = K+ + 3 Al+3 + 3 H4SiO4
+Chlorite(14A)            Mg5Al2Si3O10(OH)8 + 16 H+ = 5 Mg+2 + 2 Al+3 + 3 H4SiO4 + 6 H2O
+Ca-Montmorillonite       Ca0.165Al2.33Si3.67O10(OH)2 + 12 H2O = 0.165 Ca+2 + 2.33 Al(OH)4- + 3.67 H4SiO4 + 2 H+
+Talc                     Mg3Si4O10(OH)2 + 4 H2O + 6 H+ = 3 Mg+2 + 4 H4SiO4
+Illite                   K0.6Mg0.25Al2.3Si3.5O10(OH)2 + 11.2 H2O = 0.6 K+ + 0.25 Mg+2 + 2.3 Al(OH)4- + 3.5 H4SiO4 + 1.2 H+
+Chrysotile               Mg3Si2O5(OH)4 + 6 H+ = H2O + 2 H4SiO4 + 3 Mg+2
+Sepiolite                Mg2Si3O7.5OH:3H2O + 4 H+ + 0.5 H2O = 2 Mg+2 + 3 H4SiO4
+Sepiolite(d)             Mg2Si3O7.5OH:3H2O + 4 H+ + 0.5 H2O = 2 Mg+2 + 3 H4SiO4
+Hematite                 Fe2O3 + 6 H+ = 2 Fe+3 + 3 H2O
+Goethite                 FeOOH + 3 H+ = Fe+3 + 2 H2O
+Fe(OH)3(a)               Fe(OH)3 + 3 H+ = Fe+3 + 3 H2O
+Pyrite                   FeS2 + 2 H+ + 2 e- = Fe+2 + 2 HS-
+FeS(ppt)                 FeS + H+ = Fe+2 + HS-
+Mackinawite              FeS + H+ = Fe+2 + HS-
+Sulfur                   S + 2 H+ + 2 e- = H2S
+Vivianite                Fe3(PO4)2:8H2O = 3 Fe+2 + 2 PO4-3 + 8 H2O
+Pyrolusite               MnO2:H2O + 4 H+ + 2 e- = Mn+2 + 3 H2O
+Hausmannite              Mn3O4 + 8 H+ + 2 e- = 3 Mn+2 + 4 H2O
+Manganite                MnOOH + 3 H+ + e- = Mn+2 + 2 H2O
+Pyrochroite              Mn(OH)2 + 2 H+ = Mn+2 + 2 H2O
+Halite                   NaCl = Cl- + Na+
+Sylvite                  KCl = K+ + Cl-
+Melanterite              FeSO4:7H2O = 7 H2O + Fe+2 + SO4-2
+Alunite                  KAl3(SO4)2(OH)6 + 6 H+ = K+ + 3 Al+3 + 2 SO4-2 + 6 H2O
+Jarosite-K               KFe3(SO4)2(OH)6 + 6 H+ = 3 Fe+3 + 6 H2O + K+ + 2 SO4-2
+Zn(OH)2(e)               Zn(OH)2 + 2 H+ = Zn+2 + 2 H2O
+Smithsonite              ZnCO3 = Zn+2 + CO3-2
+Sphalerite               ZnS + H+ = Zn+2 + HS-
+Willemite                Zn2SiO4 + 4 H+ = 2 Zn+2 + H4SiO4
+Cd(OH)2                  Cd(OH)2 + 2 H+ = Cd+2 + 2 H2O
+Otavite                  CdCO3 = Cd+2 + CO3-2
+CdSiO3                   CdSiO3 + H2O + 2 H+ = Cd+2 + H4SiO4
+CdSO4                    CdSO4 = Cd+2 + SO4-2
+Cerussite                PbCO3 = Pb+2 + CO3-2
+Anglesite                PbSO4 = Pb+2 + SO4-2
+Pb(OH)2                  Pb(OH)2 + 2 H+ = Pb+2 + 2 H2O
+
+------------------------------------------------------------------------
+PHASES -- GASES
+Valid gas names for GAS_PHASE blocks and SI calculations.
+------------------------------------------------------------------------
+Gas              Reaction                                 T_c (K)    P_c (atm)
+CO2(g)           CO2 = CO2                                304.2      72.86
+H2O(g)           H2O = H2O                                647.3      
+O2(g)            O2 = O2                                  154.6      
+H2(g)            H2 = H2                                  33.2       
+N2(g)            N2 = N2                                  126.2      
+H2S(g)           H2S = H+ + HS-                           373.2      
+CH4(g)           CH4 = CH4                                190.6      
+NH3(g)           NH3 = NH3                                405.6      
+Oxg(g)           Oxg = Oxg                                154.6      
+Hdg(g)           Hdg = Hdg                                33.2       
+Ntg(g)           Ntg = Ntg                                           
+Mtg(g)           Mtg = Mtg                                190.6      
+H2Sg(g)          H2Sg = H+ + HSg-                         373.2      
+
+------------------------------------------------------------------------
+EXCHANGE_SPECIES
+Valid exchange reactions (master exchanger: X).
+------------------------------------------------------------------------
+  X- = X-
+  Na+ + X- = NaX
+  K+ + X- = KX
+  Li+ + X- = LiX
+  NH4+ + X- = NH4X
+  Ca+2 + 2 X- = CaX2
+  Mg+2 + 2 X- = MgX2
+  Sr+2 + 2 X- = SrX2
+  Ba+2 + 2 X- = BaX2
+  Mn+2 + 2 X- = MnX2
+  Fe+2 + 2 X- = FeX2
+  Cu+2 + 2 X- = CuX2
+  Zn+2 + 2 X- = ZnX2
+  Cd+2 + 2 X- = CdX2
+  Pb+2 + 2 X- = PbX2
+  Al+3 + 3 X- = AlX3
+  AlOH+2 + 2 X- = AlOHX2
+
+------------------------------------------------------------------------
+SURFACE_SPECIES
+Valid surface complexation reactions.
+Master sites: Hfo_sOH (strong), Hfo_wOH (weak)
+------------------------------------------------------------------------
+Cation sorption:
+  Hfo_sOH = Hfo_sOH
+  Hfo_sOH + H+ = Hfo_sOH2+
+  Hfo_sOH = Hfo_sO- + H+
+  Hfo_wOH = Hfo_wOH
+  Hfo_wOH + H+ = Hfo_wOH2+
+  Hfo_wOH = Hfo_wO- + H+
+  Hfo_sOH + Ca+2 = Hfo_sOHCa+2
+  Hfo_wOH + Ca+2 = Hfo_wOCa+ + H+
+  Hfo_sOH + Sr+2 = Hfo_sOHSr+2
+  Hfo_wOH + Sr+2 = Hfo_wOSr+ + H+
+  Hfo_wOH + Sr+2 + H2O = Hfo_wOSrOH + 2 H+
+  Hfo_sOH + Ba+2 = Hfo_sOHBa+2
+  Hfo_wOH + Ba+2 = Hfo_wOBa+ + H+
+  Hfo_sOH + Cd+2 = Hfo_sOCd+ + H+
+  Hfo_wOH + Cd+2 = Hfo_wOCd+ + H+
+  Hfo_sOH + Zn+2 = Hfo_sOZn+ + H+
+  Hfo_wOH + Zn+2 = Hfo_wOZn+ + H+
+  Hfo_sOH + Cu+2 = Hfo_sOCu+ + H+
+  Hfo_wOH + Cu+2 = Hfo_wOCu+ + H+
+  Hfo_sOH + Pb+2 = Hfo_sOPb+ + H+
+  Hfo_wOH + Pb+2 = Hfo_wOPb+ + H+
+  Hfo_wOH + Mg+2 = Hfo_wOMg+ + H+
+  Hfo_sOH + Mn+2 = Hfo_sOMn+ + H+
+  Hfo_wOH + Mn+2 = Hfo_wOMn+ + H+
+  Hfo_sOH + Fe+2 = Hfo_sOFe+ + H+
+  Hfo_wOH + Fe+2 = Hfo_wOFe+ + H+
+  Hfo_wOH + Fe+2 + H2O = Hfo_wOFeOH + 2 H+
+
+Anion sorption:
+  Hfo_wOH + PO4-3 + 3 H+ = Hfo_wH2PO4 + H2O
+  Hfo_wOH + PO4-3 + 2 H+ = Hfo_wHPO4- + H2O
+  Hfo_wOH + PO4-3 + H+ = Hfo_wPO4-2 + H2O
+  Hfo_wOH + H3BO3 = Hfo_wH2BO3 + H2O
+  Hfo_wOH + SO4-2 + H+ = Hfo_wSO4- + H2O
+  Hfo_wOH + SO4-2 = Hfo_wOHSO4-2
+  Hfo_wOH + F- + H+ = Hfo_wF + H2O
+  Hfo_wOH + F- = Hfo_wOHF-
+  Hfo_wOH + CO3-2 + H+ = Hfo_wCO3- + H2O
+  Hfo_wOH + CO3-2 + 2 H+ = Hfo_wHCO3 + H2O
+  Hfo_wOH + H4SiO4 = Hfo_wH3SiO4 + H2O
+  Hfo_wOH + H4SiO4 = Hfo_wH2SiO4- + H+ + H2O
+  Hfo_wOH + H4SiO4 = Hfo_wHSiO4-2 + 2 H+ + H2O
+
+------------------------------------------------------------------------
+RATES -- BUILT-IN KINETIC RATE LAWS
+These rate expressions are already defined in the database.
+Use them in KINETICS blocks by name; do NOT rewrite the rate law.
+------------------------------------------------------------------------
+
+  Quartz
+    Citation: Rimstidt and Barnes, 1980, GCA 44, 1683
+    Note: k = 10^-13.7 mol/m2/s (25 C), Ea = 90 kJ/mol
+    PARM(1) = Specific area of Quartz, m^2/mol Quartz
+    PARM(2) = salt correction: (1 + 1.5 * c_Na (mM)), < 35
+    Example:
+      KINETICS
+      Quartz
+          -m0  158.8
+          -parms 0.146  1.5
+          -step 3.1536e8 in 10
+          -tol 1e-12
+
+  K-feldspar
+    Citation: Sverdrup and Warfvinge, 1995; Appelo and Postma, 2005
+    Note: Multi-mechanism: H+, hydrolysis, OH-, CO2 pathways
+    PARM(1) = Specific area, m^2/mol K-feldspar
+    PARM(2) = Lab-to-field rate adjustment factor
+    Example:
+      KINETICS 1
+      K-feldspar
+          -m0 2.18
+          -m  2.18
+          -parms 6.41  0.1
+          -time 1.5 year in 40
+
+  Albite
+    Citation: Sverdrup and Warfvinge, 1995; Appelo and Postma, 2005
+    Note: Multi-mechanism: H+, hydrolysis, OH-, CO2 pathways
+    PARM(1) = Specific area, m^2/mol Albite
+    PARM(2) = Lab-to-field rate adjustment factor
+    Example:
+      KINETICS 1
+      Albite
+          -m0 0.46
+          -m  0.46
+          -parms 6.04  0.1
+          -time 1.5 year in 40
+
+  Calcite
+    Citation: Plummer et al., 1978, AJS 278, 179; Appelo et al., AG 13, 257
+    Note: Rate in mmol/cm2/s, uses SI(Calcite) for saturation check
+    PARM(1) = Specific surface area, cm^2/mol calcite
+    PARM(2) = Exponent for M/M0
+    Example:
+      KINETICS 1
+      Calcite
+          -tol   1e-8
+          -m0    3.e-3
+          -m     3.e-3
+          -parms 1.67e5   0.6
+          -time  1 day
+
+  Pyrite
+    Citation: Williamson and Rimstidt, 1994, GCA 58, 5443-5454
+    Note: Dissolution in presence of dissolved O2, rate in mol/m2/s
+    PARM(1) = log10(specific area), log10(m^2/mol pyrite)
+    PARM(2) = Exponent for (M/M0)
+    PARM(3) = Exponent for O2
+    PARM(4) = Exponent for H+
+    Example:
+      KINETICS 1
+      Pyrite
+          -tol    1e-8
+          -m0     5.e-4
+          -m      5.e-4
+          -parms  0.3  0.67  .5  -0.11
+          -time 1 day in 10
+
+  Organic_C
+    Citation: Additive Monod kinetics
+    Note: Electron acceptors: O2, NO3, SO4. Use -formula C
+    No PARM required (rate constants are hardcoded)
+    Example:
+      KINETICS 1
+      Organic_C
+          -formula C
+          -tol    1e-8
+          -m      5e-3
+          -time 30 year in 15
+
+  Pyrolusite
+    Citation: Postma and Appelo, 2000, GCA 64, 1237-1247
+    Note: MnO2 dissolution/precipitation, rate in mol/L/s
+    No PARM required (uses Fe(2) concentration and SR(Pyrolusite))
+    Example:
+      KINETICS 1-12
+      Pyrolusite
+          -tol    1.e-7
+          -m0     0.1
+          -m      0.1
+          -time 0.5 day in 10
+
+========================================================================
+END OF REFERENCE
+========================================================================

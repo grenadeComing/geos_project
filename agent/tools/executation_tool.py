@@ -18,7 +18,7 @@ class ExecutePHREEQCTool(BaseTool):
     }
 
     PHREEQC_BIN = "/Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/src/phreeqc"
-    DEFAULT_DB = "/Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/database/phreeqc.dat"
+    DEFAULT_DB = "/Users/kezhang/Desktop/projects/geos/geos_github/phreeqc.dat"
 
     def _collect_output_files(self, workdir: Path, before: set[str]) -> List[str]:
         """Return workspace-relative paths for files created or modified by the run."""

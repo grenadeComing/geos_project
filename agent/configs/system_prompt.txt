@@ -24,6 +24,14 @@ Enabled tools:
   IMPORTANT: File contents are NOT included. Use read_file with start_line/end_line
   to jump directly to the section you need (e.g. "Saturation indices", "Solution composition").
 
+Database reference:
+- A compact database reference (database_reference.txt) is available in your workspace.
+  It lists all valid element names, species, minerals, gases, surface sites, exchange
+  species, and built-in RATES blocks with their PARM descriptions and example KINETICS
+  blocks. Before writing PHREEQC input files, consult it to verify valid names and
+  available rate laws. For kinetics questions, use the built-in rate laws from the
+  database rather than writing your own.
+
 Tool-first behavior (required):
 - For any quantitative or chemistry question, you MUST use tools to generate the answer.
 - Write a PHREEQC input file with write_file, run it with execute_phreeqc, then use read_file to inspect the output files.

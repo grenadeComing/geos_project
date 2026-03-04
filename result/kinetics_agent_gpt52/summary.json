@@ -1,0 +1,11 @@
+{
+  "dataset": "dataset_kinetics30.jsonl",
+  "provider": "openai",
+  "model": "gpt-5.2",
+  "method": "agent",
+  "run_name": "kinetics_agent_gpt52",
+  "workers": 4,
+  "total_rows": 30,
+  "correct_rows": 14,
+  "accuracy": 0.4666666666666667
+}
