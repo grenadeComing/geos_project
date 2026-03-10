@@ -1,3 +1,4 @@
+# python answer_questions.py --dataset dataset_sach.jsonl --provider openai --model gpt-5.1 --name sach_agent_gpt51_v2 --workers 4
 import argparse
 import json
 import multiprocessing
@@ -187,7 +188,7 @@ def main() -> None:
     records = _load_dataset(Path(args.dataset))
 
     run_name = args.name or f"agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    run_dir = RESULT_ROOT / run_name
+    run_dir = RESULT_ROOT / "agent" / run_name
     run_dir.mkdir(parents=True, exist_ok=True)
 
     WORKSPACE_ROOT = run_dir / "work_space"

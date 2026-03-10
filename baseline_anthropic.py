@@ -9,7 +9,6 @@ import json
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -112,20 +111,45 @@ def _load_dataset(dataset_path: Path) -> list[dict[str, Any]]:
     return records
 
 
+def _resolve_dataset(raw: str | None) -> Path:
+    if raw is None:
+        return DATASET_FILE
+
+    candidate = Path(raw).expanduser()
+    if candidate.suffix == ".jsonl" and candidate.exists():
+        return candidate.resolve()
+
+    in_repo = BASE_DIR / f"{raw}.jsonl"
+    if in_repo.exists():
+        return in_repo.resolve()
+
+    raise FileNotFoundError(
+        f"Dataset not found: {raw}\n"
+        f"Tried path: {candidate.resolve() if candidate.is_absolute() else (BASE_DIR / candidate).resolve()}\n"
+        f"Tried name lookup: {in_repo}"
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Baseline: one-shot Anthropic Claude, no tools.")
-    parser.add_argument("--dataset", default=str(DATASET_FILE), help="Path to dataset JSONL file")
+    parser.add_argument(
+        "--dataset",
+        default=None,
+        help="Dataset name (looked up next to this script) or full path to a JSONL file",
+    )
     parser.add_argument("--model", default=MODEL, help="Model name (default: claude-sonnet-4-20250514)")
-    parser.add_argument("--name", default=None, help="Run name for the result subfolder")
+    parser.add_argument("--name", default=None, help="Run base name; model suffix is always appended")
     parser.add_argument("--workers", type=int, default=4)
     args = parser.parse_args()
 
     model = args.model
     client = anthropic.Anthropic(timeout=120.0)
-    records = _load_dataset(Path(args.dataset))
+    dataset_path = _resolve_dataset(args.dataset)
+    records = _load_dataset(dataset_path)
 
-    run_name = args.name or f"baseline_{model}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    run_dir = RESULT_ROOT / run_name
+    run_base = args.name if args.name else dataset_path.stem
+    run_name = f"{run_base}_{model}"
+    run_dir = RESULT_ROOT / "oneshot" / run_name
     run_dir.mkdir(parents=True, exist_ok=True)
 
     results_path = run_dir / "results.jsonl"
@@ -160,7 +184,7 @@ def main() -> None:
         "provider": "anthropic",
         "model": model,
         "method": "one_shot_no_tools",
-        "dataset": str(Path(args.dataset).name),
+        "dataset": str(dataset_path.name),
         "run_name": run_name,
         "total_rows": total,
         "correct_rows": correct,

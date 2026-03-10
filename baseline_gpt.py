@@ -125,7 +125,7 @@ def main() -> None:
     records = _load_dataset(Path(args.dataset))
 
     run_name = args.name or f"baseline_{model}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    run_dir = RESULT_ROOT / run_name
+    run_dir = RESULT_ROOT / "oneshot" / run_name
     run_dir.mkdir(parents=True, exist_ok=True)
 
     results_path = run_dir / "results.jsonl"
