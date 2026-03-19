@@ -52,7 +52,7 @@ Steps:
 """
 
 
-def _run_in_process(row: dict[str, Any], result_queue: multiprocessing.Queue, ws_root: str, model: str | None = None, provider: str = "openai") -> None:
+def _run_in_process(row: dict[str, Any], result_queue: multiprocessing.Queue, ws_root: str, model: str | None = None, provider: str = "openai", max_steps: int = 24) -> None:
     """Target function that runs inside an isolated process."""
     try:
         idx = row["index"]
@@ -69,7 +69,7 @@ def _run_in_process(row: dict[str, Any], result_queue: multiprocessing.Queue, ws
 
         prompt = build_prompt(question_text)
         if provider == "anthropic":
-            run_agent_anthropic([{"role": "user", "content": prompt}], model=model)
+            run_agent_anthropic([{"role": "user", "content": prompt}], model=model, max_steps=max_steps)
         else:
             run_agent_openai([{"role": "user", "content": prompt}], model=model, provider=provider)
     except Exception as e:
@@ -79,7 +79,7 @@ def _run_in_process(row: dict[str, Any], result_queue: multiprocessing.Queue, ws
     result_queue.put({"ok": True})
 
 
-def _process_one_question(row: dict[str, Any], ws_root: str, model: str | None = None, provider: str = "openai") -> dict[str, Any]:
+def _process_one_question(row: dict[str, Any], ws_root: str, model: str | None = None, provider: str = "openai", max_steps: int = 24) -> dict[str, Any]:
     """Spawn an isolated process for one question. If it crashes, only this question fails."""
     idx = row["index"]
     truth_raw = row["answer"]
@@ -88,7 +88,7 @@ def _process_one_question(row: dict[str, Any], ws_root: str, model: str | None =
         truth = None
 
     result_queue: multiprocessing.Queue = multiprocessing.Queue()
-    proc = multiprocessing.Process(target=_run_in_process, args=(row, result_queue, ws_root, model, provider))
+    proc = multiprocessing.Process(target=_run_in_process, args=(row, result_queue, ws_root, model, provider, max_steps))
     proc.start()
     timeout = 600 if provider == "anthropic" else 300
     proc.join(timeout=timeout)
@@ -172,6 +172,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--model", default=None, help="Model name (default: gpt-5.2)")
     parser.add_argument("--name", default=None, help="Run name for the result subfolder (default: auto timestamp)")
     parser.add_argument("--resume", action="store_true", help="Skip questions that already have final_answer.txt")
+    parser.add_argument("--max-steps", type=int, default=24, help="Max agent steps per question (default: 24)")
     parser.add_argument(
         "--workers",
         type=int,
@@ -227,7 +228,7 @@ def main() -> None:
         print(f"Resuming: {skipped} already done, {len(remaining)} remaining.")
 
     with ThreadPoolExecutor(max_workers=workers) as executor:
-        futures = {executor.submit(_process_one_question, row, ws_root, args.model, args.provider): row for row in records_to_run}
+        futures = {executor.submit(_process_one_question, row, ws_root, args.model, args.provider, args.max_steps): row for row in records_to_run}
         iterator = (
             tqdm(as_completed(futures), total=len(futures), desc="Evaluating", unit="q")
             if tqdm is not None

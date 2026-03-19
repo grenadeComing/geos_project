@@ -1,0 +1,11 @@
+{
+  "dataset": "dataset_S+J.jsonl",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "method": "agent",
+  "run_name": "agent_sonnet46_v1",
+  "workers": 4,
+  "total_rows": 200,
+  "correct_rows": 185,
+  "accuracy": 0.925
+}

@@ -110,6 +110,19 @@ def run_agent(
     anthropic_messages: list[dict] = [{"role": "user", "content": user_content}]
 
     for step in range(1, max_steps + 1):
+        # Fallback: warn the model when it's about to run out of steps
+        if step == max_steps - 1:
+            anthropic_messages.append({
+                "role": "user",
+                "content": (
+                    "WARNING: You have only 2 steps remaining. "
+                    "You MUST write final_answer.txt NOW with your best answer "
+                    "based on the information gathered so far. "
+                    "Use write_file to create final_answer.txt with content: <<< X >>> "
+                    "where X is A, B, C, or D."
+                ),
+            })
+
         for attempt in range(1, 6):
             try:
                 response = client.messages.create(
@@ -154,11 +167,21 @@ def run_agent(
 
         anthropic_messages.append({"role": "assistant", "content": assistant_content})
 
+        # Log token usage
+        usage = getattr(response, "usage", None)
+        usage_dict = {}
+        if usage:
+            usage_dict = {
+                "input_tokens": getattr(usage, "input_tokens", 0),
+                "output_tokens": getattr(usage, "output_tokens", 0),
+            }
+
         _log_event(
             log_path,
             "assistant",
             step=step,
             content=assistant_text,
+            usage=usage_dict,
             tool_calls=(
                 [{"id": tool_use_block.id, "name": tool_use_block.name, "arguments": json.dumps(tool_use_block.input)}]
                 if tool_use_block else []

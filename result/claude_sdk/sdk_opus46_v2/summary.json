@@ -1,0 +1,11 @@
+{
+  "dataset": "dataset_S+J.jsonl",
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "method": "claude_sdk",
+  "run_name": "sdk_opus46_v2",
+  "workers": 2,
+  "total_rows": 200,
+  "correct_rows": 181,
+  "accuracy": 0.905
+}
