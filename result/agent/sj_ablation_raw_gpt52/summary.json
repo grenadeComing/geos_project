@@ -1,0 +1,14 @@
+{
+  "model": "gpt-5.2",
+  "method": "agent_raw_output_no_toc",
+  "ablation": "raw_output",
+  "dataset": "dataset_S+J.jsonl",
+  "run_name": "sj_ablation_raw_gpt52",
+  "total_rows": 200,
+  "correct_rows": 145,
+  "error_rows": 2,
+  "accuracy": 0.725,
+  "max_raw_chars": 100000,
+  "total_input_tokens": 11621239,
+  "total_output_tokens": 78106
+}

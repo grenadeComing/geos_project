@@ -9,3 +9,7 @@ hf_eval_*
 baseline_*results*
 baseline_*summary*
 build_dataset.jsonl
+*.md
+*.pdf
+*.png
+*.svg
