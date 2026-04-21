@@ -1,0 +1,13 @@
+{
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "method": "cot_no_tools",
+  "dataset": "dataset_S+J.jsonl",
+  "run_name": "sj_cot_claude_opus46",
+  "total_rows": 200,
+  "correct_rows": 143,
+  "error_rows": 0,
+  "accuracy": 0.715,
+  "total_input_tokens": 44814,
+  "total_output_tokens": 176961
+}

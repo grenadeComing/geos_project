@@ -1,0 +1,11 @@
+{
+  "dataset": "dataset_S+J.jsonl",
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "method": "agent",
+  "run_name": "sj_agent_claude_opus46_rerun",
+  "workers": 4,
+  "total_rows": 200,
+  "correct_rows": 186,
+  "accuracy": 0.93
+}

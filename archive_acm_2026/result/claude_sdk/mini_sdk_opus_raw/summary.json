@@ -1,0 +1,21 @@
+{
+  "dataset": "mini.jsonl",
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "method": "claude_sdk",
+  "mode": "raw",
+  "run_name": "mini_sdk_opus_raw",
+  "workers": 2,
+  "total_rows": 2,
+  "correct_rows": 1,
+  "accuracy": 0.5,
+  "questions_with_usage": 2,
+  "total_input_tokens": 42,
+  "total_cache_read_input_tokens": 519098,
+  "total_cache_creation_input_tokens": 25146,
+  "total_input_tokens_effective": 544286,
+  "total_output_tokens": 16623,
+  "total_cost_usd": 0.8325,
+  "total_duration_ms": 328819,
+  "total_num_turns": 36
+}

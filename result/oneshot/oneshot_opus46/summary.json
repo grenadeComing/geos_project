@@ -1,0 +1,25 @@
+{
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "method": "one_shot_no_tools",
+  "dataset": "phreeqc_bench_v2.jsonl",
+  "run_name": "oneshot_opus46",
+  "task_filter": "all",
+  "workers": 4,
+  "total_rows": 100,
+  "graded_rows": 100,
+  "correct_rows": 46,
+  "error_rows": 0,
+  "accuracy": 0.46,
+  "by_task_type": {
+    "mcq": {
+      "total": 100,
+      "correct": 46,
+      "graded": 100,
+      "errors": 0,
+      "accuracy": 0.46
+    }
+  },
+  "total_input_tokens": 20343,
+  "total_output_tokens": 48243
+}

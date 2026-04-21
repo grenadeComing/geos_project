@@ -1,0 +1,14 @@
+{
+  "model": "claude-opus-4-6",
+  "method": "agent_toc",
+  "ablation": "toc",
+  "dataset": "dataset_S+J.jsonl",
+  "run_name": "sj_toc_opus46",
+  "total_rows": 200,
+  "correct_rows": 182,
+  "error_rows": 1,
+  "accuracy": 0.91,
+  "max_raw_chars": null,
+  "total_input_tokens": 15115027,
+  "total_output_tokens": 304261
+}

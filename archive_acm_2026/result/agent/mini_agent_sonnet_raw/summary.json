@@ -1,0 +1,14 @@
+{
+  "model": "claude-sonnet-4-6",
+  "method": "agent_raw_output_no_toc",
+  "ablation": "raw_output",
+  "dataset": "mini.jsonl",
+  "run_name": "mini_agent_sonnet_raw",
+  "total_rows": 2,
+  "correct_rows": 0,
+  "error_rows": 0,
+  "accuracy": 0.0,
+  "max_raw_chars": 52428800,
+  "total_input_tokens": 185709,
+  "total_output_tokens": 10978
+}

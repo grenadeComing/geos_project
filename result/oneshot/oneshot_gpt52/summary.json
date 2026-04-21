@@ -1,0 +1,25 @@
+{
+  "provider": "openai",
+  "model": "gpt-5.2",
+  "method": "one_shot_no_tools",
+  "dataset": "phreeqc_bench_v2.jsonl",
+  "run_name": "oneshot_gpt52",
+  "task_filter": "all",
+  "workers": 8,
+  "total_rows": 100,
+  "graded_rows": 100,
+  "correct_rows": 36,
+  "error_rows": 0,
+  "accuracy": 0.36,
+  "by_task_type": {
+    "mcq": {
+      "total": 100,
+      "correct": 36,
+      "graded": 100,
+      "errors": 0,
+      "accuracy": 0.36
+    }
+  },
+  "total_input_tokens": 18368,
+  "total_output_tokens": 600
+}

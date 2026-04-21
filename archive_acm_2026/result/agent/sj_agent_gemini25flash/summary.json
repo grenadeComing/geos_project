@@ -1,0 +1,11 @@
+{
+  "dataset": "dataset_S+J.jsonl",
+  "provider": "google",
+  "model": "gemini-2.5-flash",
+  "method": "agent",
+  "run_name": "sj_agent_gemini25flash",
+  "workers": 6,
+  "total_rows": 200,
+  "correct_rows": 89,
+  "accuracy": 0.445
+}

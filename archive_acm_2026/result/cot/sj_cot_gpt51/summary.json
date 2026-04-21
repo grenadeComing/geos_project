@@ -1,0 +1,13 @@
+{
+  "provider": "openai",
+  "model": "gpt-5.1",
+  "method": "cot_no_tools",
+  "dataset": "dataset_S+J.jsonl",
+  "run_name": "sj_cot_gpt51",
+  "total_rows": 200,
+  "correct_rows": 122,
+  "error_rows": 0,
+  "accuracy": 0.61,
+  "total_input_tokens": 39324,
+  "total_output_tokens": 76479
+}

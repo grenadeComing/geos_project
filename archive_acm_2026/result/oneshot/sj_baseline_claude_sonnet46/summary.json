@@ -1,0 +1,11 @@
+{
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "method": "one_shot_no_tools",
+  "dataset": "dataset_S+J.jsonl",
+  "run_name": "sj_baseline_claude_sonnet46",
+  "total_rows": 200,
+  "correct_rows": 130,
+  "error_rows": 1,
+  "accuracy": 0.65
+}

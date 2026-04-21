@@ -10,6 +10,9 @@ baseline_*results*
 baseline_*summary*
 build_dataset.jsonl
 *.md
+!README.md
+!archive_acm_2026/README.md
+!archive_acm_2026/experiment_results.md
 *.pdf
 *.png
 *.svg

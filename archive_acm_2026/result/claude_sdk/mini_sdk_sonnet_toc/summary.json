@@ -1,0 +1,21 @@
+{
+  "dataset": "mini.jsonl",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "method": "claude_sdk",
+  "mode": "toc",
+  "run_name": "mini_sdk_sonnet_toc",
+  "workers": 2,
+  "total_rows": 2,
+  "correct_rows": 0,
+  "accuracy": 0.0,
+  "questions_with_usage": 2,
+  "total_input_tokens": 28,
+  "total_cache_read_input_tokens": 541086,
+  "total_cache_creation_input_tokens": 51088,
+  "total_input_tokens_effective": 592202,
+  "total_output_tokens": 17296,
+  "total_cost_usd": 1.9753,
+  "total_duration_ms": 319900,
+  "total_num_turns": 23
+}

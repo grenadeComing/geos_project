@@ -1,0 +1,387 @@
+================================================================================
+COMPREHENSIVE EVALUATION ANALYSIS — dataset_S+J.jsonl (200 questions)
+Questions 61–260 from the full Phreeqc_MCQ dataset
+================================================================================
+
+================================================================================
+1. HEADLINE RESULTS (sorted by accuracy)
+================================================================================
+
+  Method                          Correct  Errors  No Ans  Accuracy
+  ------------------------------ -------- ------- ------- ---------
+  Claude Opus 4.6 + Agent             178       0      12    89.0%
+  Claude Opus 4.6 one-shot            147       0       0    73.5%
+  GPT-5.2 + Agent                     147       5       3    73.5%
+  GPT-5.1 + Agent                     138       5       2    69.0%
+  Claude Sonnet 4.6 one-shot          130       1       0    65.0%
+  GPT-5.1 one-shot                    127       0       0    63.5%
+  GPT-5.2 one-shot                    110       0       0    55.0%
+  Gemini 2.5 Flash one-shot           103       0      22    51.5%
+  Gemini 2.5 Flash + Agent             89       8      85    44.5%
+  Gemini 2.5 Pro one-shot              87       0      96    43.5%
+
+================================================================================
+2. PROVIDER COMPARISON — One-shot vs Agent lift
+================================================================================
+
+  Provider/Model                  One-shot     Agent      Lift
+  ------------------------------ --------- --------- ---------
+  OpenAI GPT-5.1                    63.5%    69.0%    +5.5%
+  OpenAI GPT-5.2                    55.0%    73.5%   +18.5%
+  Google Gemini 2.5 Flash           51.5%    44.5%    -7.0%
+  Anthropic Claude Opus 4.6         73.5%    89.0%   +15.5%
+
+================================================================================
+3. THINKING MODEL PATTERN — Larger model vs smaller (one-shot)
+================================================================================
+
+  OpenAI: GPT-5.1 one-shot (127/200 = 63.5%) vs GPT-5.2 one-shot (110/200 = 55.0%)
+    -> Smaller model wins (+8.5 pp)
+  Google: Gemini 2.5 Flash one-shot (103/200 = 51.5%) vs Gemini 2.5 Pro one-shot (87/200 = 43.5%)
+    -> Smaller model wins (+8.0 pp)
+  Anthropic: Claude Sonnet 4.6 one-shot (130/200 = 65.0%) vs Claude Opus 4.6 one-shot (147/200 = 73.5%)
+    -> Larger model WINS (+8.5 pp)
+
+  Pattern: OpenAI and Google 'thinking' models score LOWER on one-shot MCQ.
+  Exception: Anthropic Opus outperforms Sonnet — the only provider where bigger = better.
+
+================================================================================
+4. PER-QUESTION DIFFICULTY ANALYSIS
+================================================================================
+
+  All 10 methods correct:       28  (14.0%)
+  No method correct:             2  (1.0%)
+  Agent-only (no baseline):     16  (8.0%)
+  Baseline-only (no agent):      4  (2.0%)
+
+  Difficulty tiers (by # methods solving):
+    Easy   (8-10 methods):   78  (39.0%)
+    Medium (4-7 methods):    83  (41.5%)
+    Hard   (1-3 methods):    37  (18.5%)
+    Impossible (0):           2  (1.0%)
+
+  Best agent (Claude Opus 4.6 + Agent) performance by tier:
+            Easy: 78/78 (100.0%)
+          Medium: 73/83 (88.0%)
+            Hard: 27/37 (73.0%)
+            None: 0/2 (0.0%)
+
+================================================================================
+5. NEVER SOLVED — 2 questions
+   No method (baseline or agent) answered correctly.
+================================================================================
+
+--- Q18 (original: Q78) ---
+  Dataset answer: C
+  Predictions: GPT-5.1 one-shot=D, GPT-5.2 one-shot=D, Gemini 2.5 Flash one-shot=-, Gemini 2.5 Pro one-shot=B, Claude Sonnet 4.6 one-shot=D, Claude Opus 4.6 one-shot=B, GPT-5.1 + Agent=B, GPT-5.2 + Agent=D, Gemini 2.5 Flash + Agent=-, Claude Opus 4.6 + Agent=B
+  Q: Water at 25°C has pH 4.0 with chloride concentration of 1.012 × 10⁻⁴ mol/kgw (charge balanced). What is the activity (effective concentration) of Cl⁻ ions?
+
+a) 1.012 × 10⁻⁴  
+b) 1.000 × 10⁻⁴  
+c) 9.99...
+
+--- Q128 (original: Q188) ---
+  Dataset answer: A
+  Predictions: GPT-5.1 one-shot=C, GPT-5.2 one-shot=B, Gemini 2.5 Flash one-shot=C, Gemini 2.5 Pro one-shot=-, Claude Sonnet 4.6 one-shot=D, Claude Opus 4.6 one-shot=B, GPT-5.1 + Agent=C, GPT-5.2 + Agent=B, Gemini 2.5 Flash + Agent=-, Claude Opus 4.6 + Agent=B
+  Q: Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and...
+
+================================================================================
+6. SOLVED BY BEST AGENT ONLY — 15 questions
+   Claude Opus 4.6 + Agent correct, ALL 6 baselines wrong.
+================================================================================
+
+  Q104 (original: Q164) — answer: A
+  Q105 (original: Q165) — answer: D
+  Q106 (original: Q166) — answer: A
+  Q109 (original: Q169) — answer: A
+  Q117 (original: Q177) — answer: C
+  Q125 (original: Q185) — answer: B
+  Q132 (original: Q192) — answer: D
+  Q140 (original: Q200) — answer: D
+  Q145 (original: Q205) — answer: A
+  Q169 (original: Q229) — answer: C
+  Q177 (original: Q237) — answer: D
+  Q187 (original: Q247) — answer: D
+  Q191 (original: Q251) — answer: D
+  Q193 (original: Q253) — answer: D
+  Q197 (original: Q257) — answer: D
+
+================================================================================
+7. BASELINE(S) CORRECT, BEST AGENT WRONG — 19 questions
+   At least one baseline got it, but Claude Opus 4.6 + Agent did not.
+================================================================================
+
+  Q1 (original: Q61) — answer: C, agent predicted: B
+    Solved by: GPT-5.1 one-shot
+  Q15 (original: Q75) — answer: C, agent predicted: A
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Gemini 2.5 Flash one-shot, Gemini 2.5 Pro one-shot, Claude Opus 4.6 one-shot
+  Q27 (original: Q87) — answer: C, agent predicted: B
+    Solved by: GPT-5.1 one-shot
+  Q63 (original: Q123) — answer: B, agent predicted: -
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Claude Sonnet 4.6 one-shot, Claude Opus 4.6 one-shot
+  Q66 (original: Q126) — answer: B, agent predicted: D
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Gemini 2.5 Flash one-shot
+  Q85 (original: Q145) — answer: C, agent predicted: B
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Gemini 2.5 Flash one-shot, Claude Opus 4.6 one-shot
+  Q121 (original: Q181) — answer: C, agent predicted: -
+    Solved by: GPT-5.1 one-shot, Gemini 2.5 Flash one-shot
+  Q126 (original: Q186) — answer: A, agent predicted: C
+    Solved by: Gemini 2.5 Flash one-shot, Claude Sonnet 4.6 one-shot, Claude Opus 4.6 one-shot
+  Q129 (original: Q189) — answer: D, agent predicted: -
+    Solved by: GPT-5.2 one-shot
+  Q133 (original: Q193) — answer: B, agent predicted: -
+    Solved by: GPT-5.1 one-shot, Claude Sonnet 4.6 one-shot, Claude Opus 4.6 one-shot
+  Q141 (original: Q201) — answer: C, agent predicted: -
+    Solved by: GPT-5.1 one-shot, Gemini 2.5 Flash one-shot
+  Q143 (original: Q203) — answer: A, agent predicted: -
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Claude Sonnet 4.6 one-shot
+  Q147 (original: Q207) — answer: A, agent predicted: -
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Gemini 2.5 Flash one-shot, Claude Opus 4.6 one-shot
+  Q148 (original: Q208) — answer: D, agent predicted: -
+    Solved by: Claude Opus 4.6 one-shot
+  Q149 (original: Q209) — answer: B, agent predicted: -
+    Solved by: GPT-5.1 one-shot, Claude Opus 4.6 one-shot
+  Q168 (original: Q228) — answer: A, agent predicted: D
+    Solved by: Claude Opus 4.6 one-shot
+  Q182 (original: Q242) — answer: A, agent predicted: -
+    Solved by: GPT-5.1 one-shot, Claude Sonnet 4.6 one-shot, Claude Opus 4.6 one-shot
+  Q185 (original: Q245) — answer: B, agent predicted: -
+    Solved by: GPT-5.1 one-shot, GPT-5.2 one-shot, Gemini 2.5 Flash one-shot, Claude Sonnet 4.6 one-shot
+  Q190 (original: Q250) — answer: D, agent predicted: -
+    Solved by: Claude Sonnet 4.6 one-shot, Claude Opus 4.6 one-shot
+
+================================================================================
+8. AGENT HEAD-TO-HEAD COMPARISON
+================================================================================
+
+  Pair                                                     Only A   Both  Only B
+  ------------------------------------------------------- ------- ------ -------
+  GPT-5.1 + Agent vs GPT-5.2 + Agent                22    116      31
+  GPT-5.1 + Agent vs Gemini 2.5 Flash + Agent       68     70      19
+  GPT-5.1 + Agent vs Claude Opus 4.6 + Agent        11    127      51
+  GPT-5.2 + Agent vs Gemini 2.5 Flash + Agent       69     78      11
+  GPT-5.2 + Agent vs Claude Opus 4.6 + Agent        12    135      43
+  Gemini 2.5 Flash + Agent vs Claude Opus 4.6 + Agent         6     83      95
+
+================================================================================
+9. TOOL-USE LIFT — Per-model breakdown
+   Questions where agent flipped the result vs its own one-shot baseline.
+================================================================================
+
+  OpenAI GPT-5.1:
+    Agent gained (baseline wrong -> agent right): 36
+    Agent lost   (baseline right -> agent wrong): 25
+    Net lift: +11
+    Gained Qs: Q2, Q6, Q7, Q9, Q24, Q37, Q83, Q91, Q118, Q127, Q134, Q138, Q142, Q151, Q152, Q154, Q157, Q158, Q159, Q160, Q162, Q165, Q166, Q168, Q171, Q172, Q177, Q178, Q179, Q181, Q187, Q188, Q189, Q191, Q192, Q197
+    Lost Qs:   Q12, Q15, Q17, Q20, Q23, Q27, Q29, Q35, Q42, Q65, Q68, Q71, Q75, Q79, Q81, Q101, Q110, Q112, Q113, Q121, Q135, Q141, Q147, Q167, Q199
+
+  OpenAI GPT-5.2:
+    Agent gained (baseline wrong -> agent right): 51
+    Agent lost   (baseline right -> agent wrong): 14
+    Net lift: +37
+    Gained Qs: Q2, Q7, Q8, Q9, Q11, Q13, Q16, Q22, Q24, Q31, Q33, Q38, Q52, Q62, Q91, Q94, Q102, Q109, Q116, Q120, Q127, Q132, Q135, Q137, Q138, Q139, Q141, Q142, Q145, Q148, Q149, Q150, Q151, Q152, Q153, Q157, Q158, Q160, Q161, Q165, Q168, Q169, Q171, Q175, Q177, Q178, Q183, Q189, Q191, Q197, Q200
+    Lost Qs:   Q17, Q20, Q26, Q61, Q65, Q75, Q80, Q83, Q107, Q112, Q113, Q129, Q163, Q184
+
+  Google Gemini 2.5 Flash:
+    Agent gained (baseline wrong -> agent right): 34
+    Agent lost   (baseline right -> agent wrong): 48
+    Net lift: -14
+    Gained Qs: Q8, Q14, Q32, Q35, Q38, Q39, Q41, Q62, Q63, Q75, Q88, Q143, Q146, Q150, Q151, Q152, Q154, Q158, Q160, Q165, Q172, Q173, Q174, Q177, Q180, Q188, Q189, Q190, Q192, Q193, Q194, Q196, Q198, Q200
+    Lost Qs:   Q3, Q4, Q6, Q7, Q10, Q11, Q15, Q20, Q22, Q24, Q28, Q34, Q42, Q44, Q47, Q52, Q53, Q59, Q69, Q73, Q74, Q76, Q80, Q82, Q85, Q94, Q96, Q97, Q103, Q108, Q112, Q116, Q119, Q120, Q121, Q122, Q124, Q126, Q135, Q137, Q141, Q144, Q161, Q170, Q178, Q179, Q185, Q195
+
+  Anthropic Claude Opus 4.6:
+    Agent gained (baseline wrong -> agent right): 42
+    Agent lost   (baseline right -> agent wrong): 11
+    Net lift: +31
+    Gained Qs: Q7, Q8, Q9, Q11, Q12, Q30, Q71, Q104, Q105, Q106, Q107, Q109, Q112, Q116, Q117, Q118, Q123, Q125, Q132, Q139, Q140, Q145, Q152, Q153, Q154, Q157, Q158, Q161, Q163, Q169, Q175, Q176, Q177, Q183, Q187, Q189, Q191, Q193, Q195, Q196, Q197, Q199
+    Lost Qs:   Q15, Q63, Q85, Q126, Q133, Q147, Q148, Q149, Q168, Q182, Q190
+
+================================================================================
+10. AGENT-EXCLUSIVE SOLVES — Questions each agent solved that NO baseline could
+================================================================================
+
+  GPT-5.1 + Agent: 5 exclusive solves
+    Qs: Q160, Q177, Q187, Q191, Q197
+
+  GPT-5.2 + Agent: 8 exclusive solves
+    Qs: Q109, Q132, Q145, Q160, Q169, Q177, Q191, Q197
+
+  Gemini 2.5 Flash + Agent: 3 exclusive solves
+    Qs: Q160, Q177, Q193
+
+  Claude Opus 4.6 + Agent: 15 exclusive solves
+    Qs: Q104, Q105, Q106, Q109, Q117, Q125, Q132, Q140, Q145, Q169, Q177, Q187, Q191, Q193, Q197
+
+================================================================================
+11. QUESTIONS SOLVED BY EXACTLY ONE METHOD
+    Fragile answers — only a single method got it right.
+================================================================================
+
+  Total: 8
+
+  GPT-5.1 one-shot (1): Q27
+  GPT-5.2 one-shot (1): Q129
+  Claude Opus 4.6 + Agent (6): Q104, Q105, Q106, Q117, Q125, Q140
+
+================================================================================
+12. OPUS AGENT vs GPT-5.2 AGENT — Question-level comparison
+================================================================================
+
+  Both correct:          135
+  Both wrong:            10
+  Opus only:             43
+  GPT-5.2 only:          12
+
+  Opus-only Qs (43): Q12, Q17, Q20, Q26, Q30, Q36, Q61, Q65, Q71, Q75, Q80, Q83, Q101, Q104, Q105, Q106, Q107, Q110, Q111, Q112, Q113, Q114, Q115, Q117, Q118, Q122, Q123, Q124, Q125, Q140, Q156, Q162, Q163, Q164, Q166, Q170, Q176, Q181, Q184, Q187, Q188, Q193, Q194
+  GPT-5.2-only Qs (12): Q15, Q63, Q66, Q85, Q141, Q143, Q147, Q148, Q149, Q160, Q168, Q185
+
+================================================================================
+13. FAILURE MODES — Claude Opus 4.6 + Agent (22 failures)
+================================================================================
+
+  Wrong answer (picked incorrect choice):  10
+  No answer (timeout / max-steps):         12
+
+  13a. WRONG-ANSWER BREAKDOWN (10 questions)
+  ----------------------------------------------------------------------------
+
+  Q  1 | predicted B, truth C | bad_input
+        Set initial pH 7.0 without 'charge' keyword; PHREEQC accepted 7.000 instead of computing equilibrium pH 6.997.
+
+  Q 15 | predicted A, truth C | bad_input
+        Used 'Cl charge' (can't balance on a lone anion); ran without charge balance, getting −99.80% instead of the correct 0.00%.
+
+  Q 18 | predicted B, truth C | precision_limit
+        PHREEQC displayed Cl⁻ activity as 1.000e−04 (4 sig figs). True value 9.998e−5 rounds to 1.000e−4 at display precision; agent couldn't distinguish B from C.
+
+  Q 27 | predicted B, truth C | bad_input
+        Modeled HCl addition via 'Cl 1.0e−6' with 'pH 7 charge', getting pH=5.996. Correct setup yields 6.007 (option C).
+
+  Q 66 | predicted D, truth B | wrong_interpretation
+        Conceptual question on Pitzer activity coefficients. Agent identified gamma > 1 as unusual but over-analyzed option B's mechanism and chose D.
+
+  Q 85 | predicted B, truth C | wrong_interpretation
+        PHREEQC showed total alkalinity = 1.217e−9 eq/kg. Agent incorrectly equated alkalinity with HCO₃⁻ molality (2.457e−6) and chose B; correct answer C = 1.952e−21 was a different quantity.
+
+  Q126 | predicted C, truth A | bad_input
+        Kinetics rate constant=10 too stiff; after CVODE switch, all 100 steps showed identical Fe(3) because system over-equilibrated in step 1.
+
+  Q128 | predicted B, truth A | bad_input
+        Tried ~6 PHREEQC configs. Final run added explicit 1L gas volume at 200°C, dissolving gas phase entirely → S=0.130 instead of correct 0.030.
+
+  Q160 | predicted A, truth B | wrong_interpretation
+        PHREEQC showed Kaolinite Delta = +4.579e−05 (positive = precipitated). Agent concluded 'zero moles dissolved' (A); truth B = 4.499e−05 asks for magnitude of kaolinite change.
+
+  Q168 | predicted D, truth A | bad_input
+        100 mmol/kgw Ba²⁺ with no counterion → 95% charge imbalance. Corrupted speciation gave CO₃²⁻ = 2.71e−08 instead of ~3.33e−07.
+
+  Failure-mode tally (wrong answers):
+    bad_input             6  — flawed PHREEQC input file produced plausible but wrong output
+    wrong_interpretation  3  — correct PHREEQC output, wrong reasoning about the answer
+    precision_limit       1  — PHREEQC display precision too low to distinguish options
+
+  13b. NO-ANSWER BREAKDOWN (12 questions)
+  ----------------------------------------------------------------------------
+
+  Q 63 | answered (no file)         | steps: 14 | phreeqc_loop
+        Osmotic coefficient for Mono Lake brine. Ran PHREEQC 4+ times; no result matched any choice. Lost in formula derivations, never wrote final_answer.txt.
+
+  Q121 | max_steps_reached          | steps: 24 | max_steps
+        Kinetic albite dissolution + H₂S gas + Goethite SI. Tried 6+ rate formulations; SI(Goethite) always ~0.39, not matching any choice.
+
+  Q129 | max_steps_reached          | steps: 24 | max_steps
+        Same kinetic albite setup as Q121. Tried rate constants 10, 1e−10, log-based, CVODE solver. Convergence errors consumed all steps.
+
+  Q133 | max_steps_reached          | steps: 24 | max_steps
+        Calcite precipitation during 1:1 mixing + heating. Struggled with USE/SAVE/REACTION_TEMPERATURE semantics; phase assemblage kept resetting between steps.
+
+  Q141 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Gas phase: CO₂ 1atm + CH₄ 5atm + H₂S 10atm at total 1atm. Contradictory partial pressures; 9+ interpretations tried.
+
+  Q143 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Same contradictory gas phase (asking for pe). 8+ configurations giving pe values of −4.2, −3.4, −3.7, −4.4 — none matched choices.
+
+  Q147 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Same gas phase (asking for S molality). Results ranged 3.8e−7 to 5.5e−1 depending on interpretation.
+
+  Q148 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Same gas phase (asking for conductance). Got 13042, 6398, 475, 17741 — choices were ~7889–8339. No configuration matched.
+
+  Q149 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Same gas phase (asking for alkalinity). Got 3.2e−2 to 5.6e−2; none matched answer choices.
+
+  Q182 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Pure water + CH₄/CO₂/NH₃ gas at 150°C. Confused moles vs partial pressures in GAS_PHASE syntax; 8+ volume/pressure configs tried.
+
+  Q185 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Same gas setup as Q182 (asking for alkalinity). Small-vol gave 1.5e−3, large-vol gave 2.0e−2. Neither matched.
+
+  Q190 | max_steps_reached          | steps: 24 | phreeqc_loop
+        Same gas setup as Q182 (asking for pe). Small-vol −4.906 vs large-vol −5.566. No exact match.
+
+  Failure-mode tally (no answers):
+    phreeqc_loop   9  — agent repeatedly re-ran PHREEQC with varied configs, exhausted 24 steps
+    max_steps      3  — complex PHREEQC setup; agent couldn't converge within step budget
+
+  13c. ROOT-CAUSE CLUSTERS (no-answer failures)
+  ----------------------------------------------------------------------------
+
+  Cluster 1 — Contradictory gas-phase specification (5 Qs: Q141, Q143, Q147, Q148, Q149)
+    All share the same setup where partial pressures sum to 16 atm but total
+    pressure is stated as 1 atm. The agent tried every interpretation but
+    couldn't converge on the 'intended' one.
+
+  Cluster 2 — GAS_PHASE moles-vs-pressure confusion (3 Qs: Q182, Q185, Q190)
+    PHREEQC GAS_PHASE syntax 'CH4(g) 10' means partial pressure = 10 atm,
+    not 10 moles. The agent couldn't disambiguate, yielding divergent results
+    across configurations.
+
+  Cluster 3 — Complex PHREEQC modeling challenges (4 Qs: Q63, Q121, Q129, Q133)
+    Each involved a distinct modeling difficulty: osmotic coefficients (Pitzer),
+    kinetic rate law interpretation, or sequential temperature/mixing semantics.
+
+  13d. SUMMARY
+  ----------------------------------------------------------------------------
+
+  Total failures:         22 / 200  (11.0%)
+    Wrong answer:         10  (45% of failures)
+    No answer:            12  (55% of failures)
+
+  Wrong-answer root causes:
+    Bad PHREEQC input:      6  (60%) — most common; subtle errors in model setup
+    Wrong interpretation:   3  (30%) — correct output, flawed reasoning
+    Precision limit:        1  (10%) — PHREEQC display can't resolve answer choices
+
+  No-answer root causes:
+    PHREEQC loop:           9  (75%) — repeated attempts, exhausted step budget
+    Complex setup:          3  (25%) — couldn't formulate correct PHREEQC input
+
+  Key insight: 8 of 12 no-answer failures (67%) cluster into just 2 question
+  templates (gas-phase specification ambiguity). Fixing the agent's understanding
+  of GAS_PHASE syntax could recover up to 8 questions (+4 pp accuracy).
+
+================================================================================
+14. KEY FINDINGS FOR PAPER
+================================================================================
+
+  1. Claude Opus 4.6 + Agent achieves the highest score: 178/200 (89.0%).
+     This is +15.5 pp over its own one-shot baseline and +15.5 pp over GPT-5.2 + Agent.
+
+  2. Tool-augmented agents improve performance for 3 of 4 model families:
+     OpenAI GPT-5.1: 127 -> 138 (+11)
+     OpenAI GPT-5.2: 110 -> 147 (+37)
+     Google Gemini 2.5 Flash: 103 -> 89 (-14)
+     Anthropic Claude Opus 4.6: 147 -> 178 (+31)
+
+  3. 'Thinking model' paradox: In one-shot MCQ, larger reasoning models (GPT-5.2, Gemini Pro)
+     score LOWER than their smaller counterparts (GPT-5.1, Gemini Flash).
+     Exception: Anthropic, where Opus (147) >> Sonnet (130).
+
+  4. 2 questions remain unsolved by ANY method — candidates for dataset review.
+
+  5. 15 questions solved ONLY by the best agent (Opus + tools),
+     demonstrating that PHREEQC tool use enables answers impossible from knowledge alone.
+
+================================================================================
+END OF ANALYSIS
+================================================================================
