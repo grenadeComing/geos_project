@@ -1,0 +1,34 @@
+{
+  "provider": "google",
+  "model": "gemini/gemini-2.5-flash",
+  "method": "one_shot_no_tools",
+  "prompt_mode": "direct",
+  "dataset": "neurips_dataset_200_clean.jsonl",
+  "run_name": "neurips200_clean_oneshot_gflash",
+  "task_filter": "all",
+  "workers": 4,
+  "started_at": "2026-05-01T15:17:21-07:00",
+  "ended_at": "2026-05-01T16:13:01-07:00",
+  "elapsed_seconds": 3339.46,
+  "seconds_per_row": 16.697,
+  "total_rows": 200,
+  "graded_rows": 196,
+  "ungraded_rows": 4,
+  "correct_rows": 73,
+  "error_rows": 0,
+  "accuracy": 0.365,
+  "graded_accuracy": 0.37244897959183676,
+  "by_task_type": {
+    "mcq": {
+      "total": 200,
+      "correct": 73,
+      "graded": 196,
+      "ungraded": 4,
+      "errors": 0,
+      "accuracy": 0.365,
+      "graded_accuracy": 0.37244897959183676
+    }
+  },
+  "total_input_tokens": 36835,
+  "total_output_tokens": 3230869
+}

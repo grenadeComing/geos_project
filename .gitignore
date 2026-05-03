@@ -1,5 +1,14 @@
 work_space/
 review/
+# result/oneshot is small (~6 MB) and contains Direct/CoT artifacts that
+# survived the workspace incident; track it. result/custom contains
+# per-question chat logs and PHREEQC outputs (~346 MB) and is excluded.
+result/custom/
+result/custom_aborted/
+neurips_analysis/expert_handoff_neurips/
+neurips_analysis/mcq_fitb_changed_gpt54_sonnet/
+neurips_analysis/mcq_fitb_changed_gpt54_sonnet_agent_only/
+neurips_analysis/*.zip
 __pycache__/
 *.pyc
 .DS_Store

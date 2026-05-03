@@ -1,0 +1,10 @@
+cap_chars,large_outputs,fully_returned_large_outputs,still_truncated_large_outputs,evaluated_answer_values,answer_value_visible,answer_value_hidden_middle,answer_value_not_found,relative_large_chars_vs_raw100k
+100000,37,0,37,31,20,9,2,1.00
+150000,37,0,37,31,21,8,2,1.50
+200000,37,0,37,31,21,8,2,2.00
+250000,37,0,37,31,21,8,2,2.50
+300000,37,0,37,31,22,7,2,3.00
+400000,37,13,24,31,27,2,2,3.89
+500000,37,21,16,31,29,0,2,4.50
+750000,37,28,9,31,29,0,2,5.23
+1000000,37,37,0,31,29,0,2,5.40

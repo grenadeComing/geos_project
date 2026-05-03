@@ -17,8 +17,16 @@ class ExecutePHREEQCTool(BaseTool):
         "input_path": "Path to the PHREEQC input file (e.g., inputs/example2.in.txt).",
     }
 
-    PHREEQC_BIN = "/Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/src/phreeqc"
-    DEFAULT_DB = "/Users/kezhang/Desktop/projects/geos/geos_github/phreeqc.dat"
+    REPO_ROOT = Path(__file__).resolve().parents[2]
+    PHREEQC_BIN = os.environ.get(
+        "PHREEQC_BIN",
+        "/Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/src/phreeqc",
+    )
+    DEFAULT_DB = str(
+        Path(os.environ["PHREEQC_DB"]).expanduser()
+        if os.environ.get("PHREEQC_DB")
+        else REPO_ROOT / "archive_acm_2026" / "all_materials" / "phreeqc.dat"
+    )
 
     def _collect_output_files(self, workdir: Path, before: set[str]) -> List[str]:
         """Return workspace-relative paths for files created or modified by the run."""

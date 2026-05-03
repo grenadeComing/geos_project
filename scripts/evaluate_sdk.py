@@ -64,12 +64,14 @@ PHREEQC_BIN = os.environ.get(
     "PHREEQC_BIN",
     "/Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/src/phreeqc",
 )
-DEFAULT_DB = REPO_ROOT / "phreeqc.dat"
+DEFAULT_DB = (
+    Path(os.environ["PHREEQC_DB"]).expanduser()
+    if os.environ.get("PHREEQC_DB")
+    else REPO_ROOT / "archive_acm_2026" / "all_materials" / "phreeqc.dat"
+)
 if not DEFAULT_DB.exists():
-    DEFAULT_DB = REPO_ROOT / "archive_acm_2026" / "phreeqc.dat"
-DB_REFERENCE = REPO_ROOT / "database_reference.txt"
-if not DB_REFERENCE.exists():
-    DB_REFERENCE = REPO_ROOT / "archive_acm_2026" / "database_reference.txt"
+    raise FileNotFoundError(f"PHREEQC database not found: {DEFAULT_DB}. Set PHREEQC_DB to a valid database path.")
+DB_REFERENCE = REPO_ROOT / "archive_acm_2026" / "all_materials" / "database_reference.txt"
 
 MAX_TOC_ENTRIES = 50
 
@@ -352,6 +354,8 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = _parse_args()
+    started_at = datetime.now().astimezone()
+    started_perf = time.perf_counter()
     dataset_path = Path(args.dataset).expanduser().resolve()
     records = load_dataset(dataset_path)
     if args.task_filter != "all":
@@ -400,6 +404,8 @@ def main() -> None:
     )
 
     agg = summarize_results(results)
+    ended_at = datetime.now().astimezone()
+    elapsed_seconds = time.perf_counter() - started_perf
 
     # Aggregate SDK usage/cost from each question's sdk_log.jsonl result event.
     agg_input = agg_output = agg_cache_read = agg_cache_create = 0
@@ -449,6 +455,10 @@ def main() -> None:
         "workers": args.workers,
         "max_turns": args.max_turns,
         "task_filter": args.task_filter,
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "ended_at": ended_at.isoformat(timespec="seconds"),
+        "elapsed_seconds": round(elapsed_seconds, 3),
+        "seconds_per_row": round(elapsed_seconds / len(records), 3) if records else None,
         **agg,
         "questions_with_usage": qs_with_usage,
         "total_input_tokens": agg_input,

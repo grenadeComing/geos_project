@@ -4,8 +4,8 @@ context-management strategies at the tool-return boundary.
 
 Supported context modes (via --context-mode):
 
-  full     Full content of result.out returned inline (capped at MAX_RAW_CHARS,
-           effectively unlimited for this benchmark).
+  full     Raw result.out returned inline, truncated at MAX_FULL_CHARS.
+           The default 100k-char cap matches the ACM rebuttal raw baseline.
   toc      Section-level table of contents returned; agent uses read_file
            with start_line/end_line to inspect sections. (Our TOC pattern.)
   summary  Question-conditioned LLM summary of result.out returned.
@@ -73,21 +73,24 @@ RESULT_ROOT = REPO_ROOT / "result" / "custom"
 # Agent configs (reuse the original PHREEQC-agent system prompt file).
 AGENT_CONFIGS_DIR = REPO_ROOT / "agent" / "configs"
 
-# PHREEQC executable + database: kept at repo root so runners can share.
-# Falls back to the ACM archive copy if not present at root.
+# PHREEQC executable + database. The benchmark uses the updated phreeqc.dat
+# supplied by the dataset author, not the stock PHREEQC installation database.
 PHREEQC_BIN = os.environ.get(
     "PHREEQC_BIN",
     "/Users/kezhang/Desktop/projects/geos/phreeqc-3.8.6-17100/src/phreeqc",
 )
-DEFAULT_DB = REPO_ROOT / "phreeqc.dat"
+DEFAULT_DB = (
+    Path(os.environ["PHREEQC_DB"]).expanduser()
+    if os.environ.get("PHREEQC_DB")
+    else REPO_ROOT / "archive_acm_2026" / "all_materials" / "phreeqc.dat"
+)
 if not DEFAULT_DB.exists():
-    DEFAULT_DB = REPO_ROOT / "archive_acm_2026" / "phreeqc.dat"
-DB_REFERENCE = REPO_ROOT / "database_reference.txt"
-if not DB_REFERENCE.exists():
-    DB_REFERENCE = REPO_ROOT / "archive_acm_2026" / "database_reference.txt"
+    raise FileNotFoundError(f"PHREEQC database not found: {DEFAULT_DB}. Set PHREEQC_DB to a valid database path.")
+DB_REFERENCE = REPO_ROOT / "archive_acm_2026" / "all_materials" / "database_reference.txt"
 
-# FULL mode ceiling: 50 MB is effectively no truncation for this benchmark.
-MAX_FULL_CHARS = 50 * 1024 * 1024
+# FULL/raw mode ceiling. Default matches the ACM rebuttal raw baseline.
+# Override with --max-full-chars or MAX_FULL_CHARS=... for cap ablations.
+DEFAULT_MAX_FULL_CHARS = int(os.environ.get("MAX_FULL_CHARS", "100000"))
 # TOC: max number of section entries returned.
 MAX_TOC_ENTRIES = 50
 # Summary: how many chars of result.out we hand to the summarizer at most
@@ -121,32 +124,66 @@ _RUNTIME: dict[str, Any] = {
     "rag_k": DEFAULT_RAG_K,
     "rag_chunk_chars": DEFAULT_RAG_CHUNK_CHARS,
     "rag_embed_model": DEFAULT_RAG_EMBED_MODEL,
+    "max_full_chars": DEFAULT_MAX_FULL_CHARS,
     "log_path": "",               # set by _run_agent before dispatching tools
 }
 
 
 # ── System prompt ───────────────────────────────────────────────────────
 #
-# We reuse the PHREEQC-agent system prompts verbatim from disk:
+# We reuse the PHREEQC-agent system prompts from disk, but rewrite the
+# execute_phreeqc contract to match the context mode under evaluation:
 #   agent/configs/system_prompt_MCQ.txt   (multiple-choice)
-#   agent/configs/system_prompt_Fill.txt  (numeric / short-text fill-in)
+#   agent/configs/system_prompt_Fill.txt  (numeric fill-in)
 #
-# The context_mode does NOT affect the system prompt — all four modes
-# (toc / full / summary / rag) share the same prompt for a given
-# task_type. The modes differ only in what execute_phreeqc returns at
-# runtime, not in what the agent is told about it.
+# This avoids giving full / summary / rag runs stale TOC-specific instructions.
 
 SYSTEM_PROMPT_MCQ = (AGENT_CONFIGS_DIR / "system_prompt_MCQ.txt").read_text(encoding="utf-8").strip()
 SYSTEM_PROMPT_FILL = (AGENT_CONFIGS_DIR / "system_prompt_Fill.txt").read_text(encoding="utf-8").strip()
 
+_EXECUTE_TOOL_LINE = (
+    "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
+    "metadata and a TOC for result.out. File contents are NOT included — "
+    "use read_file to inspect results."
+)
+
+_EXECUTE_TOOL_CONTRACTS = {
+    "full": (
+        "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
+        "metadata and raw result.out content inline, truncated if very large. "
+        "Use read_file only if you need to inspect an additional output file "
+        "or re-read a specific portion."
+    ),
+    "toc": _EXECUTE_TOOL_LINE,
+    "summary": (
+        "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
+        "metadata and a question-conditioned summary of result.out. File "
+        "contents are not included by default; use read_file to inspect "
+        "specific output sections if the summary is insufficient."
+    ),
+    "rag": (
+        "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
+        "metadata, a TOC for result.out, and top-k retrieved excerpts selected "
+        "for the current question. Use read_file with start_line/end_line for "
+        "additional sections if the retrieved excerpts are insufficient."
+    ),
+}
+
 
 def _build_system_prompt(context_mode: str, task_type: str) -> str:
-    """Return the system prompt for a given task_type.
-
-    context_mode is accepted for API compatibility but has no effect on
-    the prompt — all modes share the same prompt per task_type.
-    """
-    return SYSTEM_PROMPT_MCQ if task_type == "mcq" else SYSTEM_PROMPT_FILL
+    """Return the system prompt with a mode-accurate execute_phreeqc contract."""
+    base = SYSTEM_PROMPT_MCQ if task_type == "mcq" else SYSTEM_PROMPT_FILL
+    contract = _EXECUTE_TOOL_CONTRACTS[context_mode]
+    if _EXECUTE_TOOL_LINE in base:
+        base = base.replace(_EXECUTE_TOOL_LINE, contract)
+    else:
+        base = base + "\n" + contract
+    return (
+        base
+        + "\n\n# Context mode for this run\n"
+        + f"The execute_phreeqc tool is configured in `{context_mode}` mode. "
+        + "Use the payload it returns according to the tool contract above."
+    )
 
 
 # ── Path validation & simple file tools ─────────────────────────────────
@@ -266,6 +303,15 @@ def _log_aux_usage(source: str, model: str,
         pass
 
 
+def _tail_text(value: str | bytes | None, limit: int = 4000) -> str:
+    """Return a JSON-serializable text tail from subprocess output."""
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        value = value.decode("utf-8", errors="replace")
+    return value[-limit:]
+
+
 # ── Summary handler ─────────────────────────────────────────────────────
 
 _SUMMARY_SYSTEM = (
@@ -368,8 +414,12 @@ def _embed(texts: list[str], model: str) -> list[list[float]]:
     """
     from openai import OpenAI
     client = OpenAI()
-    # Clip each text to ~8k tokens worth; we approximate via char cap.
-    safe = [t if len(t) < 24_000 else t[:24_000] for t in texts]
+    # text-embedding-3-small's per-input limit is 8192 tokens. On dense
+    # numeric PHREEQC output, 1 token ≈ 1.3 chars, so 10_000 chars stays
+    # comfortably under 8192 tokens. (Earlier 24_000 cap was too loose
+    # and triggered "maximum input length is 8192 tokens" 400s.)
+    _CHAR_CAP = 10_000
+    safe = [t if len(t) < _CHAR_CAP else t[:_CHAR_CAP] for t in texts]
     resp = client.embeddings.create(model=model, input=safe)
     usage = getattr(resp, "usage", None)
     if usage:
@@ -413,6 +463,8 @@ def tool_execute_phreeqc(workspace: str, input_path: str) -> dict:
 
         workdir = Path(full_in).parent
         out_file = workdir / "result.out"
+        if out_file.exists():
+            out_file.unlink()
         files_before = set(os.listdir(workdir))
 
         cmd = [PHREEQC_BIN, str(full_in), str(out_file), str(DEFAULT_DB)]
@@ -428,8 +480,8 @@ def tool_execute_phreeqc(workspace: str, input_path: str) -> dict:
                 "error": (f"PHREEQC exceeded {PHREEQC_TIMEOUT}s wall-clock and was killed. "
                           "Simplify the input (fewer time steps, looser tolerances, smaller "
                           "transport grid) and try again."),
-                "stdout": (te.stdout or "")[-4000:] if te.stdout else "",
-                "stderr": (te.stderr or "")[-4000:] if te.stderr else "",
+                "stdout": _tail_text(te.stdout),
+                "stderr": _tail_text(te.stderr),
                 "timeout_s": PHREEQC_TIMEOUT,
             }
 
@@ -451,17 +503,18 @@ def tool_execute_phreeqc(workspace: str, input_path: str) -> dict:
         if not out_file.exists():
             return result
 
+        max_full_chars = int(_RUNTIME.get("max_full_chars", DEFAULT_MAX_FULL_CHARS))
         content = out_file.read_text(encoding="utf-8", errors="replace")
-        toc = _build_toc(out_file) if out_file.stat().st_size <= MAX_FULL_CHARS else []
+        toc = _build_toc(out_file) if out_file.stat().st_size <= max_full_chars else []
 
         if mode == "full":
-            if len(content) > MAX_FULL_CHARS:
-                half = MAX_FULL_CHARS // 2
+            if len(content) > max_full_chars:
+                half = max_full_chars // 2
                 result["result_out_content"] = (
                     content[:half]
-                    + f"\n\n... [TRUNCATED: {len(content)} total chars] ...\n\n"
+                    + f"\n\n... [TRUNCATED: {len(content)} total chars, cap={max_full_chars}] ...\n\n"
                     + content[-half:])
-                result["warning"] = f"result.out truncated from {len(content)} to ~{MAX_FULL_CHARS} chars."
+                result["warning"] = f"result.out truncated from {len(content)} to ~{max_full_chars} chars."
             else:
                 result["result_out_content"] = content
 
@@ -530,7 +583,8 @@ TOOL_SPECS = [
     {"type": "function", "function": {
         "name": "execute_phreeqc",
         "description": ("Run PHREEQC on an input file. Returns execution status, "
-                        "stdout/stderr, output file paths, and result content."),
+                        "stdout/stderr, output file paths, and the result payload "
+                        "configured for this run's context mode."),
         "parameters": {"type": "object",
                        "properties": {"input_path": {"type": "string"}},
                        "required": ["input_path"]}}},
@@ -549,6 +603,11 @@ def _log_event(log_path: Path, action: str, **data: Any) -> None:
 
 def _is_anthropic_model(model: str) -> bool:
     return "claude" in model.lower() or "anthropic" in model.lower()
+
+
+def _is_gemini_model(model: str) -> bool:
+    m = model.lower()
+    return "gemini" in m or m.startswith("google/")
 
 
 def _run_agent(prompt: str, workspace: str, model: str, max_steps: int,
@@ -572,6 +631,7 @@ def _run_agent(prompt: str, workspace: str, model: str, max_steps: int,
     ]
 
     anthropic = _is_anthropic_model(model)
+    gemini = _is_gemini_model(model)
 
     for step in range(1, max_steps + 1):
         if anthropic and step == max_steps - 1:
@@ -590,8 +650,14 @@ def _run_agent(prompt: str, workspace: str, model: str, max_steps: int,
                     "messages": messages,
                     "tools": TOOL_SPECS,
                     "tool_choice": "auto",
-                    "parallel_tool_calls": False,
                 }
+                if gemini:
+                    # Gemini rejects parallel_tool_calls=False when multiple
+                    # tools are available. If it returns multiple tool calls,
+                    # we preserve every id and return one result per id below.
+                    kwargs["drop_params"] = True
+                else:
+                    kwargs["parallel_tool_calls"] = False
                 if anthropic:
                     kwargs["temperature"] = 0
                     kwargs["max_tokens"] = 4096
@@ -621,50 +687,61 @@ def _run_agent(prompt: str, workspace: str, model: str, max_steps: int,
                 "output_tokens": response.usage.completion_tokens or 0,
             }
 
-        first_tc = tool_calls[0] if tool_calls else None
+        formatted_tool_calls = []
+        for i, tc in enumerate(tool_calls):
+            call_id = tc.id or f"call_{step}_{i}"
+            formatted_tool_calls.append({
+                "id": call_id,
+                "type": "function",
+                "function": {"name": tc.function.name,
+                             "arguments": tc.function.arguments or "{}"},
+            })
         _log_event(
             log_path, "assistant", step=step,
             content=assistant_msg.content or "",
             usage=usage_dict,
-            tool_calls=[{"id": first_tc.id, "name": first_tc.function.name,
-                         "arguments": first_tc.function.arguments}] if first_tc else [],
+            tool_calls=[{
+                "id": tc["id"],
+                "name": tc["function"]["name"],
+                "arguments": tc["function"]["arguments"],
+            } for tc in formatted_tool_calls],
         )
 
         payload: dict[str, Any] = {"role": "assistant", "content": assistant_msg.content or ""}
-        if first_tc:
-            payload["tool_calls"] = [{
-                "id": first_tc.id,
-                "type": "function",
-                "function": {"name": first_tc.function.name,
-                             "arguments": first_tc.function.arguments or "{}"},
-            }]
+        if formatted_tool_calls:
+            payload["tool_calls"] = formatted_tool_calls
         messages.append(payload)
 
-        if first_tc is None:
+        if not formatted_tool_calls:
             _log_event(log_path, "run_end", status="answered", step=step)
             return
 
-        tool_name = first_tc.function.name
-        try:
-            tool_args = json.loads(first_tc.function.arguments or "{}")
-        except json.JSONDecodeError:
-            tool_args = {}
-
-        dispatch = TOOL_DISPATCH.get(tool_name)
-        if dispatch is None:
-            tool_result: dict[str, Any] = {"ok": False, "error": f"Unknown tool: {tool_name}"}
-        else:
+        # Gemini 3 always returns a unique function-call id. Because Gemini
+        # rejects parallel_tool_calls=False, preserve every returned id and
+        # provide a matching tool result for each call in the same order.
+        for tc in formatted_tool_calls:
+            tool_name = tc["function"]["name"]
             try:
-                tool_result = dispatch(workspace, tool_args)
-            except Exception as e:  # noqa: BLE001
-                tool_result = {"ok": False, "error": f"{type(e).__name__}: {e}"}
+                tool_args = json.loads(tc["function"]["arguments"] or "{}")
+            except json.JSONDecodeError:
+                tool_args = {}
 
-        messages.append({
-            "role": "tool",
-            "tool_call_id": first_tc.id,
-            "content": json.dumps(tool_result, ensure_ascii=False),
-        })
-        _log_event(log_path, "tool", step=step, tool=tool_name, args=tool_args, result=tool_result)
+            dispatch = TOOL_DISPATCH.get(tool_name)
+            if dispatch is None:
+                tool_result: dict[str, Any] = {"ok": False, "error": f"Unknown tool: {tool_name}"}
+            else:
+                try:
+                    tool_result = dispatch(workspace, tool_args)
+                except Exception as e:  # noqa: BLE001
+                    tool_result = {"ok": False, "error": f"{type(e).__name__}: {e}"}
+
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tc["id"],
+                "content": json.dumps(tool_result, ensure_ascii=False),
+            })
+            _log_event(log_path, "tool", step=step, tool=tool_name,
+                       tool_call_id=tc["id"], args=tool_args, result=tool_result)
 
     _log_event(log_path, "run_end", status="max_steps_reached", step=max_steps)
 
@@ -714,14 +791,21 @@ def _process_one(row: dict[str, Any], ws_root: str, model: str,
         result["error"] = f"Timeout {timeout_s}s"
         return result
 
+    child_msg = None
+    if not q.empty():
+        child_msg = q.get_nowait()
+
     if proc.exitcode != 0:
         err = "Process crashed"
-        if not q.empty():
-            m = q.get_nowait()
-            if isinstance(m, dict) and m.get("error"):
-                err = m["error"]
+        if isinstance(child_msg, dict) and child_msg.get("error"):
+            err = child_msg["error"]
         result = grade_row(row, pred=None)
         result["error"] = err
+        return result
+
+    if isinstance(child_msg, dict) and child_msg.get("error"):
+        result = grade_row(row, pred=None)
+        result["error"] = child_msg["error"]
         return result
 
     ws = Path(ws_root) / f"dataset_q_{idx + 1:05d}"
@@ -747,6 +831,12 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--resume", action="store_true",
                    help="Skip questions with an existing final_answer.txt.")
     p.add_argument("--task-filter", choices=("all", "mcq", "fill"), default="all")
+    p.add_argument("--start-index", type=int, default=None,
+                   help="Optional 1-based public dataset id to start from, inclusive.")
+    p.add_argument("--end-index", type=int, default=None,
+                   help="Optional 1-based public dataset id to end at, inclusive.")
+    p.add_argument("--max-full-chars", type=int, default=DEFAULT_MAX_FULL_CHARS,
+                   help="Raw/full mode character cap for result.out observations (default: %(default)s).")
     # Summary-mode knobs
     p.add_argument("--summary-model", default=None,
                    help=f"litellm model used for summary mode (default: "
@@ -764,12 +854,23 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = _parse_args()
+    started_at = datetime.now().astimezone()
+    started_perf = time.perf_counter()
     dataset_path = Path(args.dataset).expanduser().resolve()
     records = load_dataset(dataset_path)
     if args.task_filter != "all":
         records = [r for r in records if r["task_type"] == args.task_filter]
         if not records:
             raise RuntimeError(f"No rows with task_type={args.task_filter} in {dataset_path}")
+    if args.start_index is not None:
+        records = [r for r in records if int(r["id"]) >= args.start_index]
+    if args.end_index is not None:
+        records = [r for r in records if int(r["id"]) <= args.end_index]
+    if not records:
+        raise RuntimeError(
+            f"No rows left after filters: task_filter={args.task_filter}, "
+            f"start_index={args.start_index}, end_index={args.end_index}"
+        )
 
     run_dir = RESULT_ROOT / args.name
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -785,10 +886,12 @@ def main() -> None:
         "rag_k": args.rag_k,
         "rag_chunk_chars": args.rag_chunk_chars,
         "rag_embed_model": args.rag_embed_model,
+        "max_full_chars": args.max_full_chars,
     }
 
     results: list[dict[str, Any]] = []
     records_to_run = records
+    selected_ids = {int(r["id"]) for r in records}
 
     if args.resume:
         remaining: list[dict[str, Any]] = []
@@ -815,13 +918,31 @@ def main() -> None:
         for fut in it:
             results.append(fut.result())
 
+    # If a range filter is used with --resume, preserve existing result rows
+    # outside the selected range so patch-runs can safely replace only a suffix.
+    result_path = run_dir / "results.jsonl"
+    if args.resume and (args.start_index is not None or args.end_index is not None) and result_path.exists():
+        preserved: list[dict[str, Any]] = []
+        with result_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                old = json.loads(line)
+                if int(old.get("index", -1)) not in selected_ids:
+                    preserved.append(old)
+        if preserved:
+            print(f"Preserving {len(preserved)} existing result rows outside selected range")
+            results.extend(preserved)
+
     results.sort(key=lambda r: r["index"])
-    (run_dir / "results.jsonl").write_text(
+    result_path.write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in results) + "\n",
         encoding="utf-8",
     )
 
     agg = summarize_results(results)
+    ended_at = datetime.now().astimezone()
+    elapsed_seconds = time.perf_counter() - started_perf
 
     # Token aggregation from per-question chat logs.
     # Includes BOTH the main agent's `assistant` events AND any auxiliary LLM /
@@ -874,6 +995,12 @@ def main() -> None:
         "max_steps": args.max_steps,
         "workers": args.workers,
         "task_filter": args.task_filter,
+        "start_index": args.start_index,
+        "end_index": args.end_index,
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "ended_at": ended_at.isoformat(timespec="seconds"),
+        "elapsed_seconds": round(elapsed_seconds, 3),
+        "seconds_per_row": round(elapsed_seconds / len(records), 3) if records else None,
         **agg,
         # ── token accounting ──────────────────────────────────────────────
         # total_* includes BOTH agent and aux (summary / rag_embed) calls.
@@ -895,7 +1022,7 @@ def main() -> None:
         summary["rag_k"] = args.rag_k
         summary["rag_chunk_chars"] = args.rag_chunk_chars
     elif args.context_mode == "full":
-        summary["max_full_chars"] = MAX_FULL_CHARS
+        summary["max_full_chars"] = args.max_full_chars
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
     print(f"\nResults: {run_dir}")

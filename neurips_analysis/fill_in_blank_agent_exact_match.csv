@@ -1,0 +1,5 @@
+run,total,correct,accuracy,numericExact,numericExactPct,numericExactOfCorrect,correctNonExact
+raw100k_gpt54,182,105,57.7%,90,49.5%,85.7%,15
+raw500k_gpt54,182,107,58.8%,102,56.0%,95.3%,5
+toc_gpt54,182,101,55.5%,41,22.5%,40.6%,60
+toc_sonnet46,182,116,63.7%,78,42.9%,67.2%,38

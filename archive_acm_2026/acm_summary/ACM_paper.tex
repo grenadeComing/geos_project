@@ -1,0 +1,612 @@
+\documentclass[sigconf,anonymous]{acmart}
+
+% --------------------
+% Packages
+% --------------------
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings, breakable}
+\citestyle{acmauthoryear}
+% --------------------
+% Listings (for code snippets)
+% --------------------
+\lstset{
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  breaklines=true,
+  frame=single,
+  xleftmargin=2pt,
+  xrightmargin=2pt,
+  aboveskip=6pt,
+  belowskip=6pt
+}
+
+% --------------------
+% ACM Metadata
+% --------------------
+\setcopyright{acmcopyright}
+\copyrightyear{2026}
+\acmYear{2026}
+\acmDOI{} % leave empty for submission
+
+\acmConference[CAIS '26]{ACM Conference on AI and Agentic Systems}{May 26--29, 2026}{San Jose, CA}
+\acmBooktitle{CAIS '26: ACM Conference on AI and Agentic Systems, May 26--29, 2026, San Jose, CA}
+
+\begin{document}
+
+\title{PHREEQC-Agent: Tool-Augmented LLM for Geochemical Computation}
+
+% Anonymized for Double-Blind Review
+\author{Anonymous Author(s)}
+\affiliation{
+  \institution{Anonymous Institution}
+  \city{Anonymous City}
+  \country{Anonymous Country}
+}
+
+% --------------------
+% Abstract
+% --------------------
+\begin{abstract}
+We present \textbf{PHREEQC-Agent}, a tool-augmented LLM system that writes, executes, and interprets PHREEQC simulations to answer multiple-choice geochemistry questions. Many such questions require precise numerical computation---solving for equilibrium concentrations, saturation indices, or pH under specific thermodynamic conditions---where conceptual reasoning alone cannot reliably distinguish among answer choices. The agent addresses this through a metadata-only execution strategy: the simulation tool returns a table of contents rather than raw output, and the agent reads selectively by line range, decoupling simulation scale from context consumption. We evaluate ten model--method combinations spanning three model families on 200 expert-curated computational questions from \texttt{Phreeqc\_MCQ}. Our best configuration, Claude Opus 4.6 + Agent, achieves 89.0\% accuracy, a 15.5-point gain over its one-shot baseline. However, tool augmentation is not universally beneficial: Gemini 2.5 Flash + Agent scores 7 points below its one-shot baseline, suggesting a capability threshold below which agent scaffolding introduces more errors than it resolves.
+\end{abstract}
+
+\keywords{Compound AI Systems, LLM Agents, Geochemistry, PHREEQC, Benchmarking, Tool Use, Reliability}
+
+\maketitle
+
+% --------------------
+\section{Introduction}
+% --------------------
+LLMs can generate fluent domain text, but scientific problem solving often requires deterministic computation. In aqueous geochemistry, many questions ask for quantities that must be computed (e.g., pH after mixing, saturation indices, speciation) rather than recalled. Without computation, an LLM must guess from training data, which is brittle and sometimes impossible when the answer depends on precise numerical conditions.
+
+PHREEQC is a standard engine for equilibrium, kinetics, and transport modeling. We study what happens when an LLM is placed \emph{in the loop} with PHREEQC at scale: the model must write valid PHREEQC inputs, execute the engine, navigate potentially large outputs, and map extracted results to a multiple-choice answer.
+
+A central challenge is not only reasoning but \textbf{systems reliability}. Naively returning PHREEQC output text can overwhelm the model context window, and a single pathological simulation can destabilize parallel evaluation. PHREEQC-Agent is designed around two principles:
+(i) \textbf{execution returns metadata only}: instead of raw text, the agent receives a Table of Contents (TOC)—a mapped index of section headers and their corresponding line numbers—which serves as a look-up table for subsequent retrieval.
+(ii) \textbf{output access is explicit and surgical} (line-range reads via a file tool).
+
+\paragraph{Contributions.}
+We contribute:
+\begin{enumerate}[leftmargin=*, itemsep=2pt]
+  \item A tool-augmented agent architecture for PHREEQC-based computation that separates execution from reading via metadata-only returns and TOC-guided inspection.
+  \item A curated evaluation set of \texttt{Phreeqc\_MCQ}: 200 domain-expert selected high-quality computational questions evaluated on ten-configuration benchmark spanning three model families.
+  \item An architecture that eliminates three previously dominant failure modes (resource exhaustion, context overflow, worker cascade) through metadata-only execution returns and per-question process isolation.
+  \item A per-backbone retention analysis revealing a capability threshold for effective tool use: above it, agents preserve {>}87\% of one-shot correct answers while gaining 42--51 new ones; below it, agents destroy 46.6\% of previously correct answers, with 85\% of losses attributable to step-limit exhaustion rather than wrong reasoning.
+\end{enumerate}
+% --------------------
+\section{Related Work}
+
+\noindent\textbf{Tool-Augmented LLMs for Scientific Reasoning:} 
+Foundational frameworks such as ReAct \cite{yao2022react} and Toolformer \cite{schick2023toolformer} established the paradigm of interleaving reasoning with tool calls. In scientific domains, systems like ChemCrow \cite{m2024augmenting} and GalaxyWalker \cite{boiko2023autonomous} demonstrate that augmenting LLMs with specialized solvers yields performance far exceeding purely parametric models. However, a common design challenge is the \emph{decoupling of execution from context injection}. When raw, high-volume tool outputs are fed directly into the model’s context, reasoning often destabilizes. While existing literature focuses primarily on the \emph{gains} from tool-use, our work identifies a \textbf{performance retention threshold}: the point at which the cognitive overhead of managing a tool environment begins to degrade the model's baseline domain intuition.
+
+\noindent\textbf{Reliability and Benchmarking in Geochemistry:} 
+As agentic systems move into the physical sciences, benchmarking must shift from simple accuracy to a deeper analysis of failure patterns \cite{qian2024chatdev, jimenez2023swe}. In geochemistry, LLM applications have largely been restricted to property prediction and literature synthesis \cite{jablonka2024leveraging}, lacking integration with standard simulation engines. PHREEQC remains the gold standard for aqueous modeling \cite{appelo2004geochemistry}, yet no prior work has established a closed-loop LLM-PHREEQC interface at benchmark scale. We fill this gap by introducing \texttt{Phreeqc\_MCQ} and a metadata-driven architecture. Unlike general-purpose agents, our system is specifically designed to isolate the "agent-hurt" phenomenon, providing a rigorous framework for evaluating when—and for which models—computational augmentation is actually beneficial.
+
+% --------------------
+\section{System Architecture}
+\label{sec:system}
+
+\subsection{Overview}
+
+% --- WORKFLOW FIGURE ---
+\begin{figure}[t]
+  \centering
+  % Increased width to 1.05 of the column for maximum impact
+  \includegraphics[width=1.05\columnwidth]{agent_workflow.png} 
+  \caption{PHREEQC-Agent workflow illustrating the iterative loop between the LLM controller and the geochemical tool environment.}
+  \label{fig:workflow}
+\end{figure}
+
+Many geochemistry questions require precise numerical computation---such as equilibrium concentrations, saturation indices, or pH levels---where conceptual reasoning alone is insufficient. 
+
+As shown in Figure~\ref{fig:workflow}, the PHREEQC-Agent acts as an orchestrator. Rather than predicting answers from internal weights, the LLM serves as a controller navigating a sandboxed environment through a closed loop of observation, planning, and execution.
+
+% --- ALGORITHM REFERENCE ---
+Algorithm~\ref{alg:agent_controller} formalizes this logic. The loop terminates upon reaching a final answer or the step limit ($T_{\max}=24$).
+
+\begin{algorithm}[h]
+   \caption{PHREEQC-Agent Controller}
+   \label{alg:agent_controller}
+\begin{algorithmic}[1]
+   \STATE {\bfseries Input:} Question $q$, ToolSet $\mathcal{T}$
+   \STATE $H \leftarrow [\text{SystemPrompt}, \text{UserMsg}(q)]$
+   \FOR{$t=1$ {\bfseries to} $T_{\max}$}
+       \STATE $Msg \leftarrow \text{LLM}(H)$ 
+       \STATE $H.\text{append}(Msg)$
+       \IF{$Msg$ calls \textsc{Tool}($name, args$)}
+           \STATE $Result \leftarrow \text{ExecuteTool}(name, args)$
+           \STATE $H.\text{append}(\text{ToolOutput}, Result)$
+       \ELSIF{$Msg$ writes \textsc{FinalAnswer}}
+           \STATE \RETURN \textsc{Answer} 
+       \ENDIF
+   \ENDFOR
+   \RETURN \textsc{Failure}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Tools}
+The agent interfaces with the PHREEQC binary and the local filesystem through four tools:
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{write\_file}: Creates or overwrites a text file in the workspace; used primarily to write PHREEQC \texttt{.in} inputs.
+  \item \textbf{execute\_phreeqc}: Runs PHREEQC on a given input file using the \texttt{phreeqc.dat} database. Since PHREEQC runs can produce output files ranging from kilobytes to gigabytes, this tool \emph{never returns file contents}. Instead, it returns (1) metadata---return code, the last 4{,}000 characters of stdout/stderr, output file paths and sizes---and (2) a \textbf{table of contents (TOC)}: a list of section headers paired with their line numbers in \texttt{result.out}. This gives the agent a map of what the simulation produced and where each result lives, without consuming context on the results themselves. The TOC is capped at 50 entries (first 25 + last 25) for extremely large outputs; files over 50\,MB skip TOC generation entirely. On nonzero exit codes, the agent receives the full error output and can debug by rewriting and re-executing.
+  \item \textbf{read\_file}: Reads a file, optionally by line range. Files under 20{,}000 characters are returned in full; larger files are auto-truncated to the first and last 80 lines with a total line count. Line-range access allows the agent to look up specific sections identified in the TOC---such as saturation indices at lines 42--58 or solution composition at lines 12--30---retrieving only the data relevant to the question.
+  \item \textbf{list\_file}: Lists files and directories in the workspace.
+\end{itemize}
+
+This two-step pattern---receive a map, then read selectively---decouples simulation scale from context consumption and ensures the agent always knows what results are available before deciding what to inspect.
+
+\subsection{System Prompt}
+The system prompt is composed of three blocks:
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{Role:} Defines the agent as a PHREEQC operator confined to a sandboxed per-question directory. All file operations must use relative paths within this workspace.
+  \item \textbf{Tools:} Provides functional descriptions of each tool, including input/output contracts. Critically, the \texttt{execute\_phreeqc} specification emphasizes that file contents are never returned and that the agent must use \texttt{read\_file} with line ranges to inspect results.
+  \item \textbf{Constraints:} Enforces tool-first behavior---the agent must use tools for any quantitative question and may not answer from memory. Additional guardrails include: one tool call per turn, no \texttt{DATABASE} line in input files, and conservative use of PHREEQC keywords only. The last constraint was added after early runs revealed that agents generated \texttt{SELECTED\_OUTPUT} blocks with nonstandard column names, causing silent failures.
+\end{itemize}
+
+\noindent The full prompt is provided in Appendix~\ref{app:system_prompt}.
+
+\subsection{Models and Methods}
+The agent architecture is backbone-agnostic:
+the tool suite, system prompt, and step limit are
+identical across all backbones; only API-level
+settings differ (retry counts, temperature,
+client timeout). We evaluate ten configurations
+spanning three model families:
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+  \item \textbf{One-shot}: Direct prompting with no
+    tool access. Six models: Claude Opus 4.6,
+    Claude Sonnet 4.6, GPT-5.1, GPT-5.2,
+    Gemini 2.5 Flash, and Gemini 2.5 Pro.
+  \item \textbf{Agent}: The full PHREEQC-Agent
+    system. Four backbones: Claude Opus 4.6,
+    GPT-5.1, GPT-5.2, and Gemini 2.5 Flash.
+\end{itemize}
+
+% --------------------
+\section{Evaluation Framework}
+\label{sec:eval}
+\subsection{Task Format}
+Each item is a four-option multiple-choice question
+(A/B/C/D) requiring numerical geochemical computation.
+The agent receives only the question text---no
+pre-existing PHREEQC input files are provided.
+It must construct its own simulation from scratch,
+execute it, interpret the output, and select the
+correct answer.
+
+\subsection{Dataset Construction}
+We constructed a benchmark of 200 computational
+questions from two complementary sources.
+The first set draws on scenarios from the official
+USGS PHREEQC example database, covering standard
+problems such as aqueous speciation, mineral
+equilibrium, and reactive transport.
+The second set samples problems from the
+\texttt{phreeqcusers} community forum, expanding
+coverage to more open-ended tasks including
+charge-balance troubleshooting, multi-stage flow,
+and complex water--rock interaction.
+All underlying scripts were verified to execute
+without error under PHREEQC 3.8.6 with the
+standard \texttt{phreeqc.dat} thermodynamic database.
+
+From validated simulation outputs, six domain-expert
+geochemists wrote and reviewed multiple-choice
+questions. Each question has one correct answer
+determinable from the simulation output and three
+plausible distractors. To reduce stylistic bias,
+contributors varied independently in phrasing,
+detail level, and option ordering. Only questions
+for which at least two independent reviewers agreed
+on the unique correct answer were retained.
+
+The benchmark covers a range of PHREEQC use cases
+including aqueous speciation, mineral equilibrium,
+redox chemistry, gas-phase reactions, kinetics,
+and surface complexation. Kinetics and gas-phase
+questions---though less frequent---prove hardest
+for agents (Section~\ref{sec:failures}).
+
+% --------------------
+\section{Results}
+\label{sec:results}
+
+\subsection{Overall Performance}
+Table~\ref{tab:main_results} presents results across
+ten model--method combinations. Claude Opus 4.6 +
+Agent achieves the highest accuracy at 89.0\%.
+Notably, GPT-5.1 outperforms GPT-5.2 in the one-shot setting (63.5\% vs.\ 57.5\%), 
+but under tool augmentation GPT-5.2 surpasses GPT-5.1 (73.5\% vs.\ 69.0\%). 
+This reversal suggests that agent performance depends not only on baseline domain knowledge but also on tool-use reliability.
+
+For the backbones evaluated in both settings,
+a $\Delta$ column isolates the effect of agent
+augmentation.
+
+\begin{table}[h]
+\centering
+\normalsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{llcc}
+\toprule
+Model & Method & Accuracy & $\Delta$ \\
+\midrule
+\multirow{2}{*}{Claude Opus 4.6}
+  & + Agent        & \textbf{89.0\%} & \multirow{2}{*}{\textbf{+15.5}} \\
+  & One-shot       & 73.5\% & \\
+\addlinespace
+Claude Sonnet 4.6
+  & One-shot       & 65.0\% & --- \\
+\addlinespace
+\multirow{2}{*}{GPT-5.2}
+  & + Agent        & 73.5\% & \multirow{2}{*}{+16.0} \\
+  & One-shot       & 57.5\% & \\
+\addlinespace
+GPT-5.1
+  & + Agent        & 69.0\% & \multirow{2}{*}{+5.5} \\
+  & One-shot       & 63.5\% & \\
+\addlinespace
+\multirow{2}{*}{Gemini 2.5 Flash}
+  & One-shot       & 51.5\% & \multirow{2}{*}{\textbf{--7.0}} \\
+  & + Agent        & 44.5\% & \\
+\addlinespace
+Gemini 2.5 Pro
+  & One-shot       & 68\% & --- \\
+\bottomrule
+\end{tabular}
+\caption{Results on the 200-question subset.
+$\Delta$ shows the accuracy change from one-shot
+to agent.}
+\label{tab:main_results}
+\end{table}
+
+\subsection{Parametric Knowledge Can Match Tools}
+Claude Opus one-shot and GPT-5.2 + Agent both
+score 73.5\%, but they solve different questions:
+the two share only 117 of their 147 correct answers,
+with 30 unique to each. One arrives at this number
+through memorized geochemical knowledge, the other
+through grounded simulation---different strategies
+converging on the same headline by coincidence.
+This suggests that frontier-scale pretraining has
+internalized substantial quantitative geochemistry,
+enough to match a weaker model with full tool access.
+
+\subsection{Agent Retention and the Capability Threshold}
+The overall $\Delta$ masks an important asymmetry:
+agents both \emph{gain} questions (solved only with
+tools) and \emph{lose} questions (correct one-shot
+but wrong after simulation). Table~\ref{tab:retention}
+decomposes this for all four agent backbones.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+Backbone & Kept & Gained & Lost & Retention \\
+\midrule
+Claude Opus 4.6 & 136 & 42 & 11 & 92.5\% \\
+GPT-5.2 & 96 & 51 & 14 & 87.3\% \\
+GPT-5.1 & 102 & 36 & 25 & 80.3\% \\
+Gemini Flash & 55 & 34 & 48 & 53.4\% \\
+\bottomrule
+\end{tabular}
+\caption{Agent gain/loss decomposition. \emph{Kept}:
+correct in both settings. \emph{Gained}: wrong
+one-shot, correct with agent. \emph{Lost}: correct
+one-shot, wrong with agent. \emph{Retention}:
+Kept / (Kept + Lost).}
+\label{tab:retention}
+\end{table}
+
+Retention tracks model capability cleanly. Claude
+Opus preserves 92.5\% of what it already knows while
+gaining 42 new questions; Gemini Flash retains only
+53.4\%, losing nearly as many questions as it gains.
+The gain counts are comparable across backbones
+(34--51), but the loss counts diverge sharply
+(11--48), indicating that the capability threshold
+manifests primarily as an inability to
+\emph{preserve} correct parametric answers rather
+than an inability to \emph{exploit} tools.
+
+Notably, the agent-hurt effect is backbone-specific:
+of the 11 questions Claude Opus loses, zero overlap
+with GPT-5.2's losses; GPT-5.2 agent solves 7 of
+those 11 correctly. This rules out the hypothesis
+that certain questions are inherently ``agent-toxic''
+and points instead to backbone-specific reasoning
+failures.
+
+\subsection{Trajectory Efficiency}
+Table~\ref{tab:trajectory} profiles agent behavior.
+Stronger backbones are more efficient: Claude Opus
+solves the median question in 6 steps with a single
+PHREEQC execution, while Gemini Flash requires 7
+steps and 2 executions at the median, reflecting
+persistent retry loops.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lccccc}
+\toprule
+Backbone & \multicolumn{2}{c}{Steps} &
+  \multicolumn{2}{c}{PHREEQC runs} & Hit 24 \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & Med. & Mean & Med. & Mean & \\
+\midrule
+Claude Opus & 6 & 8.2 & 1 & 1.9 & 11 \\
+GPT-5.2 & 5 & 6.8 & 1 & 1.7 & 4 \\
+GPT-5.1 & 5 & 5.1 & 1 & 1.1 & 0 \\
+Gemini Flash & 7 & 9.9 & 2 & 2.9 & 34 \\
+\bottomrule
+\end{tabular}
+\caption{Agent trajectory statistics. ``Hit 24''
+is the number of questions reaching the step limit.}
+\label{tab:trajectory}
+\end{table}
+
+Gemini Flash hits the 24-step ceiling 34 times---more
+than the other three combined---and averages 2.9
+PHREEQC executions per question. Of its 48 lost
+questions, 41 (85\%) produce no parseable answer at
+all: the agent replaces what would have been a
+correct parametric guess with a long, fruitless
+tool-use trajectory that exhausts the step budget.
+
+GPT-5.1 is the most efficient agent (mean 5.1 steps,
+never hits the step limit) but has the worst
+gain-to-loss ratio among productive agents. It does
+not retry enough---giving up or guessing quickly
+rather than debugging, which explains its lower net
+gain despite high efficiency.
+
+\subsection{Tool-Requiring Questions Are Partially Universal}
+Of the 42 questions Claude Opus gains through tool
+use, 21 (50\%) are also gained by GPT-5.2, suggesting
+a shared core of tool-amenable problems. However,
+16 (38\%) are gained only by Opus---these require
+both correct PHREEQC authoring \emph{and} correct
+output interpretation that only the strongest
+backbone delivers. Only 4 questions are universally
+gained across all four agents.
+
+At the other extreme, 28 questions are solved by
+every method and 2 are solved by none. One unsolvable
+question involves a display-precision limitation
+where the correct answer and distractor round to the
+same value in PHREEQC output; the other combines
+kinetics, gas-phase equilibrium, and high-temperature
+speciation in a single problem that exceeds all
+methods' capabilities.
+
+
+% --------------------
+\section{Failure Analysis}
+\label{sec:failures}
+% --------------------
+PHREEQC-Agent (GPT-5.2 agent) is correct on 147/200 questions, leaving 53 errors. We distinguish \textbf{active} failure modes (present in the current evaluation) from \textbf{solved} failure modes (eliminated by architecture). This distinction is important: earlier drafts treated all modes as active, but three are now reduced to zero failures.
+
+\subsection{Active Failure Modes: GPT 5.2 + Agent}
+Table~\ref{tab:failure_breakdown} shows the verified breakdown of the errors from GPT-5.2 + Agent. Two dominant categories account for 80\% of the 53 errors of GPT-5.2 + Agent: (i) \textbf{wrong interpretation} (PHREEQC ran but the agent misread output or mapped to the wrong option), and (ii) \textbf{partial PHREEQC failure} (some attempts fail due to invalid inputs, sometimes followed by a successful run but still ending incorrect). 
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+Failure Mode (active) & Count (GPT 5.2 + Agent) & Share of errors \\
+\midrule
+wrong\_interpretation & 21 & 40\% \\
+some\_phreeqc\_failed & 21 & 40\% \\
+all\_phreeqc\_failed & 4 & 8\% \\
+max\_steps & 4 & 8\% \\
+timeout/error & 2 & 4\% \\
+no\_phreeqc\_run & 1 & 2\% \\
+\midrule
+Total errors & 53 & 100\% \\
+\bottomrule
+\end{tabular}
+\caption{Active failure modes of GPT-5.2+ Agent on the 200-question subset (53 total errors).}
+\label{tab:failure_breakdown}
+\end{table}
+
+\paragraph{wrong\_interpretation (21).}
+PHREEQC executes successfully and relevant values appear in \texttt{result.out}, but the agent reads the wrong field, the wrong timestep, or mis-maps a numeric result to the multiple-choice option. This is the dominant ``reasoning + extraction'' bottleneck and can be further divided into two categories: \textit{incorrect\_scripts}, where the agent writes a script that executes, but either makes a syntax error or incorrectly constructs the script in some manner that allows the output to run but does not accurately represent the scenario outlined in the problem statement, or \textit{incorrect\_interpretation}, where the script accurately reflects the scenario outlined in the question, but the agent interprets the output incorrectly. The vast majority of wrong interpretation errors for GPT 5.2 + Agent belong to the first category, primarily involving kinetics questions and questions involving gas phases, where the agent did not set up the problem correctly. In some scenarios, the agent would also assign the charge balancing adjustment to the pH parameter unprompted, causing the simulation to diverge from the problem statement. Another common failure point occurs when the agent writes a script that fails to correctly link different blocks together in multistep problems, thus creating disjointed outputs. \textit{Incorrect\_interpretation} events occurred for questions requiring counting the occurrence of a certain feature, such as "How many species of Ca are present in a solution?". The output file contains the correct results, but the model fails to return the correct information, revealing a critical limitation in the GPT 5.2 + Agent model. 
+
+\paragraph{some\_phreeqc\_failed (21) and all\_phreeqc\_failed (4).}
+The agent often generates invalid PHREEQC inputs (unsupported keywords, malformed blocks, unit mistakes), leading to parse/runtime errors. In \texttt{some\_phreeqc\_failed}, at least one execution succeeds but the overall trajectory still ends incorrect; in \texttt{all\_phreeqc\_failed}, no successful run occurs. The model has particularly poor performance in regards to kinetics questions. Kinetics questions involve a time dependent rate law that is accessed through the thermodynamic database. GPT 5.2 + Agent appears to not recognize the rate laws within the database, and thus struggles to write a functional script, either failing outright, running out of steps or timing out, or constructing its own nonsensical rate law, causing a \textit{wrong\_interpretation} failure. 
+
+\paragraph{max\_steps (4).}
+The agent enters retry loops (iterative minor edits and re-runs) and exhausts the 24-step budget without producing a parseable final answer.
+
+\paragraph{timeout/error (2).}
+The per-question process exceeds the 300-second timeout or terminates unexpectedly.
+
+\paragraph{no\_phreeqc\_run (1).}
+A rare tool-bypass event: the agent answers without executing PHREEQC despite instructions.
+
+\subsection{Claude Opus 4.6 + Agent: 22 Failures in Detail}
+Claude Opus 4.6 + Agent produces only 22 errors---10 wrong answers and 12 no-answer results (step-limit exhaustion). Table~\ref{tab:opus_failures} summarizes the root-cause taxonomy derived from inspecting all 22 chat logs.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llcc}
+\toprule
+Category & Root Cause & Count & \% of failures \\
+\midrule
+\multirow{3}{*}{Wrong answer (10)} 
+  & Bad PHREEQC input & 6 & 27\% \\
+  & Wrong interpretation & 3 & 14\% \\
+  & Precision limit & 1 & 5\% \\
+\midrule
+\multirow{2}{*}{No answer (12)} 
+  & PHREEQC retry loop & 9 & 41\% \\
+  & Complex setup failure & 3 & 14\% \\
+\midrule
+\multicolumn{2}{l}{Total} & 22 & 100\% \\
+\bottomrule
+\end{tabular}
+\caption{Failure taxonomy for Claude Opus 4.6 + Agent (22/200 errors).}
+\label{tab:opus_failures}
+\end{table}
+
+\paragraph{Bad PHREEQC input (6 wrong answers).}
+The agent writes a PHREEQC input file that executes without errors but contains a subtle modeling flaw, producing plausible but incorrect output. Specific instances include omitting the \texttt{charge} keyword so PHREEQC accepts a user-specified pH instead of computing the equilibrium value, assigning charge balance to a lone anion, which PHREEQC silently ignores, and setting a kinetic rate constant too stiff for the integrator, causing the system to over-equilibrate in the first time step. In these cases, the simulation runs to completion and the agent trusts the incorrect output.
+
+\paragraph{Wrong interpretation (3 wrong answers).}
+PHREEQC output is correct, but the agent reasons to the wrong answer. Examples include misidentifying which output quantity corresponds to the question's target (e.g., confusing total alkalinity with HCO$_3^-$ molality) and misreading a positive mineral delta as ``zero dissolved.''
+
+\paragraph{Precision limit (1 wrong answer).}
+PHREEQC displayed a rounded version of the correct answer to the problem due to precision display limitations. The agent cannot distinguish the two answer choices from PHREEQC output alone. This question is unsolved by all ten methods.
+
+\paragraph{PHREEQC retry loop (9 no-answers).}
+The agent repeatedly rewrites and re-executes PHREEQC input with varied configurations, exhausting all 24 steps without converging on a result that matches any answer choice.
+
+\paragraph{Complex setup failure (3 no-answers).}
+The problem statement is challenging to convert to PHREEQC code due to complicated rate laws or sequential mixing-then-heating semantics, thus causing the system to write an erroneous script. Other questions with the same scenario were answered correctly, indicating that the system is capable of setting up those problem statements, but was unable to in this instance.
+
+% --------------------
+
+% --------------------
+\section{Limitations}
+\label{sec:limitations}
+
+\begin{itemize}[leftmargin=*, itemsep=2pt]
+
+  \item \textbf{Single benchmark, single domain.}
+  All results are on one 200-question PHREEQC dataset. We cannot claim that the capability threshold, retention rates, or failure taxonomy generalize to other scientific simulation tools (e.g., Gaussian, GROMACS, MODFLOW) without replication.
+
+  \item \textbf{MCQ format inflates baselines and masks failure.}
+  A four-choice format gives a 25\% random-guess floor, compresses the score range, and hides whether the agent could produce a correct numerical answer in free-form. Our accuracy numbers overestimate what would survive an open-ended evaluation.
+
+  \item \textbf{Dataset answer imbalance.}
+  The correct-answer distribution is skewed (C = 38\%, A = 15.5\%), and the first 100 questions contain zero A answers. A model biased toward C could gain up to 13 points over a uniform distribution without any domain knowledge.
+\end{itemize}
+
+% --------------------
+
+% --------------------
+\section{Conclusion}
+
+We present PHREEQC-Agent, a tool-augmented LLM system for geochemical
+computation, and benchmark it across ten configurations spanning three
+model families on a curated 200-question dataset.
+
+Claude Opus 4.6 + Agent achieves 89.0\% accuracy, a 15.5 percentage-point
+gain over its one-shot baseline: the agent preserves 92.5\% of one-shot
+correct answers while gaining 42 new ones that require grounded
+computation. Fifteen questions (7.5\%) are solved by Claude Opus 4.6 + Agent but by
+\emph{none} of the one-shot baselines in Table~\ref{tab:main_results},
+confirming that tool use enables answers unattainable from parametric
+knowledge alone in our evaluation.
+
+However, tool augmentation is not uniformly beneficial.
+A per-backbone retention analysis reveals a capability threshold:
+above it, tools \emph{verify} existing knowledge (87--93\% retention);
+below it, tools \emph{destabilize} it---Gemini 2.5 Flash retains only
+53\% of its one-shot correct answers, with 85\% of losses caused by
+step-limit exhaustion rather than wrong reasoning.
+Critically, agent-hurt questions are backbone-specific rather than
+question-specific: the 11 questions Claude Opus loses have zero overlap
+with GPT-5.2's losses, indicating that these regressions stem from
+model-specific reasoning failures, not from inherent question difficulty.
+
+Architecturally, metadata-only execution returns and per-question
+process isolation eliminate three failure modes (context overflow,
+resource exhaustion, worker cascade) that dominated early development.
+The best agent's 22 residual errors cluster into two root causes:
+flawed PHREEQC input construction and output misinterpretation, with
+67\% of no-answer failures attributable to two gas-phase specification
+templates.
+
+Future work should target constrained input generation for gas-phase
+and kinetics blocks, backbone-adaptive step budgets that prevent
+unproductive retry spirals, and confidence-gated tool invocation that
+preserves correct parametric answers when simulation quality is uncertain.
+
+\section{Data and Code Availability}
+Upon acceptance, we will release the PHREEQC-Agent source code, prompts, and evaluation scripts, along with the curated 200-question subset of \texttt{Phreeqc\_MCQ} used in this paper.
+
+% --------------------
+% Bibliography
+% --------------------
+% At the end of your .tex file, replace your current style with:
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{cais_phreeqc_agent}
+
+\newpage
+\appendix
+\settopmatter{printacmref=false}
+\section{System Prompt}
+\label{app:system_prompt}
+
+\begin{tcolorbox}[
+  colback=white,
+  colframe=gray,
+  title=System Prompt,
+  listing only,
+  breakable,
+  listing options={
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true,
+    columns=fullflexible
+  }
+]
+You are a PHREEQC agent.
+
+All actions must occur within the allowed workspace folder.
+
+Workspace rules:
+- You may do file operations under the allowed workspace folder with all the tools (use relative paths).
+- Do not assume an inputs/ folder exists; create any needed input files yourself.
+- Never reference or attempt to access files outside the workspace.
+
+Enabled tools:
+- list\_file(path):
+  List files/directories under a workspace directory. Use this first when paths are unclear.
+
+- read\_file(path, start\_line?, end\_line?):
+  Read a text file in the workspace. Small files are returned in full. Large files are
+  auto-truncated to head/tail preview with total line count. Use start\_line and end\_line
+  (1-based) to read specific sections of large files.
+
+- write\_file(path, new\_content):
+  Create or overwrite a workspace text file. Use full file content each time.
+
+- execute\_phreeqc(input\_path):
+  Run PHREEQC using the configured binary/database. Input path must exist in workspace.
+  PHREEQC runs in the input file's directory and writes result.out there.
+  Returns returncode, stdout/stderr, output file paths, and a table-of-contents
+  (section name + line number) for result.out.
+  IMPORTANT: File contents are NOT included. Use read\_file with start\_line/end\_line
+  to jump directly to the section you need (e.g. "Saturation indices", "Solution composition").
+
+Tool-first behavior (required):
+- For any quantitative or chemistry question, you MUST use tools to generate the answer.
+- Write a PHREEQC input file with write\_file, run it with execute\_phreeqc, then use read\_file to inspect the output files.
+- Do not answer from memory or guesswork; if a tool fails, report the error and stop.
+- Call only one tool per turn.
+- Prefer using tools rather than asking the user to paste file contents.
+
+- After execution, summarize key results for the user.
+- Do NOT include a DATABASE line in generated PHREEQC input files (database is provided externally by the execution tool).
+- Use conservative, broadly supported PHREEQC keywords/options only; avoid nonstandard SELECTED\_OUTPUT options unless verified in output.
+
+If a file does not exist, explain what files are available using list\_file.
+
+\end{tcolorbox}
+\end{document}

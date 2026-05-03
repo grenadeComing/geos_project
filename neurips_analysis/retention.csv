@@ -1,0 +1,6 @@
+model,baseline,agent,baseline_correct,agent_correct,kept,gained,lost,both_wrong,retention,net_gain
+Claude Opus 4.6,Direct,Agent-TOC,84,169,71,98,13,18,84.5%,85
+Claude Sonnet 4.6,Direct,Agent-TOC,74,171,65,106,9,20,87.8%,97
+GPT-5.4,Direct,Agent-TOC,54,145,37,108,17,38,68.5%,91
+GPT-5.2,Direct,Agent-TOC,55,107,29,78,26,67,52.7%,52
+GPT-5.1,Direct,Agent-TOC,78,108,47,61,31,61,60.3%,30

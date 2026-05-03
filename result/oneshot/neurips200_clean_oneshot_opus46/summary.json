@@ -1,0 +1,30 @@
+{
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "method": "one_shot_no_tools",
+  "prompt_mode": "direct",
+  "dataset": "neurips_dataset_200_clean.jsonl",
+  "run_name": "neurips200_clean_oneshot_opus46",
+  "task_filter": "all",
+  "workers": 4,
+  "total_rows": 200,
+  "graded_rows": 200,
+  "ungraded_rows": 0,
+  "correct_rows": 84,
+  "error_rows": 0,
+  "accuracy": 0.42,
+  "graded_accuracy": 0.42,
+  "by_task_type": {
+    "mcq": {
+      "total": 200,
+      "correct": 84,
+      "graded": 200,
+      "ungraded": 0,
+      "errors": 0,
+      "accuracy": 0.42,
+      "graded_accuracy": 0.42
+    }
+  },
+  "total_input_tokens": 37409,
+  "total_output_tokens": 105549
+}

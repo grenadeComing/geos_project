@@ -1,0 +1,8 @@
+model,context_window_tokens,source
+Claude Opus 4.6,,
+Claude Sonnet 4.6,,
+GPT-5.1,400000,user_provided_2026-05-02
+GPT-5.2,400000,user_provided_2026-05-02
+GPT-5.4,1000000,user_provided_2026-05-02
+Gemini 2.5 Flash,,
+Gemini 3 Flash Preview,,

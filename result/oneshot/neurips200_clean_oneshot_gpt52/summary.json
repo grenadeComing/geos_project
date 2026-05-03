@@ -1,0 +1,34 @@
+{
+  "provider": "openai",
+  "model": "gpt-5.2",
+  "method": "one_shot_no_tools",
+  "prompt_mode": "direct",
+  "dataset": "neurips_dataset_200_clean.jsonl",
+  "run_name": "neurips200_clean_oneshot_gpt52",
+  "task_filter": "all",
+  "workers": 4,
+  "started_at": "2026-05-01T15:11:12-07:00",
+  "ended_at": "2026-05-01T15:11:45-07:00",
+  "elapsed_seconds": 33.249,
+  "seconds_per_row": 0.166,
+  "total_rows": 200,
+  "graded_rows": 200,
+  "ungraded_rows": 0,
+  "correct_rows": 55,
+  "error_rows": 0,
+  "accuracy": 0.275,
+  "graded_accuracy": 0.275,
+  "by_task_type": {
+    "mcq": {
+      "total": 200,
+      "correct": 55,
+      "graded": 200,
+      "ungraded": 0,
+      "errors": 0,
+      "accuracy": 0.275,
+      "graded_accuracy": 0.275
+    }
+  },
+  "total_input_tokens": 34357,
+  "total_output_tokens": 1200
+}

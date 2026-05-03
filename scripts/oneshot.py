@@ -25,10 +25,9 @@ import json
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
 from pathlib import Path
 from typing import Any
-
-import litellm
 
 BASE_DIR = Path(__file__).resolve().parent
 REPO_ROOT = BASE_DIR.parent
@@ -38,6 +37,7 @@ from _common import (  # noqa: E402
     grade_row,
     load_dataset,
     parse_answer,
+    system_prompt_cot,
     summarize_results,
     system_prompt_oneshot,
     build_prompt_oneshot,
@@ -90,6 +90,8 @@ def _completion_kwargs(model: str, system: str, user: str) -> dict[str, Any]:
 
 def _query_model(model: str, system: str, user: str, *, max_attempts: int = 5) -> tuple[str | None, dict[str, int]]:
     """Call litellm with retries. Returns (text, usage_dict)."""
+    import litellm
+
     kwargs = _completion_kwargs(model, system, user)
     last_err: Exception | None = None
     for attempt in range(1, max_attempts + 1):
@@ -114,10 +116,16 @@ def _query_model(model: str, system: str, user: str, *, max_attempts: int = 5) -
     return None, {}
 
 
-def _process_one(row: dict[str, Any], model: str) -> dict[str, Any]:
+def _process_one(row: dict[str, Any], model: str, prompt_mode: str) -> dict[str, Any]:
     task_type = row["task_type"]
-    system = system_prompt_oneshot(task_type)
-    user = build_prompt_oneshot(row)
+    include_preamble = prompt_mode == "direct"
+    has_preamble = include_preamble and bool(row.get("preamble"))
+    system = (
+        system_prompt_cot(task_type)
+        if prompt_mode == "cot"
+        else system_prompt_oneshot(task_type, has_preamble=has_preamble)
+    )
+    user = build_prompt_oneshot(row, include_preamble=include_preamble)
 
     try:
         raw, usage = _query_model(model, system, user)
@@ -140,6 +148,12 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--name", required=True, help="Run name for result subfolder.")
     p.add_argument("--workers", type=int, default=4, help="Parallel workers (threads).")
     p.add_argument(
+        "--prompt-mode",
+        choices=("direct", "cot"),
+        default="direct",
+        help="No-tool prompting mode: direct one-shot or chain-of-thought.",
+    )
+    p.add_argument(
         "--task-filter", choices=("all", "mcq", "fill"), default="all",
         help="Only run a subset of questions by task_type.",
     )
@@ -148,6 +162,8 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = _parse_args()
+    started_at = datetime.now().astimezone()
+    started_perf = time.perf_counter()
     dataset_path = Path(args.dataset).expanduser().resolve()
     records = load_dataset(dataset_path)
     if args.task_filter != "all":
@@ -160,9 +176,14 @@ def main() -> None:
 
     results: list[dict[str, Any]] = []
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as ex:
-        futures = {ex.submit(_process_one, row, args.model): row for row in records}
+        futures = {ex.submit(_process_one, row, args.model, args.prompt_mode): row for row in records}
         it = (
-            tqdm(as_completed(futures), total=len(futures), desc=f"oneshot ({args.model})", unit="q")
+            tqdm(
+                as_completed(futures),
+                total=len(futures),
+                desc=f"{args.prompt_mode} no-tools ({args.model})",
+                unit="q",
+            )
             if tqdm else as_completed(futures)
         )
         for fut in it:
@@ -177,15 +198,22 @@ def main() -> None:
     agg = summarize_results(results)
     total_input = sum((r.get("usage") or {}).get("input_tokens", 0) for r in results)
     total_output = sum((r.get("usage") or {}).get("output_tokens", 0) for r in results)
+    ended_at = datetime.now().astimezone()
+    elapsed_seconds = time.perf_counter() - started_perf
 
     summary = {
         "provider": _provider_of(args.model),
         "model": args.model,
-        "method": "one_shot_no_tools",
+        "method": "cot_no_tools" if args.prompt_mode == "cot" else "one_shot_no_tools",
+        "prompt_mode": args.prompt_mode,
         "dataset": dataset_path.name,
         "run_name": args.name,
         "task_filter": args.task_filter,
         "workers": args.workers,
+        "started_at": started_at.isoformat(timespec="seconds"),
+        "ended_at": ended_at.isoformat(timespec="seconds"),
+        "elapsed_seconds": round(elapsed_seconds, 3),
+        "seconds_per_row": round(elapsed_seconds / len(records), 3) if records else None,
         **agg,
         "total_input_tokens": total_input,
         "total_output_tokens": total_output,

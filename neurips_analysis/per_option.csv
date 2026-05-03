@@ -1,0 +1,105 @@
+key,model,method,true_label,true_count,correct,accuracy,pred_A,pred_B,pred_C,pred_D,pred_NA
+opus_direct,Claude Opus 4.6,Direct,A,63,29,46.0%,60,19,55,66,0
+opus_direct,Claude Opus 4.6,Direct,B,47,10,21.3%,60,19,55,66,0
+opus_direct,Claude Opus 4.6,Direct,C,48,18,37.5%,60,19,55,66,0
+opus_direct,Claude Opus 4.6,Direct,D,42,27,64.3%,60,19,55,66,0
+opus_cot,Claude Opus 4.6,CoT,A,63,23,36.5%,52,30,56,62,0
+opus_cot,Claude Opus 4.6,CoT,B,47,10,21.3%,52,30,56,62,0
+opus_cot,Claude Opus 4.6,CoT,C,48,17,35.4%,52,30,56,62,0
+opus_cot,Claude Opus 4.6,CoT,D,42,26,61.9%,52,30,56,62,0
+opus_toc,Claude Opus 4.6,Agent-TOC,A,63,53,84.1%,59,47,48,46,0
+opus_toc,Claude Opus 4.6,Agent-TOC,B,47,40,85.1%,59,47,48,46,0
+opus_toc,Claude Opus 4.6,Agent-TOC,C,48,40,83.3%,59,47,48,46,0
+opus_toc,Claude Opus 4.6,Agent-TOC,D,42,36,85.7%,59,47,48,46,0
+sonnet_direct,Claude Sonnet 4.6,Direct,A,63,12,19.0%,24,22,101,53,0
+sonnet_direct,Claude Sonnet 4.6,Direct,B,47,6,12.8%,24,22,101,53,0
+sonnet_direct,Claude Sonnet 4.6,Direct,C,48,33,68.8%,24,22,101,53,0
+sonnet_direct,Claude Sonnet 4.6,Direct,D,42,23,54.8%,24,22,101,53,0
+sonnet_cot,Claude Sonnet 4.6,CoT,A,63,24,38.1%,45,55,41,59,0
+sonnet_cot,Claude Sonnet 4.6,CoT,B,47,15,31.9%,45,55,41,59,0
+sonnet_cot,Claude Sonnet 4.6,CoT,C,48,24,50.0%,45,55,41,59,0
+sonnet_cot,Claude Sonnet 4.6,CoT,D,42,23,54.8%,45,55,41,59,0
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,A,63,55,87.3%,63,44,47,45,1
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,B,47,39,83.0%,63,44,47,45,1
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,C,48,40,83.3%,63,44,47,45,1
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,D,42,37,88.1%,63,44,47,45,1
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,A,63,55,87.3%,67,42,44,44,3
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,B,47,38,80.9%,67,42,44,44,3
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,C,48,37,77.1%,67,42,44,44,3
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,D,42,37,88.1%,67,42,44,44,3
+gpt54_direct,GPT-5.4,Direct,A,63,5,7.9%,20,109,42,29,0
+gpt54_direct,GPT-5.4,Direct,B,47,24,51.1%,20,109,42,29,0
+gpt54_direct,GPT-5.4,Direct,C,48,12,25.0%,20,109,42,29,0
+gpt54_direct,GPT-5.4,Direct,D,42,13,31.0%,20,109,42,29,0
+gpt54_cot,GPT-5.4,CoT,A,63,11,17.5%,21,65,66,48,0
+gpt54_cot,GPT-5.4,CoT,B,47,17,36.2%,21,65,66,48,0
+gpt54_cot,GPT-5.4,CoT,C,48,23,47.9%,21,65,66,48,0
+gpt54_cot,GPT-5.4,CoT,D,42,19,45.2%,21,65,66,48,0
+gpt54_toc,GPT-5.4,Agent-TOC,A,63,43,68.3%,61,56,48,34,1
+gpt54_toc,GPT-5.4,Agent-TOC,B,47,40,85.1%,61,56,48,34,1
+gpt54_toc,GPT-5.4,Agent-TOC,C,48,34,70.8%,61,56,48,34,1
+gpt54_toc,GPT-5.4,Agent-TOC,D,42,28,66.7%,61,56,48,34,1
+gpt54_raw,GPT-5.4,Agent-Raw100k,A,63,45,71.4%,63,52,46,39,0
+gpt54_raw,GPT-5.4,Agent-Raw100k,B,47,34,72.3%,63,52,46,39,0
+gpt54_raw,GPT-5.4,Agent-Raw100k,C,48,35,72.9%,63,52,46,39,0
+gpt54_raw,GPT-5.4,Agent-Raw100k,D,42,26,61.9%,63,52,46,39,0
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,A,63,44,69.8%,58,58,46,38,0
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,B,47,39,83.0%,58,58,46,38,0
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,C,48,36,75.0%,58,58,46,38,0
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,D,42,30,71.4%,58,58,46,38,0
+gpt52_direct,GPT-5.2,Direct,A,63,6,9.5%,16,101,43,40,0
+gpt52_direct,GPT-5.2,Direct,B,47,26,55.3%,16,101,43,40,0
+gpt52_direct,GPT-5.2,Direct,C,48,11,22.9%,16,101,43,40,0
+gpt52_direct,GPT-5.2,Direct,D,42,12,28.6%,16,101,43,40,0
+gpt52_cot,GPT-5.2,CoT,A,63,18,28.6%,34,52,65,49,0
+gpt52_cot,GPT-5.2,CoT,B,47,11,23.4%,34,52,65,49,0
+gpt52_cot,GPT-5.2,CoT,C,48,22,45.8%,34,52,65,49,0
+gpt52_cot,GPT-5.2,CoT,D,42,18,42.9%,34,52,65,49,0
+gpt52_toc,GPT-5.2,Agent-TOC,A,63,40,63.5%,70,41,36,46,7
+gpt52_toc,GPT-5.2,Agent-TOC,B,47,18,38.3%,70,41,36,46,7
+gpt52_toc,GPT-5.2,Agent-TOC,C,48,25,52.1%,70,41,36,46,7
+gpt52_toc,GPT-5.2,Agent-TOC,D,42,24,57.1%,70,41,36,46,7
+gpt52_raw,GPT-5.2,Agent-Raw100k,A,63,41,65.1%,58,43,50,45,4
+gpt52_raw,GPT-5.2,Agent-Raw100k,B,47,23,48.9%,58,43,50,45,4
+gpt52_raw,GPT-5.2,Agent-Raw100k,C,48,33,68.8%,58,43,50,45,4
+gpt52_raw,GPT-5.2,Agent-Raw100k,D,42,26,61.9%,58,43,50,45,4
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,A,63,45,71.4%,75,45,33,45,2
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,B,47,29,61.7%,75,45,33,45,2
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,C,48,25,52.1%,75,45,33,45,2
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,D,42,28,66.7%,75,45,33,45,2
+gpt51_direct,GPT-5.1,Direct,A,63,20,31.7%,41,62,46,51,0
+gpt51_direct,GPT-5.1,Direct,B,47,21,44.7%,41,62,46,51,0
+gpt51_direct,GPT-5.1,Direct,C,48,15,31.3%,41,62,46,51,0
+gpt51_direct,GPT-5.1,Direct,D,42,22,52.4%,41,62,46,51,0
+gpt51_cot,GPT-5.1,CoT,A,63,16,25.4%,30,71,62,37,0
+gpt51_cot,GPT-5.1,CoT,B,47,17,36.2%,30,71,62,37,0
+gpt51_cot,GPT-5.1,CoT,C,48,23,47.9%,30,71,62,37,0
+gpt51_cot,GPT-5.1,CoT,D,42,14,33.3%,30,71,62,37,0
+gpt51_toc,GPT-5.1,Agent-TOC,A,63,36,57.1%,60,54,44,40,2
+gpt51_toc,GPT-5.1,Agent-TOC,B,47,27,57.4%,60,54,44,40,2
+gpt51_toc,GPT-5.1,Agent-TOC,C,48,25,52.1%,60,54,44,40,2
+gpt51_toc,GPT-5.1,Agent-TOC,D,42,20,47.6%,60,54,44,40,2
+gpt51_raw,GPT-5.1,Agent-Raw100k,A,63,43,68.3%,70,46,38,46,0
+gpt51_raw,GPT-5.1,Agent-Raw100k,B,47,29,61.7%,70,46,38,46,0
+gpt51_raw,GPT-5.1,Agent-Raw100k,C,48,28,58.3%,70,46,38,46,0
+gpt51_raw,GPT-5.1,Agent-Raw100k,D,42,27,64.3%,70,46,38,46,0
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,A,63,38,60.3%,53,60,36,51,0
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,B,47,29,61.7%,53,60,36,51,0
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,C,48,23,47.9%,53,60,36,51,0
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,D,42,26,61.9%,53,60,36,51,0
+gflash_direct,Gemini 2.5 Flash,Direct,A,63,31,49.2%,64,51,50,31,4
+gflash_direct,Gemini 2.5 Flash,Direct,B,47,15,31.9%,64,51,50,31,4
+gflash_direct,Gemini 2.5 Flash,Direct,C,48,15,31.3%,64,51,50,31,4
+gflash_direct,Gemini 2.5 Flash,Direct,D,42,12,28.6%,64,51,50,31,4
+gflash_cot,Gemini 2.5 Flash,CoT,A,63,15,23.8%,35,3,153,3,6
+gflash_cot,Gemini 2.5 Flash,CoT,B,47,1,2.1%,35,3,153,3,6
+gflash_cot,Gemini 2.5 Flash,CoT,C,48,37,77.1%,35,3,153,3,6
+gflash_cot,Gemini 2.5 Flash,CoT,D,42,2,4.8%,35,3,153,3,6
+gflash3_direct,Gemini 3 Flash Preview,Direct,A,63,24,38.1%,49,26,59,66,0
+gflash3_direct,Gemini 3 Flash Preview,Direct,B,47,12,25.5%,49,26,59,66,0
+gflash3_direct,Gemini 3 Flash Preview,Direct,C,48,21,43.8%,49,26,59,66,0
+gflash3_direct,Gemini 3 Flash Preview,Direct,D,42,20,47.6%,49,26,59,66,0
+gflash3_cot,Gemini 3 Flash Preview,CoT,A,63,29,46.0%,51,31,52,66,0
+gflash3_cot,Gemini 3 Flash Preview,CoT,B,47,10,21.3%,51,31,52,66,0
+gflash3_cot,Gemini 3 Flash Preview,CoT,C,48,21,43.8%,51,31,52,66,0
+gflash3_cot,Gemini 3 Flash Preview,CoT,D,42,21,50.0%,51,31,52,66,0

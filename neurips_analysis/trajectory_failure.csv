@@ -1,0 +1,54 @@
+key,model,method,category,count
+opus_toc,Claude Opus 4.6,Agent-TOC,correct,169
+opus_toc,Claude Opus 4.6,Agent-TOC,wrong_max_step_with_answer,10
+opus_toc,Claude Opus 4.6,Agent-TOC,wrong_some_phreeqc_failed,13
+opus_toc,Claude Opus 4.6,Agent-TOC,wrong_successful_run_needs_manual_split,8
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,correct,171
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,ungraded_no_parse,1
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,wrong_max_step_with_answer,9
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,wrong_some_phreeqc_failed,10
+sonnet_toc,Claude Sonnet 4.6,Agent-TOC,wrong_successful_run_needs_manual_split,9
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,correct,167
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,ungraded_no_parse,3
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,wrong_max_step_with_answer,7
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,wrong_some_phreeqc_failed,10
+sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,wrong_successful_run_needs_manual_split,13
+gpt54_toc,GPT-5.4,Agent-TOC,correct,145
+gpt54_toc,GPT-5.4,Agent-TOC,ungraded_max_step_or_no_final,1
+gpt54_toc,GPT-5.4,Agent-TOC,wrong_some_phreeqc_failed,16
+gpt54_toc,GPT-5.4,Agent-TOC,wrong_successful_run_needs_manual_split,38
+gpt54_raw,GPT-5.4,Agent-Raw100k,correct,140
+gpt54_raw,GPT-5.4,Agent-Raw100k,wrong_some_phreeqc_failed,21
+gpt54_raw,GPT-5.4,Agent-Raw100k,wrong_successful_run_needs_manual_split,39
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,correct,149
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,wrong_some_phreeqc_failed,14
+gpt54_raw500k,GPT-5.4,Agent-Raw500k,wrong_successful_run_needs_manual_split,37
+gpt52_toc,GPT-5.2,Agent-TOC,correct,107
+gpt52_toc,GPT-5.2,Agent-TOC,ungraded_max_step_or_no_final,7
+gpt52_toc,GPT-5.2,Agent-TOC,wrong_all_phreeqc_failed,2
+gpt52_toc,GPT-5.2,Agent-TOC,wrong_max_step_with_answer,1
+gpt52_toc,GPT-5.2,Agent-TOC,wrong_some_phreeqc_failed,25
+gpt52_toc,GPT-5.2,Agent-TOC,wrong_successful_run_needs_manual_split,58
+gpt52_raw,GPT-5.2,Agent-Raw100k,correct,123
+gpt52_raw,GPT-5.2,Agent-Raw100k,ungraded_max_step_or_no_final,3
+gpt52_raw,GPT-5.2,Agent-Raw100k,ungraded_no_parse,1
+gpt52_raw,GPT-5.2,Agent-Raw100k,wrong_all_phreeqc_failed,1
+gpt52_raw,GPT-5.2,Agent-Raw100k,wrong_some_phreeqc_failed,26
+gpt52_raw,GPT-5.2,Agent-Raw100k,wrong_successful_run_needs_manual_split,46
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,correct,127
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,ungraded_max_step_or_no_final,2
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,wrong_some_phreeqc_failed,22
+gpt52_raw500k,GPT-5.2,Agent-Raw500k,wrong_successful_run_needs_manual_split,49
+gpt51_toc,GPT-5.1,Agent-TOC,correct,108
+gpt51_toc,GPT-5.1,Agent-TOC,ungraded_no_parse,2
+gpt51_toc,GPT-5.1,Agent-TOC,wrong_all_phreeqc_failed,3
+gpt51_toc,GPT-5.1,Agent-TOC,wrong_some_phreeqc_failed,37
+gpt51_toc,GPT-5.1,Agent-TOC,wrong_successful_run_needs_manual_split,50
+gpt51_raw,GPT-5.1,Agent-Raw100k,correct,127
+gpt51_raw,GPT-5.1,Agent-Raw100k,wrong_all_phreeqc_failed,7
+gpt51_raw,GPT-5.1,Agent-Raw100k,wrong_some_phreeqc_failed,29
+gpt51_raw,GPT-5.1,Agent-Raw100k,wrong_successful_run_needs_manual_split,37
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,correct,116
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,wrong_all_phreeqc_failed,9
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,wrong_some_phreeqc_failed,33
+gpt51_raw500k,GPT-5.1,Agent-Raw500k,wrong_successful_run_needs_manual_split,42
