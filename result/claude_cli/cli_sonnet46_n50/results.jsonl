@@ -1,0 +1,6 @@
+{"index": 2, "row_index": 1, "task_type": "mcq", "truth": "C", "prediction": "A", "tolerance": null, "tolerance_mode": null, "is_correct": false}
+{"index": 12, "row_index": 11, "task_type": "mcq", "truth": "B", "prediction": "B", "tolerance": null, "tolerance_mode": null, "is_correct": true}
+{"index": 23, "row_index": 22, "task_type": "mcq", "truth": "D", "prediction": "D", "tolerance": null, "tolerance_mode": null, "is_correct": true}
+{"index": 7, "row_index": 6, "task_type": "mcq", "truth": "C", "prediction": "C", "tolerance": null, "tolerance_mode": null, "is_correct": true}
+{"index": 8, "row_index": 7, "task_type": "mcq", "truth": "A", "prediction": null, "tolerance": null, "tolerance_mode": null, "is_correct": null, "error": "Timeout 600s"}
+{"index": 9, "row_index": 8, "task_type": "mcq", "truth": "A", "prediction": null, "tolerance": null, "tolerance_mode": null, "is_correct": null, "error": "Timeout 600s"}

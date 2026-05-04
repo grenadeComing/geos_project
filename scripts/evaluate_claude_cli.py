@@ -27,6 +27,7 @@ import os
 import shutil
 import subprocess
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -38,9 +39,6 @@ REPO_ROOT = BASE_DIR.parent
 sys.path.insert(0, str(BASE_DIR))
 
 from _common import (  # noqa: E402
-    FILL_FINAL_ANSWER_INSTRUCTION,
-    MCQ_FINAL_ANSWER_INSTRUCTION,
-    build_prompt,
     grade_row,
     load_dataset,
     parse_answer,
@@ -74,28 +72,31 @@ DB_REFERENCE = REPO_ROOT / "archive_acm_2026" / "all_materials" / "database_refe
 
 
 PHREEQC_INSTRUCTION = f"""\
-You have access to the PHREEQC geochemical simulator and standard file tools
-(Bash, Read, Write, Edit). Use them to solve the problem below.
+You have access to the PHREEQC geochemical simulator.
+Binary: {PHREEQC_BIN}
+Thermodynamic database: ./phreeqc.dat (in your current working directory)
+Element/species reference: ./database_reference.txt
 
-PHREEQC binary: {PHREEQC_BIN}
-Thermodynamic database: ./phreeqc.dat (already staged in your working directory)
-Database element/species reference: ./database_reference.txt (if present)
-
-To run a simulation:
-  1. Write a PHREEQC input file (e.g. input.pqi) with Write/Edit.
-  2. Execute via Bash:
-       {PHREEQC_BIN} input.pqi result.out ./phreeqc.dat
-  3. Read result.out to find the requested quantity.
-
-All file operations must stay within the current working directory.
+Run via Bash: {PHREEQC_BIN} <input.pqi> <output.out> ./phreeqc.dat
 """
 
 
 def _build_prompt(row: dict[str, Any]) -> str:
-    core = build_prompt(row, for_agent=True)
-    final = (MCQ_FINAL_ANSWER_INSTRUCTION if row["task_type"] == "mcq"
-             else FILL_FINAL_ANSWER_INSTRUCTION)
-    return f"{PHREEQC_INSTRUCTION}\n{core}\n{final}\n"
+    if row["task_type"] == "mcq":
+        answer_format = "Respond with ONLY the answer letter (A, B, C, or D). No explanation, no other text."
+    else:
+        answer_format = "Respond with ONLY the numeric answer. No units, no explanation, no other text."
+    return f"{PHREEQC_INSTRUCTION}\n{row['question']}\n\n{answer_format}\n"
+
+
+def _extract_pred(result_text: str, task_type: str) -> Any:
+    """Strict single-letter / single-number first; fall back to parse_answer."""
+    s = (result_text or "").strip()
+    if task_type == "mcq":
+        u = s.upper()
+        if u in ("A", "B", "C", "D"):
+            return u
+    return parse_answer(s, task_type, strict=False)
 
 
 def _process_one(row: dict[str, Any], ws_root: Path, model: str,
@@ -118,6 +119,7 @@ def _process_one(row: dict[str, Any], ws_root: Path, model: str,
         "--max-turns", str(max_turns),
         "--output-format", "json",
         "--dangerously-skip-permissions",
+        "--disallowedTools", "WebSearch,WebFetch",
     ]
 
     started = time.time()
@@ -155,13 +157,9 @@ def _process_one(row: dict[str, Any], ws_root: Path, model: str,
     }
     log_path.write_text(json.dumps(log, ensure_ascii=False, indent=2))
 
-    fa = workspace / "final_answer.txt"
     pred: Any = None
-    if fa.exists():
-        pred = parse_answer(fa.read_text(encoding="utf-8"), row["task_type"], strict=True)
-
-    if pred is None and isinstance(parsed, dict) and parsed.get("result"):
-        pred = parse_answer(parsed["result"], row["task_type"], strict=False)
+    if isinstance(parsed, dict) and parsed.get("result"):
+        pred = _extract_pred(parsed["result"], row["task_type"])
 
     return grade_row(row, pred)
 
@@ -177,8 +175,12 @@ def _parse_args() -> argparse.Namespace:
                    help="Per-question wall-clock timeout (seconds).")
     p.add_argument("--limit", type=int, default=None,
                    help="Process only the first N questions (for smoke tests).")
+    p.add_argument("--sample", type=int, default=None,
+                   help="Randomly sample N questions (use --seed for reproducibility).")
+    p.add_argument("--seed", type=int, default=42,
+                   help="Random seed for --sample. Default 42.")
     p.add_argument("--resume", action="store_true",
-                   help="Skip questions whose final_answer.txt already exists.")
+                   help="Skip questions whose cli_log.json already exists.")
     p.add_argument("--task-filter", choices=("all", "mcq", "fill"), default="all")
     return p.parse_args()
 
@@ -197,27 +199,66 @@ def main() -> None:
     if args.limit is not None:
         records = records[:args.limit]
         print(f"Limit applied: running first {len(records)} questions.")
+    if args.sample is not None:
+        import random
+        if args.sample > len(records):
+            raise RuntimeError(f"--sample {args.sample} > available {len(records)} records.")
+        rng = random.Random(args.seed)
+        records = sorted(rng.sample(records, args.sample), key=lambda r: r["index"])
+        sampled_indices = [r["index"] for r in records]
+        print(f"Sampled {len(records)} questions with seed={args.seed}: indices {sampled_indices}")
 
     run_dir = RESULT_ROOT / args.name
     run_dir.mkdir(parents=True, exist_ok=True)
     ws_root = run_dir / "work_space"
     ws_root.mkdir(parents=True, exist_ok=True)
 
+    if args.sample is not None:
+        (run_dir / "sample_indices.json").write_text(json.dumps({
+            "seed": args.seed,
+            "n_sampled": len(records),
+            "n_total": len(load_dataset(dataset_path)),
+            "indices": [r["index"] for r in records],
+        }, indent=2), encoding="utf-8")
+
     results: list[dict[str, Any]] = []
     records_to_run = records
+
+    results_path = run_dir / "results.jsonl"
 
     if args.resume:
         remaining: list[dict[str, Any]] = []
         for row in records:
             idx = row["index"]
-            fa = ws_root / f"dataset_q_{idx + 1:05d}" / "final_answer.txt"
-            if fa.exists():
-                pred = parse_answer(fa.read_text(encoding="utf-8"), row["task_type"], strict=True)
-                results.append(grade_row(row, pred))
-            else:
-                remaining.append(row)
+            logf = ws_root / f"dataset_q_{idx + 1:05d}" / "cli_log.json"
+            if logf.exists():
+                try:
+                    log = json.loads(logf.read_text())
+                    env = log.get("parsed") if isinstance(log, dict) else None
+                    pred = (_extract_pred(env["result"], row["task_type"])
+                            if isinstance(env, dict) and env.get("result") else None)
+                    results.append(grade_row(row, pred))
+                    continue
+                except Exception:
+                    pass
+            remaining.append(row)
         print(f"Resuming: {len(results)} done, {len(remaining)} remaining")
         records_to_run = remaining
+    else:
+        # Fresh run: clear streaming results.jsonl
+        results_path.write_text("", encoding="utf-8")
+
+    write_lock = threading.Lock()
+
+    def _append_result(r: dict[str, Any]) -> None:
+        with write_lock:
+            with results_path.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+                f.flush()
+
+    # Seed the streaming file with already-resumed results so it's the full record.
+    for r in results:
+        _append_result(r)
 
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as ex:
         futures = {
@@ -229,10 +270,13 @@ def main() -> None:
                    desc=f"cli ({args.model})", unit="q")
               if tqdm else as_completed(futures))
         for fut in it:
-            results.append(fut.result())
+            r = fut.result()
+            results.append(r)
+            _append_result(r)
 
+    # Final canonical rewrite: streaming file is in completion order; sort by index for analysis tools.
     results.sort(key=lambda r: r["index"])
-    (run_dir / "results.jsonl").write_text(
+    results_path.write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in results) + "\n",
         encoding="utf-8",
     )
