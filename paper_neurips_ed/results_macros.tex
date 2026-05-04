@@ -69,7 +69,21 @@
 \newcommand{\GeminiThreeFlashErrRetry}{112}
 \newcommand{\GeminiThreeFlashErrUnparseable}{38}
 
-% External harness comparison (Claude Code CLI vs custom on matched 50)
+% Gemini Flash 3 step-budget analysis (TOC vs Raw100k breakdown)
+\newcommand{\GeminiTOCMaxStepsBreakdown}{117}
+\newcommand{\GeminiTOCCommittedBreakdown}{82}
+\newcommand{\GeminiTOCParseableBreakdown}{50}
+\newcommand{\GeminiTOCReadFileMedian}{9}
+\newcommand{\GeminiTOCReadFileMean}{8.3}
+\newcommand{\GeminiTOCStepMedian}{24}
+\newcommand{\GeminiRawMaxStepsBreakdown}{57}
+\newcommand{\GeminiRawCommittedBreakdown}{143}
+\newcommand{\GeminiRawParseableBreakdown}{102}
+\newcommand{\GeminiRawReadFileMedian}{2}
+\newcommand{\GeminiRawReadFileMean}{2.7}
+\newcommand{\GeminiRawStepMedian}{18}
+
+% External harness comparison: Sonnet (Claude Code CLI vs custom on matched 50)
 \newcommand{\SDKCustomTOCCorrect}{41}
 \newcommand{\SDKCustomTOCAcc}{82.0\%}
 \newcommand{\SDKCustomRawCorrect}{42}
@@ -81,6 +95,34 @@
 \newcommand{\SDKCustomTOCMinusSDK}{22.0\,pp}
 \newcommand{\SDKCustomRawMinusSDK}{24.0\,pp}
 
+% External harness comparison: GPT-5.4 (Codex CLI vs custom on matched 50)
+\newcommand{\GPTFiveFourCustomTOCMatchedCorrect}{34}
+\newcommand{\GPTFiveFourCustomTOCMatchedAcc}{68.0\%}
+\newcommand{\GPTFiveFourCustomRawMatchedCorrect}{35}
+\newcommand{\GPTFiveFourCustomRawMatchedAcc}{70.0\%}
+\newcommand{\GPTFiveFourCustomRawFiveHundredKMatchedCorrect}{39}
+\newcommand{\GPTFiveFourCustomRawFiveHundredKMatchedAcc}{78.0\%}
+\newcommand{\CodexGPTFiveFourCorrect}{43}
+\newcommand{\CodexGPTFiveFourAcc}{86.0\%}
+
+% Token-efficiency comparison (per-question input tokens, in thousands)
+\newcommand{\SonnetCustomTOCPerQK}{101}
+\newcommand{\SonnetCustomRawPerQK}{258}
+\newcommand{\SDKSonnetPerQK}{197}
+\newcommand{\GPTFiveFourCustomTOCPerQK}{57}
+\newcommand{\GPTFiveFourCustomRawPerQK}{72}
+\newcommand{\GPTFiveFourCustomRawFiveHundredKPerQK}{129}
+\newcommand{\CodexGPTFiveFourPerQK}{235}
+
+% Token-efficiency: tokens per correct answer (in thousands)
+\newcommand{\SonnetCustomTOCPerCorrectK}{123}
+\newcommand{\SonnetCustomRawPerCorrectK}{307}
+\newcommand{\SDKSonnetPerCorrectK}{328}
+\newcommand{\GPTFiveFourCustomTOCPerCorrectK}{84}
+\newcommand{\GPTFiveFourCustomRawPerCorrectK}{102}
+\newcommand{\GPTFiveFourCustomRawFiveHundredKPerCorrectK}{165}
+\newcommand{\CodexGPTFiveFourPerCorrectK}{273}
+
 % TOC-vs-raw ablation.
 \newcommand{\OpusRaw}{85.0\%}
 \newcommand{\SonnetRaw}{83.5\%}
@@ -91,7 +133,7 @@
 \newcommand{\GPTFiveTwoRawFiveHundredK}{63.5\%}
 \newcommand{\GPTFiveFourRawFiveHundredK}{74.5\%}
 \newcommand{\GeminiFlashRaw}{--}
-\newcommand{\GeminiThreeFlashRaw}{--}
+\newcommand{\GeminiThreeFlashRaw}{47.0\%}
 \newcommand{\OpusTOCTokens}{22.75M}
 \newcommand{\OpusRawTokens}{43.71M}
 \newcommand{\SonnetTOCTokens}{20.19M}
