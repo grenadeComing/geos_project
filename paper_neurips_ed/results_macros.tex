@@ -370,13 +370,70 @@
 \newcommand{\GPTFiveOneTOCRerunMean}{48.7\%}
 \newcommand{\GPTFiveOneTOCRerunSD}{5.5}
 \newcommand{\GPTFiveOneTOCRerunRange}{11.0}
+\newcommand{\GPTFiveOneTOCRerunTokens}{9.41M, 9.93M, 10.21M}
+\newcommand{\GPTFiveOneTOCRerunAccDiff}{$-$10.5, $-$6.0, $+$0.5}
+\newcommand{\GPTFiveOneTOCRerunTokDiff}{$+$2.16, $+$2.68, $+$2.96}
+\newcommand{\GPTFiveOneTOCRerunTokSD}{0.41}
+\newcommand{\GPTFiveOneTOCRerunTokRange}{0.81}
 
 \newcommand{\GPTFiveTwoTOCRerunValues}{54.0\%, 55.0\%, 55.5\%}
 \newcommand{\GPTFiveTwoTOCRerunMean}{54.8\%}
 \newcommand{\GPTFiveTwoTOCRerunSD}{0.8}
 \newcommand{\GPTFiveTwoTOCRerunRange}{1.5}
+\newcommand{\GPTFiveTwoTOCRerunTokens}{11.57M, 11.84M, 12.33M}
+\newcommand{\GPTFiveTwoTOCRerunAccDiff}{$+$0.5, $+$1.5, $+$2.0}
+\newcommand{\GPTFiveTwoTOCRerunTokDiff}{$-$0.48, $-$0.21, $+$0.28}
+\newcommand{\GPTFiveTwoTOCRerunTokSD}{0.39}
+\newcommand{\GPTFiveTwoTOCRerunTokRange}{0.76}
 
 \newcommand{\GPTFiveFourTOCRerunValues}{66.5\%, 72.5\%, 74.5\%}
 \newcommand{\GPTFiveFourTOCRerunMean}{71.2\%}
 \newcommand{\GPTFiveFourTOCRerunSD}{4.2}
 \newcommand{\GPTFiveFourTOCRerunRange}{8.0}
+\newcommand{\GPTFiveFourTOCRerunTokens}{11.03M, 11.18M, 11.23M}
+\newcommand{\GPTFiveFourTOCRerunAccDiff}{$-$6.0, $0.0$, $+$2.0}
+\newcommand{\GPTFiveFourTOCRerunTokDiff}{$-$0.41, $-$0.26, $-$0.21}
+\newcommand{\GPTFiveFourTOCRerunTokSD}{0.11}
+\newcommand{\GPTFiveFourTOCRerunTokRange}{0.20}
+
+% Cap-unaffected (163 items, output <=100k) aggregate accuracy, computed by summing
+% the four cap-unaffected bins (<=10k, 10-20k, 20-50k, 50-100k) from the per-model
+% appendix bin tables (Appendix sec:appendix-output-bin-grid).
+\newcommand{\SonnetTOCCapUnaffected}{87.7\%}
+\newcommand{\SonnetRawCapUnaffected}{85.9\%}
+\newcommand{\SonnetTOCMinusRawCapUnaffected}{$+$1.8\,pp}
+\newcommand{\GPTFiveFourTOCCapUnaffected}{76.1\%}
+\newcommand{\GPTFiveFourRawCapUnaffected}{71.2\%}
+\newcommand{\GPTFiveFourTOCMinusRawCapUnaffected}{$+$4.9\,pp}
+\newcommand{\GPTFiveTwoTOCCapUnaffected}{55.2\%}
+\newcommand{\GPTFiveTwoRawCapUnaffected}{62.6\%}
+\newcommand{\GPTFiveTwoTOCMinusRawCapUnaffected}{$-$7.4\,pp}
+\newcommand{\GPTFiveOneTOCCapUnaffected}{57.0\%}
+\newcommand{\GPTFiveOneRawCapUnaffected}{69.9\%}
+\newcommand{\GPTFiveOneTOCMinusRawCapUnaffected}{$-$12.9\,pp}
+
+% Cap-unaffected (163 items) total input tokens and TOC token reduction,
+% computed from the per-bin tok/item values in the appendix bin tables.
+% 2-decimal precision so that sub-aggregates add to parent totals exactly
+% (e.g., Sonnet 13.47M + 6.72M = 20.19M = \SonnetTOCTokens).
+\newcommand{\SonnetTOCCapUnaffectedTokens}{13.47M}
+\newcommand{\SonnetRawCapUnaffectedTokens}{30.16M}
+\newcommand{\SonnetTOCCapUnaffectedTokenReduction}{55\%}
+\newcommand{\GPTFiveFourTOCCapUnaffectedTokens}{8.87M}
+\newcommand{\GPTFiveFourRawCapUnaffectedTokens}{8.56M}
+\newcommand{\GPTFiveFourTOCCapUnaffectedTokenReduction}{$-$3.6\%}
+\newcommand{\GPTFiveTwoTOCCapUnaffectedTokens}{8.93M}
+\newcommand{\GPTFiveTwoRawCapUnaffectedTokens}{9.31M}
+\newcommand{\GPTFiveTwoTOCCapUnaffectedTokenReduction}{4\%}
+\newcommand{\GPTFiveOneTOCCapUnaffectedTokens}{4.96M}
+\newcommand{\GPTFiveOneRawCapUnaffectedTokens}{5.97M}
+\newcommand{\GPTFiveOneTOCCapUnaffectedTokenReduction}{17\%}
+
+% Cap-affected (37 items) sub-aggregates for Sonnet, computed from the per-bin
+% values in Appendix tab:appendix-bin-sonnet (250-500k and >500k bins).
+\newcommand{\SonnetTOCCapAffected}{75.7\%}
+\newcommand{\SonnetRawCapAffected}{73.0\%}
+\newcommand{\SonnetTOCMinusRawCapAffected}{$+$2.7\,pp}
+\newcommand{\SonnetTOCCapAffectedTokens}{6.72M}
+\newcommand{\SonnetRawCapAffectedTokens}{21.44M}
+\newcommand{\SonnetTOCCapAffectedTokenReduction}{69\%}

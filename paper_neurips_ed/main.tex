@@ -75,7 +75,7 @@ LLM work in chemistry and geoscience often focuses on prediction, literature syn
 
 \subsection{Dataset and Task}
 
-\BenchName{} contains \BenchN{} four-option multiple-choice items derived from \BenchScenarioN{} validated PHREEQC simulation scenarios authored and reviewed by domain experts in aqueous geochemistry, with topic ideas inspired by the official USGS PHREEQC example database and the phreeqcusers community forum. Each item has a unique simulator-derived target answer; the agent must write a PHREEQC input file, execute the simulator (PHREEQC 3.8.6 with an author-supplied validated \texttt{phreeqc.dat} thermodynamic database), inspect generated output files, and commit to its final answer by writing a file containing only the letter (A, B, C, or D); missing or unparseable final-answer files count as incorrect. LLMs exhibit answer-position preferences under one-shot prompting (Appendix~\ref{sec:appendix-label-behavior}); we therefore balanced the truth-label distribution to be approximately uniform: A=\BenchAlwaysA, B=\BenchAlwaysB, C=\BenchAlwaysC, D=\BenchAlwaysD. For the scenario-clustered analysis in Section~\ref{sec:scenario}, a scenario stem is operationally defined as the first paragraph of the problem statement after whitespace normalization.
+\BenchName{} contains \BenchN{} four-option multiple-choice items derived from \BenchScenarioN{} validated PHREEQC simulation scenarios authored and reviewed by domain experts in aqueous geochemistry, with topic ideas inspired by the official USGS PHREEQC example database and the phreeqcusers community forum. Each item has a unique simulator-derived target answer; the agent must write a PHREEQC input file, execute the simulator (PHREEQC 3.8.6 with an author-supplied validated \texttt{phreeqc.dat} thermodynamic database), inspect generated output files, and commit to its final answer by writing a file containing only the letter (A, B, C, or D); missing or unparseable final-answer files count as incorrect. LLMs exhibit answer-position preferences under one-shot prompting (Appendix~\ref{sec:appendix-label-behavior}); we therefore balanced the truth-label distribution to be approximately uniform: A=\BenchAlwaysA, B=\BenchAlwaysB, C=\BenchAlwaysC, D=\BenchAlwaysD. For the scenario-clustered analysis (Appendix~\ref{sec:appendix-scenario-stratification}), a scenario stem is operationally defined as the first paragraph of the problem statement after whitespace normalization.
 
 \subsection{Scope and Choice of Simulator}
 
@@ -84,7 +84,7 @@ LLM work in chemistry and geoscience often focuses on prediction, literature syn
 \subsection{Tool Environment}
 \label{sec:harness}
 
-The custom agent is given four tools: \texttt{write\_file}, \texttt{read\_file}, \texttt{list\_file}, and \texttt{execute\_phreeqc}. Each question runs in an isolated workspace with a fixed maximum of 24 agent steps. PHREEQC execution is deterministic for a given input file and the frozen benchmark database. Because simulator-output sizes on \BenchName{} are empirically bimodal (\OutputLeHundredK{} of files $\le$100k characters, the rest beginning at $\sim$369k; Appendix~\ref{sec:appendix-output-access}), large outputs cannot reliably be inlined into the agent's context. We therefore introduce a \textbf{table-of-contents (TOC)} interface for the \texttt{execute\_phreeqc} tool: rather than returning raw text, the tool writes the simulator output to a workspace file and returns a section-level outline (section headers with their line ranges); the agent then issues line-range \texttt{read\_file} calls to retrieve evidence on demand. TOC is a structured-retrieval interface for large tool outputs, adjacent to recent memory-pointer approaches~\citep{labate2025memorypointers} but specialized to PHREEQC's deterministic, section-structured output. We evaluate the agent under two output-access protocols built on this design choice: \textbf{Agent-TOC} (size-agnostic, always uses the TOC interface) and \textbf{Agent-Raw100k} (inline raw output, head/tail-truncated to \RawCapChars{} characters). Both protocols share the agent loop and tool set; only the \texttt{execute\_phreeqc} payload differs. Comparing TOC against summarization- or chunking-based access is out of scope of this benchmark paper; we report TOC vs raw inline (Raw100k) as a within-family baseline check (Section~\ref{sec:toc}).
+The custom agent is given four tools: \texttt{write\_file}, \texttt{read\_file}, \texttt{list\_file}, and \texttt{execute\_phreeqc}. Each question runs in an isolated workspace with a fixed maximum of 24 agent steps. PHREEQC execution is deterministic for a given input file and the frozen benchmark database. Because simulator-output sizes on \BenchName{} are empirically bimodal (\OutputLeHundredK{} of files $\le$100k characters, the rest beginning at $\sim$369k; Appendix~\ref{sec:appendix-output-access}), large outputs cannot reliably be inlined into the agent's context. We therefore introduce a \textbf{table-of-contents (TOC)} interface for the \texttt{execute\_phreeqc} tool: rather than returning raw text, the tool writes the simulator output to a workspace file and returns a section-level outline --- a list of section names paired with their starting line numbers in the output file. The agent then issues \texttt{read\_file} calls with explicit \texttt{start\_line}/\texttt{end\_line} arguments to retrieve evidence on demand.\footnote{The TOC builder is gated by an implementation-level size cap; for outputs exceeding the cap or lacking parseable section headers, the returned TOC is empty and the agent navigates \texttt{result.out} via \texttt{read\_file}'s default head/tail preview. See Appendix~\ref{sec:appendix-toc-impl}.} TOC is a structured-retrieval interface for large tool outputs, adjacent to recent memory-pointer approaches~\citep{labate2025memorypointers} but specialized to PHREEQC's deterministic, section-structured output. We evaluate the agent under two output-access protocols built on this design choice: \textbf{Agent-TOC} (size-agnostic, always uses the TOC interface) and \textbf{Agent-Raw100k} (inline raw output, head/tail-truncated to \RawCapChars{} characters). Both protocols share the agent loop and tool set; only the \texttt{execute\_phreeqc} payload differs. Comparing TOC against summarization- or chunking-based access is out of scope of this benchmark paper; we report TOC vs raw inline (Raw100k) as a within-family baseline check (Section~\ref{sec:toc}).
 
 \section{Main Results}
 \label{sec:main-results}
@@ -130,7 +130,7 @@ Gemini 3 Flash Preview's TOC agent reverses the pattern, reaching only \GeminiTh
 \section{Beyond Aggregate Accuracy: Diagnostic Probes for Tool-Augmented Agents}
 \label{sec:diagnostic}
 
-Section~\ref{sec:main-results} establishes that tool access drives the headline gains for top- and mid-tier models and that it actively harms the below-mid tier. This section opens the box behind those aggregate numbers along five axes: whether tool use is pure addition or trades items at the unit level (§\ref{sec:diag-retention}), whether the gains depend on the choice of output-access protocol (§\ref{sec:toc}), what operational cost is paid in wall-clock and step counts (§\ref{sec:diag-trajectory}), whether vendor-default external harnesses replicate the gains under matched conditions (§\ref{sec:diag-harness}), and whether the conclusions hold under scenario-clustered uncertainty (§\ref{sec:scenario}).
+Section~\ref{sec:main-results} establishes that tool access drives the headline gains for top- and mid-tier models and that it actively harms the below-mid tier. This section opens the box behind those aggregate numbers along two axes: whether tool use is pure addition or trades items at the unit level (§\ref{sec:diag-retention}), and whether the gains depend on the choice of output-access protocol (§\ref{sec:toc}). Three additional diagnostics --- external harness comparison, trajectory and operational cost, and scenario-clustered uncertainty --- are reported in Appendices~\ref{sec:appendix-external-harness}, \ref{sec:appendix-trajectory}, and \ref{sec:appendix-scenario-stratification} and support the same capability-tier reading.
 
 \subsection{Retention: Tool Use Trades Items, Not Just Adds Them}
 \label{sec:diag-retention}
@@ -160,7 +160,7 @@ Two patterns generalize across the five agents in Table~\ref{tab:retention} with
 \subsection{TOC Pays Off Only for Top-Tier Models}
 \label{sec:toc}
 
-TOC keeps raw output out of context at the cost of an extra navigation step the agent must execute. Whether that tradeoff pays off should depend on the model's navigation capability, not on any property of the benchmark. Table~\ref{tab:toc-raw} compares the TOC and Raw100k protocols (Section~\ref{sec:harness}) on the full benchmark, where the \RawCapChars-character cap is non-binding for most items and the question is whether structured access changes cost or accuracy. Table~\ref{tab:large-output-access} then isolates the \RawCapAffectedN{} cap-affected high-output items, where Raw100k and Raw500k differ in the evidence actually returned.
+TOC keeps raw output out of context at the cost of an extra navigation step the agent must execute. Whether that tradeoff pays off should depend on the model's navigation capability, not on any property of the benchmark. Table~\ref{tab:toc-raw} compares the TOC and Raw100k protocols (Section~\ref{sec:harness}) on the full benchmark, where the \RawCapChars-character cap is non-binding for most items and the question is whether structured access changes cost or accuracy.
 
 \begin{table}[t]
 \centering
@@ -177,13 +177,34 @@ GPT-5.2 & \GPTFiveTwoTOC & \GPTFiveTwoRaw & \GPTFiveTwoTOCMinusRaw & \GPTFiveTwo
 GPT-5.1 & \GPTFiveOneTOC & \GPTFiveOneRaw & \GPTFiveOneTOCMinusRaw & \GPTFiveOneTOCTokens & \GPTFiveOneRawTokens & \GPTFiveOneTOCTokenReduction \\
 \bottomrule
 \end{tabular}
-\caption{TOC versus truncated raw-output execution interface. Both conditions use the same agent loop and differ only in what \texttt{execute\_phreeqc} returns. Raw observations are capped at \RawCapChars{} characters per PHREEQC execution. ``TOC--Raw'' reports TOC accuracy minus raw-output accuracy in percentage points. ``TOC token saving'' reports the percentage input-token reduction from using TOC instead of raw output, computed as $(\mathrm{Raw}-\mathrm{TOC})/\mathrm{Raw}$.}
+\caption{TOC versus truncated raw-output execution interface. Both conditions use the same agent loop and differ only in what \texttt{execute\_phreeqc} returns. Raw observations are capped at \RawCapChars{} characters per PHREEQC execution. The ``TOC tokens'' and ``Raw tokens'' columns report total agent input tokens per run (millions, M); all token reporting in this section uses the same convention.}
 \label{tab:toc-raw}
 \end{table}
 
-The TOC ablation pattern aligns with model capability tier rather than with vendor. For the three top-tier models in our evaluation (Claude Opus 4.6, Claude Sonnet 4.6, and GPT-5.4), TOC essentially matches raw-output accuracy at large input-token savings: Opus is \OpusTOCMinusRaw{} relative to raw at \OpusTOCTokenReduction{} token reduction, Sonnet is \SonnetTOCMinusRaw{} at \SonnetTOCTokenReduction{}, and GPT-5.4 is \GPTFiveFourTOCMinusRaw{} at \GPTFiveFourTOCTokenReduction{}. For the two mid-tier models in our evaluation (GPT-5.2 and GPT-5.1), TOC is a measurable cost: GPT-5.2 is \GPTFiveTwoTOCMinusRaw{} at \GPTFiveTwoTOCTokenReduction{}, and GPT-5.1 is \GPTFiveOneTOCMinusRaw{} at \GPTFiveOneTOCTokenReduction{}. The cut crosses vendor: GPT-5.4 sits with the Anthropic top-tier rather than with its same-vendor mid-tier siblings, while GPT-5.1 and GPT-5.2 sit on the mid-tier side regardless of being from the same family as GPT-5.4. This pattern is consistent with a capability-mediated mechanism: TOC navigation requires interpreting a table-of-contents structure, issuing precise line-range read calls, extracting the requested numerical quantity, and mapping it to an answer choice. Each step is a capability test; mid-tier models stumble on one or more of these steps and lose accuracy that raw-output access would have preserved by delivering the entire payload upfront. The GPT-5.2 regression sits an order of magnitude outside the model's measured TOC rerun SD of \GPTFiveTwoTOCRerunSD\,pp (Table~\ref{tab:toc-rerun-variance}); the GPT-5.1 regression sits within roughly two of its larger \GPTFiveOneTOCRerunSD\,pp SD but is directionally consistent with the same capability-tier pattern. We therefore read the TOC interface as Pareto-good for top-tier models in this harness --- no measurable accuracy cost at substantial token savings --- and as a measurable tradeoff for mid-tier models, with a mechanism that points to navigation capability rather than vendor or context-window size. Appendix~\ref{sec:appendix-cross-protocol-overlap} quantifies this directly via a cross-protocol right-item overlap analysis: both protocols catch items the other misses for every model, but for mid-tier GPT the asymmetry favors Raw100k by 16--19 net items (raw-only minus TOC-only), while for top-tier Sonnet the two protocols disagree on only 6\% of items and for GPT-5.4 the disagreement is roughly symmetric. Appendix~\ref{sec:appendix-retention-decomp} reports per-bin lost-rate decompositions showing that on the small-output bulk of the benchmark ($\le$50k characters), mid-tier lost rates range from 26\% to 60\% across bins (with $n\ge 15$ direct-right items per cell), while top-tier lost rates stay below 20\% on the same bins. Because \OutputLeHundredK{} of items are not cap-affected, the GPT accuracy losses cannot be attributed to Raw100k truncation; we examine the output-size dependence next.
+Table~\ref{tab:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) sits within $\pm$2.5\,pp of raw-output accuracy at 20--60\% input-token reductions; TOC is Pareto-good. The mid tier (GPT-5.1, GPT-5.2) regresses by 8--10\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per GPT model (Table~\ref{tab:toc-rerun-variance}) yield a maximum accuracy SD of \TOCRerunMaxSD\,pp, an order of magnitude below the gap. Token consumption is even more stable --- all three GPT models have rerun token SD $\le$ 0.41\,M (GPT-5.4 just 0.11\,M) --- so the 20--60\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
 
-The aggregate TOC-vs-Raw100k difference also hides systematic variation by output size. Within the \RawCapUnaffectedN{} cap-unaffected items where Raw100k returns the file in full, Sonnet's TOC matches or beats Raw100k across every output-size bin, with the largest TOC advantage in the 20--50k mid-range ($+$3.8pp, $n$=26). GPT-5.4 shows the opposite pattern in the small mode --- TOC is roughly tied with Raw100k on outputs $\le$10k ($n$=82) but better in the 10--20k bin ($+$6.4pp, $n$=47) --- and Raw100k regains an advantage in the long tail at 250--500k ($+$14.3pp, $n$=21). For mid-tier GPT models, Raw100k generally beats TOC on the bulk of items: GPT-5.2 trails TOC by $-$8.0pp aggregate, with bin-level gaps of $-$12.8pp at 10--20k ($n$=47) and $-$11.5pp at 20--50k ($n$=26). The pattern is therefore non-monotone in both output size and model: TOC's structured access is well-utilized by Sonnet across the distribution, weakly utilized by GPT-5.4 except in the long tail, and a net cost for the mid-tier GPT family on the items that dominate the benchmark. Read against the per-model rerun SDs in Table~\ref{tab:toc-rerun-variance}, the GPT-5.2 bin gaps sit an order of magnitude above the model's measured TOC variance and are therefore the most robust quantitative result in this output-access analysis; the GPT-5.4 long-tail gap also exceeds its model SD; the smaller GPT-5.4 and GPT-5.1 small-bin gaps sit closer to noise and should be read as directionally consistent with the broader pattern rather than as standalone effect sizes.
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccc}
+\toprule
+Model & Orig.\ (acc, tok) & Acc $\Delta$ (pp) & Tok $\Delta$ (M) & Acc SD / Rng & Tok SD / Rng \\
+\midrule
+GPT-5.1 + TOC & \GPTFiveOneTOC, \GPTFiveOneTOCTokens & \GPTFiveOneTOCRerunAccDiff & \GPTFiveOneTOCRerunTokDiff & \GPTFiveOneTOCRerunSD{} / \GPTFiveOneTOCRerunRange & \GPTFiveOneTOCRerunTokSD{} / \GPTFiveOneTOCRerunTokRange \\
+GPT-5.2 + TOC & \GPTFiveTwoTOC, \GPTFiveTwoTOCTokens & \GPTFiveTwoTOCRerunAccDiff & \GPTFiveTwoTOCRerunTokDiff & \GPTFiveTwoTOCRerunSD{} / \GPTFiveTwoTOCRerunRange & \GPTFiveTwoTOCRerunTokSD{} / \GPTFiveTwoTOCRerunTokRange \\
+GPT-5.4 + TOC & \GPTFiveFourTOC, \GPTFiveFourTOCTokens & \GPTFiveFourTOCRerunAccDiff & \GPTFiveFourTOCRerunTokDiff & \GPTFiveFourTOCRerunSD{} / \GPTFiveFourTOCRerunRange & \GPTFiveFourTOCRerunTokSD{} / \GPTFiveFourTOCRerunTokRange \\
+\bottomrule
+\end{tabular}
+\caption{TOC rerun stability per GPT model. $\Delta$ columns are reruns minus original (Table~\ref{tab:toc-raw}); tokens are total agent input tokens (M). Per-item decomposition in Appendix~\ref{sec:appendix-stability}.}
+\label{tab:toc-rerun-variance}
+\end{table}
+
+The benchmark is bimodal in output size (Section~\ref{sec:harness}): \OutputLeHundredK{} of items are at most 100k characters and the remainder begin at $\sim$369k. We therefore analyze TOC behavior in two regimes: cap-unaffected items, where the TOC index is built and Raw100k returns the file in full, and cap-affected items, where the TOC index is empty (Appendix~\ref{sec:appendix-toc-impl}) and Raw100k truncates. We examine each regime in turn.
+
+On the cap-unaffected regime (\RawCapUnaffectedN{} items, output $\le$100k), top-tier wins accuracy under TOC and mid-tier loses, with model-specific token effects. Sonnet TOC reaches \SonnetTOCCapUnaffected{} (\SonnetTOCMinusRawCapUnaffected{} over Raw100k) at \SonnetTOCCapUnaffectedTokenReduction{} input-token reduction (\SonnetTOCCapUnaffectedTokens{} vs \SonnetRawCapUnaffectedTokens{}). GPT-5.4 TOC reaches \GPTFiveFourTOCCapUnaffected{} (\GPTFiveFourTOCMinusRawCapUnaffected{}) at $\sim$3.6\% aggregate token overhead (\GPTFiveFourTOCCapUnaffectedTokens{} vs \GPTFiveFourRawCapUnaffectedTokens{}), concentrated entirely in the $\le$10k bin where Raw100k's inline payload is already small. On the mid-bins where TOC's structured retrieval is most engaged, GPT-5.4's trade is decisively favorable: $+$6.4\,pp at 10--20k (47 items, tied tokens), $+$23.1\,pp at 20--50k (26 items, 4\% token overhead), and tied accuracy at 50--100k (8 items, 37\% token saving) --- TOC strictly Pareto-dominates Raw100k on every bin from 10k upward. GPT-5.2 trails Raw100k by \GPTFiveTwoTOCMinusRawCapUnaffected{} (\GPTFiveTwoTOCCapUnaffected{} vs \GPTFiveTwoRawCapUnaffected{}) at marginal \GPTFiveTwoTOCCapUnaffectedTokenReduction{} token saving. Sonnet's \SonnetTOCCapUnaffectedTokenReduction{} cap-unaffected token saving is close to its full-benchmark \SonnetTOCTokenReduction{} reduction (Table~\ref{tab:toc-raw}); this rules out the concern that the aggregate top-tier TOC token savings reported in Section~\ref{sec:main-results} are merely an artifact of the \LargeOutputN{} cap-affected items where Raw100k inlines 100k characters --- TOC is genuinely token-efficient on the cap-unaffected bulk for Sonnet, the regime where it actually performs structured retrieval. The full per-output-size grid for both protocols is in Appendix~\ref{sec:appendix-output-bin-grid}.
+
+On the cap-affected regime (\LargeOutputN{} items), TOC's section index is empty (Appendix~\ref{sec:appendix-toc-impl}), so structured retrieval is not exercised here; a working cap-affected TOC is left as future work. We test instead whether a larger truncation cap helps: Raw500k (5$\times$ Raw100k's 50k head + 50k tail; Table~\ref{tab:large-output-access}) drops GPT-5.4 from \GPTFiveFourRawLargeAcc{} to \GPTFiveFourRawFiveHundredKLargeAcc{} ($-$5.4\,pp) and GPT-5.2 from \GPTFiveTwoRawLargeAcc{} to \GPTFiveTwoRawFiveHundredKLargeAcc{} ($-$5.4\,pp). GPT-5.1's apparent gain (\GPTFiveOneRawLargeAcc{} to \GPTFiveOneRawFiveHundredKLargeAcc{}, $+$8.1\,pp) is most plausibly rerun noise: GPT-5.1 has the highest TOC rerun SD among the GPT family (\GPTFiveOneTOCRerunSD\,pp; Table~\ref{tab:toc-rerun-variance}), and its \GPTFiveOneRawFiveHundredKLargeAcc{} sits barely above its Direct (\GPTFiveOneOneShot{}) and CoT (\GPTFiveOneCoT{}) baselines (Table~\ref{tab:main-results}), indicating the model is fluctuating near its capability floor on these difficult items rather than benefiting from the larger window. The directionally consistent finding is that a 5$\times$ larger raw window hurts cap-affected accuracy --- longer inline simulator content distracts rather than helps the agent's reasoning.
 
 \begin{table}[t]
 \centering
@@ -198,93 +219,9 @@ GPT-5.2 & \GPTFiveTwoContextWindow & \GPTFiveTwoTOCLargeAcc & \GPTFiveTwoRawLarg
 GPT-5.1 & \GPTFiveOneContextWindow & \GPTFiveOneTOCLargeAcc & \GPTFiveOneRawLargeAcc & \GPTFiveOneRawFiveHundredKLargeAcc & \GPTFiveOneTOCLargeTokensPerItem & \GPTFiveOneRawLargeTokensPerItem & \GPTFiveOneRawFiveHundredKLargeTokensPerItem \\
 \bottomrule
 \end{tabular}
-\caption{Output-access comparison on the \LargeOutputN{} cap-affected items whose simulator outputs exceed 100k characters. Token columns report mean input tokens per question on this subset. Raw500k denotes a \RawHighCapChars{}-character cap on each raw simulator output; it corresponds to roughly \GPTFiveFourRawFiveHundredKApproxContext{} of GPT-5.4's recorded context window and \GPTFiveTwoRawFiveHundredKApproxContext{} of the GPT-5.1/5.2 recorded context windows under a rough four-characters-per-token conversion.}
+\caption{Output-access comparison on the \LargeOutputN{} cap-affected items whose simulator outputs exceed 100k characters. Raw500k denotes a \RawHighCapChars{}-character cap on each raw simulator output; it corresponds to roughly \GPTFiveFourRawFiveHundredKApproxContext{} of GPT-5.4's recorded context window and \GPTFiveTwoRawFiveHundredKApproxContext{} of the GPT-5.1/5.2 recorded context windows under a rough four-characters-per-token conversion. The TOC column reports Agent-TOC mode behavior on this subset; the section index is empty here (Appendix~\ref{sec:appendix-toc-impl}), so Agent-TOC is structurally blind \texttt{read\_file} navigation rather than structured retrieval. Token columns report mean input tokens per question on this subset.}
 \label{tab:large-output-access}
 \end{table}
-
-The Raw500k runs test whether the Raw100k condition is merely too restrictive for larger-context models. Across all items, increasing the raw cap raises GPT-5.4 from \GPTFiveFourRaw{} to \GPTFiveFourRawFiveHundredK{} and GPT-5.2 from \GPTFiveTwoRaw{} to \GPTFiveTwoRawFiveHundredK{}, but lowers GPT-5.1 from \GPTFiveOneRaw{} to \GPTFiveOneRawFiveHundredK{}. These aggregate comparisons should not be interpreted as pure cap effects, because \RawCapUnaffectedN{} items already have observed outputs at or below 100k characters and therefore receive essentially the same simulator output under both raw caps; differences on those items reflect rerun and trajectory variation rather than additional output access. The real raw-cap question is concentrated in the \RawCapAffectedN{} high-output items where the 100k cap binds. Table~\ref{tab:large-output-access} therefore reports this subset separately. On these items, Raw500k changes GPT-5.4 from \GPTFiveFourRawLargeAcc{} to \GPTFiveFourRawFiveHundredKLargeAcc{}, GPT-5.2 from \GPTFiveTwoRawLargeAcc{} to \GPTFiveTwoRawFiveHundredKLargeAcc{}, and GPT-5.1 from \GPTFiveOneRawLargeAcc{} to \GPTFiveOneRawFiveHundredKLargeAcc{}. The item-level gain/loss counts are also mixed: GPT-5.4 gains \GPTFiveFourRawFiveHundredKLargeGainVsRaw{} and loses \GPTFiveFourRawFiveHundredKLargeLossVsRaw{} cap-affected items, GPT-5.2 gains \GPTFiveTwoRawFiveHundredKLargeGainVsRaw{} and loses \GPTFiveTwoRawFiveHundredKLargeLossVsRaw{}, and GPT-5.1 gains \GPTFiveOneRawFiveHundredKLargeGainVsRaw{} and loses \GPTFiveOneRawFiveHundredKLargeLossVsRaw{}. Thus larger raw context is not a monotone proxy for model capability; output access remains a budget, capacity, and trajectory-shaping intervention.
-
-The practical implication is conditional, not universal: TOC is the right engineering choice for top-tier models on structured-output simulators, but mid-tier deployments on the same simulator should prefer raw inline access. More broadly, output-access protocol $\times$ model capability is an interaction effect that benchmarks for tool-augmented agents should report, not a design decision to fix once and forget.
-
-\subsection{External Harness Comparison}
-\label{sec:diag-harness}
-
-To control for harness quality, we compared our custom agent against vendor-default external CLI harnesses on a random 50-question scenario-spanning subsample (seed 42), with the backbone held fixed within each comparison panel: Claude Sonnet 4.6 against the official Claude Code CLI, and GPT-5.4 against OpenAI Codex CLI. Each harness runs under its native deployed-product defaults; budget configuration, the Codex \texttt{reasoning\_effort} setting, and the per-condition error breakdown are deferred to Appendix~\ref{sec:appendix-external-harness}. Table~\ref{tab:sdk-comparison} reports matched accuracy and per-question input-token cost on the same 50 items.
-
-The accuracy direction is mixed across vendors: custom dominates Sonnet by \SDKCustomTOCMinusSDK{} but trails Codex on GPT-5.4 by 18.0\,pp. The token-efficiency direction is uniform: custom Agent-TOC reaches 2.7--3.3$\times$ more correct answers per input token than the deployed external CLI on both backbones (Sonnet: \SonnetCustomTOCPerCorrectK\,K vs \SDKSonnetPerCorrectK\,K tokens per correct; GPT-5.4: \GPTFiveFourCustomTOCPerCorrectK\,K vs \CodexGPTFiveFourPerCorrectK\,K). Codex's higher absolute accuracy on GPT-5.4 is purchased at 4.1$\times$ the per-question input-token cost; under a fixed-budget setting, custom TOC delivers more correct answers. We read this as evidence that the cost-efficiency advantage of purpose-built scientific agent harnesses is robust to the absolute-accuracy direction.
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{llcrr}
-\toprule
-Backbone & Harness & Acc & In tok/q (K) & In tok/correct (K) \\
-\midrule
-\multirow{3}{*}{Sonnet 4.6} & Custom + Agent-TOC (ours) & \SDKCustomTOCAcc & \SonnetCustomTOCPerQK & \SonnetCustomTOCPerCorrectK \\
- & Custom + Agent-Raw100k (ours) & \SDKCustomRawAcc & \SonnetCustomRawPerQK & \SonnetCustomRawPerCorrectK \\
- & Claude Code CLI (external) & \SDKSonnetAcc & \SDKSonnetPerQK & \SDKSonnetPerCorrectK \\
-\midrule
-\multirow{4}{*}{GPT-5.4} & Custom + Agent-TOC (ours) & \GPTFiveFourCustomTOCMatchedAcc & \GPTFiveFourCustomTOCPerQK & \GPTFiveFourCustomTOCPerCorrectK \\
- & Custom + Agent-Raw100k (ours) & \GPTFiveFourCustomRawMatchedAcc & \GPTFiveFourCustomRawPerQK & \GPTFiveFourCustomRawPerCorrectK \\
- & Custom + Agent-Raw500k (ours) & \GPTFiveFourCustomRawFiveHundredKMatchedAcc & \GPTFiveFourCustomRawFiveHundredKPerQK & \GPTFiveFourCustomRawFiveHundredKPerCorrectK \\
- & Codex CLI (external) & \CodexGPTFiveFourAcc & \CodexGPTFiveFourPerQK & \CodexGPTFiveFourPerCorrectK \\
-\bottomrule
-\end{tabular}
-\caption{Matched cross-vendor comparison on a random 50-question subsample (seed 42), with the backbone fixed within each panel. Per-question input tokens are full-benchmark averages for custom harnesses and matched-50 averages for external CLIs. ``In tok/correct'' = ``In tok/q'' / accuracy is the cost-efficiency metric (lower is better). Custom Agent-TOC's \SDKCustomTOCAcc{} on Sonnet and \GPTFiveFourCustomTOCMatchedAcc{} on GPT-5.4 agree with their full-benchmark headlines (\SonnetTOC{} and \GPTFiveFourTOC{}, Table~\ref{tab:main-results}), confirming the subsample is well-calibrated. Methodology details (budgets, reasoning-effort configuration, non-commit error breakdown) are in Appendix~\ref{sec:appendix-external-harness}.}
-\label{tab:sdk-comparison}
-\end{table}
-
-\subsection{Operational Trajectory and Cost Metrics}
-\label{sec:diag-trajectory}
-
-Tool-augmented evaluation should include more than final accuracy because correctness may be purchased with long retries, repeated simulator executions, or high wall-clock cost. Table~\ref{tab:trajectory} reports trajectory statistics parsed from agent logs. Wall-clock time is measured per question from the logged \texttt{run\_start} event to the logged \texttt{run\_end} event; this differs from total experiment elapsed time because runs use multiple workers. These quantities separate agents that fail quickly from agents that enter long retry loops, and they expose the operational cost of grounded execution.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabular}{lcccccc}
-\toprule
-Model & Wall med. & Wall p90 & Steps med. & Runs med. & Runs mean & Failed runs \\
-\midrule
-Claude Opus 4.6 + TOC & \OpusWallMedianSeconds & \OpusWallPNinetySeconds & \OpusMedianSteps & \OpusMedianRuns & \OpusMeanRuns & \OpusFailedRuns \\
-Claude Sonnet 4.6 + TOC & \SonnetWallMedianSeconds & \SonnetWallPNinetySeconds & \SonnetMedianSteps & \SonnetMedianRuns & \SonnetMeanRuns & \SonnetFailedRuns \\
-GPT-5.4 + TOC & \GPTFiveFourWallMedianSeconds & \GPTFiveFourWallPNinetySeconds & \GPTFiveFourMedianSteps & \GPTFiveFourMedianRuns & \GPTFiveFourMeanRuns & \GPTFiveFourFailedRuns \\
-GPT-5.2 + TOC & \GPTFiveTwoWallMedianSeconds & \GPTFiveTwoWallPNinetySeconds & \GPTFiveTwoMedianSteps & \GPTFiveTwoMedianRuns & \GPTFiveTwoMeanRuns & \GPTFiveTwoFailedRuns \\
-GPT-5.1 + TOC & \GPTFiveOneWallMedianSeconds & \GPTFiveOneWallPNinetySeconds & \GPTFiveOneMedianSteps & \GPTFiveOneMedianRuns & \GPTFiveOneMeanRuns & \GPTFiveOneFailedRuns \\
-Gemini 3 Flash Preview + TOC & \GeminiThreeFlashWallMedianSeconds & \GeminiThreeFlashWallPNinetySeconds & \GeminiThreeFlashMedianSteps & \GeminiThreeFlashMedianRuns & \GeminiThreeFlashMeanRuns & \GeminiThreeFlashFailedRuns \\
-\bottomrule
-\end{tabular}
-\caption{Trajectory statistics for TOC-agent runs. Wall-clock columns are seconds per question. ``Runs'' counts PHREEQC executions per question; failed runs counts nonzero PHREEQC executions across the full run.}
-\label{tab:trajectory}
-\end{table}
-
-The aggregate medians in Table~\ref{tab:trajectory} mask qualitatively different failure modes across capability tiers. Appendix~\ref{sec:appendix-trajectory} decomposes the per-item step distribution on failed items and identifies three distinct patterns: top-tier agents (Opus, Sonnet) fail by step-budget exhaustion \emph{after} committing to an answer ($>$60\% of failures reach the 24-step ceiling); mid-tier GPT agents fail by premature commitment (failed-item median 7--9 steps, $<$10\% reach the ceiling); and the below-mid Gemini Flash 3 agent fails by step-budget exhaustion \emph{without} committing (117/200 reach the ceiling with no final-answer message). Step exhaustion looks the same in aggregate trajectory medians but means opposite things at the top and below-mid tiers; identical aggregate trajectory medians can therefore correspond to substantively different agent behaviors.
-
-\subsection{Robustness Check: Scenario Dependence}
-\label{sec:scenario}
-
-The preceding analyses are item-level because each item has a distinct target answer. As a robustness check, we also ask whether the conclusions depend on treating related questions from the same simulation setup as independent. Because \BenchName{} contains \BenchN{} items derived from \BenchScenarioN{} scenario stems, item-level accuracy can overstate the number of independent scientific setups. We therefore aggregate by scenario and compute uncertainty by resampling scenario stems rather than individual items. Table~\ref{tab:scenario} reports mean scenario accuracy, scenario-clustered confidence intervals, and the number of scenario stems solved completely or missed completely.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabular}{lcccc}
-\toprule
-Method & Item acc. & Mean scenario acc. (95\% CI) & All-correct & All-wrong \\
-\midrule
-Claude Sonnet 4.6 + TOC & \SonnetTOC & \SonnetScenarioMean{} [\SonnetScenarioCILow, \SonnetScenarioCIHigh] & \SonnetScenarioAllCorrect & \SonnetScenarioAllWrong \\
-Claude Opus 4.6 + TOC & \OpusTOC & \OpusScenarioMean{} [\OpusScenarioCILow, \OpusScenarioCIHigh] & \OpusScenarioAllCorrect & \OpusScenarioAllWrong \\
-GPT-5.4 + TOC & \GPTFiveFourTOC & \GPTFiveFourScenarioMean{} [\GPTFiveFourScenarioCILow, \GPTFiveFourScenarioCIHigh] & \GPTFiveFourScenarioAllCorrect & \GPTFiveFourScenarioAllWrong \\
-GPT-5.2 + TOC & \GPTFiveTwoTOC & \GPTFiveTwoScenarioMean{} [\GPTFiveTwoScenarioCILow, \GPTFiveTwoScenarioCIHigh] & \GPTFiveTwoScenarioAllCorrect & \GPTFiveTwoScenarioAllWrong \\
-Gemini 3 Flash Preview + TOC & \GeminiThreeFlashTOC & \GeminiThreeFlashScenarioMean{} [\GeminiThreeFlashScenarioCILow, \GeminiThreeFlashScenarioCIHigh] & \GeminiThreeFlashScenarioAllCorrect & \GeminiThreeFlashScenarioAllWrong \\
-Claude Opus 4.6 direct & \OpusOneShot & \OpusDirectScenarioMean{} [\OpusDirectScenarioCILow, \OpusDirectScenarioCIHigh] & \OpusDirectScenarioAllCorrect & \OpusDirectScenarioAllWrong \\
-\bottomrule
-\end{tabular}
-\caption{Scenario-level analysis to avoid treating all \BenchN{} items as independent scientific setups. Confidence intervals use a nonparametric bootstrap over scenario stems.}
-\label{tab:scenario}
-\end{table}
-
-Appendix~\ref{sec:appendix-scenario-stratification} reports the full per-scenario $\times$ per-model accuracy grid and categorizes scenarios into universally easy, universally hard, and capability-discriminative groups; roughly four scenarios drive most of the cross-model accuracy gap, indicating the benchmark's discriminative power is concentrated rather than uniform.
 
 \section{Failure Analysis}
 \label{sec:failure}
@@ -377,17 +314,41 @@ We introduced \BenchName, a benchmark for evaluating LLM agents that operate det
 \bibliographystyle{plainnat}
 \bibliography{references}
 
+\newpage
 \appendix
 
 \section{Artifact and Reproducibility Pointer}
 \label{sec:appendix-artifact}
 
-The full artifact, including all prompts, agent and tool source code, the frozen benchmark JSONL, the author-supplied PHREEQC thermodynamic database, generated PHREEQC inputs and outputs, per-question chat logs (where retained), result files, and the analysis script that regenerates every table in this paper, is released at the anonymized URL listed in Section~\ref{sec:data-availability}. The appendix sections below are not artifact dumps; they extend the analyses in Sections~\ref{sec:main-results} and~\ref{sec:diagnostic} with additional breakdowns that did not fit in the main paper.
+Code and dataset are available at \url{https://anonymous.4open.science/r/phreeqc-mcq-200-anon-3D74/README.md}.
 
 \section{External Harness Comparison: Methodology and Failure Modes}
 \label{sec:appendix-external-harness}
 
-This appendix expands on the matched 50-question external-harness comparison (Table~\ref{tab:sdk-comparison}) with full configuration details and per-condition failure-mode breakdowns.
+To control for harness quality, we compared our custom agent against vendor-default external CLI harnesses on a random 50-question scenario-spanning subsample (seed 42), with the backbone held fixed within each comparison panel: Claude Sonnet 4.6 against the official Claude Code CLI, and GPT-5.4 against OpenAI Codex CLI. Each harness runs under its native deployed-product defaults. Table~\ref{tab:sdk-comparison} reports matched accuracy and per-question input-token cost on the same 50 items. The accuracy direction is mixed across vendors: custom dominates Sonnet by \SDKCustomTOCMinusSDK{} but trails Codex on GPT-5.4 by 18.0\,pp. The token-efficiency direction is uniform: custom Agent-TOC reaches 2.7--3.3$\times$ more correct answers per input token than the deployed external CLI on both backbones (Sonnet: \SonnetCustomTOCPerCorrectK\,K vs \SDKSonnetPerCorrectK\,K tokens per correct; GPT-5.4: \GPTFiveFourCustomTOCPerCorrectK\,K vs \CodexGPTFiveFourPerCorrectK\,K). Codex's higher absolute accuracy on GPT-5.4 is purchased at 4.1$\times$ the per-question input-token cost; under a fixed-budget setting, custom TOC delivers more correct answers. We read this as evidence that the cost-efficiency advantage of purpose-built scientific agent harnesses is robust to the absolute-accuracy direction.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llcrr}
+\toprule
+Backbone & Harness & Acc & In tok/q (K) & In tok/correct (K) \\
+\midrule
+\multirow{3}{*}{Sonnet 4.6} & Custom + Agent-TOC (ours) & \SDKCustomTOCAcc & \SonnetCustomTOCPerQK & \SonnetCustomTOCPerCorrectK \\
+ & Custom + Agent-Raw100k (ours) & \SDKCustomRawAcc & \SonnetCustomRawPerQK & \SonnetCustomRawPerCorrectK \\
+ & Claude Code CLI (external) & \SDKSonnetAcc & \SDKSonnetPerQK & \SDKSonnetPerCorrectK \\
+\midrule
+\multirow{4}{*}{GPT-5.4} & Custom + Agent-TOC (ours) & \GPTFiveFourCustomTOCMatchedAcc & \GPTFiveFourCustomTOCPerQK & \GPTFiveFourCustomTOCPerCorrectK \\
+ & Custom + Agent-Raw100k (ours) & \GPTFiveFourCustomRawMatchedAcc & \GPTFiveFourCustomRawPerQK & \GPTFiveFourCustomRawPerCorrectK \\
+ & Custom + Agent-Raw500k (ours) & \GPTFiveFourCustomRawFiveHundredKMatchedAcc & \GPTFiveFourCustomRawFiveHundredKPerQK & \GPTFiveFourCustomRawFiveHundredKPerCorrectK \\
+ & Codex CLI (external) & \CodexGPTFiveFourAcc & \CodexGPTFiveFourPerQK & \CodexGPTFiveFourPerCorrectK \\
+\bottomrule
+\end{tabular}
+\caption{Matched cross-vendor comparison on a random 50-question subsample (seed 42), with the backbone fixed within each panel. Per-question input tokens are full-benchmark averages for custom harnesses and matched-50 averages for external CLIs. ``In tok/correct'' = ``In tok/q'' / accuracy is the cost-efficiency metric (lower is better). Custom Agent-TOC's \SDKCustomTOCAcc{} on Sonnet and \GPTFiveFourCustomTOCMatchedAcc{} on GPT-5.4 agree with their full-benchmark headlines (\SonnetTOC{} and \GPTFiveFourTOC{}, Table~\ref{tab:main-results}), confirming the subsample is well-calibrated.}
+\label{tab:sdk-comparison}
+\end{table}
+
+The remainder of this appendix reports configuration details and per-condition failure-mode breakdowns.
 
 \paragraph{Step budgets and approval policies.}
 Each harness is run under the deployed-product defaults of its native CLI: our custom agent uses a 24-step budget; the Claude Code CLI uses a 20-turn budget; the Codex CLI exposes no step-budget flag and is bounded only by a 600\,s subprocess timeout. Approval and sandboxing prompts are disabled in all three so that no human-in-the-loop interaction can occur (\texttt{--dangerously-skip-permissions} for Claude Code, \texttt{--ask-for-approval never} and \texttt{--dangerously-bypass-approvals-and-sandbox} for Codex, no approval gate for the custom agent).
@@ -490,7 +451,12 @@ The breakdown isolates the Raw100k recovery as a \emph{commit-rate effect, not a
 \section{Extended Output-Access Analysis}
 \label{sec:appendix-output-access}
 
-Section~\ref{sec:diagnostic} reported aggregate TOC versus Raw100k accuracy and a per-output-size paragraph for selected bins. This appendix completes that analysis with (i)~the empirical output-size distribution that motivates the bimodal claim in Section~\ref{sec:harness}, (ii)~the full per-model output-size grid, and (iii)~a cross-protocol right-item overlap analysis that asks whether different output-access protocols solve the same items or different ones.
+Section~\ref{sec:diagnostic} reported aggregate TOC versus Raw100k accuracy and a per-output-size paragraph for selected bins. This appendix completes that analysis with (i)~the TOC builder's implementation-level details, (ii)~the empirical output-size distribution that motivates the bimodal claim in Section~\ref{sec:harness}, (iii)~the full per-model output-size grid, and (iv)~a cross-protocol right-item overlap analysis that asks whether different output-access protocols solve the same items or different ones.
+
+\subsection{TOC Implementation Details}
+\label{sec:appendix-toc-impl}
+
+The TOC builder regex-scans \texttt{result.out} for PHREEQC's canonical dash-delimited section headers (the pattern \texttt{\^{}-\{3,\}\textbackslash{}s*([A-Za-z].+?)\textbackslash{}s*-\{3,\}\textbackslash{}s*\$}) and emits a list of \texttt{(section name, starting line number)} pairs. The matched section vocabulary is fixed by PHREEQC's output formatter and includes \texttt{Solution composition}, \texttt{Description of solution}, \texttt{Distribution of species}, \texttt{Saturation indices}, and \texttt{Solid solutions}, among others. The scan is gated by an implementation-level size cap (configurable via \texttt{--max-full-chars}, default 100,000 characters); files exceeding the cap return an empty TOC payload, and the agent must locate sections via \texttt{read\_file}'s default head/tail preview (first and last 80 lines for files larger than 20,000 characters) before issuing line-range reads. The cap was set to different values across our TOC-mode runs and is logged per-run in the released code; items at or below the cap received a non-empty TOC wherever sections parsed. This implementation choice does not affect the directional findings in Section~\ref{sec:toc}: Agent-TOC and Agent-Raw100k still differ in \emph{how} the agent receives the simulator output --- workspace file plus optional index, navigated via \texttt{read\_file}, versus head/tail-truncated inline payload --- and that interface difference is what the capability-tier comparison measures. A cleaner re-implementation would always build the TOC regardless of size (the regex scan is cheap even on multi-megabyte outputs); we flag this as a concrete improvement for future replications.
 
 \subsection{Output-Size Distribution}
 \label{sec:appendix-output-distribution}
@@ -549,6 +515,8 @@ $\le$10k & 82 & 87.8\% & 87.8\% & 60{,}012 & 100{,}106 & 0.0 \\
 250--500k & 21 & 85.7\% & 85.7\% & 139{,}816 & 470{,}600 & 0.0 \\
 $>$500k & 16 & 62.5\% & 56.3\% & 236{,}180 & 722{,}180 & $-$6.3 \\
 \midrule
+\textit{cap-unaffected} & 163 & 87.7\% & 85.9\% & 82{,}648 & 185{,}059 & $-$1.8 \\
+\textit{cap-affected} & 37 & 75.7\% & 73.0\% & 181{,}487 & 579{,}391 & $-$2.7 \\
 all & 200 & 85.5\% & 83.5\% & 100{,}934 & 258{,}010 & $-$2.0 \\
 \bottomrule
 \end{tabular}
@@ -571,6 +539,8 @@ $\le$10k & 82 & 75.6\% & 76.8\% & 82.9\% & 46{,}641 & 41{,}267 & 46{,}847 & $+$1
 250--500k & 21 & 57.1\% & 71.4\% & 57.1\% & 71{,}385 & 160{,}356 & 341{,}201 & $+$14.3 \\
 $>$500k & 16 & 56.3\% & 56.3\% & 62.5\% & 66{,}795 & 148{,}737 & 499{,}357 & 0.0 \\
 \midrule
+\textit{cap-unaffected} & 163 & 76.1\% & 71.2\% & 77.9\% & 54{,}401 & 52{,}514 & 63{,}244 & $-$4.9 \\
+\textit{cap-affected} & 37 & 56.8\% & 64.9\% & 59.5\% & 69{,}400 & 155{,}332 & 409{,}593 & $+$8.1 \\
 all & 200 & 72.5\% & 70.0\% & 74.5\% & 57{,}176 & 71{,}535 & 128{,}513 & $-$2.5 \\
 \bottomrule
 \end{tabular}
@@ -593,6 +563,8 @@ $\le$10k & 82 & 54.9\% & 56.1\% & 61.0\% & 61{,}597 & 47{,}599 & 52{,}925 & $+$1
 250--500k & 21 & 42.9\% & 66.7\% & 57.1\% & 80{,}110 & 235{,}834 & 393{,}098 & $+$23.8 \\
 $>$500k & 16 & 50.0\% & 43.8\% & 43.8\% & 89{,}644 & 196{,}623 & 642{,}357 & $-$6.3 \\
 \midrule
+\textit{cap-unaffected} & 163 & 55.2\% & 62.6\% & 66.3\% & 54{,}792 & 57{,}108 & 62{,}147 & $+$7.4 \\
+\textit{cap-affected} & 37 & 45.9\% & 56.8\% & 51.4\% & 84{,}233 & 218{,}878 & 500{,}886 & $+$10.9 \\
 all & 200 & 53.5\% & 61.5\% & 63.5\% & 60{,}238 & 87{,}035 & 143{,}313 & $+$8.0 \\
 \bottomrule
 \end{tabular}
@@ -615,6 +587,8 @@ $\le$10k & 82 & 62.2\% & 69.5\% & 62.2\% & 23{,}356 & 23{,}525 & 28{,}764 & $+$7
 250--500k & 21 & 47.6\% & 38.1\% & 47.6\% & 67{,}170 & 192{,}960 & 293{,}928 & $-$9.5 \\
 $>$500k & 16 & 31.3\% & 31.3\% & 37.5\% & 54{,}874 & 128{,}917 & 285{,}258 & 0.0 \\
 \midrule
+\textit{cap-unaffected} & 163 & 57.0\% & 69.9\% & 61.3\% & 30{,}426 & 36{,}604 & 37{,}745 & $+$12.9 \\
+\textit{cap-affected} & 37 & 40.5\% & 35.1\% & 43.2\% & 61{,}853 & 165{,}266 & 290{,}179 & $-$5.4 \\
 all & 200 & 54.0\% & 63.5\% & 58.0\% & 36{,}240 & 60{,}750 & 84{,}445 & $+$9.5 \\
 \bottomrule
 \end{tabular}
@@ -673,23 +647,7 @@ Two patterns are visible in Tables~\ref{tab:appendix-overlap-toc-raw100} and~\re
 \section{Rerun Stability and Per-Question Decomposition}
 \label{sec:appendix-stability}
 
-To calibrate the run-to-run noise floor of the TOC protocol, we executed \TOCRerunNumSamples{} independent TOC reruns for each GPT model on the frozen benchmark (Table~\ref{tab:toc-rerun-variance}). Sample standard deviations across reruns are \GPTFiveOneTOCRerunSD\,pp for GPT-5.1, \GPTFiveTwoTOCRerunSD\,pp for GPT-5.2, and \GPTFiveFourTOCRerunSD\,pp for GPT-5.4; observed ranges are \GPTFiveOneTOCRerunRange\,pp, \GPTFiveTwoTOCRerunRange\,pp, and \GPTFiveFourTOCRerunRange\,pp respectively. We use the maximum sample SD, \TOCRerunMaxSD\,pp on GPT-5.1, as the conservative measured TOC noise-floor estimate cited in Section~\ref{sec:main-results}. The headline TOC accuracies reported elsewhere (\GPTFiveOneTOC{} for GPT-5.1, \GPTFiveTwoTOC{} for GPT-5.2, \GPTFiveFourTOC{} for GPT-5.4) lie within their corresponding rerun ranges. Notably, rerun stability does not track with the retention metric reported in Section~\ref{sec:diagnostic}: GPT-5.2 has the lowest retention but the smallest rerun SD, indicating that retention measures item-level tool-induced movement rather than run-to-run reproducibility.
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{lcccc}
-\toprule
-Model & Original & Reruns ($n$=\TOCRerunNumSamples{}) & SD (pp) & Range (pp) \\
-\midrule
-GPT-5.1 + TOC & \GPTFiveOneTOC & \GPTFiveOneTOCRerunValues & \GPTFiveOneTOCRerunSD & \GPTFiveOneTOCRerunRange \\
-GPT-5.2 + TOC & \GPTFiveTwoTOC & \GPTFiveTwoTOCRerunValues & \GPTFiveTwoTOCRerunSD & \GPTFiveTwoTOCRerunRange \\
-GPT-5.4 + TOC & \GPTFiveFourTOC & \GPTFiveFourTOCRerunValues & \GPTFiveFourTOCRerunSD & \GPTFiveFourTOCRerunRange \\
-\bottomrule
-\end{tabular}
-\caption{TOC rerun-to-rerun accuracy distribution per GPT model. Each rerun is an independent execution of the TOC agent on the frozen benchmark with identical prompts and tool contracts. Reported SD and range are over the \TOCRerunNumSamples{} reruns; the original column is the headline number used elsewhere in the paper.}
-\label{tab:toc-rerun-variance}
-\end{table}
+Table~\ref{tab:toc-rerun-variance} (Section~\ref{sec:toc}) reports the headline rerun calibration: \TOCRerunNumSamples{} independent TOC reruns per GPT model on the frozen benchmark, with sample SDs of \GPTFiveOneTOCRerunSD\,pp (GPT-5.1), \GPTFiveTwoTOCRerunSD\,pp (GPT-5.2), and \GPTFiveFourTOCRerunSD\,pp (GPT-5.4); observed ranges are \GPTFiveOneTOCRerunRange\,pp, \GPTFiveTwoTOCRerunRange\,pp, and \GPTFiveFourTOCRerunRange\,pp respectively. The maximum sample SD, \TOCRerunMaxSD\,pp on GPT-5.1, is the conservative noise-floor estimate used in Section~\ref{sec:main-results}. The headline TOC accuracies (\GPTFiveOneTOC{} for GPT-5.1, \GPTFiveTwoTOC{} for GPT-5.2, \GPTFiveFourTOC{} for GPT-5.4) lie within their corresponding rerun ranges. Notably, rerun stability does not track with the retention metric reported in Section~\ref{sec:diagnostic}: GPT-5.2 has the lowest retention but the smallest rerun SD, indicating that retention measures item-level tool-induced movement rather than run-to-run reproducibility.
 
 Aggregate SD compresses item-level structure: it does not say whether the variance comes from a small set of unstable items or whether it is spread broadly across the benchmark, nor does it identify which kinds of items are most variance-prone. The remainder of this appendix completes that picture by treating every item under GPT-5.1 + TOC as a paired observation across the four available samples (the original headline run plus three reruns) and computing per-item agreement.
 
@@ -790,7 +748,26 @@ Three implications follow for tool-augmented agent evaluation in general:
 \section{Per-Scenario Difficulty Stratification}
 \label{sec:appendix-scenario-stratification}
 
-Section~\ref{sec:scenario} reports scenario-clustered confidence intervals to acknowledge that \BenchN{} items are derived from \BenchScenarioN{} simulation scenario stems. The main-paper table is necessarily coarse: it reports one mean and one CI per model. This appendix completes the picture by reporting per-(model, scenario) accuracy for every TOC agent on every scenario stem, identifying which scenarios are universally hard, which are universally easy, and which are most capability-discriminative.
+As a robustness check on the item-level analyses, we ask whether the conclusions depend on treating related questions from the same simulation setup as independent. Because \BenchName{} contains \BenchN{} items derived from \BenchScenarioN{} scenario stems, item-level accuracy can overstate the number of independent scientific setups. We therefore aggregate by scenario and compute uncertainty by resampling scenario stems rather than individual items. Table~\ref{tab:scenario} reports mean scenario accuracy, scenario-clustered confidence intervals, and the number of scenario stems solved completely or missed completely. The remainder of this appendix completes the picture by reporting per-(model, scenario) accuracy for every TOC agent on every scenario stem, identifying which scenarios are universally hard, which are universally easy, and which are most capability-discriminative; roughly four scenarios drive most of the cross-model accuracy gap, indicating the benchmark's discriminative power is concentrated rather than uniform.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+Method & Item acc. & Mean scenario acc. (95\% CI) & All-correct & All-wrong \\
+\midrule
+Claude Sonnet 4.6 + TOC & \SonnetTOC & \SonnetScenarioMean{} [\SonnetScenarioCILow, \SonnetScenarioCIHigh] & \SonnetScenarioAllCorrect & \SonnetScenarioAllWrong \\
+Claude Opus 4.6 + TOC & \OpusTOC & \OpusScenarioMean{} [\OpusScenarioCILow, \OpusScenarioCIHigh] & \OpusScenarioAllCorrect & \OpusScenarioAllWrong \\
+GPT-5.4 + TOC & \GPTFiveFourTOC & \GPTFiveFourScenarioMean{} [\GPTFiveFourScenarioCILow, \GPTFiveFourScenarioCIHigh] & \GPTFiveFourScenarioAllCorrect & \GPTFiveFourScenarioAllWrong \\
+GPT-5.2 + TOC & \GPTFiveTwoTOC & \GPTFiveTwoScenarioMean{} [\GPTFiveTwoScenarioCILow, \GPTFiveTwoScenarioCIHigh] & \GPTFiveTwoScenarioAllCorrect & \GPTFiveTwoScenarioAllWrong \\
+Gemini 3 Flash Preview + TOC & \GeminiThreeFlashTOC & \GeminiThreeFlashScenarioMean{} [\GeminiThreeFlashScenarioCILow, \GeminiThreeFlashScenarioCIHigh] & \GeminiThreeFlashScenarioAllCorrect & \GeminiThreeFlashScenarioAllWrong \\
+Claude Opus 4.6 direct & \OpusOneShot & \OpusDirectScenarioMean{} [\OpusDirectScenarioCILow, \OpusDirectScenarioCIHigh] & \OpusDirectScenarioAllCorrect & \OpusDirectScenarioAllWrong \\
+\bottomrule
+\end{tabular}
+\caption{Scenario-level analysis to avoid treating all \BenchN{} items as independent scientific setups. Confidence intervals use a nonparametric bootstrap over scenario stems.}
+\label{tab:scenario}
+\end{table}
 
 \subsection{Per-Scenario Accuracy Across TOC Agents}
 
@@ -854,7 +831,7 @@ S14 contains only one item ($n=1$), giving a 100-pp spread that is mechanically 
 
 \subsection{What This Adds Beyond the Main-Paper Scenario Analysis}
 
-Section~\ref{sec:scenario} reports a single mean scenario accuracy and a CI per agent. The appendix grid reveals two structural properties that the aggregate hides:
+Table~\ref{tab:scenario} reports a single mean scenario accuracy and a CI per agent. The grid below reveals two structural properties that the aggregate hides:
 
 \begin{enumerate}[leftmargin=*, itemsep=2pt]
     \item The benchmark's discriminative power is not uniformly distributed. Roughly four scenarios drive most of the cross-model accuracy gap (S04, S17, S18, S21), while three scenarios (S05, S11, S15) contribute almost nothing because all models converge on similar accuracy. Future versions of the benchmark could use this structure to diagnose specifically where new agent designs improve or regress, rather than reporting a single aggregate.
@@ -962,7 +939,26 @@ Three findings differentiate the appendix decomposition from the aggregate reten
 \section{Trajectory Length and Failure Mode}
 \label{sec:appendix-trajectory}
 
-Section~\ref{sec:diagnostic} reports aggregate trajectory metrics (median, mean, p90 step counts) per TOC agent. Aggregate medians are similar across the five completed agents (median 7--8 steps), masking two qualitatively different failure patterns: (i)~per-item step counts that grow with task difficulty and saturate the 24-step budget when the agent gets stuck in retry loops, versus (ii)~per-item step counts that stay short even on wrong items because the agent commits to an incorrect answer quickly. This appendix decomposes the trajectory-length distribution to surface this distinction.
+Tool-augmented evaluation should include more than final accuracy because correctness may be purchased with long retries, repeated simulator executions, or high wall-clock cost. Table~\ref{tab:trajectory} reports trajectory statistics parsed from agent logs (wall-clock measured per question from the logged \texttt{run\_start} to \texttt{run\_end}). The aggregate medians (median 7--8 steps across the five completed agents) mask qualitatively different failure modes across capability tiers: top-tier agents (Opus, Sonnet) fail by step-budget exhaustion \emph{after} committing to an answer ($>$60\% of failures reach the 24-step ceiling); mid-tier GPT agents fail by premature commitment (failed-item median 7--9 steps, $<$10\% reach the ceiling); and the below-mid Gemini Flash 3 agent fails by step-budget exhaustion \emph{without} committing (117/200 reach the ceiling with no final-answer message). Step exhaustion looks the same in aggregate trajectory medians but means opposite things at the top and below-mid tiers; identical aggregate trajectory medians can therefore correspond to substantively different agent behaviors. The remainder of this appendix decomposes the trajectory-length distribution to surface this distinction further.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Model & Wall med. & Wall p90 & Steps med. & Runs med. & Runs mean & Failed runs \\
+\midrule
+Claude Opus 4.6 + TOC & \OpusWallMedianSeconds & \OpusWallPNinetySeconds & \OpusMedianSteps & \OpusMedianRuns & \OpusMeanRuns & \OpusFailedRuns \\
+Claude Sonnet 4.6 + TOC & \SonnetWallMedianSeconds & \SonnetWallPNinetySeconds & \SonnetMedianSteps & \SonnetMedianRuns & \SonnetMeanRuns & \SonnetFailedRuns \\
+GPT-5.4 + TOC & \GPTFiveFourWallMedianSeconds & \GPTFiveFourWallPNinetySeconds & \GPTFiveFourMedianSteps & \GPTFiveFourMedianRuns & \GPTFiveFourMeanRuns & \GPTFiveFourFailedRuns \\
+GPT-5.2 + TOC & \GPTFiveTwoWallMedianSeconds & \GPTFiveTwoWallPNinetySeconds & \GPTFiveTwoMedianSteps & \GPTFiveTwoMedianRuns & \GPTFiveTwoMeanRuns & \GPTFiveTwoFailedRuns \\
+GPT-5.1 + TOC & \GPTFiveOneWallMedianSeconds & \GPTFiveOneWallPNinetySeconds & \GPTFiveOneMedianSteps & \GPTFiveOneMedianRuns & \GPTFiveOneMeanRuns & \GPTFiveOneFailedRuns \\
+Gemini 3 Flash Preview + TOC & \GeminiThreeFlashWallMedianSeconds & \GeminiThreeFlashWallPNinetySeconds & \GeminiThreeFlashMedianSteps & \GeminiThreeFlashMedianRuns & \GeminiThreeFlashMeanRuns & \GeminiThreeFlashFailedRuns \\
+\bottomrule
+\end{tabular}
+\caption{Trajectory statistics for TOC-agent runs. Wall-clock columns are seconds per question. ``Runs'' counts PHREEQC executions per question; failed runs counts nonzero PHREEQC executions across the full run.}
+\label{tab:trajectory}
+\end{table}
 
 \subsection{Step Count vs Accuracy on GPT-5.1 + TOC ($n$=600)}
 
