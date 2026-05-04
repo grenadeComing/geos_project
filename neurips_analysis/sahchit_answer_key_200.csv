@@ -1,0 +1,595 @@
+id,original_row_index,question,A,B,C,D,correct_option,correct_answer_value
+1,1,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 100, what is the redox potential pe?",7.366,7.367,7.365,7.364,D,7.364
+2,2,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 100, what is the pH?",5.535,5.537,5.534,5.538,C,5.534
+3,3,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 100, what is the molality of carbon?",5.276e-04,5.278-04,5.274e-04,5.277e-04,A,5.276e-04
+4,4,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.",-4.35,-4.34,-4.38,-4.36,A,-4.35
+5,5,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 47, what is the pH?",5.324,5.327,5.325,5.326,D,5.326
+6,6,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 47, what is the molality of carbon",5.142e-04,5.141e-04,5.140e-04,5.145e-04,B,5.141e-04
+7,7,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 47, what is the saturation index of Aragonite?",-5.04,-5.08,-5.06,-5.07,C,-5.06
+8,8,"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.
+
+At reaction step 47, what is the redox potential pe?",7.606,7.602,7.603,7.604,A,7.606
+9,9,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 100, what is the pH?",2.129,2.130,2.126,2.128,A,2.129
+10,10,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 100, what is the saturation index of Witherite?",-9.35,-9.38,-9.36,-9.33,C,-9.36
+11,11,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 100, what is the molality of CO2?",1.590e-03,1.590e-04,1.591e-03,1.585e-03,A,1.590e-03
+12,12,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 100, what is the total alkalinity?",-9.265e-03,-9.260e-03,-9.261e-03,-9.262e-03,B,-9.260e-03
+13,13,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 10, what is the pH?",2.014,2.008,2.013,2.009,C,2.013
+14,14,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 10, how many moles of calcite are present?",9.995e-01,9.988e-01,9.997e-01,9.998e-01,D,9.998e-01
+15,15,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 10, is the saturation index of witherite higher or lower than at reaction step 100?",Higher,Lower,the same,N/A,B,Lower
+16,16,"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.
+
+At reaction step 10, are there more species of C (4) or Cu (2) present?",More Cu (2),More C (4),the same number,neither are present,B,More C (4)
+17,17,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, how many moles of albite have dissolved?",2.293e-04,2.294e-04,2.296e-04,2.298e-04,A,2.293e-04
+18,18,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, what is the pe?",-.080,-.086,-.083,-.081,D,-.081
+19,19,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, how many moles of Si are in solution?",6.880e-04,6.882e-04,6.879e-04,6.883e-04,C,6.879e-04
+20,20,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, which dissolved species is present at the highest molality?",Fe,Na,S,Al,C,S
+21,21,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, what is the ionic strength of the solution?",2.162e-02,2.166e-02,2.163e-02,2.164e-02,B,2.166e-02
+22,22,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 10, is there more or less Fe (3) in solution compared to reaction step 100?",More,Less,Same,N/A,A,More
+23,23,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 10, is there more or less Ba+2 in solution than at reaction step 70?",More,Less,Nonzero same amount of both,Neither exist in solution,D,Neither exist in solution
+24,24,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, how many moles of H2S gas has dissolved into solution?",3.041e-02,3.044e-02,3.042e-02,3.040e-02,A,3.041e-02
+25,25,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, what is the saturation index of Goethite?",-1.70,-1.69,-1.75,-1.72,D,-1.72
+26,26,"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).
+
+At reaction step 100, how many species of Si are present in solution?",3,5,10,2,A,3
+27,27,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 20°C, what is the pH of the mixture?",10.037,10.036,10.035,10.034,A,10.037
+28,28,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 180°C, what is the pH of the mixture?",7.405,7.402,7.401,7.400,D,7.400
+29,29,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 200°C, how many moles of calcite have precipitated in the mixture?",4.986e-02,4.987e-02,4.984e-02,4.983e-02,B,4.987e-02
+30,30,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 100°C, how many moles of calcite have precipitated in the mixture?",4.973e-02,4.971e-02,4.970e-02,4.972e-02,D,4.972e-02
+31,31,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 100°C, what is the ionic strength of the mixture?",4.068e-04,4.063e-04,4.066e-04,4.064e-04,C,4.066e-04
+32,32,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 160°C, how many species of Ca are present in the mixture?",2,0,4,1,C,4
+33,33,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 160°C, what is the saturation index of aragonite in the mixture?",-0.82,-0.80,-0.85,-0.83,A,-0.82
+34,34,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 20°C is there more or less moles of C (4) present than moles of Ca in the mixture?",More,Less,Same,N/A,C,Same
+35,35,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 200°C what is the density of the solution?",0.86469,0.86468,0.86463,0.86465,B,0.86468
+36,36,"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.
+
+At 200°C what is the log IAP of calcite in the mixture?",-12.29,-12.21,-12.23,-12.26,D,-12.26
+37,37,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.",6.536,6.533,6.531,6.530,C,6.531
+38,38,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+What is the saturation index of aragonite?",-0.47,-0.45,-0.44,-0.43,B,-0.45
+39,39,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+What is the pe in the solution?",-4.646,-4.644,-4.645,-4.647,A,-4.646
+40,40,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+How many moles of calcite have precipitated?",3.644e-02,3.646e-02,3.647e-02,3.645e-02,B,3.646e-02
+41,41,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+How many moles of CH4 gas dissolved into solution?",2.913e-04,2.916e-04,2.912e-04,2.911e-04,A,2.913e-04
+42,42,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+Which gas had the most moles dissolve?",CO2,H2S,CH4,All the same,B,H2S
+43,43,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+What is the molality of S in solution?",4.737e-02,4.738e-02,4.736e-02,4.735e-02,A,4.737e-02
+44,44,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+What is the specific conductance of the solution?",7949,7943,7944,7948,D,7948
+45,45,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+What is the alkalinity of the solution?",2.690e-02,2.694e-02,2.692e-02,2.693e-02,B,2.694e-02
+46,46,"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.
+
+How many species of Ca are present in solution?",6,8,7,4,A,6
+47,47,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+What is the pH of the solution?",5.506,5.509,5.507,5.508,B,5.509
+48,48,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+What is the pe of the solution?",9.266,9.268,9.263,9.265,D,9.265
+49,49,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+What is the specific conductance of the solution?",124109,124104,124108,124103,C,124108
+50,50,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+What is the molality of Al (OH) 4- in the solution?",2.243e-06,2.242e-06,2.241e-06,2.240e-06,B,2.242e-06
+51,51,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+Is there more moles of Fe (2) or Fe (3) in solution?",Fe (2),Fe (3),Same,N/A,B,Fe (3)
+52,52,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+Are there fewer species of Fe (2) or Fe (3) in solution?",Fe (2),Fe (3),same,n/a,A,Fe (2)
+53,53,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+How many species of Al are in solution?",5,6,8,4,C,8
+54,54,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+How many moles of Mg are in solution?",4.432e+00,4.434e+00,4.430e+00,4.431e+00,A,4.432e+00
+55,55,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+What is the saturation index of Mirabilite?",-1.92,-1.89,-1.91,-1.90,D,-1.90
+56,56,"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.
+
+How many moles of kaolinite dissolved?",4.496e-05,4.499e-05,4.498e-05,4.500e-05,B,4.499e-05
+57,57,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+What is the pH?",7.417,7.416,7.414,7.418,A,7.417
+58,58,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+What is the specific conductance?",10113,10114,10115,10116,D,10116
+59,59,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+What is the ionic strength of the solution?",1.684e-01,1.685e-01,1.686e-01,1.688e-01,B,1.685e-01
+60,60,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+Which mineral dissolved the most?",Rhodochrosite,Sepiolite and Sepiolite(d),Talc,None,B,Sepiolite and Sepiolite(d)
+61,61,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+Which mineral had net precipitation?",Talc,Rhodochrosite,Sepiolite(d),None,A,Talc
+62,62,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+How many moles of talc were present in the final assemblage?",2.332e+01,2.334e+01,2.330e+01,2.333e+01,D,2.333e+01
+63,63,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+How many species of C (4) are present in the solution?",16,13,9,4,B,13
+64,64,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+How many moles of CO3-2 are present in solution?",3.326e-07,3.327e-07,3.324e-07,3.323e-07,A,3.326e-07
+65,65,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+What is the saturation index of Sepiolite(d)?",-8.81,-8.83,-8.82,-8.86,C,-8.82
+66,66,"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].
+
+How many moles of Mn (3) are present in solution?",6.938e-18,6.936e-18,6.933e-18,6.932e-18,C,6.933e-18
+67,67,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the pH?",0.944,0.943,0.945,0.946,C,0.945
+68,68,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the saturation index of pyrite?",-219.40,-219.43,-219.46,-219.44,B,-219.43
+69,69,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the pe of the solution?",19.678,19.676,19.679,19.674,A,19.678
+70,70,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the specific conductance?",55869,55868,55866,55865,C,55866
+71,71,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the alkalinity?",-3.630e-01,-3.631e-01,-3.632e-01,-3.633e-01,A,-3.630e-01
+72,72,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+How many species of Fe (3) are present in solution?",10,8,5,7,A,10
+73,73,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the saturation index of hematite?",2.00,2.03,2.02,2.01,D,2.01
+74,74,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the molality of H+ in the solution?",1.438e-01,1.434e-01,1.437e-01,1.439e-01,A,1.438e-01
+75,75,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+What is the molality of S (6) in the solution?",2.008e-01,2.006e-01,2.003e-01,2.004e-01,B,2.006e-01
+76,76,"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.
+
+Are there more moles of Fe (2) or Fe (3) in solution?",Fe (2),Fe (3),Same,N/A,B,Fe (3)
+77,77,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What is the pH?",6.614,6.615,6.617,6.618,D,6.618
+78,78,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).",0.91720,0.91723,0.91721,0.91722,A,0.91720
+79,79,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What is the saturation index of N2?",2.08,2.07,2.09,2.05,C,2.09
+80,80,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+How many species of C (4) are present in solution?",4,3,0,1,A,4
+81,81,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+Is the molality of NH4+ or NH3 higher?",NH4+,NH3,Same,N/A,A,NH4+
+82,82,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What is the alkalinity?",5.161e-03,5.160e-03,5.162e-03,5.165e-03,B,5.160e-03
+83,83,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What is the molality of N in solution?",1.475e-01,1.478e-01,1.474e-01,1.476e-01,D,1.476e-01
+84,84,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What is the specific conductance of the solution?",774,773,770,772,A,774
+85,85,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What was the delta of moles of CH4?",5.275e-02,5.277e-02,5.276e-02,5.278e-02,B,5.277e-02
+86,86,"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).
+
+What is the pe of the final solution?",-5.196,-5.200,-5.198,-5.199,D,-5.199
+87,87,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the pH?",7.493,7.494,7.491,7.492,D,7.492
+88,88,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the specific conductance?",44,46,47,48,B,46
+89,89,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the pe?",3.506,3.509,3.504,3.508,D,3.508
+90,90,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the ionic strength?",8.538e-05,8.539e-05,8.537e-05,8.536e-05,A,8.538e-05
+91,91,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the log IAP of Chrysotile?",21.13,21.15,21.14,21.18,C,21.14
+92,92,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+How many species of Si are present?",1,2,3,5,C,3
+93,93,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the saturation index of Chalcedony?",-2.33,-2.37,-2.30,-2.36,D,-2.36
+94,94,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the saturation index of quartz?",-2.20,-2.24,-2.21,-2.28,C,-2.21
+95,95,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+What is the molality of MgOH+?",6.818e-06,6.814e-06,6.816e-06,6.817e-06,C,6.816e-06
+96,96,"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.
+
+Is there more Mg or Si in solution?",Mg,Si,Same,N/A,A,Mg
+97,97,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the molality of Alkalinity?",4.995e-03,4.993e-03,4.997e-03,4.999e-03,C,4.997e-03
+98,98,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the molality of Ca?",2.496e-03,2.498e-03,2.495e-03,2.494e-03,A,2.496e-03
+99,99,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the total carbon?",5.280e-03,5.284e-03,5.285e-03,5.287e-03,D,5.287e-03
+100,100,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the electrical balance?",-5.431e-06,-5.435e-06,-5.436e-06,-5.438e-06,A,-5.431e-06
+101,101,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the specific conductance?",464,468,473,463,D,463
+102,102,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the saturation index of Aragonite?",0.40,0.39,0.42,0.41,A,0.40
+103,103,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the saturation index of O2 (g)?",-37.20,-37.18,-37.19,-37.21,C,-37.19
+104,104,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the activity of CO2?",3.193e-04,3.199e-04,3.198e-04,3.197e-04,D,3.197e-04
+105,105,"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.
+
+What is the activity of H2?",7.079e-27,7.070e-27,7.073e-27,7.075e-27,A,7.079e-27
+106,107,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the molality of Cl?",5.707e+00,5.710e+00,5.709e+00,5.708e+00,A,5.707e+00
+107,108,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the pH of the mixture?",6.732,6.730,6.733,6.731,C,6.733
+108,109,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the pe of the mixture?",11.241,11.240,11.244,11.243,C,11.244
+109,110,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+what is the electrical balance?",-5.703e+00,-5.707e+00,-5.709e+00,-5.710e+00,B,-5.707e+00
+110,111,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the viscosity of the mixture?",0.89229,0.89829,0.89429,0.89329,D,0.89329
+111,112,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the specific conductance of the mixture?",263753,263768,263761,263760,D,263760
+112,113,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the saturation index of H2O (g)?",-1.55,-1.51,-1.54,-1.53,A,-1.55
+113,114,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the activity of H+ in the mixture?",1.850e-07,1.852e-07,1.851e-07,1.855e-07,C,1.851e-07
+114,115,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the molality of HCl?",1.286e-08,1.285e-08,1.283e-08,1.280e-08,A,1.286e-08
+115,116,"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.
+
+What is the log IAP of O2(g)?",-14.22,-14.26,-14.19,-14.32,B,-14.26
+116,117,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the pH of the final solution?",1.013,1.010,1.019,1.018,A,1.013
+117,118,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the ionic strength of the final solution?",1.397e-01,1.394e-01,1.399e-01,1.391e-01,D,1.391e-01
+118,119,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the pe of the final solution?",5.596,5.587,5.591,5.590,C,5.591
+119,120,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the log IAP of H2 (g) in the final solution?",-16.38,-16.36,-16.31,-16.33,B,-16.36
+120,121,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the activity of H+ in the final solution?",9.706e-02,9.704e-02,9.700e-02,9.703e-02,A,9.706e-02
+121,122,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the pH in solution of reaction step 1?",2.750,2.751,2.748,2.745,B,2.751
+122,123,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the viscosity of the solution at reaction step 1?",0.89067,0.89064,0.89058,0.89059,B,0.89064
+123,124,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the pH of the solution at reaction step 2?",2.129,2.122,2.127,2.124,D,2.124
+124,125,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.
+
+What is the activity of H+ at reaction step 2?",7.513e-03,7.514e-03,7.512e-03,7.516e-03,A,7.513e-03
+125,126,"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid to solution 1.
+
+What is the pe at reaction step 4?",16.658,16.652,16.655,16.654,C,16.655
+126,127,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the pH of the solution?",7.066,7.065,7.062,7.068,A,7.066
+127,128,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the ionic strength of the solution?",4.1741e-02,4.176e-02,4.174e-02,4.172e-02,C,4.174e-02
+128,130,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the pe of the solution?",10.741,10.749,10.737,10.740,D,10.740
+129,131,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the saturation index of anhydrite?",-0.30,-0.35,-0.28,-0.34,A,-0.30
+130,132,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the saturation index of Sulfur?",-87.52,-87.51,-87.56,-87.59,C,-87.56
+131,133,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the activity of OH-?",1.179e-07,1.176e-07,1.178e-07,1.172e-07,C,1.178e-07
+132,134,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the molality of CaHSO4+?",3.162e-09,3.161e-09,3.168e-09,3.160e-09,A,3.162e-09
+133,135,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the molality of H2?",1.719e-39,1.712e-39,1.710e-39,1.708e-39,C,1.710e-39
+134,136,"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.
+
+What is the final number of moles of gypsum in the assemblage?",9.985e+00,9.986e+00,9.988e+00,9.980e+00,A,9.985e+00
+135,137,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the pH?",5.610,5.619,5.617,5.613,A,5.610
+136,138,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the pe?",0.360,0.366,0.361,0.363,B,0.366
+137,139,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the ionic strength?",2.462e-06,2.466e-06,2.461e-06,2.457e-06,C,2.461e-06
+138,140,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the alkalinity?",1.219e-09,1.218e-09,1.212e-09,1.217e-09,D,1.217e-09
+139,141,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the delta of CO2 (g)?",-1.600e-05,-1.594e-05,-1.500e-05,-1.606e-05,A,-1.600e-05
+140,142,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the saturation index of CH4?",-25.42,-25.40,-25.45,-25.48,D,-25.48
+141,143,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the activity of H+?",2.459e-06,2.456e-06,2.452e-06,2.457e-06,B,2.456e-06
+142,145,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the molality of OH-?",4.129e-09,4.136e-09,4.131e-09,4.122e-09,A,4.129e-09
+143,146,"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.
+
+What is the log IAP of CO2 (g)?",-4.80,-4.84,-4.87,-4.86,C,-4.87
+144,147,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the pe of solution 10 at transport 10?",-1.452,-1.453,-1.451,-1.454,A,-1.452
+145,148,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the pe of solution 1 at transport step 10?",10.732,10.734,10.733,10.730,C,10.733
+146,149,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+How many moles of CaX2 are on exchange site 1 at transport step 5?",4.284e-04,4.287e-04,4.283e-04,4.280e-04,A,4.284e-04
+147,150,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the specific conductance of solution 1 at transport step 5?",124,126,122,123,D,123
+148,151,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the concentration of Na of solution 1 at transport step 5?",9.875e-04,9.871e-04,9.872e-04,9.869e-04,B,9.871e-04
+149,152,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the molality of NaX at transport step 4, exchange 1?",1.301e-04,1.304e-04,1.302e-04,1.306e-04,B,1.304e-04
+150,153,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the equivalent fraction of CaX2 at exchange 8 at transport step 4?",1.000e+00,9.900e-01,9.998e-01,9.999e-01,A,1.000e+00
+151,154,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the specific conductance at exchange site 8 at transport step 4?",252,256,258,255,D,255
+152,155,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the equivalent fraction of CaX2 at exchange 1 at transport step 6?",8.453e-01,8.457e-01,8.450e-01,8.452e-01,B,8.457e-01
+153,156,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the molality of Na at exchange 1 at transport step 6?",9.895e-04,9.889e-04,9.890e-04,9.893e-04,C,9.890e-04
+154,157,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the viscosity of solution 1 at transport step 6?",0.89023,0.89021,0.89026,0.89028,C,0.89026
+155,158,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the molality of Ca+2 in solution 1 at transport step 6?",5.506e-06,5.502e-06,5.508e-06,5.501e-06,A,5.506e-06
+156,159,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+How many moles of NaX are present at exchange 4 at transport step 10?",9.498e-05,9.496e-05,9.493e-05,9.491e-05,A,9.498e-05
+157,160,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the molality of HCl at solution 4 at transport step 10?",3.323e-11,3.326e-11,3.320e-11,3.319e-11,C,3.320e-11
+158,161,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the saturation index of H2O (g) at solution 4 and transport step 10?",-1.51,-1.48,-1.53,-1.50,D,-1.50
+159,162,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the saturation index of Halite at exchange 3 at transport step 10?",-7.64,-7.61,-7.58,-7.60,B,-7.61
+160,163,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the log IAP of H2 (g) at exchange 3 at transport step 10?",-14.24,-14.28,-14.21,-14.23,A,-14.24
+161,164,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the activity of Na+ in solution 3 at transport step 10?",9.444e-04,9.443e-04,9.448e-04,9.440e-04,A,9.444e-04
+162,165,"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.
+
+What is the alkalinity of solution 3 at transport step 10?",1.417e-09,1.415e-09,1.419e-09,1.410e-09,A,1.417e-09
+163,166,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the mole fraction of Strontianite in the solid solution?",6.17e-01,6.10e-01,6.12e-01,6.13e-01,D,6.13e-01
+164,167,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the pH of the resulting solution?",6.020,6.022,6.021,6.026,B,6.022
+165,168,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the specific conductance of the solution?",1000,999,1001,1005,C,1001
+166,169,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the pe of the resulting solution?",11.829,11.828,11.824,11.827,D,11.827
+167,170,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the activity of Ca+2?",2.643e-03,2.641e-03,2.647e-03,2.649e-03,C,2.647e-03
+168,171,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the ionic strength of the resulting solution?",1.659e-02,1.655e-02,1.654e-02,1.651e-02,B,1.655e-02
+169,172,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+How many moles of calcite are present?",5.55e-03,5.59e-03,5.52e-03,5.51e-03,A,5.55e-03
+170,173,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the molality of C(4) in the resulting solution?",3.237e-02,3.234e-02,3.228e-02,3.230e-02,D,3.230e-02
+171,174,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the saturation index of Strontianite?",-0.21,-0.19,-0.20,-0.17,A,-0.21
+172,175,"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.
+
+What is the saturation index of Calcite?",-0.44,-0.41,-0.46,-0.43,B,-0.41
+173,176,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the pH at reaction step 5?",6.175,6.178,6.172,6.171,B,6.178
+174,178,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the specific conductance at reaction step 5?",76,79,77,73,C,77
+175,179,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the ionic strength at reaction step 5?",3.389e-04,3.385e-04,3.382e-04,3.384e-04,B,3.385e-04
+176,180,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the molality of Ba at reaction step 5?",1.460e-05,1.458e-05,1.452e-05,1.456e-05,D,1.456e-05
+177,181,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the saturation index of Barite at reaction step 5?",0.72,0.77,0.78,0.73,A,0.72
+178,182,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the saturation index of Barite at reaction step 4?",0.76,0.72,0.73,0.78,A,0.76
+179,183,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the specific conductance of the solution at reaction step 4?",61,67,63,62,C,63
+180,184,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the saturation index of Barite at reaction step 3?",0.82,0.83,0.85,0.88,B,0.83
+181,185,"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.
+
+What is the molality of S(6) at reaction step 3?",1.563e-04,1.561e-04,1.562e-04,1.566e-04,B,1.561e-04
+182,187,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the viscosity of the resulting solution?",1.13759,1.13757,1.13758,1.13753,B,1.13757
+183,188,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+How many moles of CH4(g) are there?",2.991e-03,2.993e-03,2.992e-03,2.990e-03,C,2.992e-03
+184,189,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the molality of C(-4) in solution?",2.009e-03,2.008e-03,2.003e-03,2.002e-03,B,2.008e-03
+185,190,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the saturation index of CO2(g)?",-7.81,-7.88,-7.83,-7.86,D,-7.86
+186,191,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the molality of HC03- in solution?",2.355e-09,2.353e-09,2.352e-09,2.350e-09,A,2.355e-09
+187,192,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the pe of the solution?",-4.587,-4.588,-4.584,-4.581,C,-4.584
+188,193,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the molality of CO2 in solution?",6.279e-10,6.278e-10,6.277e-10,6.273e-10,C,6.277e-10
+189,194,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the density of the solution?",0.99906,0.99904,0.99901,0.99902,A,0.99906
+190,195,"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).
+
+What is the ionic strength of the solution?",7.434e-08,7.436e-08,7.437e-08,7.433e-08,A,7.434e-08
+191,196,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the pH of the resulting solution?",6.486,6.483,6.481,6.489,D,6.489
+192,197,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the pe of the resulting solution?",11.749,11.752,11.750,11.753,C,11.750
+193,198,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the specific conductance of the resulting solution?",2436,2432,2435,2429,B,2432
+194,199,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the viscosity of the resulting solution?",0.90897,0.90899,0.90893,0.90895,D,0.90895
+195,200,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+How many moles of calcite precipitated out of solution?",8.039e-04,8.041e-04,8.047e-04,8.042e-04,D,8.042e-04
+196,201,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the molality of Ca+2 in the resulting solution?",3.863e-03,3.868e-03,3.866e-03,3.869e-03,B,3.868e-03
+197,202,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the activity of Cl- in the resulting solution?",3.574e-03,3.569e-03,3.571e-03,3.577e-03,C,3.571e-03
+198,203,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the saturation index of Anhydrite?",-1.29,-1.26,-1.27,-1.23,C,-1.27
+199,204,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the saturation index of Hexahydrite?",-3.98,-3.96,-3.93,-3.99,A,-3.98
+200,205,"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.
+
+What is the saturation index of Thenardite?",-6.88,-6.84,-6.81,-6.83,B,-6.84
