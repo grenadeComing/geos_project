@@ -1,0 +1,43 @@
+{
+  "dataset": "neurips_dataset_200_clean.jsonl",
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "method": "claude_code_cli",
+  "context_mode": "raw_via_bash",
+  "run_name": "cli_sonnet46_n50",
+  "workers": 2,
+  "max_turns": 20,
+  "task_filter": "all",
+  "limit": null,
+  "started_at": "2026-05-03T19:51:30-07:00",
+  "ended_at": "2026-05-03T20:01:47-07:00",
+  "elapsed_seconds": 616.772,
+  "seconds_per_row": 12.335,
+  "total_rows": 50,
+  "graded_rows": 40,
+  "ungraded_rows": 10,
+  "correct_rows": 30,
+  "error_rows": 0,
+  "accuracy": 0.6,
+  "graded_accuracy": 0.75,
+  "by_task_type": {
+    "mcq": {
+      "total": 50,
+      "correct": 30,
+      "graded": 40,
+      "ungraded": 10,
+      "errors": 0,
+      "accuracy": 0.6,
+      "graded_accuracy": 0.75
+    }
+  },
+  "questions_with_usage": 46,
+  "total_input_tokens": 433,
+  "total_cache_read_input_tokens": 9125815,
+  "total_cache_creation_input_tokens": 731518,
+  "total_input_tokens_effective": 9857766,
+  "total_output_tokens": 272215,
+  "total_cost_usd": 9.5993,
+  "total_duration_ms": 4841590,
+  "total_num_turns": 395
+}

@@ -1,13 +1,2 @@
 key,model,method,median_steps,mean_steps,median_phreeqc_runs,mean_phreeqc_runs,median_read_file_calls,mean_read_file_calls,failed_phreeqc_run_events,items_with_wall_clock,median_wall_seconds,p90_wall_seconds
-opus_toc,Claude Opus 4.6,Agent-TOC,8,11.04,1,2.13,4,4.43,61,200,34.0,144.0
-sonnet_toc,Claude Sonnet 4.6,Agent-TOC,7,10.38,1,2.11,2,3.88,65,200,29.0,126.0
-sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,6,8.51,1,2.35,1,1.57,57,200,27.0,148.3
-gpt54_toc,GPT-5.4,Agent-TOC,8,9.34,1,1.70,2,2.96,74,200,19.0,36.1
-gpt54_raw,GPT-5.4,Agent-Raw100k,6,7.35,1,1.52,1,1.31,59,200,17.0,26.1
-gpt54_raw500k,GPT-5.4,Agent-Raw500k,6,7.19,1,1.47,1,1.25,62,200,16.0,30.0
-gpt52_toc,GPT-5.2,Agent-TOC,8,9.78,1,1.98,2,2.85,115,200,20.0,47.0
-gpt52_raw,GPT-5.2,Agent-Raw100k,7,7.89,1,1.69,1,1.50,103,199,19.0,38.0
-gpt52_raw500k,GPT-5.2,Agent-Raw500k,7,7.62,1,1.71,1,1.25,113,200,17.0,40.0
-gpt51_toc,GPT-5.1,Agent-TOC,7,7.91,1,1.75,2,1.95,124,199,15.0,31.2
-gpt51_raw,GPT-5.1,Agent-Raw100k,6,6.52,1,1.59,1,0.81,115,200,13.0,25.0
-gpt51_raw500k,GPT-5.1,Agent-Raw500k,6,6.28,1,1.59,1,0.62,126,200,13.0,29.0
+gflash3_toc,Gemini 3 Flash Preview,Agent-TOC,24,21.06,6,5.28,9,8.31,130,199,113.0,158.6

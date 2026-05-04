@@ -1,27 +1,16 @@
 key,model,method,item_correct,item_total,item_accuracy,scenario_count,mean_scenario_accuracy,scenario_bootstrap_ci_low,scenario_bootstrap_ci_high,all_correct_scenarios,any_correct_scenarios,all_wrong_scenarios
 opus_direct,Claude Opus 4.6,Direct,84,200,42.0%,21,43.9%,36.6%,52.8%,1,21,0
 opus_cot,Claude Opus 4.6,CoT,76,200,38.0%,21,36.5%,29.5%,43.2%,0,20,1
-opus_toc,Claude Opus 4.6,Agent-TOC,169,200,84.5%,21,84.8%,77.3%,91.5%,10,21,0
 sonnet_direct,Claude Sonnet 4.6,Direct,74,200,37.0%,21,35.6%,28.6%,42.7%,0,20,1
 sonnet_cot,Claude Sonnet 4.6,CoT,86,200,43.0%,21,45.7%,37.9%,54.0%,1,21,0
-sonnet_toc,Claude Sonnet 4.6,Agent-TOC,171,200,85.5%,21,85.6%,77.8%,92.6%,9,21,0
-sonnet_raw,Claude Sonnet 4.6,Agent-Raw100k,167,200,83.5%,21,83.4%,74.9%,91.0%,10,21,0
 gpt54_direct,GPT-5.4,Direct,54,200,27.0%,21,25.7%,18.0%,33.7%,0,17,4
 gpt54_cot,GPT-5.4,CoT,70,200,35.0%,21,32.8%,24.4%,41.3%,0,20,1
-gpt54_toc,GPT-5.4,Agent-TOC,145,200,72.5%,21,73.6%,64.0%,82.8%,5,21,0
-gpt54_raw,GPT-5.4,Agent-Raw100k,140,200,70.0%,21,71.7%,60.8%,81.6%,3,21,0
-gpt54_raw500k,GPT-5.4,Agent-Raw500k,149,200,74.5%,21,75.8%,64.7%,85.9%,7,21,0
 gpt52_direct,GPT-5.2,Direct,55,200,27.5%,21,26.2%,21.7%,30.7%,0,20,1
 gpt52_cot,GPT-5.2,CoT,69,200,34.5%,21,32.9%,26.2%,39.9%,0,20,1
-gpt52_toc,GPT-5.2,Agent-TOC,107,200,53.5%,21,51.0%,41.7%,60.3%,0,20,1
-gpt52_raw,GPT-5.2,Agent-Raw100k,123,200,61.5%,21,57.9%,46.9%,68.5%,3,20,1
-gpt52_raw500k,GPT-5.2,Agent-Raw500k,127,200,63.5%,21,60.4%,49.2%,71.2%,3,20,1
 gpt51_direct,GPT-5.1,Direct,78,200,39.0%,21,42.0%,34.9%,50.2%,1,21,0
 gpt51_cot,GPT-5.1,CoT,70,200,35.0%,21,38.1%,29.6%,47.8%,1,21,0
-gpt51_toc,GPT-5.1,Agent-TOC,108,200,54.0%,21,52.1%,42.1%,62.4%,1,20,1
-gpt51_raw,GPT-5.1,Agent-Raw100k,127,200,63.5%,21,61.4%,49.6%,72.3%,1,20,1
-gpt51_raw500k,GPT-5.1,Agent-Raw500k,116,200,58.0%,21,56.0%,44.9%,66.6%,1,20,1
 gflash_direct,Gemini 2.5 Flash,Direct,73,200,36.5%,21,39.5%,31.9%,48.1%,1,20,1
 gflash_cot,Gemini 2.5 Flash,CoT,55,200,27.5%,21,30.8%,23.1%,40.4%,1,21,0
 gflash3_direct,Gemini 3 Flash Preview,Direct,77,200,38.5%,21,36.7%,30.8%,42.8%,0,20,1
 gflash3_cot,Gemini 3 Flash Preview,CoT,81,200,40.5%,21,39.3%,32.6%,45.5%,0,20,1
+gflash3_toc,Gemini 3 Flash Preview,Agent-TOC,47,200,23.5%,21,23.4%,17.0%,29.9%,0,19,2

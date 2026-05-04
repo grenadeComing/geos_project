@@ -1,2 +1,2 @@
 outputs_le_100k,pct_outputs_le_100k,min_chars,p25_chars,p50_chars,p75_chars,p90_chars,p95_chars,max_chars
-163,81.5%,1484,7578,9998,17579,21351,48014,54609
+162,81.0%,1131,7313,9568,12642,18051,21263,54385
