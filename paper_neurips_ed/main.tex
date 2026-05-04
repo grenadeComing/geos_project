@@ -84,33 +84,14 @@ LLM work in chemistry and geoscience often focuses on prediction, literature syn
 \subsection{Tool Environment}
 \label{sec:harness}
 
-The custom agent is given four tools: \texttt{write\_file}, \texttt{read\_file}, \texttt{list\_file}, and \texttt{execute\_phreeqc}. Each question runs in an isolated workspace with a fixed maximum of 24 agent steps. PHREEQC execution is deterministic for a given input file and the frozen benchmark database. The agent is instructed to use tools for quantitative questions and to base the final answer on simulator output. This design intentionally keeps the harness simple: it is a controlled environment for comparing no-tool reasoning, reasoning-only prompting, and tool-augmented execution.
-
-\subsection{Output-Access Protocols}
-\label{sec:toc}
-
-PHREEQC outputs are heavy-tailed rather than uniformly large. Among completed agent workspaces, \OutputLeHundredK{} of observed \texttt{result.out} files are at most 100k characters while \OutputGtHundredK{} exceed it; the median output is \OutputPFiftyChars, the 90th percentile is \OutputPNinetyChars, and the maximum is \OutputMaxChars. The distribution is in fact bimodal: the small mode tops out near 55k characters (95th percentile within the $\le$100k items), while every output above the cap begins at roughly 369k characters or higher. The 100k cap therefore sits in an empty interval between modes rather than within either mode, which makes Raw100k a natural baseline rather than an arbitrary truncation. Output access is therefore part of the evaluation rather than a neutral implementation detail: returning the full file can saturate context, while returning too little starves the agent of evidence it needs to extract the requested quantity. We treat output access as a controlled variable and study three protocols, each targeted at a different regime of the output-size distribution:
-
-\begin{itemize}[leftmargin=*, itemsep=2pt]
-    \item \textbf{Agent-TOC} (size-agnostic; main agent condition). \texttt{execute\_phreeqc} returns execution status, file names, file sizes, stderr/stdout snippets, and a table of contents for \texttt{result.out}; the agent then issues \texttt{read\_file} calls with explicit line ranges. Context cost is bounded regardless of output size, so this protocol spans the full distribution, including the \OutputGtHundredK{} long tail.
-    \item \textbf{Agent-Raw100k} (typical case). \texttt{execute\_phreeqc} returns \texttt{result.out} inline, truncated to \RawCapChars{} characters per execution by preserving the head and tail of the file. Because the cap is non-binding on \OutputLeHundredK{} of items, TOC versus Raw100k on these items reduces to a clean comparison between structured pointer access and full inline output, without confounding by truncation.
-    \item \textbf{Agent-Raw500k} (long-tail stress). The same protocol with a \RawHighCapChars{}-character cap. This is targeted at the \RawCapAffectedN{} cap-binding items where Raw100k actually truncates, and asks whether residual errors on the long tail are explained by additional output evidence rather than by reasoning or extraction failures.
-\end{itemize}
-
-All three protocols share the agent loop and tool set; only the payload returned by \texttt{execute\_phreeqc} differs. We do not present TOC as a universal replacement for retrieval, summarization, or domain-specific parsers. It is one deterministic output-management mechanism for this evaluation harness --- return structure eagerly, defer content until requested --- and the comparison of interest is against budgeted raw access under the same simulator, task set, and agent loop.
+The custom agent is given four tools: \texttt{write\_file}, \texttt{read\_file}, \texttt{list\_file}, and \texttt{execute\_phreeqc}. Each question runs in an isolated workspace with a fixed maximum of 24 agent steps. PHREEQC execution is deterministic for a given input file and the frozen benchmark database. Because simulator-output sizes on \BenchName{} are empirically bimodal (\OutputLeHundredK{} of files $\le$100k characters, the rest beginning at $\sim$369k; Appendix~\ref{sec:appendix-output-access}), large outputs cannot reliably be inlined into the agent's context. We therefore introduce a \textbf{table-of-contents (TOC)} interface for the \texttt{execute\_phreeqc} tool: rather than returning raw text, the tool writes the simulator output to a workspace file and returns a section-level outline (section headers with their line ranges); the agent then issues line-range \texttt{read\_file} calls to retrieve evidence on demand. TOC is a structured-retrieval interface for large tool outputs, adjacent to recent memory-pointer approaches~\citep{labate2025memorypointers} but specialized to PHREEQC's deterministic, section-structured output. We evaluate the agent under two output-access protocols built on this design choice: \textbf{Agent-TOC} (size-agnostic, always uses the TOC interface) and \textbf{Agent-Raw100k} (inline raw output, head/tail-truncated to \RawCapChars{} characters). Both protocols share the agent loop and tool set; only the \texttt{execute\_phreeqc} payload differs. Comparing TOC against summarization- or chunking-based access is out of scope of this benchmark paper; we report TOC vs raw inline (Raw100k) as a within-family baseline check (Section~\ref{sec:toc}).
 
 \section{Main Results}
 \label{sec:main-results}
 
-All main experiments use the frozen \BenchName{} benchmark. Accuracy is computed as correct answers divided by all \BenchN{} items; ungraded answers count as incorrect. We also report token usage, latency, number of PHREEQC executions, failed PHREEQC executions, and step-limit behavior for agent runs. Sub-5\,pp accuracy differences should be read as within rerun variance and not as substantive protocol effects (Appendix~\ref{sec:appendix-stability}); larger gaps and directionally consistent patterns across models are the basis for substantive claims. Because closed-model APIs can drift, all results should be interpreted as measurements of the listed model endpoints at the time of the rerun rather than as permanent model properties.
+Table~\ref{tab:main-results} reports direct, chain-of-thought (CoT), TOC-agent, and Raw100k-agent accuracy across model families on \BenchName. Direct baselines sit in the \GPTFiveFourOneShot--\OpusOneShot{} range, just above the \BenchMajority{} majority-label floor (the intended shape per Section~\ref{sec:benchmark}). All percentages use the \BenchN-item denominator with ungraded answers counted as incorrect. We read the table along three axes below: whether mental reasoning can substitute for tool grounding (§\ref{sec:main-cot}), what tool access adds for capable models (§\ref{sec:main-tool}), and when tool augmentation backfires (§\ref{sec:main-belowmid}).
 
-Table~\ref{tab:main-results} reports direct, chain-of-thought, TOC-agent, and raw-agent accuracy where available. The chain-of-thought baseline addresses the concern that apparent gains might come from eliciting more explicit model reasoning, rather than from using PHREEQC as an external computational tool. Direct no-tool baselines sit in the \GPTFiveFourOneShot--\OpusOneShot{} range across model families, just above the \BenchMajority{} majority-label floor; this is the intended shape of the benchmark, since items that direct models could solve reliably from parametric knowledge were excluded during construction (Section~\ref{sec:benchmark}).
-
-Chain-of-thought prompting yields roughly $\pm 8$pp around the direct baseline and is not consistently positive: Opus loses 4.0pp under CoT and GPT-5.1 loses 4.0pp, while Sonnet, GPT-5.4, and GPT-5.2 gain 6.0--8.0pp. Tool access then adds 15.0--42.5pp on top of the better of the two no-tool conditions for the five top- and mid-tier completed agents: Opus +42.5pp, Sonnet +42.5pp, GPT-5.4 +37.5pp, GPT-5.2 +19.0pp, and GPT-5.1 +15.0pp. Reasoning-only prompting therefore does not substitute for grounded simulator execution on this benchmark; the headline accuracy gains are attributable to tool use rather than to additional reasoning tokens.
-
-Gemini 3 Flash Preview's TOC agent reverses this pattern, reaching only \GeminiThreeFlashTOC{} (47/200) --- a \GeminiThreeFlashTOCMinusBestNoTool{} regression below its better no-tool baseline (CoT, \GeminiThreeFlashCoT{}) and the only completed agent in our evaluation where tool access actively harms aggregate performance. The dominant failure mode is step-budget exhaustion without commitment: 117/200 trajectories exhausted the 24-step budget while continuing to issue tool calls and never produced a final-answer message, and an additional 33 trajectories committed to a final message that was not parseable in the required answer format. No trajectories failed due to API errors, rate limits, or billing constraints --- all 200 ran to completion under the same harness, prompts, step budget, and infrastructure as the other five models. Among the 50 trajectories that produced a parseable answer, 47 were correct (94.0\% conditional accuracy), indicating that the bottleneck is agent-loop control and final-answer commitment rather than reasoning or PHREEQC operation. We read this as a third capability tier --- below-mid --- where tool augmentation degrades aggregate accuracy not by producing wrong answers but by preventing the model from producing any answer at all. Switching to Raw100k --- where \texttt{execute\_phreeqc} returns the simulator output inline and the agent does not have to issue \texttt{read\_file} calls to inspect sections --- drops Gemini Flash 3's median \texttt{read\_file} traffic from \GeminiTOCReadFileMedian{} to \GeminiRawReadFileMedian{} calls per question and lowers step-budget exhaustion from \GeminiTOCMaxStepsBreakdown/200 to \GeminiRawMaxStepsBreakdown/200 (Appendix~\ref{sec:appendix-gemini-step-budget}); this isolates TOC navigation overhead, not PHREEQC operation, as the mechanism behind the below-mid-tier non-commit failure.
-
-\begin{table}[t]
+\begin{table}[!ht]
 \centering
 \small
 \begin{tabular}{llcccc}
@@ -131,37 +112,28 @@ Below-mid & Gemini 3 Flash Preview & \GeminiThreeFlashOneShot & \GeminiThreeFlas
 \label{tab:main-results}
 \end{table}
 
-\section{Diagnostic Analysis}
+\subsection{Chain-of-Thought Is Not Sufficient}
+\label{sec:main-cot}
+
+A geochemistry question may be solvable through mental recall and arithmetic, or it may require numerical computation that no amount of pre-trained knowledge can deliver to the precision the four answer choices demand. We probe this with chain-of-thought (CoT) prompting~\citep{wei2022chainofthought}, which has been shown to substantially boost performance on reasoning-heavy tasks. Across model families, CoT yields roughly $\pm 8$\,pp around direct (Opus and GPT-5.1 lose 4.0\,pp; Sonnet, GPT-5.4, and GPT-5.2 gain 6.0--8.0\,pp). The contrast against the output-token expansion CoT produces is sharp: Sonnet expands its total output tokens by 140$\times$ (1.6K to 225K) for a $+6.0$\,pp accuracy gain, and GPT-5.1 expands by 29$\times$ (2.0K to 58.6K) for a $-4.0$\,pp \emph{decrease} (Appendix~\ref{sec:appendix-cot-tokens}). For items not solvable from parametric knowledge, scaling the reasoning-token budget cannot substitute for grounded simulator output: the bottleneck on \BenchName{} is computational, not reasoning-budgeted.
+
+\subsection{Tool Access Is Necessary}
+\label{sec:main-tool}
+
+Tool access (Agent-TOC) adds 15.0--42.5\,pp on top of the better no-tool baseline for the five top- and mid-tier completed agents: Opus $+42.5$\,pp, Sonnet $+42.5$\,pp, GPT-5.4 $+37.5$\,pp, GPT-5.2 $+19.0$\,pp, GPT-5.1 $+15.0$\,pp. Both Anthropic and OpenAI top-tier models exhibit similar gains, supporting the reading that simulator access --- not vendor-specific scaffolding --- drives the improvement. The headline gains in Table~\ref{tab:main-results} are attributable to PHREEQC computation, not to additional reasoning tokens: when a question exceeds what a model can compute mentally, a calculator is necessary.
+
+\subsection{Tool Augmentation Can Hurt Below-Mid-Tier Models}
+\label{sec:main-belowmid}
+
+Gemini 3 Flash Preview's TOC agent reverses the pattern, reaching only \GeminiThreeFlashTOC{} --- a \GeminiThreeFlashTOCMinusBestNoTool{} regression below its better no-tool baseline (CoT, \GeminiThreeFlashCoT{}) and the only completed agent in our evaluation where tool access actively harms aggregate performance. The mechanism is step-budget exhaustion under TOC navigation overhead: switching to Raw100k recovers headline accuracy to \GeminiThreeFlashRaw{}, with detailed trajectory analysis in Appendix~\ref{sec:appendix-gemini-step-budget}. We read this as a third capability tier --- below-mid --- where tool augmentation can degrade aggregate accuracy not by producing wrong answers but by preventing the model from producing any answer at all. Even Gemini Flash 3's recovered Raw100k accuracy (\GeminiThreeFlashRaw{}, $+8.5$\,pp over Direct) is roughly half the smallest Direct-to-Tool gain achieved by the five top- and mid-tier agents (GPT-5.1: $+15.0$\,pp; Section~\ref{sec:main-tool}), so even when navigation overhead is removed, tool access helps Gemini Flash 3 less than any other model in our evaluation.
+
+\section{Beyond Aggregate Accuracy: Diagnostic Probes for Tool-Augmented Agents}
 \label{sec:diagnostic}
 
-\subsection{External Harness Comparison}
-
-To control for harness quality, we compared our custom agent against vendor-default external CLI harnesses on a random 50-question scenario-spanning subsample (seed 42), with the backbone held fixed within each comparison panel: Claude Sonnet 4.6 against the official Claude Code CLI, and GPT-5.4 against OpenAI Codex CLI. Each harness runs under its native deployed-product defaults; budget configuration, the Codex \texttt{reasoning\_effort} setting, and the per-condition error breakdown are deferred to Appendix~\ref{sec:appendix-external-harness}. Table~\ref{tab:sdk-comparison} reports matched accuracy and per-question input-token cost on the same 50 items.
-
-The accuracy direction is mixed across vendors: custom dominates Sonnet by \SDKCustomTOCMinusSDK{} but trails Codex on GPT-5.4 by 18.0\,pp. The token-efficiency direction is uniform: custom Agent-TOC reaches 2.7--3.3$\times$ more correct answers per input token than the deployed external CLI on both backbones (Sonnet: \SonnetCustomTOCPerCorrectK\,K vs \SDKSonnetPerCorrectK\,K tokens per correct; GPT-5.4: \GPTFiveFourCustomTOCPerCorrectK\,K vs \CodexGPTFiveFourPerCorrectK\,K). Codex's higher absolute accuracy on GPT-5.4 is purchased at 4.1$\times$ the per-question input-token cost; under a fixed-budget setting, custom TOC delivers more correct answers. We read this as evidence that the cost-efficiency advantage of purpose-built scientific agent harnesses is robust to the absolute-accuracy direction.
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{llcrr}
-\toprule
-Backbone & Harness & Acc & In tok/q (K) & In tok/correct (K) \\
-\midrule
-\multirow{3}{*}{Sonnet 4.6} & Custom + Agent-TOC (ours) & \SDKCustomTOCAcc & \SonnetCustomTOCPerQK & \SonnetCustomTOCPerCorrectK \\
- & Custom + Agent-Raw100k (ours) & \SDKCustomRawAcc & \SonnetCustomRawPerQK & \SonnetCustomRawPerCorrectK \\
- & Claude Code CLI (external) & \SDKSonnetAcc & \SDKSonnetPerQK & \SDKSonnetPerCorrectK \\
-\midrule
-\multirow{4}{*}{GPT-5.4} & Custom + Agent-TOC (ours) & \GPTFiveFourCustomTOCMatchedAcc & \GPTFiveFourCustomTOCPerQK & \GPTFiveFourCustomTOCPerCorrectK \\
- & Custom + Agent-Raw100k (ours) & \GPTFiveFourCustomRawMatchedAcc & \GPTFiveFourCustomRawPerQK & \GPTFiveFourCustomRawPerCorrectK \\
- & Custom + Agent-Raw500k (ours) & \GPTFiveFourCustomRawFiveHundredKMatchedAcc & \GPTFiveFourCustomRawFiveHundredKPerQK & \GPTFiveFourCustomRawFiveHundredKPerCorrectK \\
- & Codex CLI (external) & \CodexGPTFiveFourAcc & \CodexGPTFiveFourPerQK & \CodexGPTFiveFourPerCorrectK \\
-\bottomrule
-\end{tabular}
-\caption{Matched cross-vendor comparison on a random 50-question subsample (seed 42), with the backbone fixed within each panel. Per-question input tokens are full-benchmark averages for custom harnesses and matched-50 averages for external CLIs. ``In tok/correct'' = ``In tok/q'' / accuracy is the cost-efficiency metric (lower is better). Custom Agent-TOC's \SDKCustomTOCAcc{} on Sonnet and \GPTFiveFourCustomTOCMatchedAcc{} on GPT-5.4 agree with their full-benchmark headlines (\SonnetTOC{} and \GPTFiveFourTOC{}, Table~\ref{tab:main-results}), confirming the subsample is well-calibrated. Methodology details (budgets, reasoning-effort configuration, non-commit error breakdown) are in Appendix~\ref{sec:appendix-external-harness}.}
-\label{tab:sdk-comparison}
-\end{table}
+Section~\ref{sec:main-results} establishes that tool access drives the headline gains for top- and mid-tier models and that it actively harms the below-mid tier. This section opens the box behind those aggregate numbers along five axes: whether tool use is pure addition or trades items at the unit level (§\ref{sec:diag-retention}), whether the gains depend on the choice of output-access protocol (§\ref{sec:toc}), what operational cost is paid in wall-clock and step counts (§\ref{sec:diag-trajectory}), whether vendor-default external harnesses replicate the gains under matched conditions (§\ref{sec:diag-harness}), and whether the conclusions hold under scenario-clustered uncertainty (§\ref{sec:scenario}).
 
 \subsection{Retention: Tool Use Trades Items, Not Just Adds Them}
+\label{sec:diag-retention}
 
 Aggregate accuracy alone cannot tell whether tool access reliably improves a model. An agent can solve new questions through grounded computation while also losing questions that the same model answered correctly without tools. Table~\ref{tab:retention} therefore decomposes each TOC-agent run into kept, gained, and lost answers relative to its direct no-tool baseline. Retention is kept divided by kept plus lost. Higher retention indicates greater stability under tool augmentation: among questions the model answered correctly without tools, fewer are lost after adding the PHREEQC agent loop.
 
@@ -183,11 +155,12 @@ GPT-5.1 & \GPTFiveOneKept & \GPTFiveOneGained & \GPTFiveOneLost & \GPTFiveOneRet
 \label{tab:retention}
 \end{table}
 
-The completed runs show that simulator access can produce large net gains while still losing some direct-baseline correct answers. The asymmetry is clearest in the loss counts: all five top- and mid-tier TOC agents gain many questions through tool use, but the number of previously correct answers they lose ranges from \SonnetLost{} for Claude Sonnet 4.6 and \OpusLost{} for Claude Opus 4.6 to \GPTFiveTwoLost{} for GPT-5.2 and \GPTFiveOneLost{} for GPT-5.1. Retention therefore acts as a stability diagnostic: it measures whether an agent can exploit PHREEQC without destabilizing answers the same model could already produce without tools. This instability is most visible for the GPT-family agents: GPT-5.4 gains \GPTFiveFourGained{} questions but loses \GPTFiveFourLost{} direct-correct questions, GPT-5.2 gains \GPTFiveTwoGained{} but loses \GPTFiveTwoLost{}, and GPT-5.1 gains \GPTFiveOneGained{} but loses \GPTFiveOneLost{}. Thus the weaker retention is not simply a failure to benefit from PHREEQC; in this harness, it reflects less stable behavior while navigating the tool loop, simulator outputs, and final-answer mapping. The lost-item sets overlap only partially across backbones, so the effect is not explained simply by a fixed set of questions that are intrinsically fragile under tool use; it reflects model- and trajectory-specific failures introduced by the tool loop.
+Two patterns generalize across the five agents in Table~\ref{tab:retention} without requiring item-level recitation. First, the GPT family is less stable under tool augmentation than the Anthropic family: according to Appendix~\ref{sec:appendix-lost-by-bin}, GPT-5.2 is the least stable, losing 47.3\% of its direct-correct items overall versus 12.2\% for Sonnet ($\sim$4$\times$). The gap persists even on the smallest-output bin ($\le$10k characters, where all five agents face the same evidence load): GPT-5.2 still loses 50\% of the items it answered correctly without tools, roughly 5$\times$ Sonnet's 9.1\% on the same bin (Appendix~\ref{sec:appendix-lost-by-bin}). Second, different models lose different items: the lost-item sets only partially overlap across backbones, which rules out a ``broken benchmark'' explanation in which a fixed set of items is unsolvable under tool use. The regressions instead trace to each model's specific tool-loop behavior. Combined with the Gemini non-commit failure in Section~\ref{sec:main-belowmid}, this establishes a benchmark-level claim that aggregate accuracy cannot make: tool augmentation is never purely additive --- top- and mid-tier models trade items even when net-positive, and the below-mid model fails to commit at all.
 
-\subsection{Output Access Shapes Cost, Trajectory, and Reliability}
+\subsection{TOC Pays Off Only for Top-Tier Models}
+\label{sec:toc}
 
-Section~\ref{sec:toc} motivated three protocols spanning a size-agnostic structured interface, a typical-case raw baseline, and a long-tail stress condition. We now ask how those access choices translate into accuracy, token cost, and recovery behavior, and we keep the analysis aligned with the regime each protocol was designed to probe. Table~\ref{tab:toc-raw} compares TOC against Raw100k on the full benchmark, where the \RawCapChars{}-character cap is non-binding for most items and the question is whether structured access changes cost or accuracy as a general interface. Table~\ref{tab:large-output-access} then isolates the cap-affected high-output subset, where Raw100k and Raw500k differ in the evidence actually returned to the agent. This staged structure avoids treating raw-cap effects as if they were uniformly distributed across all \BenchN{} items.
+TOC keeps raw output out of context at the cost of an extra navigation step the agent must execute. Whether that tradeoff pays off should depend on the model's navigation capability, not on any property of the benchmark. Table~\ref{tab:toc-raw} compares the TOC and Raw100k protocols (Section~\ref{sec:harness}) on the full benchmark, where the \RawCapChars-character cap is non-binding for most items and the question is whether structured access changes cost or accuracy. Table~\ref{tab:large-output-access} then isolates the \RawCapAffectedN{} cap-affected high-output items, where Raw100k and Raw500k differ in the evidence actually returned.
 
 \begin{table}[t]
 \centering
@@ -231,7 +204,38 @@ GPT-5.1 & \GPTFiveOneContextWindow & \GPTFiveOneTOCLargeAcc & \GPTFiveOneRawLarg
 
 The Raw500k runs test whether the Raw100k condition is merely too restrictive for larger-context models. Across all items, increasing the raw cap raises GPT-5.4 from \GPTFiveFourRaw{} to \GPTFiveFourRawFiveHundredK{} and GPT-5.2 from \GPTFiveTwoRaw{} to \GPTFiveTwoRawFiveHundredK{}, but lowers GPT-5.1 from \GPTFiveOneRaw{} to \GPTFiveOneRawFiveHundredK{}. These aggregate comparisons should not be interpreted as pure cap effects, because \RawCapUnaffectedN{} items already have observed outputs at or below 100k characters and therefore receive essentially the same simulator output under both raw caps; differences on those items reflect rerun and trajectory variation rather than additional output access. The real raw-cap question is concentrated in the \RawCapAffectedN{} high-output items where the 100k cap binds. Table~\ref{tab:large-output-access} therefore reports this subset separately. On these items, Raw500k changes GPT-5.4 from \GPTFiveFourRawLargeAcc{} to \GPTFiveFourRawFiveHundredKLargeAcc{}, GPT-5.2 from \GPTFiveTwoRawLargeAcc{} to \GPTFiveTwoRawFiveHundredKLargeAcc{}, and GPT-5.1 from \GPTFiveOneRawLargeAcc{} to \GPTFiveOneRawFiveHundredKLargeAcc{}. The item-level gain/loss counts are also mixed: GPT-5.4 gains \GPTFiveFourRawFiveHundredKLargeGainVsRaw{} and loses \GPTFiveFourRawFiveHundredKLargeLossVsRaw{} cap-affected items, GPT-5.2 gains \GPTFiveTwoRawFiveHundredKLargeGainVsRaw{} and loses \GPTFiveTwoRawFiveHundredKLargeLossVsRaw{}, and GPT-5.1 gains \GPTFiveOneRawFiveHundredKLargeGainVsRaw{} and loses \GPTFiveOneRawFiveHundredKLargeLossVsRaw{}. Thus larger raw context is not a monotone proxy for model capability; output access remains a budget, capacity, and trajectory-shaping intervention.
 
+The practical implication is conditional, not universal: TOC is the right engineering choice for top-tier models on structured-output simulators, but mid-tier deployments on the same simulator should prefer raw inline access. More broadly, output-access protocol $\times$ model capability is an interaction effect that benchmarks for tool-augmented agents should report, not a design decision to fix once and forget.
+
+\subsection{External Harness Comparison}
+\label{sec:diag-harness}
+
+To control for harness quality, we compared our custom agent against vendor-default external CLI harnesses on a random 50-question scenario-spanning subsample (seed 42), with the backbone held fixed within each comparison panel: Claude Sonnet 4.6 against the official Claude Code CLI, and GPT-5.4 against OpenAI Codex CLI. Each harness runs under its native deployed-product defaults; budget configuration, the Codex \texttt{reasoning\_effort} setting, and the per-condition error breakdown are deferred to Appendix~\ref{sec:appendix-external-harness}. Table~\ref{tab:sdk-comparison} reports matched accuracy and per-question input-token cost on the same 50 items.
+
+The accuracy direction is mixed across vendors: custom dominates Sonnet by \SDKCustomTOCMinusSDK{} but trails Codex on GPT-5.4 by 18.0\,pp. The token-efficiency direction is uniform: custom Agent-TOC reaches 2.7--3.3$\times$ more correct answers per input token than the deployed external CLI on both backbones (Sonnet: \SonnetCustomTOCPerCorrectK\,K vs \SDKSonnetPerCorrectK\,K tokens per correct; GPT-5.4: \GPTFiveFourCustomTOCPerCorrectK\,K vs \CodexGPTFiveFourPerCorrectK\,K). Codex's higher absolute accuracy on GPT-5.4 is purchased at 4.1$\times$ the per-question input-token cost; under a fixed-budget setting, custom TOC delivers more correct answers. We read this as evidence that the cost-efficiency advantage of purpose-built scientific agent harnesses is robust to the absolute-accuracy direction.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llcrr}
+\toprule
+Backbone & Harness & Acc & In tok/q (K) & In tok/correct (K) \\
+\midrule
+\multirow{3}{*}{Sonnet 4.6} & Custom + Agent-TOC (ours) & \SDKCustomTOCAcc & \SonnetCustomTOCPerQK & \SonnetCustomTOCPerCorrectK \\
+ & Custom + Agent-Raw100k (ours) & \SDKCustomRawAcc & \SonnetCustomRawPerQK & \SonnetCustomRawPerCorrectK \\
+ & Claude Code CLI (external) & \SDKSonnetAcc & \SDKSonnetPerQK & \SDKSonnetPerCorrectK \\
+\midrule
+\multirow{4}{*}{GPT-5.4} & Custom + Agent-TOC (ours) & \GPTFiveFourCustomTOCMatchedAcc & \GPTFiveFourCustomTOCPerQK & \GPTFiveFourCustomTOCPerCorrectK \\
+ & Custom + Agent-Raw100k (ours) & \GPTFiveFourCustomRawMatchedAcc & \GPTFiveFourCustomRawPerQK & \GPTFiveFourCustomRawPerCorrectK \\
+ & Custom + Agent-Raw500k (ours) & \GPTFiveFourCustomRawFiveHundredKMatchedAcc & \GPTFiveFourCustomRawFiveHundredKPerQK & \GPTFiveFourCustomRawFiveHundredKPerCorrectK \\
+ & Codex CLI (external) & \CodexGPTFiveFourAcc & \CodexGPTFiveFourPerQK & \CodexGPTFiveFourPerCorrectK \\
+\bottomrule
+\end{tabular}
+\caption{Matched cross-vendor comparison on a random 50-question subsample (seed 42), with the backbone fixed within each panel. Per-question input tokens are full-benchmark averages for custom harnesses and matched-50 averages for external CLIs. ``In tok/correct'' = ``In tok/q'' / accuracy is the cost-efficiency metric (lower is better). Custom Agent-TOC's \SDKCustomTOCAcc{} on Sonnet and \GPTFiveFourCustomTOCMatchedAcc{} on GPT-5.4 agree with their full-benchmark headlines (\SonnetTOC{} and \GPTFiveFourTOC{}, Table~\ref{tab:main-results}), confirming the subsample is well-calibrated. Methodology details (budgets, reasoning-effort configuration, non-commit error breakdown) are in Appendix~\ref{sec:appendix-external-harness}.}
+\label{tab:sdk-comparison}
+\end{table}
+
 \subsection{Operational Trajectory and Cost Metrics}
+\label{sec:diag-trajectory}
 
 Tool-augmented evaluation should include more than final accuracy because correctness may be purchased with long retries, repeated simulator executions, or high wall-clock cost. Table~\ref{tab:trajectory} reports trajectory statistics parsed from agent logs. Wall-clock time is measured per question from the logged \texttt{run\_start} event to the logged \texttt{run\_end} event; this differs from total experiment elapsed time because runs use multiple workers. These quantities separate agents that fail quickly from agents that enter long retry loops, and they expose the operational cost of grounded execution.
 
@@ -424,6 +428,32 @@ GPT-5.4 + TOC & \GPTFiveFourTOCPredDist & \GPTFiveFourTOCLabelRange \\
 \label{tab:label-behavior}
 \end{table}
 
+\section{CoT vs Direct Output-Token Usage}
+\label{sec:appendix-cot-tokens}
+
+Section~\ref{sec:main-cot} argues that CoT does not substitute for grounded simulator execution despite delivering substantially more reasoning tokens than Direct. Table~\ref{tab:appendix-cot-tokens} reports total input and output tokens for each model under Direct and CoT prompting on the full \BenchN-item benchmark, parsed from the per-run \texttt{summary.json} files in the released artifact. CoT increases output tokens by 30--140$\times$ on the Sonnet and GPT families: Sonnet expands from 1.6K to 225.4K total output tokens (a 140.9$\times$ ratio), GPT-5.4 from 1.2K to 55.6K (46.4$\times$), GPT-5.2 from 1.2K to 77.6K (64.7$\times$), and GPT-5.1 from 2.0K to 58.6K (29.0$\times$). Opus 4.6 already uses 105.5K output tokens under Direct prompting because Anthropic's reasoning models perform internal thinking by default; its CoT/Direct ratio is therefore only 2.0$\times$. Gemini 2.5 Flash and Gemini 3 Flash Preview emit large output-token counts in both conditions (3.2--5.6M tokens) because the Gemini API reports internal thinking traces in the output-token field; their CoT/Direct ratios are 1.7$\times$ and 1.3$\times$ respectively.
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrcc}
+\toprule
+Model & Direct in & Direct out & CoT in & CoT out & out ratio & Direct acc & CoT acc \\
+\midrule
+Claude Opus 4.6      & 37{,}409 & 105{,}549     & 37{,}409 & 209{,}771     & 2.0$\times$    & \OpusOneShot          & \OpusCoT \\
+Claude Sonnet 4.6    & 37{,}409 & 1{,}600       & 37{,}409 & 225{,}396     & 140.9$\times$  & \SonnetOneShot        & \SonnetCoT \\
+GPT-5.4              & 34{,}357 & 1{,}200       & 34{,}557 & 55{,}627      & 46.4$\times$   & \GPTFiveFourOneShot   & \GPTFiveFourCoT \\
+GPT-5.2              & 34{,}357 & 1{,}200       & 34{,}557 & 77{,}627      & 64.7$\times$   & \GPTFiveTwoOneShot    & \GPTFiveTwoCoT \\
+GPT-5.1              & 34{,}357 & 2{,}018       & 34{,}557 & 58{,}569      & 29.0$\times$   & \GPTFiveOneOneShot    & \GPTFiveOneCoT \\
+Gemini 2.5 Flash     & 36{,}835 & 3{,}230{,}869 & 37{,}035 & 5{,}603{,}377 & 1.7$\times$    & \GeminiFlashOneShot   & \GeminiFlashCoT \\
+Gemini 3 Flash Preview & 36{,}835 & 3{,}964{,}492 & 37{,}035 & 5{,}180{,}764 & 1.3$\times$  & \GeminiThreeFlashOneShot & \GeminiThreeFlashCoT \\
+\bottomrule
+\end{tabular}
+\caption{Total input and output tokens across all \BenchN{} items under Direct vs CoT prompting, with the corresponding accuracies. CoT delivers 30--140$\times$ more output tokens than Direct on Sonnet and GPT-5.x but accuracy moves only by $\pm 8$\,pp; Opus's smaller token ratio reflects extended thinking enabled by default in Direct, and Gemini's million-scale output counts include internal thinking traces reported in the output-token field.}
+\label{tab:appendix-cot-tokens}
+\end{table}
+
 \section{Gemini Flash 3 Step-Budget Analysis: TOC vs Raw100k}
 \label{sec:appendix-gemini-step-budget}
 
@@ -434,29 +464,75 @@ Section~\ref{sec:main-results} reports that Gemini 3 Flash Preview's TOC agent f
 \small
 \begin{tabular}{lcc}
 \toprule
-Trajectory metric (per 200 questions) & Agent-TOC & Agent-Raw100k \\
+Outcome (per 200 items) & Agent-TOC & Agent-Raw100k \\
 \midrule
-Max-steps-reached (no final-answer message) & \GeminiTOCMaxStepsBreakdown & \GeminiRawMaxStepsBreakdown \\
-Committed final-answer message               & \GeminiTOCCommittedBreakdown & \GeminiRawCommittedBreakdown \\
-Parseable answer (graded)                    & \GeminiTOCParseableBreakdown & \GeminiRawParseableBreakdown \\
+\textbf{Correct} (graded $\cap$ correct)            & \textbf{47}  & \textbf{94} \\
+\textbf{Wrong} (graded $\cap$ wrong)                & \textbf{3}   & \textbf{8} \\
+Unparseable (committed but format invalid) & 32  & 41 \\
+Max-steps-reached (never committed)        & 117 & 57 \\
+Other (no \texttt{run\_end} event)         & 1   & 0 \\
+\midrule
+\textbf{Total}                                      & \textbf{200} & \textbf{200} \\
+\midrule
+\multicolumn{3}{l}{\textit{Derived metrics}} \\
+Headline accuracy (correct / 200)          & \GeminiThreeFlashTOC & \GeminiThreeFlashRaw \\
+Conditional accuracy (correct / graded)    & 94.0\% (47/50) & 92.2\% (94/102) \\
 Median \texttt{read\_file} calls per question & \GeminiTOCReadFileMedian & \GeminiRawReadFileMedian \\
-Mean \texttt{read\_file} calls per question   & \GeminiTOCReadFileMean & \GeminiRawReadFileMean \\
-Median agent steps used per question         & \GeminiTOCStepMedian & \GeminiRawStepMedian \\
+Median agent steps used per question       & \GeminiTOCStepMedian & \GeminiRawStepMedian \\
 \bottomrule
 \end{tabular}
-\caption{Gemini Flash 3 trajectory statistics under TOC vs Raw100k on the full 200-item benchmark. The protocol switch reduces median \texttt{read\_file} traffic from \GeminiTOCReadFileMedian{} to \GeminiRawReadFileMedian{} calls per question (saving roughly six steps), which lowers step-budget exhaustion from \GeminiTOCMaxStepsBreakdown/200 to \GeminiRawMaxStepsBreakdown/200 and raises parseable-commit rate from \GeminiTOCParseableBreakdown/200 to \GeminiRawParseableBreakdown/200. Below the capability tier where TOC navigation is well-managed (e.g., Sonnet's median TOC trajectory uses 7 steps; Section~\ref{sec:diagnostic}), TOC's structured access functions as a step-budget tax rather than a context-management benefit. The 24-step ceiling is hit by Gemini Flash 3's median TOC run, leaving no headroom for reasoning or final-answer commitment.}
+\caption{Gemini Flash 3 outcome breakdown under TOC vs Raw100k on the full 200-item benchmark. Each column sums to 200. The protocol switch reduces median \texttt{read\_file} traffic from \GeminiTOCReadFileMedian{} to \GeminiRawReadFileMedian{} calls per question, which lowers step-budget exhaustion from 117 to 57 and raises parseable-commit rate from 50 to 102.}
 \label{tab:appendix-gemini-step-budget}
 \end{table}
+
+The breakdown isolates the Raw100k recovery as a \emph{commit-rate effect, not a reasoning effect}. Conditional accuracy on items where Gemini Flash 3 commits to a parseable answer is essentially the same under both protocols (94.0\% under TOC vs 92.2\% under Raw100k), so when the model can produce an answer it is equally accurate in either regime. The headline accuracy gain from \GeminiThreeFlashTOC{} to \GeminiThreeFlashRaw{} comes entirely from converting non-commits into graded answers: max-steps-reached drops from 117/200 to 57/200, the unparseable count is roughly stable (32 vs 41), and the wrong-when-graded count remains very small in absolute terms (3 vs 8). The mechanism is direct: TOC navigation costs roughly seven extra steps per question (median \texttt{read\_file} 9 vs 2), and those steps come out of the 24-step budget that would otherwise be spent reasoning and committing. Below the capability tier where TOC navigation is well-managed (e.g., Sonnet's median TOC trajectory uses 7 steps; Section~\ref{sec:diagnostic}), TOC's structured access functions as a step-budget tax rather than a context-management benefit, and the 24-step ceiling becomes the dominant driver of the regression.
 
 \section{Extended Output-Access Analysis}
 \label{sec:appendix-output-access}
 
-Section~\ref{sec:diagnostic} reported aggregate TOC versus Raw100k accuracy and a per-output-size paragraph for selected bins. This appendix completes that analysis with (i)~the full per-model output-size grid, and (ii)~a cross-protocol right-item overlap analysis that asks whether different output-access protocols solve the same items or different ones.
+Section~\ref{sec:diagnostic} reported aggregate TOC versus Raw100k accuracy and a per-output-size paragraph for selected bins. This appendix completes that analysis with (i)~the empirical output-size distribution that motivates the bimodal claim in Section~\ref{sec:harness}, (ii)~the full per-model output-size grid, and (iii)~a cross-protocol right-item overlap analysis that asks whether different output-access protocols solve the same items or different ones.
+
+\subsection{Output-Size Distribution}
+\label{sec:appendix-output-distribution}
+
+Table~\ref{tab:appendix-output-distribution} reports the empirical distribution of \texttt{result.out} sizes across all \BenchN{} benchmark items. The 100--250k character interval is empty: every output is either at most 100k or at least 369k. This is the bimodal pattern referenced in Section~\ref{sec:harness} and is what motivates placing the Raw100k cap at 100k characters (non-binding for the small-output bulk, binding only on the long-tail subset).
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+Output-size bin / threshold & Items ($n$) & Share of \BenchN{} \\
+\midrule
+\multicolumn{3}{l}{\textit{Per-bin counts}} \\
+\quad $\le$10k          & 82  & 41.0\% \\
+\quad 10--20k           & 47  & 23.5\% \\
+\quad 20--50k           & 26  & 13.0\% \\
+\quad 50--100k          & 8   & 4.0\%  \\
+\quad \textit{100--250k (empty interval)} & \textit{0}  & \textit{0.0\%} \\
+\quad 250--500k         & 21  & 10.5\% \\
+\quad $>$500k           & 16  & 8.0\%  \\
+\midrule
+\multicolumn{3}{l}{\textit{Cumulative thresholds}} \\
+\quad $\le$100k (small mode total)   & 163 & \OutputLeHundredK \\
+\quad $>$100k (long-tail total)      & 37  & \OutputGtHundredK \\
+\quad $>$250k                        & 37  & 18.5\% \\
+\quad $>$500k                        & 16  & 8.0\%  \\
+\midrule
+\multicolumn{3}{l}{\textit{Distribution statistics}} \\
+\quad Median \texttt{result.out} size       & \multicolumn{2}{c}{\OutputPFiftyChars} \\
+\quad 90th percentile                       & \multicolumn{2}{c}{\OutputPNinetyChars} \\
+\quad Maximum                               & \multicolumn{2}{c}{\OutputMaxChars} \\
+\bottomrule
+\end{tabular}
+\caption{Empirical \texttt{result.out} size distribution on \BenchName. The bimodal pattern is visible directly: the 100--250k interval is empty, so $>$100k and $>$250k cumulative counts are identical (37 items each). The small mode contains \OutputLeHundredK{} of items at sizes up to 100k characters; the long-tail mode contains the remaining \OutputGtHundredK{} starting at $\sim$369k and reaching a maximum of \OutputMaxChars. This empty interval is what places the Raw100k cap in a principled location rather than at an arbitrary truncation point.}
+\label{tab:appendix-output-distribution}
+\end{table}
 
 \subsection{Per-Model Accuracy Across Output-Size Bins}
 \label{sec:appendix-output-bin-grid}
 
-Tables~\ref{tab:appendix-bin-sonnet}--\ref{tab:appendix-bin-gpt51} report TOC, Raw100k, and (where available) Raw500k accuracy for each completed agent across six output-size bins. Item counts per bin are: $n=82$ ($\le$10k), $n=47$ (10--20k), $n=26$ (20--50k), $n=8$ (50--100k), $n=21$ (250--500k), $n=16$ ($>$500k); the empty 100--250k interval reflects the bimodal output distribution discussed in Section~\ref{sec:toc}. Token columns report mean input tokens per item within the bin.
+Tables~\ref{tab:appendix-bin-sonnet}--\ref{tab:appendix-bin-gpt51} report TOC, Raw100k, and (where available) Raw500k accuracy for each completed agent across the same six output-size bins as Table~\ref{tab:appendix-output-distribution}. Token columns report mean input tokens per item within the bin.
 
 \begin{table}[h]
 \centering
@@ -791,6 +867,7 @@ Section~\ref{sec:scenario} reports a single mean scenario accuracy and a CI per 
 Section~\ref{sec:diagnostic} reports overall retention rates per model: 52.7--87.8\% across the five completed TOC agents. Aggregate retention says \emph{how many} direct-correct items the agent loses but not \emph{which} items, which output-size regimes contribute, or whether losses cluster in specific scenarios or answer labels. This appendix decomposes the lost set per model along three axes: simulator output size, scenario membership, and true answer label.
 
 \subsection{Lost-Item Rate by Simulator Output Size}
+\label{sec:appendix-lost-by-bin}
 
 For each model and output-size bin, we compute the \emph{lost rate}: among items the direct-baseline answered correctly, the fraction that the TOC agent then answered incorrectly. This is conditional on the direct baseline being right; it is not a per-bin accuracy. A 50\% lost rate in a bin means half of the items the model could solve without tools are lost when the same model operates the TOC agent loop.
 

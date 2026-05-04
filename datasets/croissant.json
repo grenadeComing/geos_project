@@ -1,0 +1,180 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "PHREEQC-MCQ-200",
+  "description": "PHREEQC-MCQ-200 is an expert-curated benchmark of 200 multiple-choice questions for evaluating tool-augmented LLM agents on deterministic scientific computation. Each item is a four-option question grounded in the USGS PHREEQC aqueous-geochemistry simulator: the unique correct answer is recoverable only by writing a PHREEQC input file, executing the simulator with a fixed thermodynamic database (phreeqc.dat, PHREEQC 3.8.6), inspecting numerical output, and selecting one of A/B/C/D. The benchmark is derived from 21 validated simulation scenarios authored and reviewed by domain experts in aqueous geochemistry, with topic ideas inspired by the official USGS PHREEQC example database and the phreeqcusers community forum. Items consistently solvable by direct no-tool baselines during pilot runs were excluded so that the benchmark isolates tool-grounded computation rather than parametric recall.",
+  "version": "1.0.0",
+  "datePublished": "2026-05-04",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://anonymous.4open.science/r/phreeqc-mcq-200-anon-3D74",
+  "keywords": [
+    "tool-augmented LLM agents",
+    "scientific computation benchmark",
+    "PHREEQC",
+    "geochemistry",
+    "agent evaluation methodology",
+    "chain-of-thought",
+    "capability tier",
+    "output-access protocols"
+  ],
+  "creator": {
+    "@type": "Organization",
+    "name": "PHREEQC-MCQ-200 Authors (anonymous for double-blind review)"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "PHREEQC-MCQ-200 Authors (anonymous for double-blind review)"
+  },
+  "citeAs": "@inproceedings{phreeqcmcq2026, title={PHREEQC-MCQ-200: A Benchmark for Evaluating Tool-Augmented LLM Agents on Deterministic Scientific Computation}, author={Anonymous Author(s)}, booktitle={Submitted to NeurIPS 2026 Datasets and Benchmarks Track}, year={2026}}",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "neurips_dataset_200_clean.jsonl",
+      "name": "neurips_dataset_200_clean.jsonl",
+      "description": "The PHREEQC-MCQ-200 benchmark in JSON Lines format. Each line is a JSON object describing one multiple-choice question, with fields {id, question, answer, benchmark}.",
+      "contentUrl": "https://anonymous.4open.science/r/phreeqc-mcq-200-anon-3D74/neurips_dataset_200_clean.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "md5": "c01433586186954a0660abc82ea03582",
+      "contentSize": "79790 B"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "phreeqc_database",
+      "name": "phreeqc.dat",
+      "description": "The author-supplied validated PHREEQC thermodynamic database used for benchmark validation and required at evaluation time. PHREEQC 3.8.6 is U.S. Geological Survey software in the public domain (Parkhurst and Appelo, 2013). The database is distributed alongside the benchmark to ensure reproducible numerical answers.",
+      "contentUrl": "https://anonymous.4open.science/r/phreeqc-mcq-200-anon-3D74/phreeqc.dat",
+      "encodingFormat": "text/plain",
+      "md5": "b6f88f158bda78fd806787f87ee31b84",
+      "contentSize": "54717 B"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "questions",
+      "name": "questions",
+      "description": "One record per benchmark question. Each record contains an integer identifier, the natural-language problem statement (with four answer choices appended), the gold answer letter, and the dataset partition tag.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "questions/id",
+          "name": "id",
+          "description": "Integer identifier for the question, 1-indexed. Used for deterministic ordering and cross-referencing with run logs.",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "neurips_dataset_200_clean.jsonl"
+            },
+            "extract": {
+              "column": "id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "questions/question",
+          "name": "question",
+          "description": "Natural-language problem statement. Each question contains a chemistry/geochemistry scenario followed by four answer options inline (formatted as 'A. ...', 'B. ...', 'C. ...', 'D. ...'). The agent or model receives the entire question text as input.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "neurips_dataset_200_clean.jsonl"
+            },
+            "extract": {
+              "column": "question"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "questions/answer",
+          "name": "answer",
+          "description": "Gold answer letter, one of {A, B, C, D}. Each item has a unique correct answer recoverable from PHREEQC simulator output. Distractors are numerically plausible but distinguishable from the correct value when the simulator is run.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "neurips_dataset_200_clean.jsonl"
+            },
+            "extract": {
+              "column": "answer"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "questions/benchmark",
+          "name": "benchmark",
+          "description": "Benchmark tag. Constant value 'phreeqc' for this dataset; included for compatibility with multi-benchmark loaders that aggregate datasets across simulators.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "neurips_dataset_200_clean.jsonl"
+            },
+            "extract": {
+              "column": "benchmark"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "rai:dataCollection": "Items were authored and reviewed by domain experts in aqueous geochemistry. Topic ideas were inspired by the official USGS PHREEQC example database and the phreeqcusers community forum, but each question text and its answer choices were written de novo by the experts; no question text was copied from external sources. Each candidate item was retained only if (i) the simulation setup executes successfully against the frozen thermodynamic database, (ii) the intended answer is uniquely determined from PHREEQC output, (iii) the four answer choices are numerically plausible (distractors are not trivially distinguishable from the correct option without simulation), (iv) the question statement is unambiguous to multiple independent reviewers, and (v) the answer is not reliably recoverable from parametric knowledge alone (items consistently solved by direct no-tool baselines during pilot runs were excluded). Ambiguous items, duplicated items, and items whose answer depended on display-precision artifacts in PHREEQC output were removed before freezing the release.",
+  "rai:dataCollectionTimeframe": "Authoring and review took place from late 2025 through early 2026. The version released here is the 1.0.0 frozen release.",
+  "rai:dataAnnotation": "Each item is annotated with a single gold-answer letter (A/B/C/D) corresponding to the unique correct simulator-derived answer. Annotation is implicit in the item-authoring process: the domain expert who proposes a question simultaneously specifies its correct answer, runs the underlying PHREEQC script to verify the numerical answer, and proposes three numerically plausible distractors. Independent reviewers then verify (a) that the simulation script executes correctly, (b) that the answer is uniquely determined from PHREEQC output, and (c) that the question statement is unambiguous. There is no separate post-hoc annotation step.",
+  "rai:dataAnnotationProtocol": "(1) Author proposes question text + four answer choices + designates correct option. (2) Author runs the PHREEQC script and confirms the numerical answer matches the designated correct option. (3) At least one independent reviewer re-runs the script, checks unambiguity, and either approves or sends the item back for revision. (4) Items where any reviewer reports ambiguity, multiple plausible answers, or display-precision conflicts are removed.",
+  "rai:dataAnnotatorDemographics": "Annotators are domain experts in aqueous geochemistry from the authoring institution. Detailed demographic information is withheld for double-blind review.",
+  "rai:dataIntendedUse": "PHREEQC-MCQ-200 is intended for evaluating tool-augmented LLM agents on deterministic scientific computation. Recommended uses include: (i) measuring tool-augmented agent accuracy and retention under a unique-answer setting, (ii) comparing output-access protocols (e.g., metadata vs raw output) on a benchmark with a controlled deterministic simulator, (iii) studying capability-tier effects in agentic interfaces, and (iv) supporting failure-mode decomposition and rerun-stability analyses for scientific agents.",
+  "rai:dataUseCases": "Examples of intended use: benchmarking new LLM models with simulator tool access; ablating agent-harness design choices (output-access protocol, step budget, retry policy); comparing custom agent harnesses against vendor-default external CLIs (e.g., Claude Code CLI, OpenAI Codex CLI) under matched conditions; auditing per-question retention and stability behavior of tool-augmented agents.",
+  "rai:dataLimitations": "(i) Single simulator: the benchmark uses one simulator (PHREEQC) and one scientific subdomain (aqueous geochemistry). Findings on this benchmark do not automatically generalize to other simulators or domains. (ii) Multiple-choice format: the four-option MCQ surface is a deliberate trade-off for deterministic grading at scale; it is not a substitute for open-ended scientific modeling evaluation. (iii) Database dependence: numerical answers depend on the author-supplied validated thermodynamic database (phreeqc.dat) released alongside the benchmark; substituting another database can change correct answers and should be treated as a different benchmark condition. (iv) Scenario dependence: the 200 items are derived from 21 validated simulation scenario stems; multiple items may share a scenario, which we report explicitly with scenario-clustered uncertainty in the accompanying paper. (v) Closed-model and API drift: results obtained against commercial LLM endpoints can drift over time; reported scores should be interpreted as measurements of the listed model endpoints at the time of evaluation, not as permanent model properties.",
+  "rai:dataBiases": "(i) Topic coverage reflects the subdomains the authors took inspiration from --- the USGS PHREEQC example database and the phreeqcusers forum --- which over-represent equilibrium-, kinetic-, and reactive-transport scenarios common in environmental and hydrogeochemical practice; molecular-scale, biological, or atmospheric geochemistry are under-represented. Question text and answer choices were authored de novo by domain experts and were not copied from these sources. (ii) Difficulty was deliberately calibrated to require simulation: items consistently solvable by direct no-tool LLM baselines during pilot runs were removed, which pushes direct baselines toward the majority-label floor by construction. (iii) Truth-label distribution is approximately uniform (A=31.5%, B=23.5%, C=24.0%, D=21.0%) but not exactly uniform; the majority-label baseline of 31.5% is reported in the accompanying paper. (iv) Authorship: the dataset was produced at a single institution with a small expert team, which can introduce stylistic and topic-selection bias not visible in aggregate statistics.",
+  "rai:hasSyntheticData": "No. All 200 questions and their answer choices are authored de novo by domain experts in aqueous geochemistry; numerical answers are derived from PHREEQC simulator output and verified by independent reviewers. No LLM-generated, paraphrased, or otherwise synthetic content is included in the question text or answer choices.",
+  "rai:personalSensitiveInformation": "The dataset contains no personal data, no protected-class attributes, no identifying information about humans, and no medical or legal information. Each item is a synthetic geochemistry question and its multiple-choice answer.",
+  "rai:dataReleaseMaintenancePlan": "The 1.0.0 frozen release is intended to be a stable evaluation set. Future revisions, if any, will be distributed under a distinct version identifier and announced via the artifact repository. Errata will be tracked in an ERRATA file at the repository root. The authors commit to maintaining the frozen 1.0.0 release alongside any subsequent revisions so prior evaluations remain reproducible.",
+  "rai:dataLifecycleManagement": "The dataset is distributed as a single JSON Lines file plus the companion thermodynamic database, with all required prompts, evaluation scripts, and analysis tooling included in the artifact (see url). Reproducing the headline numbers in the accompanying paper requires running the included evaluation scripts against the released JSONL and database. The authors do not plan major content additions to the 1.0.0 release; planned future versions (v1.x) will add scenarios in adjacent geochemistry subdomains under a distinct version identifier.",
+  "rai:dataSocialImpact": "Positive use case: more reproducible evaluation of scientific LLM agents before they are trusted in real computational workflows; a controlled benchmark for studying when tool augmentation helps vs hurts. The main risk is over-trust: high aggregate accuracy on multiple-choice simulator tasks should not be read as evidence that an agent can autonomously perform scientific modeling without expert oversight. The authors release per-question logs and generated simulator artifacts so failures can be inspected rather than hidden behind final-answer scores."
+}
