@@ -14,6 +14,7 @@
 \usepackage{enumitem}
 \usepackage{multirow}
 \usepackage{xcolor}
+\usepackage{svg}
 
 \input{results_macros}
 
@@ -164,29 +165,16 @@ Two patterns generalize across the four agents in Table~\ref{tab:retention} with
 \subsection{TOC Pays Off Only for Top-Tier Models}
 \label{sec:toc}
 
-TOC keeps raw output out of context at the cost of an extra navigation step the agent must execute. Whether that tradeoff pays off should depend on the model's navigation capability, not on any property of the benchmark. Table~\ref{tab:toc-raw} compares the TOC and Raw100k protocols (Section~\ref{sec:harness}) on the full benchmark, where the \RawCapChars-character cap is non-binding for most items and the question is whether structured access changes cost or accuracy.
+TOC keeps raw output out of context at the cost of an extra navigation step the agent must execute. Whether that tradeoff pays off should depend on the model's navigation capability, not on any property of the benchmark. Figure~\ref{fig:toc-raw} compares the TOC and Raw100k protocols (Section~\ref{sec:harness}) on the full benchmark, where the \RawCapChars-character cap is non-binding for most items and the question is whether structured access changes cost or accuracy.
 
-\begin{table}[t]
+\begin{figure}[t]
 \centering
-\small
-\setlength{\tabcolsep}{6pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{lcccccc}
-\toprule
-Model & TOC acc. & Raw acc. & TOC--Raw & TOC tokens & Raw tokens & TOC token saving \\
-\midrule
-Claude Opus 4.6 & \OpusTOC & \OpusRaw & \OpusTOCMinusRaw & \OpusTOCTokens & \OpusRawTokens & \OpusTOCTokenReduction \\
-Claude Sonnet 4.6 & \SonnetTOC & \SonnetRaw & \SonnetTOCMinusRaw & \SonnetTOCTokens & \SonnetRawTokens & \SonnetTOCTokenReduction \\
-GPT-5.4 & \GPTFiveFourTOC & \GPTFiveFourRaw & \GPTFiveFourTOCMinusRaw & \GPTFiveFourTOCTokens & \GPTFiveFourRawTokens & \GPTFiveFourTOCTokenReduction \\
-GPT-5.2 & \GPTFiveTwoTOC & \GPTFiveTwoRaw & \GPTFiveTwoTOCMinusRaw & \GPTFiveTwoTOCTokens & \GPTFiveTwoRawTokens & \GPTFiveTwoTOCTokenReduction \\
-GPT-5.1 & \GPTFiveOneTOC & \GPTFiveOneRaw & \GPTFiveOneTOCMinusRaw & \GPTFiveOneTOCTokens & \GPTFiveOneRawTokens & \GPTFiveOneTOCTokenReduction \\
-\bottomrule
-\end{tabular}
-\caption{TOC versus truncated raw-output execution interface. Both conditions use the same agent loop and differ only in what \texttt{execute\_phreeqc} returns. Raw observations are capped at \RawCapChars{} characters per PHREEQC execution. The ``TOC tokens'' and ``Raw tokens'' columns report total agent input tokens per run (millions, M); all token reporting in this section uses the same convention.}
-\label{tab:toc-raw}
-\end{table}
+\includesvg[width=\linewidth]{toc_raw100k_accuracy_token_efficiency}
+\caption{TOC versus truncated raw-output execution interface, per model. Both protocols use the same agent loop and differ only in what \texttt{execute\_phreeqc} returns; raw observations are capped at \RawCapChars{} characters per PHREEQC execution. Each point summarizes one model's full-benchmark TOC and Raw100k accuracy and total agent input-token cost (millions). The capability-tier $\times$ protocol interaction discussed in this section is visible as separate clusters: top-tier models (Opus, Sonnet, GPT-5.4) achieve TOC accuracy within $\pm 2.5$\,pp of Raw100k at substantial token savings, while mid-tier GPT-5.1 and GPT-5.2 lose 8--10\,pp under TOC at smaller token savings.}
+\label{fig:toc-raw}
+\end{figure}
 
-Table~\ref{tab:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) sits within $\pm$2.5\,pp of raw-output accuracy at 20--60\% input-token reductions; TOC is Pareto-good. The mid tier (GPT-5.1, GPT-5.2) regresses by 8--10\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per model in Table~\ref{tab:toc-rerun-variance} (the three GPT models and Claude Sonnet 4.6) yield a maximum accuracy SD of \TOCRerunMaxSD\,pp, an order of magnitude below the gap. Token consumption is even more stable --- all four reported models have rerun token SD $\le$ 0.41\,M (GPT-5.4 just 0.11\,M) --- so the 20--60\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
+Figure~\ref{fig:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) sits within $\pm$2.5\,pp of raw-output accuracy at 20--60\% input-token reductions; TOC is Pareto-good. The mid tier (GPT-5.1, GPT-5.2) regresses by 8--10\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per model in Table~\ref{tab:toc-rerun-variance} (the three GPT models and Claude Sonnet 4.6) yield a maximum accuracy SD of \TOCRerunMaxSD\,pp, an order of magnitude below the gap. Token consumption is even more stable --- all four reported models have rerun token SD $\le$ 0.41\,M (GPT-5.4 just 0.11\,M) --- so the 20--60\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
 
 \begin{table}[t]
 \centering
@@ -202,11 +190,11 @@ GPT-5.2 + TOC & \GPTFiveTwoTOC, \GPTFiveTwoTOCTokens & \GPTFiveTwoTOCRerunAccDif
 GPT-5.4 + TOC & \GPTFiveFourTOC, \GPTFiveFourTOCTokens & \GPTFiveFourTOCRerunAccDiff & \GPTFiveFourTOCRerunTokDiff & \GPTFiveFourTOCRerunSD{} / \GPTFiveFourTOCRerunRange & \GPTFiveFourTOCRerunTokSD{} / \GPTFiveFourTOCRerunTokRange \\
 \bottomrule
 \end{tabular}
-\caption{TOC rerun stability across the GPT family and Claude Sonnet 4.6. $\Delta$ columns are reruns minus original (Table~\ref{tab:toc-raw}); tokens are total agent input tokens (M). Per-item decomposition for GPT-5.1 in Appendix~\ref{sec:appendix-stability}.}
+\caption{TOC rerun stability across the GPT family and Claude Sonnet 4.6. $\Delta$ columns are reruns minus original (Figure~\ref{fig:toc-raw}); tokens are total agent input tokens (M). Per-item decomposition for GPT-5.1 in Appendix~\ref{sec:appendix-stability}.}
 \label{tab:toc-rerun-variance}
 \end{table}
 
-On the small-output bulk of the benchmark (\RawCapUnaffectedN{} items with simulator outputs $\le$100k characters), top-tier wins accuracy under TOC and mid-tier loses, with model-specific token effects. Sonnet TOC reaches \SonnetTOCCapUnaffected{} (\SonnetTOCMinusRawCapUnaffected{} over Raw100k) at \SonnetTOCCapUnaffectedTokenReduction{} input-token reduction (\SonnetTOCCapUnaffectedTokens{} vs \SonnetRawCapUnaffectedTokens{}). GPT-5.4 TOC reaches \GPTFiveFourTOCCapUnaffected{} (\GPTFiveFourTOCMinusRawCapUnaffected{}) at $\sim$3.6\% aggregate token overhead (\GPTFiveFourTOCCapUnaffectedTokens{} vs \GPTFiveFourRawCapUnaffectedTokens{}), concentrated entirely in the $\le$10k bin where Raw100k's inline payload is already small. On the mid-bins where TOC's structured retrieval is most engaged, GPT-5.4's trade is decisively favorable: $+$6.4\,pp at 10--20k (47 items, tied tokens), $+$23.1\,pp at 20--50k (26 items, 4\% token overhead), and tied accuracy at 50--100k (8 items, 37\% token saving) --- TOC strictly Pareto-dominates Raw100k on every bin from 10k upward. GPT-5.2 trails Raw100k by \GPTFiveTwoTOCMinusRawCapUnaffected{} (\GPTFiveTwoTOCCapUnaffected{} vs \GPTFiveTwoRawCapUnaffected{}) at marginal \GPTFiveTwoTOCCapUnaffectedTokenReduction{} token saving. Sonnet's \SonnetTOCCapUnaffectedTokenReduction{} small-output token saving is close to its full-benchmark \SonnetTOCTokenReduction{} reduction (Table~\ref{tab:toc-raw}); this rules out the concern that the aggregate top-tier TOC token savings reported in Section~\ref{sec:main-results} are merely an artifact of the \LargeOutputN{} long-tail items where Raw100k inlines 100k characters --- TOC is genuinely token-efficient on the small-output bulk for Sonnet, the regime where it actually performs structured retrieval. The full per-output-size grid for both protocols is in Appendix~\ref{sec:appendix-output-bin-grid}.
+On the small-output bulk of the benchmark (\RawCapUnaffectedN{} items with simulator outputs $\le$100k characters), top-tier wins accuracy under TOC and mid-tier loses, with model-specific token effects. Sonnet TOC reaches \SonnetTOCCapUnaffected{} (\SonnetTOCMinusRawCapUnaffected{} over Raw100k) at \SonnetTOCCapUnaffectedTokenReduction{} input-token reduction (\SonnetTOCCapUnaffectedTokens{} vs \SonnetRawCapUnaffectedTokens{}). GPT-5.4 TOC reaches \GPTFiveFourTOCCapUnaffected{} (\GPTFiveFourTOCMinusRawCapUnaffected{}) at $\sim$3.6\% aggregate token overhead (\GPTFiveFourTOCCapUnaffectedTokens{} vs \GPTFiveFourRawCapUnaffectedTokens{}), concentrated entirely in the $\le$10k bin where Raw100k's inline payload is already small. On the mid-bins where TOC's structured retrieval is most engaged, GPT-5.4's trade is decisively favorable: $+$6.4\,pp at 10--20k (47 items, tied tokens), $+$23.1\,pp at 20--50k (26 items, 4\% token overhead), and tied accuracy at 50--100k (8 items, 37\% token saving) --- TOC strictly Pareto-dominates Raw100k on every bin from 10k upward. GPT-5.2 trails Raw100k by \GPTFiveTwoTOCMinusRawCapUnaffected{} (\GPTFiveTwoTOCCapUnaffected{} vs \GPTFiveTwoRawCapUnaffected{}) at marginal \GPTFiveTwoTOCCapUnaffectedTokenReduction{} token saving. Sonnet's \SonnetTOCCapUnaffectedTokenReduction{} small-output token saving is close to its full-benchmark \SonnetTOCTokenReduction{} reduction (Figure~\ref{fig:toc-raw}); this rules out the concern that the aggregate top-tier TOC token savings reported in Section~\ref{sec:main-results} are merely an artifact of the \LargeOutputN{} long-tail items where Raw100k inlines 100k characters --- TOC is genuinely token-efficient on the small-output bulk for Sonnet, the regime where it actually performs structured retrieval. The full per-output-size grid for both protocols is in Appendix~\ref{sec:appendix-output-bin-grid}.
 
 On the long-tail items where simulator outputs exceed 100k characters (45 items in the 5-model union, Appendix~\ref{sec:appendix-cap-affected-per-model}), TOC and Raw100k accuracies and tokens for all five models are reported in Table~\ref{tab:capaffected-toc-verification}. The aggregate cap-unaffected pattern softens here: top-tier Sonnet and GPT-5.4 still trail Raw100k by $\sim$4--5\,pp under TOC, and GPT-5.2 trails by 8.9\,pp, but GPT-5.1 now wins by 6.7\,pp because Raw100k truncates the most heavily on these items where the section index is most useful. TOC token saving versus Raw100k ranges from 7\% (GPT-5.1) to 65\% (Sonnet) on this slice. A complementary analysis of whether simply raising the inline cap (Raw100k $\to$ Raw500k) recovers long-tail accuracy without TOC is reported in Appendix~\ref{sec:appendix-raw-cap-scaling}.
 
