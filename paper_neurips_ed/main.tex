@@ -142,18 +142,23 @@ Aggregate accuracy alone cannot tell whether tool access reliably improves a mod
 \begin{table}[t]
 \centering
 \small
-\begin{tabular}{lcccc}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccccc}
 \toprule
-Model & Kept & Gained & Lost & Retention \\
+Model & Method & Kept & Gained & Lost & Retention & TOC$-$Raw retention \\
 \midrule
-Claude Opus 4.6 & \OpusKept & \OpusGained & \OpusLost & \OpusRetention \\
-Claude Sonnet 4.6 & \SonnetKept & \SonnetGained & \SonnetLost & \SonnetRetention \\
-GPT-5.4 & \GPTFiveFourKept & \GPTFiveFourGained & \GPTFiveFourLost & \GPTFiveFourRetention \\
-GPT-5.2 & \GPTFiveTwoKept & \GPTFiveTwoGained & \GPTFiveTwoLost & \GPTFiveTwoRetention \\
-GPT-5.1 & \GPTFiveOneKept & \GPTFiveOneGained & \GPTFiveOneLost & \GPTFiveOneRetention \\
+Claude Opus 4.6   & Agent-TOC     & \OpusKept           & \OpusGained           & \OpusLost           & \OpusRetention            & --- \\
+\multirow{2}{*}{Claude Sonnet 4.6} & Agent-TOC     & \SonnetKept         & \SonnetGained         & \SonnetLost         & \SonnetRetention          & \multirow{2}{*}{\SonnetTOCMinusRawRetention} \\
+                                   & Agent-Raw100k & \SonnetRawKept      & \SonnetRawGained      & \SonnetRawLost      & \SonnetRawRetention       & \\
+\multirow{2}{*}{GPT-5.4}           & Agent-TOC     & \GPTFiveFourKept    & \GPTFiveFourGained    & \GPTFiveFourLost    & \GPTFiveFourRetention     & \multirow{2}{*}{\GPTFiveFourTOCMinusRawRetention} \\
+                                   & Agent-Raw100k & \GPTFiveFourRawKept & \GPTFiveFourRawGained & \GPTFiveFourRawLost & \GPTFiveFourRawRetention  & \\
+\multirow{2}{*}{GPT-5.2}           & Agent-TOC     & \GPTFiveTwoKept     & \GPTFiveTwoGained     & \GPTFiveTwoLost     & \GPTFiveTwoRetention      & \multirow{2}{*}{\GPTFiveTwoTOCMinusRawRetention} \\
+                                   & Agent-Raw100k & \GPTFiveTwoRawKept  & \GPTFiveTwoRawGained  & \GPTFiveTwoRawLost  & \GPTFiveTwoRawRetention   & \\
+\multirow{2}{*}{GPT-5.1}           & Agent-TOC     & \GPTFiveOneKept     & \GPTFiveOneGained     & \GPTFiveOneLost     & \GPTFiveOneRetention      & \multirow{2}{*}{\GPTFiveOneTOCMinusRawRetention} \\
+                                   & Agent-Raw100k & \GPTFiveOneRawKept  & \GPTFiveOneRawGained  & \GPTFiveOneRawLost  & \GPTFiveOneRawRetention   & \\
 \bottomrule
 \end{tabular}
-\caption{Gain/loss/retention analysis for TOC agents relative to direct no-tool baselines. Retention exposes tool-induced regressions that aggregate accuracy hides. Gemini 3 Flash Preview is omitted: 75\% of its TOC trajectories produced no parseable answer, so the conventional kept/lost decomposition is undefined when most direct-correct items are simply not graded under the agent.}
+\caption{Gain/loss/retention decomposition relative to each model's Direct no-tool baseline, reported separately for Agent-TOC and Agent-Raw100k. Retention exposes tool-induced regressions that aggregate accuracy hides. The rightmost column (TOC$-$Raw retention) makes the capability-tier pattern explicit: top-tier Sonnet and GPT-5.4 retain marginally more direct-correct items under TOC ($+1.4$ and $+1.8$\,pp), whereas mid-tier GPT-5.2 and GPT-5.1 lose substantially more direct-correct items under TOC than under Raw100k ($-5.4$ and $-7.7$\,pp), tracing the mid-tier TOC accuracy regression in Section~\ref{sec:toc} to a per-item navigation cost rather than a baseline capability gap. The Opus row reports Agent-TOC only; Opus did not run Agent-Raw100k in our evaluation, and the per-item Direct correctness used by the spliced TOC retention is unavailable for Opus, so the Opus values reflect the original (pre-splice) TOC measurement and are retained for reference only. Gemini 3 Flash Preview is omitted: 75\% of its TOC trajectories produced no parseable answer, so the conventional kept/lost decomposition is undefined when most direct-correct items are simply not graded under the agent.}
 \label{tab:retention}
 \end{table}
 
