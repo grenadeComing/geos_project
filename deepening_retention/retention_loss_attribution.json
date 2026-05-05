@@ -1,0 +1,208 @@
+[
+  {
+    "model": "Claude Opus 4.6",
+    "key": "opus",
+    "preferred": "D",
+    "predCount": {
+      "A": 60,
+      "B": 19,
+      "C": 55,
+      "D": 66
+    },
+    "truthCount": {
+      "A": 63,
+      "B": 47,
+      "C": 48,
+      "D": 42
+    },
+    "totalAgentWrong": 31,
+    "kept": 71,
+    "lost": 13,
+    "gained": 98,
+    "missed": 18,
+    "cellA_total": 27,
+    "cellC_total": 57,
+    "lostA": 4,
+    "lostC": 9,
+    "lossRateA": 0.14814814814814814,
+    "lossRateC": 0.15789473684210525,
+    "asymmetry": 0.009746588693957114,
+    "cellAFlipDist": {
+      "A": 2,
+      "B": 2
+    },
+    "cellAFlipNoAnswer": 0,
+    "cellCFlipDist": {
+      "A": 2,
+      "B": 4,
+      "C": 2,
+      "D": 1
+    },
+    "cellCFlipNoAnswer": 0
+  },
+  {
+    "model": "Claude Sonnet 4.6",
+    "key": "sonnet",
+    "preferred": "C",
+    "predCount": {
+      "A": 24,
+      "B": 22,
+      "C": 101,
+      "D": 53
+    },
+    "truthCount": {
+      "A": 63,
+      "B": 47,
+      "C": 48,
+      "D": 42
+    },
+    "totalAgentWrong": 29,
+    "kept": 65,
+    "lost": 9,
+    "gained": 106,
+    "missed": 20,
+    "cellA_total": 33,
+    "cellC_total": 41,
+    "lostA": 5,
+    "lostC": 4,
+    "lossRateA": 0.15151515151515152,
+    "lossRateC": 0.0975609756097561,
+    "asymmetry": -0.05395417590539542,
+    "cellAFlipDist": {
+      "A": 3,
+      "D": 2
+    },
+    "cellAFlipNoAnswer": 0,
+    "cellCFlipDist": {
+      "C": 2,
+      "B": 1,
+      "A": 1
+    },
+    "cellCFlipNoAnswer": 0
+  },
+  {
+    "model": "GPT-5.4",
+    "key": "gpt54",
+    "preferred": "B",
+    "predCount": {
+      "A": 20,
+      "B": 109,
+      "C": 42,
+      "D": 29
+    },
+    "truthCount": {
+      "A": 63,
+      "B": 47,
+      "C": 48,
+      "D": 42
+    },
+    "totalAgentWrong": 55,
+    "kept": 37,
+    "lost": 17,
+    "gained": 108,
+    "missed": 38,
+    "cellA_total": 24,
+    "cellC_total": 30,
+    "lostA": 5,
+    "lostC": 12,
+    "lossRateA": 0.20833333333333334,
+    "lossRateC": 0.4,
+    "asymmetry": 0.19166666666666668,
+    "cellAFlipDist": {
+      "C": 1,
+      "A": 3,
+      "D": 1
+    },
+    "cellAFlipNoAnswer": 0,
+    "cellCFlipDist": {
+      "A": 7,
+      "B": 2,
+      "C": 3
+    },
+    "cellCFlipNoAnswer": 0
+  },
+  {
+    "model": "GPT-5.2",
+    "key": "gpt52",
+    "preferred": "B",
+    "predCount": {
+      "A": 16,
+      "B": 101,
+      "C": 43,
+      "D": 40
+    },
+    "truthCount": {
+      "A": 63,
+      "B": 47,
+      "C": 48,
+      "D": 42
+    },
+    "totalAgentWrong": 93,
+    "kept": 29,
+    "lost": 26,
+    "gained": 78,
+    "missed": 67,
+    "cellA_total": 26,
+    "cellC_total": 29,
+    "lostA": 14,
+    "lostC": 12,
+    "lossRateA": 0.5384615384615384,
+    "lossRateC": 0.41379310344827586,
+    "asymmetry": -0.12466843501326258,
+    "cellAFlipDist": {
+      "D": 2,
+      "A": 9,
+      "C": 2
+    },
+    "cellAFlipNoAnswer": 1,
+    "cellCFlipDist": {
+      "B": 4,
+      "A": 4,
+      "D": 2,
+      "C": 1
+    },
+    "cellCFlipNoAnswer": 1
+  },
+  {
+    "model": "GPT-5.1",
+    "key": "gpt51",
+    "preferred": "B",
+    "predCount": {
+      "A": 41,
+      "B": 62,
+      "C": 46,
+      "D": 51
+    },
+    "truthCount": {
+      "A": 63,
+      "B": 47,
+      "C": 48,
+      "D": 42
+    },
+    "totalAgentWrong": 92,
+    "kept": 47,
+    "lost": 31,
+    "gained": 61,
+    "missed": 61,
+    "cellA_total": 21,
+    "cellC_total": 57,
+    "lostA": 6,
+    "lostC": 25,
+    "lossRateA": 0.2857142857142857,
+    "lossRateC": 0.43859649122807015,
+    "asymmetry": 0.15288220551378445,
+    "cellAFlipDist": {
+      "C": 2,
+      "D": 2,
+      "A": 2
+    },
+    "cellAFlipNoAnswer": 0,
+    "cellCFlipDist": {
+      "B": 5,
+      "A": 8,
+      "C": 5,
+      "D": 6
+    },
+    "cellCFlipNoAnswer": 1
+  }
+]

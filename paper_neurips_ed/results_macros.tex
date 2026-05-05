@@ -384,8 +384,9 @@
 \newcommand{\GeminiThreeFlashTOCLabelRange}{16.7--33.3\%}
 \newcommand{\GPTFiveFourTOCLabelRange}{66.7--85.1\%}
 
-% TOC paired-rerun variance (n=3 independent reruns per GPT model, executed
-% 2026-05-03; computed manually from per-run summary.json files).
+% TOC paired-rerun variance (n=3 independent reruns per GPT model executed
+% 2026-05-03 and per Sonnet executed 2026-05-04; computed manually from
+% per-run summary.json files).
 \newcommand{\TOCRerunNumSamples}{3}
 \newcommand{\TOCRerunMaxSD}{5.5}
 \newcommand{\TOCRerunMaxRange}{11.0}
@@ -419,6 +420,16 @@
 \newcommand{\GPTFiveFourTOCRerunTokDiff}{$-$0.41, $-$0.26, $-$0.21}
 \newcommand{\GPTFiveFourTOCRerunTokSD}{0.11}
 \newcommand{\GPTFiveFourTOCRerunTokRange}{0.20}
+
+\newcommand{\SonnetTOCRerunValues}{84.5\%, 83.5\%, 85.0\%}
+\newcommand{\SonnetTOCRerunMean}{84.3\%}
+\newcommand{\SonnetTOCRerunSD}{0.8}
+\newcommand{\SonnetTOCRerunRange}{1.5}
+\newcommand{\SonnetTOCRerunTokens}{24.08M, 24.49M, 23.68M}
+\newcommand{\SonnetTOCRerunAccDiff}{$-$1.0, $-$2.0, $-$0.5}
+\newcommand{\SonnetTOCRerunTokDiff}{$+$3.89, $+$4.30, $+$3.49}
+\newcommand{\SonnetTOCRerunTokSD}{0.41}
+\newcommand{\SonnetTOCRerunTokRange}{0.81}
 
 % Cap-unaffected (163 items, output <=100k) aggregate accuracy, computed by summing
 % the four cap-unaffected bins (<=10k, 10-20k, 20-50k, 50-100k) from the per-model
