@@ -1,0 +1,6 @@
+model,kept,gained,lost,both_wrong,retention_pct,net_gain
+Claude Opus 4.6,-,-,-,-,-,-
+Claude Sonnet 4.6,64,104,10,22,86.5%,94
+GPT-5.1,46,62,32,60,59.0%,30
+GPT-5.2,31,77,24,68,56.4%,53
+GPT-5.4,35,110,19,36,64.8%,91

@@ -50,7 +50,11 @@
 \newcommand{\GeminiThreeFlashCoT}{40.5\%}
 
 % Main TOC-agent runs.
-\newcommand{\OpusTOC}{84.5\%}
+% Opus updated 2026-05-04 from cap-affected union45 uncapped TOC rerun
+% (32/45 vs prior blind-TOC 34/45 on the same union; net delta = -2 items).
+\newcommand{\OpusTOC}{83.5\%}      % was 84.5%; spliced from neurips200_tocfix_uncapped_capaffected45_toc_opus46
+\newcommand{\OpusTOCBaseline}{84.5\%}  % preserved for reference
+\newcommand{\OpusTOCNewFortyFive}{71.1\%}  % accuracy on the 45-item rerun slice (32/45)
 \newcommand{\SonnetTOC}{85.5\%}
 \newcommand{\GPTFiveOneTOC}{54.0\%}
 \newcommand{\GPTFiveTwoTOC}{53.5\%}
@@ -146,7 +150,12 @@
 \newcommand{\GPTFiveFourRawFiveHundredK}{74.5\%}
 \newcommand{\GeminiFlashRaw}{--}
 \newcommand{\GeminiThreeFlashRaw}{47.0\%}
-\newcommand{\OpusTOCTokens}{22.75M}
+% Opus splice token estimate: old cap-unaffected (estimated 15.18M, using Sonnet's
+% 33.3% cap-affected token-share as proxy since Opus has no per-bin breakdown)
+% + new 45-item rerun input total (8.59M) = 23.76M. Caveat in App B.2.
+\newcommand{\OpusTOCTokens}{23.76M}      % was 22.75M; spliced (cap-affected portion estimated)
+\newcommand{\OpusTOCTokensBaseline}{22.75M}  % preserved for reference
+\newcommand{\OpusTOCNewFortyFiveTokens}{8.59M}  % new 45-item rerun input total
 \newcommand{\OpusRawTokens}{43.71M}
 \newcommand{\SonnetTOCTokens}{20.19M}
 \newcommand{\SonnetRawTokens}{51.60M}
@@ -164,7 +173,7 @@
 \newcommand{\GPTFiveOneTOCMinusRaw}{-9.5 pp}
 \newcommand{\GPTFiveTwoTOCMinusRaw}{-8.0 pp}
 \newcommand{\GPTFiveFourTOCMinusRaw}{+2.5 pp}
-\newcommand{\OpusTOCMinusRaw}{-0.5 pp}
+\newcommand{\OpusTOCMinusRaw}{-1.5 pp}  % was -0.5 pp; derived from spliced OpusTOC=83.5%
 \newcommand{\GPTFiveOneRawFiveHundredKMinusTOC}{+4.0 pp}
 \newcommand{\GPTFiveTwoRawFiveHundredKMinusTOC}{+10.0 pp}
 \newcommand{\GPTFiveFourRawFiveHundredKMinusTOC}{+2.0 pp}
@@ -172,7 +181,7 @@
 \newcommand{\GPTFiveTwoRawFiveHundredKMinusRaw}{+2.0 pp}
 \newcommand{\GPTFiveFourRawFiveHundredKMinusRaw}{+4.5 pp}
 \newcommand{\SonnetTOCMinusRaw}{+2.0 pp}
-\newcommand{\OpusTOCTokenReduction}{47.9\%}
+\newcommand{\OpusTOCTokenReduction}{45.6\%}  % was 47.9%; derived from spliced OpusTOCTokens=23.76M / OpusRawTokens=43.71M
 \newcommand{\SonnetTOCTokenReduction}{60.9\%}
 \newcommand{\GPTFiveOneTOCTokenReduction}{40.3\%}
 \newcommand{\GPTFiveTwoTOCTokenReduction}{30.8\%}
@@ -211,6 +220,8 @@
 \newcommand{\GPTFiveTwoRawFiveHundredKSmallAcc}{66.3\%}
 \newcommand{\GPTFiveFourRawSmallAcc}{71.2\%}
 \newcommand{\GPTFiveFourRawFiveHundredKSmallAcc}{77.9\%}
+% Original cap-affected (37-canonical) macros — keep AS-IS for tab:large-output-access,
+% which retains its original story (Raw100k -> Raw500k inline cap does not help).
 \newcommand{\GPTFiveOneRawFiveHundredKLargeAcc}{43.2\%}
 \newcommand{\GPTFiveTwoRawFiveHundredKLargeAcc}{51.4\%}
 \newcommand{\GPTFiveFourRawFiveHundredKLargeAcc}{59.5\%}
@@ -229,6 +240,30 @@
 \newcommand{\GPTFiveOneRawFiveHundredKLargeTokensPerItem}{290.2k}
 \newcommand{\GPTFiveTwoRawFiveHundredKLargeTokensPerItem}{500.9k}
 \newcommand{\GPTFiveFourRawFiveHundredKLargeTokensPerItem}{409.6k}
+
+% NEW: 45-item cap-affected union from the uncapped-TOC verification rerun (2026-05-04).
+% Used in the new TOC-fix verification table (separate from tab:large-output-access).
+% TOC: directly from the 5 rerun summary.json files.
+% Raw100k: subsetted from baseline per-item correctness on the same 45 items.
+% Raw100k tok/q: per-(model, item) bin assignment x per-bin Raw100k token means.
+\newcommand{\OpusTOCFortyFiveAcc}{71.1\%}
+\newcommand{\SonnetTOCFortyFiveAcc}{71.1\%}
+\newcommand{\GPTFiveFourTOCFortyFiveAcc}{55.6\%}
+\newcommand{\GPTFiveTwoTOCFortyFiveAcc}{48.9\%}
+\newcommand{\GPTFiveOneTOCFortyFiveAcc}{40.0\%}
+\newcommand{\OpusTOCFortyFiveTokensPerItem}{191K}
+\newcommand{\SonnetTOCFortyFiveTokensPerItem}{193K}
+\newcommand{\GPTFiveFourTOCFortyFiveTokensPerItem}{85K}
+\newcommand{\GPTFiveTwoTOCFortyFiveTokensPerItem}{111K}
+\newcommand{\GPTFiveOneTOCFortyFiveTokensPerItem}{101K}
+\newcommand{\SonnetRawFortyFiveAcc}{75.6\%}
+\newcommand{\GPTFiveFourRawFortyFiveAcc}{60.0\%}
+\newcommand{\GPTFiveTwoRawFortyFiveAcc}{57.8\%}
+\newcommand{\GPTFiveOneRawFortyFiveAcc}{33.3\%}
+\newcommand{\SonnetRawFortyFiveTokensPerItem}{546K}
+\newcommand{\GPTFiveFourRawFortyFiveTokensPerItem}{147K}
+\newcommand{\GPTFiveTwoRawFortyFiveTokensPerItem}{185K}
+\newcommand{\GPTFiveOneRawFortyFiveTokensPerItem}{109K}
 \newcommand{\GPTFiveFourRawCapAffectedN}{37}
 \newcommand{\GPTFiveFourRawCapUnaffectedN}{163}
 \newcommand{\GPTFiveOneRawFiveHundredKLargeGainVsRaw}{5}

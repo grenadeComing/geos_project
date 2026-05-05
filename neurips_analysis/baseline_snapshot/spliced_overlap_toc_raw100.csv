@@ -1,0 +1,6 @@
+model,TOC_right,Raw100k_right,Both,TOC_only,Raw_only,Neither
+Claude Opus 4.6,-,-,-,-,-,-
+Claude Sonnet 4.6,168,167,160,8,7,25
+GPT-5.1,108,127,85,23,42,50
+GPT-5.2,108,123,81,27,42,50
+GPT-5.4,145,140,119,26,21,34

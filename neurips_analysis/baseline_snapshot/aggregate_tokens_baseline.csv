@@ -1,0 +1,14 @@
+model,method,total_input_tokens_M,headline_accuracy_pct,total_correct_of_200
+Claude Opus 4.6,Agent-TOC,22.75,84.5,169
+Claude Opus 4.6,Agent-Raw100k,43.71,85.0,170
+Claude Sonnet 4.6,Agent-TOC,20.19,85.5,171
+Claude Sonnet 4.6,Agent-Raw100k,51.6,83.5,167
+GPT-5.4,Agent-TOC,11.44,72.5,145
+GPT-5.4,Agent-Raw100k,14.31,70.0,140
+GPT-5.4,Agent-Raw500k,25.7,74.5,149
+GPT-5.2,Agent-TOC,12.05,53.5,107
+GPT-5.2,Agent-Raw100k,17.41,61.5,123
+GPT-5.2,Agent-Raw500k,28.66,63.5,127
+GPT-5.1,Agent-TOC,7.25,54.0,108
+GPT-5.1,Agent-Raw100k,12.15,63.5,127
+GPT-5.1,Agent-Raw500k,16.89,58.0,116
