@@ -14,7 +14,6 @@
 \usepackage{enumitem}
 \usepackage{multirow}
 \usepackage{xcolor}
-\usepackage{svg}
 
 \input{results_macros}
 
@@ -86,7 +85,14 @@ LLM work in chemistry and geoscience often focuses on prediction, literature syn
 \subsection{Tool Environment}
 \label{sec:harness}
 
-The custom agent is given four tools --- \texttt{write\_file}, \texttt{read\_file}, \texttt{list\_file}, and \texttt{execute\_phreeqc} --- and runs each question in an isolated workspace with a fixed maximum of 24 agent steps. PHREEQC execution is deterministic for a given input file and the frozen benchmark database; outputs are natively section-structured (Solution composition, Distribution of species, Saturation indices, $\dots$) and can reach \OutputMaxChars{}, motivating a structured-retrieval interface rather than always inlining the full payload. We evaluate two output-access protocols that differ only in what \texttt{execute\_phreeqc} returns: \textbf{Agent-TOC}, where the tool writes the simulator output to a workspace file and returns a section-level outline (section names paired with starting line numbers) so the agent can fetch evidence on demand via \texttt{read\_file} with explicit line ranges; and \textbf{Agent-Raw100k}, where the output is inlined head/tail-truncated to \RawCapChars{} characters. The 100k truncation cap is placed at a natural break in the empirical bimodal output-size distribution (\OutputLeHundredK{} of files $\le$100k characters, the rest $\ge$369k; Appendix~\ref{sec:appendix-output-distribution}), so it is non-binding for the small-output bulk and binding only on the long tail. Implementation details and per-model long-tail item counts are in Appendices~\ref{sec:appendix-toc-impl} and~\ref{sec:appendix-cap-affected-per-model}.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{agent_workflow.png}
+\caption{\BenchName{} agent harness under the Agent-TOC protocol.}
+\label{fig:agent-workflow}
+\end{figure}
+
+The agent workflow is shown in Figure~\ref{fig:agent-workflow}. The custom agent is given four tools --- \texttt{write\_file}, \texttt{read\_file}, \texttt{list\_file}, and \texttt{execute\_phreeqc} --- and runs each question in an isolated workspace with a fixed maximum of 24 agent steps. PHREEQC execution is deterministic for a given input file and the frozen benchmark database; outputs are natively section-structured (Solution composition, Distribution of species, Saturation indices, $\dots$) and can reach \OutputMaxChars{}, motivating a structured-retrieval interface rather than always inlining the full payload. We evaluate two output-access protocols that differ only in what \texttt{execute\_phreeqc} returns: \textbf{Agent-TOC}, where the tool writes the simulator output to a workspace file and returns a section-level outline (section names paired with starting line numbers) so the agent can fetch evidence on demand via \texttt{read\_file} with explicit line ranges; and \textbf{Agent-Raw100k}, where the output is inlined head/tail-truncated to \RawCapChars{} characters. The 100k truncation cap is placed at a natural break in the empirical bimodal output-size distribution (\OutputLeHundredK{} of files $\le$100k characters, the rest $\ge$369k; Appendix~\ref{sec:appendix-output-distribution}), so it is non-binding for the small-output bulk and binding only on the long tail. Implementation details and per-model long-tail item counts are in Appendices~\ref{sec:appendix-toc-impl} and~\ref{sec:appendix-cap-affected-per-model}.
 
 \section{Main Results}
 \label{sec:main-results}
@@ -169,8 +175,8 @@ TOC keeps raw output out of context at the cost of an extra navigation step the 
 
 \begin{figure}[t]
 \centering
-\includesvg[width=\linewidth]{toc_raw100k_accuracy_token_efficiency}
-\caption{TOC versus truncated raw-output execution interface, per model. Both protocols use the same agent loop and differ only in what \texttt{execute\_phreeqc} returns; raw observations are capped at \RawCapChars{} characters per PHREEQC execution. Each point summarizes one model's full-benchmark TOC and Raw100k accuracy and total agent input-token cost (millions). The capability-tier $\times$ protocol interaction discussed in this section is visible as separate clusters: top-tier models (Opus, Sonnet, GPT-5.4) achieve TOC accuracy within $\pm 2.5$\,pp of Raw100k at substantial token savings, while mid-tier GPT-5.1 and GPT-5.2 lose 8--10\,pp under TOC at smaller token savings.}
+\includegraphics[width=\linewidth]{toc_raw100k_accuracy_token_efficiency.pdf}
+\caption{TOC versus truncated raw-output execution interface, per model. Both protocols use the same agent loop and differ only in what \texttt{execute\_phreeqc} returns; raw observations are capped at \RawCapChars{} characters per PHREEQC execution. Each point summarizes one model's full-benchmark TOC and Raw100k accuracy and total agent input-token cost (millions).}
 \label{fig:toc-raw}
 \end{figure}
 
