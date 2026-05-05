@@ -275,6 +275,12 @@
 \newcommand{\GPTFiveFourRawFortyFiveTokensPerItem}{147K}
 \newcommand{\GPTFiveTwoRawFortyFiveTokensPerItem}{185K}
 \newcommand{\GPTFiveOneRawFortyFiveTokensPerItem}{109K}
+
+% TOC minus Raw100k accuracy on the 45-item union (positive = TOC wins).
+\newcommand{\SonnetTOCMinusRawFortyFive}{-4.5 pp}      % 71.1 - 75.6
+\newcommand{\GPTFiveFourTOCMinusRawFortyFive}{-4.4 pp} % 55.6 - 60.0
+\newcommand{\GPTFiveTwoTOCMinusRawFortyFive}{-8.9 pp}  % 48.9 - 57.8
+\newcommand{\GPTFiveOneTOCMinusRawFortyFive}{+6.7 pp}  % 40.0 - 33.3
 \newcommand{\GPTFiveFourRawCapAffectedN}{37}
 \newcommand{\GPTFiveFourRawCapUnaffectedN}{163}
 \newcommand{\GPTFiveOneRawFiveHundredKLargeGainVsRaw}{5}
@@ -288,16 +294,14 @@
 \newcommand{\LargeOutputN}{37}
 
 % Retention analysis: direct no-tool baseline vs TOC agent.
-\newcommand{\OpusKept}{71}
-\newcommand{\OpusGained}{98}
-\newcommand{\OpusLost}{13}
-\newcommand{\OpusRetention}{84.5\%}
-\newcommand{\OpusNetGain}{+85}
+\newcommand{\OpusKept}{70}        % was 71; precise from Opus Direct (84 correct) and spliced TOC (167 correct)
+\newcommand{\OpusGained}{97}      % was 98
+\newcommand{\OpusLost}{14}        % was 13
+\newcommand{\OpusRetention}{83.3\%}  % was 84.5%; = 70/(70+14)
+\newcommand{\OpusNetGain}{+83}    % was +85; = gained - lost = 97 - 14
 % Retention (kept/gained/lost) recomputed from spliced per-item TOC vs surviving per-item Direct.
-% Opus retention NOT updated — Opus per-item Direct is not preserved in any surviving CSV
-% (only failure-queue entries for opus_toc, no opus_direct), so kept/lost cannot be precisely
-% recomputed. Opus row reflects baseline retention; updated headline OpusTOC=83.5% applied to
-% Table 1, but kept/gained/lost left at baseline values.
+% Opus Direct per-item recovered from result/oneshot/neurips200_clean_oneshot_opus46/results.jsonl
+% on 2026-05-05 (200 rows, 84 correct = OpusOneShot=42.0%); Opus retention now precise as well.
 \newcommand{\SonnetKept}{64}        % was 65
 \newcommand{\SonnetGained}{104}     % was 106
 \newcommand{\SonnetLost}{10}        % was 9
