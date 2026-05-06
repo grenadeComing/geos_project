@@ -26,7 +26,7 @@
 \maketitle
 
 \begin{abstract}
-Tool-augmented LLM agents are increasingly deployed for scientific computation, but it remains unclear when tool access reliably improves performance and when the agent loop introduces new errors. We study this through PHREEQC, an open-source aqueous-geochemistry simulator used for groundwater quality, contaminant transport, and mine-drainage modeling, whose deterministic execution and pinned thermodynamic database make a reproducible benchmark possible. We introduce \BenchName, an expert-validated benchmark of \BenchN{} multiple-choice items derived from \BenchScenarioN{} PHREEQC simulation scenarios, paired with an agent harness for writing simulator inputs, executing PHREEQC, inspecting outputs, and committing to a final answer. We evaluate direct, chain-of-thought, and tool-augmented agents across three model families and two output-access protocols, and report three findings. \textbf{(1)} Tool access produces net accuracy gains for all five top- and mid-tier completed agents, but agents lose 9--31 items they had answered correctly without tools, yielding retention rates of 52.7--87.8\%. \textbf{(2)} Chain-of-thought does not close the gap to grounded execution despite 30--140$\times$ output-token expansion. \textbf{(3)} Output-access protocol interacts with model capability rather than vendor identity: a metadata-guided table-of-contents interface preserves accuracy for top-tier models --- including Claude Opus 4.6, Claude Sonnet 4.6, and GPT-5.4, within $\pm$2.5\,pp of raw-output accuracy --- while reducing input tokens by 20--61\%, but costs 8--10 percentage points on the same vendor's mid-tier GPT-5.1 and GPT-5.2. \BenchName{} shows that scientific tool-use evaluations should report not only aggregate accuracy but also item-level retention and output-access sensitivity.
+Tool-augmented LLM agents are increasingly deployed for scientific computation, but it remains unclear when tool access reliably improves performance and when the agent loop introduces new errors. We study this through PHREEQC, an open-source aqueous-geochemistry simulator used for groundwater quality, contaminant transport, and acid mine drainage modeling, whose deterministic execution and pinned thermodynamic database make a reproducible benchmark possible. We introduce \BenchName, an expert-validated benchmark of \BenchN{} multiple-choice items derived from \BenchScenarioN{} PHREEQC simulation scenarios, paired with an agent harness for writing simulator inputs, executing PHREEQC, inspecting outputs, and committing to a final answer. We evaluate direct, chain-of-thought, and tool-augmented agents across three model families and two output-access protocols, and report three findings. \textbf{(1)} Tool access produces net accuracy gains for all five top- and mid-tier completed agents, but agents lose 9--31 items they had answered correctly without tools, yielding retention rates of 52.7--87.8\%. \textbf{(2)} Chain-of-thought does not close the gap to grounded execution despite 30--140$\times$ output-token expansion. \textbf{(3)} Output-access protocol interacts with model capability rather than vendor identity: a metadata-guided table-of-contents interface preserves accuracy for top-tier models --- including Claude Opus 4.6, Claude Sonnet 4.6, and GPT-5.4, within $\pm$2.5\,pp of raw-output accuracy --- while reducing input tokens by 20--61\%, but costs 8--10 percentage points on the same vendor's mid-tier GPT-5.1 and GPT-5.2. \BenchName{} shows that scientific tool-use evaluations should report not only aggregate accuracy but also item-level retention and output-access sensitivity.
 \end{abstract}
 
 \section{Introduction}
@@ -35,7 +35,7 @@ Building tool-augmented LLM agents has become routine; evaluating whether tools 
 
 Deterministic scientific simulators make this question testable. Unlike open-ended scientific question answering, simulator tasks provide executable evidence and reproducible ground truth, while stressing capabilities that common benchmarks hide: domain-specific input synthesis, error recovery, context management for large outputs, numerical extraction, and final-answer calibration. Output access is a particularly load-bearing variable: simulator outputs are heavy-tailed, ranging from a few kilobytes to nearly a megabyte, so the protocol the agent uses to inspect them shapes both context cost and the evidence it can actually see.
 
-We study this evaluation problem through PHREEQC, an open-source simulator for aqueous geochemistry \citep{parkhurst2013phreeqc,appelo2004geochemistry}. PHREEQC computes equilibrium speciation, mineral saturation, surface complexation, kinetic reactions, and one-dimensional reactive transport, and has been the field's reference tool for over thirty years across groundwater quality, mine drainage, contaminant remediation, and reactive-transport studies. It is deterministic for a fixed input and thermodynamic database --- a precondition for a reproducible benchmark --- and its outputs are text with section headers, tables, and time-step records, making it a realistic case for studying scientific-tool use without requiring reviewers to evaluate novelty in geochemistry.
+We study this evaluation problem through PHREEQC, an open-source simulator for aqueous geochemistry \citep{parkhurst2013phreeqc,appelo2004geochemistry}. PHREEQC computes equilibrium speciation, mineral saturation, surface complexation, kinetic reactions, and one-dimensional reactive transport, and has been the field's reference tool for over twenty-five years (released 1999) across groundwater quality, acid mine drainage, contaminant remediation, and reactive-transport studies. It is deterministic for a fixed input and thermodynamic database --- a precondition for a reproducible benchmark --- and its outputs are text with section headers, tables, and time-step records, making it a realistic case for studying scientific-tool use without requiring reviewers to evaluate novelty in geochemistry.
 
 We introduce \BenchName, a high-confidence benchmark of \BenchN{} multiple-choice question items derived from \BenchScenarioN{} validated simulation scenarios. Each item is answerable by constructing and executing a PHREEQC simulation and extracting a specific computed quantity. The benchmark uses multiple choice because it provides deterministic scalable grading, but every item is grounded in a unique simulator-derived target value. We therefore use the benchmark as a diagnostic harness for evaluating scientific agents, not as a geochemistry trivia set.
 
@@ -80,14 +80,14 @@ LLM work in chemistry and geoscience often focuses on prediction, literature syn
 
 \subsection{Scope and Choice of Simulator}
 
-\BenchName{} tests three things: whether agents can translate a scientific task into simulator input, run the simulator, inspect output, and commit to a unique answer; whether tool access improves performance through grounded execution rather than only longer reasoning traces; and whether output-access choices affect cost and reliability for large simulator outputs. We use PHREEQC for three reasons. First, it is the field's standard tool: PHREEQC is what working geochemists and environmental consultants actually run, so the benchmark exercises a deployment-relevant workflow rather than a synthetic one. Second, it is open-source and ships with a frozen thermodynamic database we can pin --- a property the leading commercial geochemical-modeling alternatives do not provide, and that other open codes provide only over narrower scopes. Open-source plus a fixed database is what makes the ground truth reproducible. Third, PHREEQC's deterministic execution and section-structured text output --- properties shared by many command-line scientific tools (electronic-structure, molecular-simulation, subsurface-flow) --- let us study output-access protocols cleanly. The first two are why we chose PHREEQC; the third is a property we then exploit. \BenchName{} itself is one of the paper's contributions, alongside the diagnostic methodology. We do not claim that PHREEQC itself is the scientific contribution, that geochemical modeling is solved by LLM agents, that tool access is always beneficial, that aggregate accuracy alone is sufficient to evaluate agents, that any single output-access protocol generalizes across domains, or that the measured retention rates and failure proportions transfer unchanged to other simulators.
+\BenchName{} tests three things: whether agents can translate a scientific task into simulator input, run the simulator, inspect output, and commit to a unique answer; whether tool access improves performance through grounded execution rather than only longer reasoning traces; and whether output-access choices affect cost and reliability for large simulator outputs. We use PHREEQC for three reasons. First, it is the premier open-source option in geochemical modeling, widely used by researchers and environmental consultants, so the benchmark exercises a deployment-relevant workflow rather than a synthetic one. Second, it is open-source and ships with a frozen thermodynamic database we can pin --- a property the leading commercial geochemical-modeling alternatives do not provide, and that other open codes provide only over narrower scopes. Open-source plus a fixed database is what makes the ground truth reproducible. Third, PHREEQC's deterministic execution and section-structured text output --- properties shared by many command-line scientific tools (electronic-structure, molecular-simulation, subsurface-flow) --- let us study output-access protocols cleanly. The first two are why we chose PHREEQC; the third is a property we then exploit. \BenchName{} itself is one of the paper's contributions, alongside the diagnostic methodology.
 
 \subsection{Tool Environment}
 \label{sec:harness}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.85\linewidth]{agent_workflow.png}
+\includegraphics[width=0.85\linewidth]{agent_workflow.pdf}
 \caption{\BenchName{} agent harness under the Agent-TOC protocol.}
 \label{fig:agent-workflow}
 \end{figure}
@@ -162,7 +162,7 @@ GPT-5.2           & \GPTFiveTwoKept     & \GPTFiveTwoGained     & \GPTFiveTwoLos
 GPT-5.1           & \GPTFiveOneKept     & \GPTFiveOneGained     & \GPTFiveOneLost     & \GPTFiveOneRetention      & \GPTFiveOneRawKept   & \GPTFiveOneRawGained  & \GPTFiveOneRawLost  & \GPTFiveOneRawRetention   & \GPTFiveOneTOCMinusRawRetention   & $-19$ \\
 \bottomrule
 \end{tabular}
-\caption{Gain/loss/retention decomposition relative to each model's Direct no-tool baseline, with Agent-TOC and Agent-Raw100k reported side by side for the four models that ran both protocols. Retention $=$ kept/(kept+lost). $\Delta$~Ret.\ and $\Delta$~Net (TOC minus Raw100k) isolate the per-item cost of the TOC navigation interface from any shared capability gap visible under both protocols.}
+\caption{Gain/loss/retention decomposition relative to each model's Direct no-tool baseline, with Agent-TOC and Agent-Raw100k reported side by side. Retention $=$ kept/(kept+lost). $\Delta$~Ret.\ and $\Delta$~Net (TOC minus Raw100k) isolate the per-item cost of the TOC navigation interface from any shared capability gap visible under both protocols. Opus is omitted from this table because per-item Direct correctness was not retained for the Opus run, which is required to compute kept/gained/lost; aggregate Opus accuracy under both protocols is reported in Table~\ref{tab:main-results}.}
 \label{tab:retention}
 \end{table}
 
@@ -180,7 +180,7 @@ TOC keeps raw output out of context at the cost of an extra navigation step the 
 \label{fig:toc-raw}
 \end{figure}
 
-Figure~\ref{fig:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) sits within $\pm$2.5\,pp of raw-output accuracy at 20--60\% input-token reductions; TOC is Pareto-good. The mid tier (GPT-5.1, GPT-5.2) regresses by 8--10\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per model in Table~\ref{tab:toc-rerun-variance} (the three GPT models and Claude Sonnet 4.6) yield a maximum accuracy SD of \TOCRerunMaxSD\,pp, an order of magnitude below the gap. Token consumption is even more stable --- all four reported models have rerun token SD $\le$ 0.41\,M (GPT-5.4 just 0.11\,M) --- so the 20--60\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
+Figure~\ref{fig:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) sits within $\pm$2.5\,pp of raw-output accuracy at 20--60\% input-token reductions; TOC is Pareto-good in this evaluation. The mid tier (GPT-5.1, GPT-5.2) regresses by 8--10\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per model in Table~\ref{tab:toc-rerun-variance} (the three GPT models and Claude Sonnet 4.6) yield a maximum accuracy SD of \TOCRerunMaxSD\,pp, smaller than the 8--10\,pp gap. Token consumption is even more stable --- all four reported models have rerun token SD $\le$ 0.41\,M (GPT-5.4 just 0.11\,M) --- so the 20--60\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
 
 \begin{table}[t]
 \centering
@@ -219,22 +219,19 @@ GPT-5.2           & \GPTFiveTwoTOCFortyFiveAcc  & \GPTFiveTwoRawFortyFiveAcc   &
 GPT-5.1           & \GPTFiveOneTOCFortyFiveAcc  & \GPTFiveOneRawFortyFiveAcc   & \GPTFiveOneTOCMinusRawFortyFive  & \GPTFiveOneTOCFortyFiveTokensPerItem  & \GPTFiveOneRawFortyFiveTokensPerItem  & 7\% \\
 \bottomrule
 \end{tabular}
-\caption{TOC accuracy and tokens on the 45-item long-tail union of items whose simulator outputs exceed 100k characters in at least one TOC run (Appendix~\ref{sec:appendix-cap-affected-per-model}), all five completed TOC models. TOC values are from the uncapped-TOC run on this slice (\texttt{MAX\_FULL\_CHARS=10M}, well above the largest observed \OutputMaxChars{} output, so the section index is built unconditionally for every item). Raw100k accuracies subset the baseline per-item Raw100k correctness to the same 45 items; Raw100k tok/q is estimated from per-(model,item) bin assignment weighted by the per-bin token means in Appendix~\ref{sec:appendix-output-bin-grid}. Opus 4.6 has no Raw measurements. The $\Delta$ acc.\ column (TOC $-$ Raw100k accuracy) and the TOC token saving column together show the per-model accuracy-vs-token tradeoff on this slice; readings discussed in Section~\ref{sec:toc}.}
+\caption{TOC accuracy and tokens on the 45-item long-tail union of items whose simulator outputs exceed 100k characters in at least one TOC run (Appendix~\ref{sec:appendix-cap-affected-per-model}), all five completed TOC models. TOC values are from the uncapped-TOC run on this slice (\texttt{MAX\_FULL\_CHARS=10M}, well above the largest observed \OutputMaxChars{} output, so the section index is built unconditionally for every item). Raw100k accuracies subset the baseline per-item Raw100k correctness to the same 45 items; Raw100k tok/q is estimated from per-(model,item) bin assignment weighted by the per-bin token means in Appendix~\ref{sec:appendix-output-bin-grid}. Opus 4.6's aggregate Raw100k accuracy is reported in Table~\ref{tab:main-results}; per-item Raw100k correctness was not retained for the Opus run, so Opus cannot be subset to this 45-item slice. The $\Delta$ acc.\ column (TOC $-$ Raw100k accuracy) and the TOC token saving column together show the per-model accuracy-vs-token tradeoff on this slice; readings discussed in Section~\ref{sec:toc}.}
 \label{tab:capaffected-toc-verification}
 \end{table}
 
 \section{Failure Analysis}
 \label{sec:failure}
 
-This section reports a domain-expert review of the residual failure cases produced by tool-augmented agents on \BenchName. The review targets errors that automatic log-level inspection cannot distinguish: whether a successful PHREEQC input faithfully encoded the problem statement, whether the output section inspected by the agent contained the correct quantity, and whether the final answer mapping was numerically justified. The complementary automatic log-derived categorization (parseability, execution success, step-budget exhaustion) is reported alongside the trajectory analysis in Appendix~\ref{sec:appendix-trajectory}.
-
-\paragraph{Domain-reviewed taxonomy.}
-For expert review, error trajectories are packaged for labeling with the following categories: invalid simulator input; plausible but wrong simulator input; output navigation failure; answer mapping failure; retry exhaustion; and missing or unparseable final answer. The review package contains the question, truth, prediction, chat log, generated PHREEQC input files, and output files for each error case.
+We complement the automatic log-derived categorization in Appendix~\ref{sec:appendix-trajectory} with a domain-expert review of the residual failure cases on \BenchName{}. The review surfaces a capability-tier $\times$ failure-mode asymmetry that aggregate accuracy hides: mid-tier GPT failures are dominated by high-confidence wrong PHREEQC builds together with cases where the right answer is present in \texttt{result.out} but the agent does not use it, while top-tier Opus failures concentrate in subtle bad-PHREEQC-input cases (the input parses and runs but contains a modeling flaw such as an omitted \texttt{charge} keyword or a stiff kinetic constant) and PHREEQC retry loops that exhaust the step budget without committing. Tool-loop failures therefore concentrate in different regions of the (input, execute, navigate, commit) chain by capability tier. Full categorical taxonomy and per-category descriptions are in Appendix~\ref{sec:appendix-failure-taxonomy}.
 
 \section{Discussion}
 
 \paragraph{Output-access protocol $\times$ model capability is an interaction effect.}
-TOC's payoff cleanly tracks capability, not vendor: GPT-5.4 behaves like the Anthropic top-tier (TOC Pareto-good at substantial token savings), while same-vendor GPT-5.1 and GPT-5.2 lose 8--13\,pp under TOC at marginal token savings (Section~\ref{sec:toc}). Output-access protocol should be matched to the deployed model's capability rather than chosen uniformly across a model fleet, and output-access ablation should be reported alongside aggregate accuracy whenever a benchmark involves long simulator outputs.
+TOC's payoff tracks capability, not vendor: GPT-5.4 behaves like the Anthropic top-tier (TOC Pareto-good at substantial token savings), while same-vendor GPT-5.1 and GPT-5.2 lose 8--13\,pp under TOC at marginal token savings (Section~\ref{sec:toc}). Output-access protocol should be matched to the deployed model's capability rather than chosen uniformly across a model fleet, and output-access ablation should be reported alongside aggregate accuracy whenever a benchmark involves long simulator outputs.
 
 \paragraph{TOC token saving across simulator domains.}
 The structured-retrieval mechanism is mechanical: any deterministic simulator with section-structured output can build a TOC-style handle, replacing an inline payload that grows with output size. The capability-tier interaction we report likely transfers under the same mechanism: top-tier models that navigate structure successfully reap the savings; mid-tier models that fail navigation lose accuracy. What does not transfer cleanly is the model-specific reasoning-token expansion under inline content we observed (Section~\ref{sec:toc}) --- that is a property of how a particular model expands reasoning when given inline simulator output, not of the simulator --- so cross-simulator validation of TOC's per-model token effect would need separate measurement per (simulator, model) pair.
@@ -252,12 +249,6 @@ Multiple-choice grading enables controlled exact-match scoring on \BenchN{} item
 
 \paragraph{Budget-limited rerun coverage.}
 Running rerun-stability experiments on commercial LLM APIs is expensive at scale, and we executed three independent TOC reruns per GPT model and three reruns for Claude Sonnet 4.6 (Table~\ref{tab:toc-rerun-variance}) but not for Opus. Sonnet's measured rerun accuracy SD is \SonnetTOCRerunSD\,pp, the lowest in our evaluation alongside GPT-5.2's \GPTFiveTwoTOCRerunSD\,pp; this directly verifies the Sonnet portion of the top-tier Pareto-good interpretation in Section~\ref{sec:toc}. The Opus portion still rests on the assumption that Opus TOC variance is no larger than the largest measured TOC variance ($\TOCRerunMaxSD$\,pp), which is not directly verified. We note that two independent signals already point to Opus being stable under our setting: its per-true-label accuracy spread under TOC is $\le$5\,pp (versus 18--27\,pp for the GPT family; Appendix~\ref{sec:appendix-label-behavior}), and it retains its TOC accuracy advantage on both the small-output bulk and the long-tail slice (Section~\ref{sec:toc}). We release prompts, logs, simulator inputs/outputs, and analysis scripts so future work can run paired Opus reruns under controlled conditions.
-
-
-\section{Data and Code Availability}
-\label{sec:data-availability}
-
-The submission artifact includes the frozen \BenchName{} JSONL file, the PHREEQC 3.8.6 binary, the author-supplied validated thermodynamic database, the Direct, chain-of-thought, TOC-agent, and Raw-agent prompts, the agent and tool source code, generated simulator inputs and \texttt{result.out} files for failure cases, per-question chat logs for failure cases, the new GPT-5.1 paired-rerun runs in full, result JSONL files, and the analysis script that regenerates every table in the paper. PHREEQC/database attribution and licenses, the benchmark-code license, and the reproduce-the-tables command are documented in the artifact. Appendix~\ref{sec:appendix-datasheet} provides the full dataset documentation in datasheet-for-datasets format \citep{gebru2021datasheets}; Appendix~\ref{sec:appendix-artifact} provides the artifact pointer and directory layout.
 
 \section{Conclusion}
 
@@ -378,7 +369,7 @@ Output-size bin / threshold & Items ($n$) & Share of \BenchN{} \\
 \subsection{TOC Implementation Details}
 \label{sec:appendix-toc-impl}
 
-All runs reported in this paper use PHREEQC 3.8.6 with the author-supplied validated \texttt{phreeqc.dat} thermodynamic database (Section~\ref{sec:benchmark}); the binary and database are pinned in the released artifact (Section~\ref{sec:data-availability}). The TOC builder regex-scans \texttt{result.out} for PHREEQC's canonical dash-delimited section headers (pattern \texttt{\^{}-\{3,\}\textbackslash{}s*([A-Za-z].+?)\textbackslash{}s*-\{3,\}\textbackslash{}s*\$}) and emits a list of \texttt{(section name, starting line number)} pairs. The matched section vocabulary is fixed by PHREEQC's output formatter and includes \texttt{Solution composition}, \texttt{Description of solution}, \texttt{Distribution of species}, \texttt{Saturation indices}, and \texttt{Solid solutions}, among others. The builder runs unconditionally on every \texttt{result.out} the agent produces, regardless of file size: the regex scan is line-wise and cheap even on multi-megabyte outputs, so Agent-TOC always exposes a non-empty section index when PHREEQC produces canonical headers. The agent then issues \texttt{read\_file} calls with explicit \texttt{start\_line}/\texttt{end\_line} arguments to retrieve evidence on demand. The size threshold parameter (\texttt{--max-full-chars}) is retained in the released code as a defensive upper bound but is set well above the largest \texttt{result.out} ever observed in our benchmark (\OutputMaxChars), so it is non-binding for every TOC-mode run reported in this paper.
+All runs reported in this paper use PHREEQC 3.8.6 with the author-supplied validated \texttt{phreeqc.dat} thermodynamic database (Section~\ref{sec:benchmark}); the binary and database are pinned in the released artifact (Appendix~\ref{sec:appendix-artifact}). The TOC builder regex-scans \texttt{result.out} for PHREEQC's canonical dash-delimited section headers (pattern \texttt{\^{}-\{3,\}\textbackslash{}s*([A-Za-z].+?)\textbackslash{}s*-\{3,\}\textbackslash{}s*\$}) and emits a list of \texttt{(section name, starting line number)} pairs. The matched section vocabulary is fixed by PHREEQC's output formatter and includes \texttt{Solution composition}, \texttt{Description of solution}, \texttt{Distribution of species}, \texttt{Saturation indices}, and \texttt{Solid solutions}, among others. The builder runs unconditionally on every \texttt{result.out} the agent produces, regardless of file size: the regex scan is line-wise and cheap even on multi-megabyte outputs, so Agent-TOC always exposes a non-empty section index when PHREEQC produces canonical headers. The agent then issues \texttt{read\_file} calls with explicit \texttt{start\_line}/\texttt{end\_line} arguments to retrieve evidence on demand. The size threshold parameter (\texttt{--max-full-chars}) is retained in the released code as a defensive upper bound but is set well above the largest \texttt{result.out} ever observed in our benchmark (\OutputMaxChars), so it is non-binding for every TOC-mode run reported in this paper.
 
 \subsection{Cap-Affected Item Counts Are Model-Dependent}
 \label{sec:appendix-cap-affected-per-model}
@@ -673,10 +664,10 @@ S19 & 9 & 100.0\% & 88.9\% & 66.7\% & 44.4\% & 44.4\% & 44.4\% & 100.0\% & 68.9\
 S20 & 9 & 100.0\% & 100.0\% & 100.0\% & 66.7\% & 88.9\% & 66.7\% & 100.0\% & 91.1\% & 33.3 \\
 S21 & 10 & 100.0\% & 100.0\% & 100.0\% & 90.0\% & 30.0\% & 30.0\% & 100.0\% & 84.0\% & 70.0 \\
 \midrule
-all & 200 & 84.5\% & 85.5\% & 72.5\% & 53.5\% & 54.0\% & --- & --- & 70.0\% & --- \\
+all & 200 & \OpusTOC & \SonnetTOC & \GPTFiveFourTOC & \GPTFiveTwoTOC & \GPTFiveOneTOC & --- & --- & --- & --- \\
 \bottomrule
 \end{tabular}
-\caption{Per-scenario accuracy for the five completed TOC agents. ``min,'' ``max,'' and ``mean'' summarize cross-model behavior on each scenario; ``spread'' is max$-$min in percentage points. Bottom row is the overall TOC accuracy per model on the full benchmark.}
+\caption{Per-scenario accuracy for the five completed TOC agents. ``min,'' ``max,'' and ``mean'' summarize cross-model behavior on each scenario; ``spread'' is max$-$min in percentage points. Bottom row is the overall TOC accuracy per model on the full benchmark, matching Table~\ref{tab:main-results}. Per-scenario rows are from a snapshot prior to the cap-affected TOC-fix splice (Section~\ref{sec:toc}); the splice updates a small number of cap-affected items by 0--2\,pp aggregate but does not alter the per-scenario qualitative pattern.}
 \label{tab:appendix-scenario-grid}
 \end{table}
 
@@ -1068,6 +1059,78 @@ Gemini 3 Flash Preview + TOC & \GeminiThreeFlashErrSomeFailed & \GeminiThreeFlas
 
 This automatic taxonomy already shows a useful distinction. For strong agents, many residual errors are not ordinary API failures or complete simulator failures. Instead, they often involve a successful PHREEQC execution followed by a wrong final answer, or a trajectory with at least one failed PHREEQC attempt followed by an incorrect recovery. Those cases require expert review (Section~\ref{sec:failure}) to separate plausible-but-wrong simulator inputs from output-navigation and answer-mapping errors. The below-mid Gemini Flash 3 row shows a qualitatively different signature: \GeminiThreeFlashErrRetry{} of its errors fall into the step/no-final category and another \GeminiThreeFlashErrUnparseable{} into no-parse, while only \GeminiThreeFlashErrSuccessfulWrong{} are successful-run-wrong --- i.e.\ the automatic taxonomy alone is sufficient to identify non-commit as the dominant residual failure mode, without needing expert review.
 
+\section{Domain-Reviewed Failure Taxonomy}
+\label{sec:appendix-failure-taxonomy}
+
+\subsection{GPT-5.4 + Agent-TOC: Current-Evaluation Breakdown}
+
+The domain reviewer's breakdown of all 55 GPT-5.4 + Agent-TOC errors on \BenchName{}:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+Failure category & Count & Share of errors \\
+\midrule
+High-confidence wrong build & 33 & 60\% \\
+Wrong interpretation (right answer present, not used) & 12 & 22\% \\
+Precision & 4 & 7\% \\
+Bad simulation (PHREEQC failed) & 3 & 5\% \\
+Low-confidence wrong build & 2 & 4\% \\
+No question & 1 & 2\% \\
+\midrule
+Total errors & 55 & 100\% \\
+\bottomrule
+\end{tabular}
+\caption{Domain-reviewed failure taxonomy for GPT-5.4~+~Agent-TOC on \BenchName{} (55/200 errors).}
+\label{tab:appendix-gpt-failure}
+\end{table}
+
+The reviewer also notes that ``the type of question gotten wrong is more widespread'' for GPT than for Opus, that ``the failure mode of right answer present but still answered wrong appears here where it doesn't in Opus,'' and that GPT ``has much more high-confidence wrong builds compared to Opus.''
+
+\subsection{Categorical Descriptions (Paired Prior Domain Review)}
+
+The categorical descriptions below are from a paired domain review of the same models on \BenchName{} under the prior PHREEQC-Agent evaluation; specific count breakdowns under that prior evaluation are in the released artifact (Appendix~\ref{sec:appendix-artifact}). Qualitative failure modes are stable across both evaluations.
+
+\subsubsection{GPT 5.2 + Agent: Active Failure Modes}
+
+Two dominant categories accounted for the majority of errors: (i) \textbf{wrong interpretation} (PHREEQC ran but the agent misread output or mapped to the wrong option), and (ii) \textbf{partial PHREEQC failure} (some attempts fail due to invalid inputs, sometimes followed by a successful run but still ending incorrect).
+
+\paragraph{wrong\_interpretation.}
+PHREEQC executes successfully and relevant values appear in \texttt{result.out}, but the agent reads the wrong field, the wrong timestep, or mis-maps a numeric result to the multiple-choice option. This is the dominant ``reasoning + extraction'' bottleneck and can be further divided into two categories: \textit{incorrect\_scripts}, where the agent writes a script that executes, but either makes a syntax error or incorrectly constructs the script in some manner that allows the output to run but does not accurately represent the scenario outlined in the problem statement, or \textit{incorrect\_interpretation}, where the script accurately reflects the scenario outlined in the question, but the agent interprets the output incorrectly. The vast majority of wrong interpretation errors for GPT 5.2 + Agent belong to the first category, primarily involving kinetics questions and questions involving gas phases, where the agent did not set up the problem correctly. In some scenarios, the agent would also assign the charge balancing adjustment to the pH parameter unprompted, causing the simulation to diverge from the problem statement. Another common failure point occurs when the agent writes a script that fails to correctly link different blocks together in multistep problems, thus creating disjointed outputs. \textit{Incorrect\_interpretation} events occurred for questions requiring counting the occurrence of a certain feature, such as ``How many species of Ca are present in a solution?''. The output file contains the correct results, but the model fails to return the correct information, revealing a critical limitation in the GPT 5.2 + Agent model.
+
+\paragraph{some\_phreeqc\_failed and all\_phreeqc\_failed.}
+The agent often generates invalid PHREEQC inputs (unsupported keywords, malformed blocks, unit mistakes), leading to parse/runtime errors. In \texttt{some\_phreeqc\_failed}, at least one execution succeeds but the overall trajectory still ends incorrect; in \texttt{all\_phreeqc\_failed}, no successful run occurs. The model has particularly poor performance in regards to kinetics questions. Kinetics questions involve a time dependent rate law that is accessed through the thermodynamic database. GPT 5.2 + Agent appears to not recognize the rate laws within the database, and thus struggles to write a functional script, either failing outright, running out of steps or timing out, or constructing its own nonsensical rate law, causing a \textit{wrong\_interpretation} failure.
+
+\paragraph{max\_steps.}
+The agent enters retry loops (iterative minor edits and re-runs) and exhausts the 24-step budget without producing a parseable final answer.
+
+\paragraph{timeout/error.}
+The per-question process exceeds the 300-second timeout or terminates unexpectedly.
+
+\paragraph{no\_phreeqc\_run.}
+A rare tool-bypass event: the agent answers without executing PHREEQC despite instructions.
+
+\subsubsection{Claude Opus 4.6 + Agent: Failures in Detail}
+
+Under the prior evaluation, Claude Opus 4.6 + Agent produced wrong-answer and no-answer trajectories with the following root-cause categories.
+
+\paragraph{Bad PHREEQC input.}
+The agent writes a PHREEQC input file that executes without errors but contains a subtle modeling flaw, producing plausible but incorrect output. Specific instances include omitting the \texttt{charge} keyword so PHREEQC accepts a user-specified pH instead of computing the equilibrium value, assigning charge balance to a lone anion, which PHREEQC silently ignores, and setting a kinetic rate constant too stiff for the integrator, causing the system to over-equilibrate in the first time step. In these cases, the simulation runs to completion and the agent trusts the incorrect output.
+
+\paragraph{Wrong interpretation.}
+PHREEQC output is correct, but the agent reasons to the wrong answer. Examples include misidentifying which output quantity corresponds to the question's target (e.g., confusing total alkalinity with HCO$_3^-$ molality) and misreading a positive mineral delta as ``zero dissolved.''
+
+\paragraph{Precision limit.}
+PHREEQC displayed a rounded version of the correct answer to the problem due to precision display limitations. The agent cannot distinguish the two answer choices from PHREEQC output alone. This question is unsolved by all ten methods.
+
+\paragraph{PHREEQC retry loop.}
+The agent repeatedly rewrites and re-executes PHREEQC input with varied configurations, exhausting all 24 steps without converging on a result that matches any answer choice.
+
+\paragraph{Complex setup failure.}
+The problem statement is challenging to convert to PHREEQC code due to complicated rate laws or sequential mixing-then-heating semantics, thus causing the system to write an erroneous script. Other questions with the same scenario were answered correctly, indicating that the system is capable of setting up those problem statements, but was unable to in this instance.
+
 \section{Datasheet for \texorpdfstring{\BenchName}{PHREEQC-MCQ-200}}
 \label{sec:appendix-datasheet}
 
@@ -1103,6 +1166,7 @@ Items were authored by domain experts in aqueous geochemistry and reviewed by ad
 \paragraph{Validation criteria.}
 Each candidate item was retained only if (i)~the simulation setup executes successfully against the frozen author-supplied database, (ii)~the intended answer is uniquely determined from the PHREEQC output, (iii)~the four answer choices are numerically plausible (distractors are not trivially distinguishable from the correct option without simulation), and (iv)~the question statement is unambiguous to multiple independent reviewers.
 
+\newpage
 \input{checklist}
 
 \end{document}
