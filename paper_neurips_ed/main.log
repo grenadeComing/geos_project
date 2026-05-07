@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.15)  5 MAY 2026 11:04
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.15)  6 MAY 2026 20:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -11,14 +11,14 @@ Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 )
-\c@part=\count179
-\c@section=\count180
-\c@subsection=\count181
-\c@subsubsection=\count182
-\c@paragraph=\count183
-\c@subparagraph=\count184
-\c@figure=\count185
-\c@table=\count186
+\c@part=\count175
+\c@section=\count176
+\c@subsection=\count177
+\c@subsubsection=\count178
+\c@paragraph=\count179
+\c@subparagraph=\count180
+\c@figure=\count181
+\c@table=\count182
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -39,13 +39,15 @@ Enter file name:
          
 l.105 \newcommand
                  {\acksection}{\section*{Acknowledgments and Disclosure of F...
+*** (cannot \read from terminal in nonstop modes)
+
  
 Here is how much of TeX's memory you used:
- 268 strings out of 480445
- 3196 string characters out of 5892391
- 282888 words of memory out of 5000000
- 17631 multiletter control sequences out of 15000+600000
- 403430 words of font info for 27 fonts, out of 8000000 for 9000
+ 270 strings out of 478436
+ 3197 string characters out of 5853929
+ 288633 words of memory out of 5000000
+ 20269 multiletter control sequences out of 15000+600000
+ 403438 words of font info for 28 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 47i,0n,53p,170b,36s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 47i,0n,53p,170b,40s stack positions out of 5000i,500n,10000p,200000b,80000s
+No pages of output.

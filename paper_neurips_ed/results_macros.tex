@@ -143,7 +143,7 @@
 \newcommand{\CodexGPTFiveFourPerCorrectK}{273}
 
 % TOC-vs-raw ablation.
-\newcommand{\OpusRaw}{85.0\%}
+\newcommand{\OpusRaw}{83.0\%}        % was 85.0%; from new neurips200_opusrawfix_raw100k_opus46 run (166/200)
 \newcommand{\SonnetRaw}{83.5\%}
 \newcommand{\GPTFiveOneRaw}{63.5\%}
 \newcommand{\GPTFiveTwoRaw}{61.5\%}
@@ -159,7 +159,7 @@
 \newcommand{\OpusTOCTokens}{23.76M}      % was 22.75M; spliced (cap-affected portion estimated)
 \newcommand{\OpusTOCTokensBaseline}{22.75M}  % preserved for reference
 \newcommand{\OpusTOCNewFortyFiveTokens}{8.59M}  % new 45-item rerun input total
-\newcommand{\OpusRawTokens}{43.71M}
+\newcommand{\OpusRawTokens}{46.77M}  % was 43.71M; from new neurips200_opusrawfix_raw100k_opus46 run
 % TOC token totals spliced from cap-affected union45 uncapped rerun (clean for these 4
 % with per-bin data: cap-unaffected portion unchanged + new 45-rerun summary input total).
 \newcommand{\SonnetTOCTokens}{22.14M}      % was 20.19M; = 13.47M cap-unaffected + 8.66M new
@@ -183,7 +183,7 @@
 \newcommand{\GPTFiveOneTOCMinusRaw}{-9.5 pp}   % unchanged (GPT-5.1 TOC unchanged)
 \newcommand{\GPTFiveTwoTOCMinusRaw}{-7.5 pp}   % was -8.0 pp; from spliced GPTFiveTwoTOC=54.0%
 \newcommand{\GPTFiveFourTOCMinusRaw}{+2.5 pp}  % unchanged (GPT-5.4 TOC unchanged)
-\newcommand{\OpusTOCMinusRaw}{-1.5 pp}  % was -0.5 pp; derived from spliced OpusTOC=83.5%
+\newcommand{\OpusTOCMinusRaw}{+0.5 pp}  % was -1.5 pp; OpusTOC=83.5% - new OpusRaw=83.0%
 \newcommand{\GPTFiveOneRawFiveHundredKMinusTOC}{+4.0 pp}
 \newcommand{\GPTFiveTwoRawFiveHundredKMinusTOC}{+10.0 pp}
 \newcommand{\GPTFiveFourRawFiveHundredKMinusTOC}{+2.0 pp}
@@ -191,7 +191,7 @@
 \newcommand{\GPTFiveTwoRawFiveHundredKMinusRaw}{+2.0 pp}
 \newcommand{\GPTFiveFourRawFiveHundredKMinusRaw}{+4.5 pp}
 \newcommand{\SonnetTOCMinusRaw}{+0.5 pp}     % was +2.0 pp; from spliced SonnetTOC=84.0% vs SonnetRaw=83.5%
-\newcommand{\OpusTOCTokenReduction}{45.6\%}  % was 47.9%; derived from spliced OpusTOCTokens=23.76M / OpusRawTokens=43.71M
+\newcommand{\OpusTOCTokenReduction}{49.2\%}  % was 45.6%; = 1 - OpusTOCTokens=23.76M / new OpusRawTokens=46.77M
 % TOC token reductions re-derived from spliced TOC tokens / Raw100k tokens.
 \newcommand{\SonnetTOCTokenReduction}{57.1\%}    % was 60.9%; = 1 - 22.14/51.60
 \newcommand{\GPTFiveOneTOCTokenReduction}{21.7\%} % was 40.3%; = 1 - 9.51/12.15 -- larger drop because uncapped TOC issues real read_file calls instead of the prior empty-index fallback
@@ -267,16 +267,19 @@
 \newcommand{\GPTFiveFourTOCFortyFiveTokensPerItem}{85K}
 \newcommand{\GPTFiveTwoTOCFortyFiveTokensPerItem}{111K}
 \newcommand{\GPTFiveOneTOCFortyFiveTokensPerItem}{101K}
+\newcommand{\OpusRawFortyFiveAcc}{73.3\%}              % 33/45 = 73.33%; from new Opus Raw100k rerun
 \newcommand{\SonnetRawFortyFiveAcc}{75.6\%}
 \newcommand{\GPTFiveFourRawFortyFiveAcc}{60.0\%}
 \newcommand{\GPTFiveTwoRawFortyFiveAcc}{57.8\%}
 \newcommand{\GPTFiveOneRawFortyFiveAcc}{33.3\%}
+\newcommand{\OpusRawFortyFiveTokensPerItem}{434K}      % 19.51M / 45 = 433,558
 \newcommand{\SonnetRawFortyFiveTokensPerItem}{546K}
 \newcommand{\GPTFiveFourRawFortyFiveTokensPerItem}{147K}
 \newcommand{\GPTFiveTwoRawFortyFiveTokensPerItem}{185K}
 \newcommand{\GPTFiveOneRawFortyFiveTokensPerItem}{109K}
 
 % TOC minus Raw100k accuracy on the 45-item union (positive = TOC wins).
+\newcommand{\OpusTOCMinusRawFortyFive}{-2.2 pp}        % 71.1 - 73.3
 \newcommand{\SonnetTOCMinusRawFortyFive}{-4.5 pp}      % 71.1 - 75.6
 \newcommand{\GPTFiveFourTOCMinusRawFortyFive}{-4.4 pp} % 55.6 - 60.0
 \newcommand{\GPTFiveTwoTOCMinusRawFortyFive}{-8.9 pp}  % 48.9 - 57.8
@@ -328,8 +331,12 @@
 \newcommand{\GeminiFlashRetention}{--}
 \newcommand{\GeminiFlashNetGain}{--}
 
-% Raw100k retention vs Direct (computed from surviving baseline per-item correctness;
-% Opus excluded -- never ran Raw100k).
+% Raw100k retention vs Direct (computed from per-item correctness).
+\newcommand{\OpusRawKept}{71}
+\newcommand{\OpusRawGained}{95}
+\newcommand{\OpusRawLost}{13}
+\newcommand{\OpusRawRetention}{84.5\%}
+\newcommand{\OpusRawNetGain}{+82}
 \newcommand{\SonnetRawKept}{63}
 \newcommand{\SonnetRawGained}{104}
 \newcommand{\SonnetRawLost}{11}
@@ -352,6 +359,7 @@
 \newcommand{\GPTFiveFourRawNetGain}{+86}
 
 % Retention diff: TOC retention - Raw100k retention (positive = TOC preserves more direct-correct items).
+\newcommand{\OpusTOCMinusRawRetention}{-1.2 pp}        % 83.3% - 84.5%
 \newcommand{\SonnetTOCMinusRawRetention}{+1.4 pp}      % 86.5% - 85.1%
 \newcommand{\GPTFiveFourTOCMinusRawRetention}{+1.8 pp} % 64.8% - 63.0%
 \newcommand{\GPTFiveTwoTOCMinusRawRetention}{-5.4 pp}  % 56.4% - 61.8%
@@ -518,6 +526,10 @@
 % Cap-unaffected (163 items, output <=100k) aggregate accuracy, computed by summing
 % the four cap-unaffected bins (<=10k, 10-20k, 20-50k, 50-100k) from the per-model
 % appendix bin tables (Appendix sec:appendix-output-bin-grid).
+% Opus uses Sonnet's canonical 162-item ≤100k partition since Opus has no per-bin table.
+\newcommand{\OpusTOCCapUnaffected}{87.7\%}      % 142/162 = 87.65%
+\newcommand{\OpusRawCapUnaffected}{86.4\%}      % 140/162 = 86.42%; from new Opus Raw100k rerun
+\newcommand{\OpusTOCMinusRawCapUnaffected}{$+$1.2\,pp}
 \newcommand{\SonnetTOCCapUnaffected}{87.7\%}
 \newcommand{\SonnetRawCapUnaffected}{85.9\%}
 \newcommand{\SonnetTOCMinusRawCapUnaffected}{$+$1.8\,pp}

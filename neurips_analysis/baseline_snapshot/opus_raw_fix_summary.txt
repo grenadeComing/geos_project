@@ -1,0 +1,38 @@
+=== Opus 4.6 Raw100k splice — table cells for tab:capaffected-toc-verification ===
+
+
+[small-output bulk (Sonnet canonical, n=162)]
+  Raw100k acc        : 140/162 = 86.42%
+  Raw100k tok/q (mean): 181024  (total 29.326M)
+  TOC     acc        : 142/162 = 87.65%
+
+[small-output bulk (NOT in UNION_45, n=155)]
+  Raw100k acc        : 133/155 = 85.81%
+  Raw100k tok/q (mean): 175877  (total 27.261M)
+  TOC     acc        : 135/155 = 87.10%
+
+[long-output tail (UNION_45, n=45)]
+  Raw100k acc        : 33/45 = 73.33%
+  Raw100k tok/q (mean): 433558  (total 19.510M)
+  TOC     acc        : 32/45 = 71.11%
+
+[all 200]
+  Raw100k acc        : 166/200 = 83.00%
+  Raw100k tok/q (mean): 233855  (total 46.771M)
+  TOC     acc        : 167/200 = 83.50%
+
+[Long tail (45 items in UNION_45) — TABLE ROW VALUES]
+  TOC acc      : 71.1%  (32/45)
+  Raw100k acc  : 73.3%  (33/45)
+  delta acc    : -2.2 pp  (TOC - Raw100k)
+  TOC tok/q    : 190821  (=8.59M/45 = 191K)
+  Raw100k tok/q: 433558
+  TOC saving   : 56.0%
+
+[Small-output bulk (162 items per Sonnet canonical reference) — TABLE ROW VALUES]
+  TOC acc      : 87.7%  (142/162)
+  Raw100k acc  : 86.4%  (140/162)
+  delta acc    : +1.2 pp
+  TOC tok/q    : ~98093 (estimated; OG opus_toc dir deleted)
+  Raw100k tok/q: 181024
+  TOC saving   : ~45.8% (estimated)
