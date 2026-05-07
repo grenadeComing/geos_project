@@ -54,7 +54,7 @@ Our contribution is an evaluation benchmark and analysis methodology, not a new 
     \item We provide \BenchName, an expert-validated benchmark and artifact package for evaluating LLM agents in a deterministic, unique-answer scientific software setting.
     \item \textbf{(Q1)} Scaling reasoning tokens cannot substitute for tool access: chain-of-thought yields $\pm 8$\,pp at 29--140$\times$ output-token expansion, while simulator access adds 15.0--41.5\,pp on top of the better no-tool baseline for top- and mid-tier agents.
     \item \textbf{(Q2)} A gain/loss/retention decomposition showing that tool augmentation is never purely additive: top- and mid-tier agents lose 10--32 items they had answered correctly without tools while gaining 62--110 newly correct ones, yielding retention rates of 56.4--86.5\%. This connects item-level gain/loss accounting from model-version-comparison work~\citep{rci2026} with tool-vs-no-tool evaluation.
-    \item \textbf{(Q3)} A within-family output-access protocol comparison (table-of-contents indexing vs truncated raw output), showing 11--57\% input-token reduction while matching or exceeding raw-output accuracy by 0.5--2.5\,pp for top-tier models. This instantiates tool-output-format ablation~\citep{toolouts2025} for scientific simulator outputs.
+    \item \textbf{(Q3)} A within-family output-access protocol comparison (table-of-contents indexing vs truncated raw output), showing 11--57\% input-token reduction while matching or exceeding raw-output accuracy by 0.5--2.5\,pp for top-tier models, with the comparison validated by 3 independent TOC reruns per model on all five top- and mid-tier agents (top-tier rerun SDs 0.6--2.8\,pp; max 4.1\,pp on GPT-5.1). This instantiates tool-output-format ablation~\citep{toolouts2025} for scientific simulator outputs.
     \item \textbf{(Q4)} Our central empirical finding: output-access tradeoffs cluster by model capability tier and cross vendor boundaries --- on the output-access axis, GPT-5.4 patterns with Claude Opus 4.6 and Sonnet 4.6 (TOC matches or exceeds Raw100k by 0.5--2.5\,pp at 11--57\% input-token reduction), while same-vendor GPT-5.1 and GPT-5.2 lose 7.5--9.5\,pp under TOC. Retention sits intermediate for GPT-5.4 (64.8\%, between Sonnet's 86.5\% and the mid-tier GPT 56--59\% range), so the cross-vendor effect is axis-specific --- concentrated where output-access scaffolding interacts with capability. To our knowledge this is the first such finding in a controlled scientific-simulator setting.
     \item \textbf{(Q5)} We report a domain-expert failure taxonomy and an external-harness comparison (Claude Code CLI, Codex CLI, matched 50-question subsample) showing 2.7--3.3$\times$ better tokens-per-correct-answer for our custom harness (Appendix~\ref{sec:appendix-external-harness}).
 \end{enumerate}
@@ -98,6 +98,8 @@ Table~\ref{tab:main-results} reports direct, chain-of-thought (CoT), TOC-agent, 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
+\caption{Main results on \BenchName. All percentages use all \BenchN{} items as the denominator; unparseable or missing final answers count as incorrect. CIs are 95\% Wilson binomial. Raw100k denotes the truncated raw-output agent condition. Capability-tier groupings are informal and motivated by the TOC-vs-Raw pattern in Section~\ref{sec:diagnostic}.}
+\label{tab:main-results}
 \begin{tabular}{llcccc}
 \toprule
 Tier & Model & Direct (95\% CI) & CoT (95\% CI) & Agent-TOC & Agent-Raw100k \\
@@ -112,8 +114,6 @@ Tier & Model & Direct (95\% CI) & CoT (95\% CI) & Agent-TOC & Agent-Raw100k \\
 Below-mid & Gemini 3 Flash Preview & \GeminiThreeFlashOneShot~\GeminiThreeFlashOneShotCI & \GeminiThreeFlashCoT~\GeminiThreeFlashCoTCI & \GeminiThreeFlashTOC & \GeminiThreeFlashRaw \\
 \bottomrule
 \end{tabular}
-\caption{Main results on \BenchName. All percentages use all \BenchN{} items as the denominator; unparseable or missing final answers count as incorrect. CIs are 95\% Wilson binomial. Raw100k denotes the truncated raw-output agent condition. Capability-tier groupings are informal and motivated by the TOC-vs-Raw pattern in Section~\ref{sec:diagnostic}.}
-\label{tab:main-results}
 \end{table}
 
 \subsection{Chain-of-Thought Is Not Sufficient}
@@ -145,6 +145,8 @@ Aggregate accuracy alone cannot tell whether tool access reliably improves a mod
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3.5pt}
+\caption{Gain/loss/retention decomposition relative to each model's Direct no-tool baseline, with Agent-TOC and Agent-Raw100k reported side by side. Retention $=$ kept/(kept+lost). $\Delta$~Ret.\ and $\Delta$~Net (TOC minus Raw100k) isolate the per-item cost of the TOC navigation interface from any shared capability gap visible under both protocols.}
+\label{tab:retention}
 \begin{tabular}{lcccccccccc}
 \toprule
 & \multicolumn{4}{c}{Direct $\rightarrow$ Agent-TOC} & \multicolumn{4}{c}{Direct $\rightarrow$ Agent-Raw100k} & \multicolumn{2}{c}{TOC vs Raw100k} \\
@@ -158,8 +160,6 @@ GPT-5.2           & \GPTFiveTwoKept     & \GPTFiveTwoGained     & \GPTFiveTwoLos
 GPT-5.1           & \GPTFiveOneKept     & \GPTFiveOneGained     & \GPTFiveOneLost     & \GPTFiveOneRetention      & \GPTFiveOneRawKept   & \GPTFiveOneRawGained  & \GPTFiveOneRawLost  & \GPTFiveOneRawRetention   & \GPTFiveOneTOCMinusRawRetention   & $-19$ \\
 \bottomrule
 \end{tabular}
-\caption{Gain/loss/retention decomposition relative to each model's Direct no-tool baseline, with Agent-TOC and Agent-Raw100k reported side by side. Retention $=$ kept/(kept+lost). $\Delta$~Ret.\ and $\Delta$~Net (TOC minus Raw100k) isolate the per-item cost of the TOC navigation interface from any shared capability gap visible under both protocols.}
-\label{tab:retention}
 \end{table}
 
 Two patterns generalize across the five agents in Table~\ref{tab:retention} without requiring item-level recitation. First, the GPT family is less stable under tool augmentation than the Anthropic family: according to Appendix~\ref{sec:appendix-lost-by-bin}, GPT-5.2 is the least stable, losing 43.6\% of its direct-correct items overall versus 13.5\% for Sonnet and 16.7\% for Opus ($\sim$3$\times$ the Anthropic rate). The gap persists even on the smallest-output bin ($\le$10k characters, where all five agents face the same evidence load): GPT-5.2 still loses 50\% of the items it answered correctly without tools, roughly 5$\times$ Sonnet's 9.1\% on the same bin (Appendix~\ref{sec:appendix-lost-by-bin}). Second, different models lose different items: the lost-item sets only partially overlap across backbones, which rules out a ``broken benchmark'' explanation in which a fixed set of items is unsolvable under tool use. The regressions instead trace to each model's specific tool-loop behavior. Combined with the Gemini non-commit failure in Section~\ref{sec:main-belowmid}, this establishes a benchmark-level claim that aggregate accuracy cannot make: tool augmentation is never purely additive --- top- and mid-tier models trade items even when net-positive, and the below-mid model fails to commit at all.
@@ -176,33 +176,36 @@ TOC keeps raw output out of context at the cost of an extra navigation step the 
 \label{fig:toc-raw}
 \end{figure}
 
-Figure~\ref{fig:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) matches or exceeds raw-output accuracy by 0.5--2.5\,pp at 11--57\% input-token reductions; TOC is Pareto-good in this evaluation. The mid tier (GPT-5.1, GPT-5.2) regresses by 7.5--9.5\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per model in Table~\ref{tab:toc-rerun-variance} (the three GPT models and Claude Sonnet 4.6) yield a maximum accuracy SD of \TOCRerunMaxSD\,pp, smaller than the 7.5--9.5\,pp gap. Token consumption is even more stable --- all four reported models have rerun token SD $\le$ 0.41\,M (GPT-5.4 just 0.11\,M) --- so the 11--57\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
+Figure~\ref{fig:toc-raw} shows two patterns. The top tier (Opus, Sonnet, GPT-5.4) matches or exceeds raw-output accuracy by 0.5--2.5\,pp at 11--57\% input-token reductions; TOC is Pareto-good in this evaluation. The mid tier (GPT-5.1, GPT-5.2) regresses by 7.5--9.5\,pp at similar token savings. The cut crosses vendor: GPT-5.4 sits with the Anthropic top tier, while same-vendor GPT-5.1/5.2 sit on the mid-tier side. The mid-tier gap is not a rerun artifact: \TOCRerunNumSamples{} independent TOC reruns per model in Table~\ref{tab:toc-rerun-variance} (all five top- and mid-tier completed agents) yield top-tier accuracy SDs of \SonnetTOCRerunSD, \OpusTOCRerunSD, \GPTFiveFourTOCRerunSD\,pp (Sonnet, Opus, GPT-5.4) and a maximum SD of \TOCRerunMaxSD\,pp on GPT-5.1, all smaller than the 7.5--9.5\,pp gap. Token consumption is even more stable in relative terms --- post-splice rerun token SD ranges from 0.12\,M (GPT-5.1) to 1.77\,M (Opus), at most 7.8\% of mean per-rerun input tokens --- so the 11--57\% TOC token-reduction range reflects a property of the protocol rather than rerun noise.
 
 \begin{table}[t]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
+\caption{TOC rerun stability across all five top- and mid-tier agents on \BenchName{}. $\Delta$ columns are reruns minus original (Figure~\ref{fig:toc-raw}); tokens are total agent input tokens (M). All TOC values reflect the spliced configuration in which the 45-item uncapped-TOC fix is applied to each rerun's long-output items, matching the headline accuracy. Per-item decomposition for GPT-5.1 in Appendix~\ref{sec:appendix-stability}.}
+\label{tab:toc-rerun-variance}
 \begin{tabular}{lccccc}
 \toprule
 Model & Orig.\ (acc, tok) & Acc $\Delta$ (pp) & Tok $\Delta$ (M) & Acc SD / Rng & Tok SD / Rng \\
 \midrule
+Claude Opus 4.6 + TOC   & \OpusTOC, \OpusTOCTokens             & \OpusTOCRerunAccDiff       & \OpusTOCRerunTokDiff       & \OpusTOCRerunSD{} / \OpusTOCRerunRange       & \OpusTOCRerunTokSD{} / \OpusTOCRerunTokRange \\
 Claude Sonnet 4.6 + TOC & \SonnetTOC, \SonnetTOCTokens & \SonnetTOCRerunAccDiff & \SonnetTOCRerunTokDiff & \SonnetTOCRerunSD{} / \SonnetTOCRerunRange & \SonnetTOCRerunTokSD{} / \SonnetTOCRerunTokRange \\
 GPT-5.1 + TOC & \GPTFiveOneTOC, \GPTFiveOneTOCTokens & \GPTFiveOneTOCRerunAccDiff & \GPTFiveOneTOCRerunTokDiff & \GPTFiveOneTOCRerunSD{} / \GPTFiveOneTOCRerunRange & \GPTFiveOneTOCRerunTokSD{} / \GPTFiveOneTOCRerunTokRange \\
 GPT-5.2 + TOC & \GPTFiveTwoTOC, \GPTFiveTwoTOCTokens & \GPTFiveTwoTOCRerunAccDiff & \GPTFiveTwoTOCRerunTokDiff & \GPTFiveTwoTOCRerunSD{} / \GPTFiveTwoTOCRerunRange & \GPTFiveTwoTOCRerunTokSD{} / \GPTFiveTwoTOCRerunTokRange \\
 GPT-5.4 + TOC & \GPTFiveFourTOC, \GPTFiveFourTOCTokens & \GPTFiveFourTOCRerunAccDiff & \GPTFiveFourTOCRerunTokDiff & \GPTFiveFourTOCRerunSD{} / \GPTFiveFourTOCRerunRange & \GPTFiveFourTOCRerunTokSD{} / \GPTFiveFourTOCRerunTokRange \\
 \bottomrule
 \end{tabular}
-\caption{TOC rerun stability across the GPT family and Claude Sonnet 4.6. $\Delta$ columns are reruns minus original (Figure~\ref{fig:toc-raw}); tokens are total agent input tokens (M). Per-item decomposition for GPT-5.1 in Appendix~\ref{sec:appendix-stability}.}
-\label{tab:toc-rerun-variance}
 \end{table}
 
 \paragraph{Are the TOC savings biased toward long-output items?}
-If TOC's full-benchmark token reduction (Figure~\ref{fig:toc-raw}) came entirely from items where Raw100k inlines a 100k payload, the small-output bulk could be paying TOC's structured-retrieval overhead with no benefit and the long tail could carry all the gains. To rule this out we split the benchmark into the \RawCapUnaffectedN{}-item small-output bulk (output $\le$100k in the canonical reference run) and the 45-item long-output tail (items whose simulator outputs exceed 100k characters in at least one of the five completed TOC runs; Appendix~\ref{sec:appendix-cap-affected-per-model}) and report TOC versus Raw100k on each slice in Table~\ref{tab:capaffected-toc-verification}. We use the 5-model union (45) rather than the canonical 37 ($=$ 200 $-$ \RawCapUnaffectedN{}) for the long-output tail because per-model PHREEQC inputs differ: an item small-output for one model can be long-output for another, so the union covers every (model, item) pair that could plausibly hit the 100k regime.
+If TOC's full-benchmark token reduction (Figure~\ref{fig:toc-raw}) came entirely from items where Raw100k inlines a 100k payload, the small-output bulk could be paying TOC's structured-retrieval overhead with no benefit and the long tail could carry all the gains. To rule this out we split the benchmark into the \RawCapUnaffectedN{}-item small-output bulk (output $\le$100k in the canonical reference run) and the 45-item long-output tail (items whose simulator outputs exceed 100k characters in at least one of the five completed TOC runs; Appendix~\ref{sec:appendix-cap-affected-per-model}) and report TOC versus Raw100k on each slice in Table~\ref{tab:capaffected-toc-verification}. We use the 5-model union (45) rather than the canonical 37 ($=$ 200 $-$ \RawCapUnaffectedN{}) for the long-output tail because per-model PHREEQC inputs differ: an item small-output for one model can be long-output for another, so the union covers every (model, item) pair that could plausibly hit the 100k regime. Rerun stability of TOC accuracy on the small-output-bulk slice itself is reported in Appendix~\ref{sec:appendix-stability-small} (max small-bulk SD \GPTFiveOneTOCSmallRerunSD\,pp on GPT-5.1, top-tier SDs \SonnetTOCSmallRerunSD--\GPTFiveFourTOCSmallRerunSD\,pp).
 
 \begin{table}[t]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
+\caption{Small-output bulk uses the \RawCapUnaffectedN{} items with $\le$100k characters in the canonical reference run; long-output tail uses the 5-model union of items exceeding 100k in at least one TOC run (Appendix~\ref{sec:appendix-cap-affected-per-model}). We use 45 rather than 37 ($=$ 200 $-$ \RawCapUnaffectedN{}) because per-model PHREEQC inputs differ --- an item small-output for one model can be long-output for another, so the union covers every (model, item) pair that could plausibly hit the 100k regime; some items therefore appear under both row groups for at least one model.}
+\label{tab:capaffected-toc-verification}
 \begin{tabular}{lccccccc}
 \toprule
 Model & TOC acc. & Raw100k acc. & $\Delta$ acc. & TOC tok/q & Raw100k tok/q & TOC token saving \\
@@ -224,8 +227,6 @@ GPT-5.2           & \GPTFiveTwoTOCFortyFiveAcc  & \GPTFiveTwoRawFortyFiveAcc   &
 GPT-5.1           & \GPTFiveOneTOCFortyFiveAcc  & \GPTFiveOneRawFortyFiveAcc   & \GPTFiveOneTOCMinusRawFortyFive  & \GPTFiveOneTOCFortyFiveTokensPerItem  & \GPTFiveOneRawFortyFiveTokensPerItem  & 7\% \\
 \bottomrule
 \end{tabular}
-\caption{Small-output bulk uses the \RawCapUnaffectedN{} items with $\le$100k characters in the canonical reference run; long-output tail uses the 5-model union of items exceeding 100k in at least one TOC run (Appendix~\ref{sec:appendix-cap-affected-per-model}). We use 45 rather than 37 ($=$ 200 $-$ \RawCapUnaffectedN{}) because per-model PHREEQC inputs differ --- an item small-output for one model can be long-output for another, so the union covers every (model, item) pair that could plausibly hit the 100k regime; some items therefore appear under both row groups for at least one model.}
-\label{tab:capaffected-toc-verification}
 \end{table}
 
 Both slices show the same top-vs-mid-tier ordering. On the small-output bulk, top-tier gains accuracy under TOC: Opus $+$1.2\,pp at $\sim$46\% token saving (Pareto-win), Sonnet $+$1.8\,pp at 55\% token saving (Pareto-win), GPT-5.4 $+$4.9\,pp at 3.6\% token overhead; mid-tier (GPT-5.1, GPT-5.2) lose 7.4--12.9\,pp. On the long-output tail, top-tier Opus, Sonnet, and GPT-5.4 trail Raw100k by 2--5\,pp; GPT-5.2 trails by 8.9\,pp; GPT-5.1 reverses to win by 6.7\,pp because Raw100k truncates most heavily on these items. TOC saves 7--65\% of input tokens on the long-output tail. For top-tier models, TOC's long-tail token saving (Opus 56\%, Sonnet 65\%, GPT-5.4 42\%) is substantially larger than the same model's small-bulk saving (46\%, 55\%, $-$3.6\% overhead) --- the 2--5\,pp accuracy give-back buys disproportionately large token reductions on exactly the items where Raw100k is most expensive. Per-output-size bin breakdown is in Appendix~\ref{sec:appendix-output-bin-grid}.
@@ -236,6 +237,8 @@ A natural alternative to TOC on this long-tail slice is to simply enlarge the in
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
+\caption{Raw100k versus Raw500k on the same \LargeOutputN{} long-output items as Table~\ref{tab:capaffected-toc-verification} (GPT family only; Raw500k was not run for Anthropic models). Across all three GPT models, the larger inline window does not consistently improve accuracy and substantially raises per-question token cost. Token columns report mean input tokens per question on this subset.}
+\label{tab:large-output-access}
 \begin{tabular}{lccccc}
 \toprule
 Model & Window & Raw100k acc. & Raw500k acc. & Raw100k tok/q & Raw500k tok/q \\
@@ -245,8 +248,6 @@ GPT-5.2 & \GPTFiveTwoContextWindow & \GPTFiveTwoRawLargeAcc & \GPTFiveTwoRawFive
 GPT-5.1 & \GPTFiveOneContextWindow & \GPTFiveOneRawLargeAcc & \GPTFiveOneRawFiveHundredKLargeAcc & \GPTFiveOneRawLargeTokensPerItem & \GPTFiveOneRawFiveHundredKLargeTokensPerItem \\
 \bottomrule
 \end{tabular}
-\caption{Raw100k versus Raw500k on the same \LargeOutputN{} long-output items as Table~\ref{tab:capaffected-toc-verification} (GPT family only; Raw500k was not run for Anthropic models). Across all three GPT models, the larger inline window does not consistently improve accuracy and substantially raises per-question token cost. Token columns report mean input tokens per question on this subset.}
-\label{tab:large-output-access}
 \end{table}
 
 \section{Failure Analysis}
@@ -263,7 +264,7 @@ TOC's payoff tracks capability, not vendor: GPT-5.4 behaves like the Anthropic t
 The structured-retrieval mechanism is mechanical: any deterministic simulator with section-structured output can build a TOC-style handle, replacing an inline payload that grows with output size. The capability-tier interaction we report likely transfers under the same mechanism: top-tier models that navigate structure successfully reap the savings; mid-tier models that fail navigation lose accuracy. What does not transfer cleanly is the model-specific reasoning-token expansion under inline content we observed (Section~\ref{sec:toc}) --- that is a property of how a particular model expands reasoning when given inline simulator output, not of the simulator --- so cross-simulator validation of TOC's per-model token effect would need separate measurement per (simulator, model) pair.
 
 \paragraph{Rerun stability and retention are independent properties.}
-GPT-5.2 has the lowest retention (\GPTFiveTwoRetention) but the smallest TOC rerun SD (\GPTFiveTwoTOCRerunSD\,pp); GPT-5.1 has higher retention (\GPTFiveOneRetention) but the largest rerun SD (\GPTFiveOneTOCRerunSD\,pp; Appendix~\ref{sec:appendix-stability}). Most benchmark papers conflate these as ``noise''; reporting them separately exposes structural agent-protocol properties that aggregate accuracy hides, and we recommend both in future tool-augmented agent evaluations.
+GPT-5.2 has the lowest retention (\GPTFiveTwoRetention) but a small TOC rerun SD of \GPTFiveTwoTOCRerunSD\,pp (close to Sonnet's \SonnetTOCRerunSD\,pp); GPT-5.1 has higher retention (\GPTFiveOneRetention) but the largest rerun SD (\GPTFiveOneTOCRerunSD\,pp; Appendix~\ref{sec:appendix-stability}). Most benchmark papers conflate these as ``noise''; reporting them separately exposes structural agent-protocol properties that aggregate accuracy hides, and we recommend both in future tool-augmented agent evaluations.
 
 \paragraph{Long-output set size is itself a capability signal.}
 On a simulator like PHREEQC the set of items that produce long outputs is not a dataset constant — it depends on how completely the agent's PHREEQC input exercises the simulator. Across our five completed TOC runs the per-model count of items with output exceeding 100k characters ranges from 23 (GPT-5.1) to 41 (GPT-5.4), with union 45 and intersection only 15 (Appendix~\ref{sec:appendix-cap-affected-per-model}). Stronger agents both produce more long outputs (more complete inputs) and navigate them better, so long-output coverage and long-output accuracy compound rather than trade off. Future tool-augmented benchmark designers should report per-model output-size statistics rather than treating output size as an item-level constant.
@@ -272,9 +273,6 @@ On a simulator like PHREEQC the set of items that produce long outputs is not a 
 
 \paragraph{MCQ format and benchmark scope.}
 Multiple-choice grading enables controlled exact-match scoring on \BenchN{} items derived from \BenchScenarioN{} scenario stems with a fixed author-supplied PHREEQC thermodynamic database. We report scenario-level metrics (Appendix~\ref{sec:appendix-scenario-stratification}) so items are not treated as fully independent scientific setups; results should be interpreted as measurements under this benchmark format rather than as unconstrained scientific modeling performance.
-
-\paragraph{Budget-limited rerun coverage.}
-Running rerun-stability experiments on commercial LLM APIs is expensive at scale, and we executed three independent TOC reruns per GPT model and three reruns for Claude Sonnet 4.6 (Table~\ref{tab:toc-rerun-variance}) but not for Opus. Sonnet's measured rerun accuracy SD is \SonnetTOCRerunSD\,pp, the lowest in our evaluation alongside GPT-5.2's \GPTFiveTwoTOCRerunSD\,pp; this directly verifies the Sonnet portion of the top-tier Pareto-good interpretation in Section~\ref{sec:toc}. The Opus portion still rests on the assumption that Opus TOC variance is no larger than the largest measured TOC variance ($\TOCRerunMaxSD$\,pp), which is not directly verified. We note that two independent signals already point to Opus being stable under our setting: its per-true-label accuracy spread under TOC is $\le$5\,pp (versus 18--27\,pp for the GPT family; Appendix~\ref{sec:appendix-label-behavior}), and its TOC-vs-Raw100k profile across both slices closely tracks the directly-rerun-validated Sonnet baseline (small-output bulk: Opus $+$1.2\,pp, Sonnet $+$1.8\,pp; long-output tail: Opus $-$2.2\,pp at 56\% token saving, Sonnet $-$4.5\,pp at 65\% saving; Section~\ref{sec:toc}). We release prompts, logs, simulator inputs/outputs, and analysis scripts so future work can run paired Opus reruns under controlled conditions.
 
 \section{Conclusion}
 
@@ -301,6 +299,8 @@ Direct no-tool baselines exhibit strong label preferences. Sonnet direct predict
 \begin{table}[h]
 \centering
 \small
+\caption{Answer-label behavior for selected completed runs. Direct baselines can show strong label preferences, whereas the strongest TOC agents predict labels close to the true-label distribution.}
+\label{tab:label-behavior}
 \begin{tabular}{lcc}
 \toprule
 Method & Predicted A/B/C/D/NA & Per-true-label accuracy range \\
@@ -320,8 +320,6 @@ GPT-5.1 + TOC & \GPTFiveOneTOCPredDist & \GPTFiveOneTOCLabelRange \\
 Gemini 3 Flash Preview + TOC & \GeminiThreeFlashTOCPredDist & \GeminiThreeFlashTOCLabelRange \\
 \bottomrule
 \end{tabular}
-\caption{Answer-label behavior for selected completed runs. Direct baselines can show strong label preferences, whereas the strongest TOC agents predict labels close to the true-label distribution.}
-\label{tab:label-behavior}
 \end{table}
 
 \section{CoT vs Direct Output-Token Usage}
@@ -333,6 +331,8 @@ Section~\ref{sec:main-cot} argues that CoT does not substitute for grounded simu
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
+\caption{Total input and output tokens across all \BenchN{} items under Direct vs CoT prompting, with the corresponding accuracies. CoT delivers 30--140$\times$ more output tokens than Direct on Sonnet and GPT-5.x but accuracy moves only by $\pm 8$\,pp; Opus's smaller token ratio reflects extended thinking enabled by default in Direct, and Gemini's million-scale output counts include internal thinking traces reported in the output-token field.}
+\label{tab:appendix-cot-tokens}
 \begin{tabular}{lrrrrrcc}
 \toprule
 Model & Direct in & Direct out & CoT in & CoT out & out ratio & Direct acc & CoT acc \\
@@ -346,8 +346,6 @@ Gemini 2.5 Flash     & 36{,}835 & 3{,}230{,}869 & 37{,}035 & 5{,}603{,}377 & 1.7
 Gemini 3 Flash Preview & 36{,}835 & 3{,}964{,}492 & 37{,}035 & 5{,}180{,}764 & 1.3$\times$  & \GeminiThreeFlashOneShot & \GeminiThreeFlashCoT \\
 \bottomrule
 \end{tabular}
-\caption{Total input and output tokens across all \BenchN{} items under Direct vs CoT prompting, with the corresponding accuracies. CoT delivers 30--140$\times$ more output tokens than Direct on Sonnet and GPT-5.x but accuracy moves only by $\pm 8$\,pp; Opus's smaller token ratio reflects extended thinking enabled by default in Direct, and Gemini's million-scale output counts include internal thinking traces reported in the output-token field.}
-\label{tab:appendix-cot-tokens}
 \end{table}
 
 \section{Extended Output-Access Analysis}
@@ -363,6 +361,8 @@ Table~\ref{tab:appendix-output-distribution} reports the empirical distribution 
 \begin{table}[h]
 \centering
 \small
+\caption{Empirical \texttt{result.out} size distribution on \BenchName{} from a canonical reference TOC run. In this reference, the bimodal pattern is visible directly: the 100--250k interval is empty, so $>$100k and $>$250k cumulative counts are identical (37 items each). The small mode contains \OutputLeHundredK{} of items at sizes up to 100k characters; the long-tail mode contains the remaining \OutputGtHundredK{} starting at $\sim$369k and reaching a maximum of \OutputMaxChars. The empty interval is what places the Raw100k cap in a principled location rather than at an arbitrary truncation point. Per-model long-output counts range from 23 to 41 across our completed TOC runs (Appendix~\ref{sec:appendix-cap-affected-per-model}).}
+\label{tab:appendix-output-distribution}
 \begin{tabular}{lcc}
 \toprule
 Output-size bin / threshold & Items ($n$) & Share of \BenchN{} \\
@@ -388,8 +388,6 @@ Output-size bin / threshold & Items ($n$) & Share of \BenchN{} \\
 \quad Maximum                               & \multicolumn{2}{c}{\OutputMaxChars} \\
 \bottomrule
 \end{tabular}
-\caption{Empirical \texttt{result.out} size distribution on \BenchName{} from a canonical reference TOC run. In this reference, the bimodal pattern is visible directly: the 100--250k interval is empty, so $>$100k and $>$250k cumulative counts are identical (37 items each). The small mode contains \OutputLeHundredK{} of items at sizes up to 100k characters; the long-tail mode contains the remaining \OutputGtHundredK{} starting at $\sim$369k and reaching a maximum of \OutputMaxChars. The empty interval is what places the Raw100k cap in a principled location rather than at an arbitrary truncation point. Per-model long-output counts range from 23 to 41 across our completed TOC runs (Appendix~\ref{sec:appendix-cap-affected-per-model}).}
-\label{tab:appendix-output-distribution}
 \end{table}
 
 \subsection{TOC Implementation Details}
@@ -406,6 +404,8 @@ The long-output split used throughout Section~\ref{sec:toc} and Appendix~\ref{se
 \centering
 \small
 \setlength{\tabcolsep}{8pt}
+\caption{Per-model long-output counts ($\texttt{result.out}>100$k characters) across the five completed TOC runs. The set is concentrated in two ID ranges (1--26 and 144--162) but is not identical across models: stronger agents tend to write more complete PHREEQC inputs and therefore trigger more long outputs. The canonical reference run used for the bin tables in Appendix~\ref{sec:appendix-output-bin-grid} reports \LargeOutputN{} long-output items and \RawCapUnaffectedN{} short-output items; per-model bin assignments differ slightly but do not change the qualitative TOC-vs-Raw reading.}
+\label{tab:appendix-cap-affected-per-model}
 \begin{tabular}{lcc}
 \toprule
 TOC run & Long-output count & Share of \BenchN \\
@@ -420,8 +420,6 @@ Union (any of 5 runs) & 45 & 22.5\% \\
 Intersection (all 5 runs) & 15 & 7.5\% \\
 \bottomrule
 \end{tabular}
-\caption{Per-model long-output counts ($\texttt{result.out}>100$k characters) across the five completed TOC runs. The set is concentrated in two ID ranges (1--26 and 144--162) but is not identical across models: stronger agents tend to write more complete PHREEQC inputs and therefore trigger more long outputs. The canonical reference run used for the bin tables in Appendix~\ref{sec:appendix-output-bin-grid} reports \LargeOutputN{} long-output items and \RawCapUnaffectedN{} short-output items; per-model bin assignments differ slightly but do not change the qualitative TOC-vs-Raw reading.}
-\label{tab:appendix-cap-affected-per-model}
 \end{table}
 
 The variation (23 vs 41, a 1.8$\times$ range) is itself a capability signal that compounds the Section~\ref{sec:toc} reading: top-tier and GPT-5.4 agents not only navigate large outputs better, they also \emph{produce} more large outputs by writing more complete PHREEQC inputs. GPT-5.1's lower long-output count is therefore not a sign that the model encounters less long-tail context but that more of its inputs fail to fully exercise PHREEQC. For the long-output TOC fix runs we report on this slice, the rerun target is the 5-model union (45 items) so that every item that any agent could plausibly produce a $>$100k output on is covered.
@@ -435,6 +433,8 @@ Tables~\ref{tab:appendix-bin-sonnet}--\ref{tab:appendix-bin-gpt51} report TOC, R
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
+\caption{Claude Sonnet 4.6 per-bin accuracy and token cost. TOC matches or beats Raw100k in every bin and saves 40--81\% of input tokens depending on output size; the dollar-cost savings are concentrated in the larger bins.}
+\label{tab:appendix-bin-sonnet}
 \begin{tabular}{lcccccc}
 \toprule
 Bin & $n$ & TOC acc. & Raw100k acc. & TOC tok/item & Raw100k tok/item & Raw$-$TOC \\
@@ -451,14 +451,14 @@ $>$500k & 16 & 62.5\% & 56.3\% & 236{,}180 & 722{,}180 & $-$6.3 \\
 all & 200 & 84.0\% & 83.5\% & 100{,}934 & 258{,}010 & $+$0.5 \\
 \bottomrule
 \end{tabular}
-\caption{Claude Sonnet 4.6 per-bin accuracy and token cost. TOC matches or beats Raw100k in every bin and saves 40--81\% of input tokens depending on output size; the dollar-cost savings are concentrated in the larger bins.}
-\label{tab:appendix-bin-sonnet}
 \end{table}
 
 \begin{table}[h]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
+\caption{GPT-5.4 per-bin accuracy and token cost. TOC's advantage is concentrated in the 10--50k mid-range; Raw100k regains the advantage in the 250--500k bin where its truncation cap binds. Raw500k recovers the long tail at substantially higher token cost.}
+\label{tab:appendix-bin-gpt54}
 \begin{tabular}{lcccccccc}
 \toprule
 Bin & $n$ & TOC acc. & Raw100k & Raw500k & TOC tok/item & Raw100k tok/item & Raw500k tok/item & Raw100--TOC \\
@@ -475,14 +475,14 @@ $>$500k & 16 & 56.3\% & 56.3\% & 62.5\% & 66{,}795 & 148{,}737 & 499{,}357 & 0.0
 all & 200 & 72.5\% & 70.0\% & 74.5\% & 57{,}176 & 71{,}535 & 128{,}513 & $-$2.5 \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.4 per-bin accuracy and token cost. TOC's advantage is concentrated in the 10--50k mid-range; Raw100k regains the advantage in the 250--500k bin where its truncation cap binds. Raw500k recovers the long tail at substantially higher token cost.}
-\label{tab:appendix-bin-gpt54}
 \end{table}
 
 \begin{table}[h]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
+\caption{GPT-5.2 per-bin accuracy and token cost. Raw100k beats TOC in five of six bins (only the $>$500k bin reverses, where Raw100k still truncates). The size of the Raw advantage is mostly above the model's measured TOC rerun SD of \GPTFiveTwoTOCRerunSD\,pp (Table~\ref{tab:toc-rerun-variance}).}
+\label{tab:appendix-bin-gpt52}
 \begin{tabular}{lcccccccc}
 \toprule
 Bin & $n$ & TOC acc. & Raw100k & Raw500k & TOC tok/item & Raw100k tok/item & Raw500k tok/item & Raw100--TOC \\
@@ -499,14 +499,14 @@ $>$500k & 16 & 50.0\% & 43.8\% & 43.8\% & 89{,}644 & 196{,}623 & 642{,}357 & $-$
 all & 200 & 54.0\% & 61.5\% & 63.5\% & 60{,}238 & 87{,}035 & 143{,}313 & $+$7.5 \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.2 per-bin accuracy and token cost. Raw100k beats TOC in five of six bins (only the $>$500k bin reverses, where Raw100k still truncates). The size of the Raw advantage is mostly above the model's measured TOC rerun SD of \GPTFiveTwoTOCRerunSD\,pp (Table~\ref{tab:toc-rerun-variance}).}
-\label{tab:appendix-bin-gpt52}
 \end{table}
 
 \begin{table}[h]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
+\caption{GPT-5.1 per-bin accuracy and token cost. Pattern resembles GPT-5.2: Raw100k beats TOC on the small-output bulk, but the gap narrows or reverses on outputs that exceed the 100k cap.}
+\label{tab:appendix-bin-gpt51}
 \begin{tabular}{lcccccccc}
 \toprule
 Bin & $n$ & TOC acc. & Raw100k & Raw500k & TOC tok/item & Raw100k tok/item & Raw500k tok/item & Raw100--TOC \\
@@ -523,8 +523,6 @@ $>$500k & 16 & 31.3\% & 31.3\% & 37.5\% & 54{,}874 & 128{,}917 & 285{,}258 & 0.0
 all & 200 & 54.0\% & 63.5\% & 58.0\% & 36{,}240 & 60{,}750 & 84{,}445 & $+$9.5 \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.1 per-bin accuracy and token cost. Pattern resembles GPT-5.2: Raw100k beats TOC on the small-output bulk, but the gap narrows or reverses on outputs that exceed the 100k cap.}
-\label{tab:appendix-bin-gpt51}
 \end{table}
 
 \paragraph{What the per-bin grid shows.}
@@ -541,6 +539,8 @@ Aggregate accuracy can mask the question of \emph{which} items each protocol sol
 \centering
 \small
 \setlength{\tabcolsep}{6pt}
+\caption{TOC vs Raw100k right-item overlap on the \BenchN{}-item benchmark. ``Both,'' ``TOC only,'' ``Raw only,'' and ``Neither'' partition the benchmark; each row sums to \BenchN. Top-tier agents (Sonnet, GPT-5.4) have small one-protocol-only counts and the two protocols largely converge on the same answer space; mid-tier agents (GPT-5.1, GPT-5.2) show asymmetric one-only counts with Raw100k accessing 16--19 items that TOC misses.}
+\label{tab:appendix-overlap-toc-raw100}
 \begin{tabular}{lccccccc}
 \toprule
 Model & TOC right & Raw100k right & Both & TOC only & Raw only & Neither \\
@@ -551,14 +551,14 @@ GPT-5.2 & 107 & 123 & 81 & 26 & 42 & 51 \\
 GPT-5.1 & 108 & 127 & 85 & 23 & 42 & 50 \\
 \bottomrule
 \end{tabular}
-\caption{TOC vs Raw100k right-item overlap on the \BenchN{}-item benchmark. ``Both,'' ``TOC only,'' ``Raw only,'' and ``Neither'' partition the benchmark; each row sums to \BenchN. Top-tier agents (Sonnet, GPT-5.4) have small one-protocol-only counts and the two protocols largely converge on the same answer space; mid-tier agents (GPT-5.1, GPT-5.2) show asymmetric one-only counts with Raw100k accessing 16--19 items that TOC misses.}
-\label{tab:appendix-overlap-toc-raw100}
 \end{table}
 
 \begin{table}[h]
 \centering
 \small
 \setlength{\tabcolsep}{6pt}
+\caption{Three-way right-item partition over TOC, Raw100k, and Raw500k for the GPT family. ``All three'' counts items solved under every protocol; the next three columns count items solved by exactly one protocol; the last three columns count items solved by exactly two of three. The ``Neither / none'' cell (omitted) is $\BenchN-\sum$ of the seven listed cells: 27 for GPT-5.4, 30 for GPT-5.2, 38 for GPT-5.1.}
+\label{tab:appendix-overlap-three-way}
 \begin{tabular}{lccccccc}
 \toprule
 Model & All three & TOC only & Raw100 only & Raw500 only & TOC$\cap$R100 & TOC$\cap$R500 & R100$\cap$R500 \\
@@ -568,8 +568,6 @@ GPT-5.2 & 72 & 17 & 17 & 21 & 9 & 9 & 25 \\
 GPT-5.1 & 71 & 17 & 15 & 12 & 14 & 6 & 27 \\
 \bottomrule
 \end{tabular}
-\caption{Three-way right-item partition over TOC, Raw100k, and Raw500k for the GPT family. ``All three'' counts items solved under every protocol; the next three columns count items solved by exactly one protocol; the last three columns count items solved by exactly two of three. The ``Neither / none'' cell (omitted) is $\BenchN-\sum$ of the seven listed cells: 27 for GPT-5.4, 30 for GPT-5.2, 38 for GPT-5.1.}
-\label{tab:appendix-overlap-three-way}
 \end{table}
 
 \paragraph{What the overlap analysis adds beyond aggregate accuracy.}
@@ -585,6 +583,8 @@ Section~\ref{sec:main-results} reports that Gemini 3 Flash Preview's TOC agent f
 \begin{table}[h]
 \centering
 \small
+\caption{Gemini Flash 3 outcome breakdown under TOC vs Raw100k on the full 200-item benchmark. Each column sums to 200. The protocol switch reduces median \texttt{read\_file} traffic from \GeminiTOCReadFileMedian{} to \GeminiRawReadFileMedian{} calls per question, which lowers step-budget exhaustion from 117 to 57 and raises parseable-commit rate from 50 to 102.}
+\label{tab:appendix-gemini-step-budget}
 \begin{tabular}{lcc}
 \toprule
 Outcome (per 200 items) & Agent-TOC & Agent-Raw100k \\
@@ -604,8 +604,6 @@ Median \texttt{read\_file} calls per question & \GeminiTOCReadFileMedian & \Gemi
 Median agent steps used per question       & \GeminiTOCStepMedian & \GeminiRawStepMedian \\
 \bottomrule
 \end{tabular}
-\caption{Gemini Flash 3 outcome breakdown under TOC vs Raw100k on the full 200-item benchmark. Each column sums to 200. The protocol switch reduces median \texttt{read\_file} traffic from \GeminiTOCReadFileMedian{} to \GeminiRawReadFileMedian{} calls per question, which lowers step-budget exhaustion from 117 to 57 and raises parseable-commit rate from 50 to 102.}
-\label{tab:appendix-gemini-step-budget}
 \end{table}
 
 The breakdown isolates the Raw100k recovery as a \emph{commit-rate effect, not a reasoning effect}. Conditional accuracy on items where Gemini Flash 3 commits to a parseable answer is essentially the same under both protocols (94.0\% under TOC vs 92.2\% under Raw100k), so when the model can produce an answer it is equally accurate in either regime. The headline accuracy gain from \GeminiThreeFlashTOC{} to \GeminiThreeFlashRaw{} comes entirely from converting non-commits into graded answers: max-steps-reached drops from 117/200 to 57/200, the unparseable count is roughly stable (32 vs 41), and the wrong-when-graded count remains very small in absolute terms (3 vs 8). The mechanism is direct: TOC navigation costs roughly seven extra steps per question (median \texttt{read\_file} 9 vs 2), and those steps come out of the 24-step budget that would otherwise be spent reasoning and committing. Below the capability tier where TOC navigation is well-managed (e.g., Sonnet's median TOC trajectory uses 7 steps; Section~\ref{sec:diagnostic}), TOC's structured access functions as a step-budget tax rather than a context-management benefit, and the 24-step ceiling becomes the dominant driver of the regression.
@@ -618,6 +616,8 @@ As a robustness check on the item-level analyses, we ask whether the conclusions
 \begin{table}[h]
 \centering
 \small
+\caption{Scenario-level analysis to avoid treating all \BenchN{} items as independent scientific setups. Confidence intervals use a nonparametric bootstrap over scenario stems.}
+\label{tab:scenario}
 \begin{tabular}{lcccc}
 \toprule
 Method & Item acc. & Mean scenario acc. (95\% CI) & All-correct & All-wrong \\
@@ -630,8 +630,6 @@ Gemini 3 Flash Preview + TOC & \GeminiThreeFlashTOC & \GeminiThreeFlashScenarioM
 Claude Opus 4.6 direct & \OpusOneShot & \OpusDirectScenarioMean{} [\OpusDirectScenarioCILow, \OpusDirectScenarioCIHigh] & \OpusDirectScenarioAllCorrect & \OpusDirectScenarioAllWrong \\
 \bottomrule
 \end{tabular}
-\caption{Scenario-level analysis to avoid treating all \BenchN{} items as independent scientific setups. Confidence intervals use a nonparametric bootstrap over scenario stems.}
-\label{tab:scenario}
 \end{table}
 
 \subsection{Per-Scenario Accuracy Across TOC Agents}
@@ -642,6 +640,8 @@ Table~\ref{tab:appendix-scenario-grid} reports the accuracy of each TOC agent on
 \centering
 \scriptsize
 \setlength{\tabcolsep}{4pt}
+\caption{Per-scenario accuracy for the five completed TOC agents. ``min,'' ``max,'' and ``mean'' summarize cross-model behavior on each scenario; ``spread'' is max$-$min in percentage points. Bottom row is the overall TOC accuracy per model on the full benchmark, matching Table~\ref{tab:main-results}. Per-scenario rows are from a snapshot prior to the long-output TOC-fix splice (Section~\ref{sec:toc}); the splice updates a small number of long-output items by 0--2\,pp aggregate but does not alter the per-scenario qualitative pattern.}
+\label{tab:appendix-scenario-grid}
 \begin{tabular}{lcccccccccc}
 \toprule
 Scenario & $n$ & Opus & Sonnet & GPT-5.4 & GPT-5.2 & GPT-5.1 & min & max & mean & spread \\
@@ -671,8 +671,6 @@ S21 & 10 & 100.0\% & 100.0\% & 100.0\% & 90.0\% & 30.0\% & 30.0\% & 100.0\% & 84
 all & 200 & \OpusTOC & \SonnetTOC & \GPTFiveFourTOC & \GPTFiveTwoTOC & \GPTFiveOneTOC & --- & --- & --- & --- \\
 \bottomrule
 \end{tabular}
-\caption{Per-scenario accuracy for the five completed TOC agents. ``min,'' ``max,'' and ``mean'' summarize cross-model behavior on each scenario; ``spread'' is max$-$min in percentage points. Bottom row is the overall TOC accuracy per model on the full benchmark, matching Table~\ref{tab:main-results}. Per-scenario rows are from a snapshot prior to the long-output TOC-fix splice (Section~\ref{sec:toc}); the splice updates a small number of long-output items by 0--2\,pp aggregate but does not alter the per-scenario qualitative pattern.}
-\label{tab:appendix-scenario-grid}
 \end{table}
 
 \subsection{Categorizing Scenarios by Difficulty Pattern}
@@ -717,6 +715,8 @@ For each model and output-size bin, we compute the \emph{lost rate}: among items
 \centering
 \small
 \setlength{\tabcolsep}{6pt}
+\caption{Lost-item rate per output-size bin and model. Values report the fraction of direct-baseline-correct items that the TOC agent answered incorrectly within each bin. The overall row uses the aggregate lost count (Section~\ref{sec:diagnostic}) divided by the direct-baseline-correct count for each model, and is the population-weighted average of the bin rates above. Top-tier models (Opus, Sonnet) keep loss rates below 25\% across all but the long tail; mid-tier GPT models reach 50--80\% lost rates in the 20--500k range.}
+\label{tab:appendix-retention-by-bin}
 \begin{tabular}{lcccccc}
 \toprule
 Bin & $n$ & Opus & Sonnet & GPT-5.4 & GPT-5.2 & GPT-5.1 \\
@@ -731,8 +731,6 @@ $>$500k & 10 & 40.0\% & 60.0\% & 100.0\% & 0.0\% & 100.0\% \\
 overall & 200 & 16.7\% & 13.5\% & 35.2\% & 43.6\% & 41.0\% \\
 \bottomrule
 \end{tabular}
-\caption{Lost-item rate per output-size bin and model. Values report the fraction of direct-baseline-correct items that the TOC agent answered incorrectly within each bin. The overall row uses the aggregate lost count (Section~\ref{sec:diagnostic}) divided by the direct-baseline-correct count for each model, and is the population-weighted average of the bin rates above. Top-tier models (Opus, Sonnet) keep loss rates below 25\% across all but the long tail; mid-tier GPT models reach 50--80\% lost rates in the 20--500k range.}
-\label{tab:appendix-retention-by-bin}
 \end{table}
 
 The bin-stratified lost rate is the strongest single retention finding the appendix surfaces. For top-tier agents (Opus and Sonnet), TOC loses at most a quarter of direct-correct items across every bin except the $>$500k tail; their overall 13--16\% loss rate is genuinely benign. For GPT-5.4, the loss rate doubles compared to top-tier (35\%) and reaches 50\% in the 50--100k bin and 100\% in the $>$500k bin. For mid-tier GPT-5.1 and GPT-5.2, the picture is structurally different: lost rate stays elevated across every output regime, peaks in the 20--50k bin (57--60\%), and reaches 80\% on the 250--500k bin for GPT-5.2. On these models, the TOC agent loop is losing more than half of the items the model would have answered correctly without tools across most of the benchmark.
@@ -747,6 +745,8 @@ If lost items cluster within a small number of scenarios, the loss is concentrat
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
+\caption{Top scenarios contributing to each model's lost set (direct-right, TOC-wrong items). Numbers in parentheses are item counts within each scenario. For top-tier agents, lost items are diffuse across scenarios (most contributing scenarios have only 1 lost item); for mid-tier agents, certain scenarios contribute disproportionately (GPT-5.1 has 13 of 32 lost items in just three scenarios: S04, S17, S01).}
+\label{tab:appendix-lost-by-scenario}
 \begin{tabular}{lcl}
 \toprule
 Model & Total lost & Top contributing scenarios (lost items) \\
@@ -758,8 +758,6 @@ GPT-5.2 & 24 & S09 (3), S04 (2), S06 (2), S16 (2), S17 (2), S20 (2), 11 other wi
 GPT-5.1 & 32 & S04 (5), S17 (5), S01 (3), S19 (3), S09 (2), S10 (2), S12 (2), S21 (2), 8 other with 1 each \\
 \bottomrule
 \end{tabular}
-\caption{Top scenarios contributing to each model's lost set (direct-right, TOC-wrong items). Numbers in parentheses are item counts within each scenario. For top-tier agents, lost items are diffuse across scenarios (most contributing scenarios have only 1 lost item); for mid-tier agents, certain scenarios contribute disproportionately (GPT-5.1 has 13 of 32 lost items in just three scenarios: S04, S17, S01).}
-\label{tab:appendix-lost-by-scenario}
 \end{table}
 
 Top-tier agents lose items diffusely: Opus's 14 lost items spread across 10 scenarios, Sonnet's 10 across 7 scenarios. There is no scenario for which Opus or Sonnet loses more than 3 items, suggesting losses are item-specific rather than scenario-systematic. Mid-tier agents are different: GPT-5.1 loses five items each in S04 (the kinetic-dissolution scenario) and S17, and three each in S01 and S19. For these models, certain simulation setups appear to trigger TOC failures more reliably than others. This pattern is consistent with TOC navigation interacting with specific PHREEQC output structures (e.g., long kinetic time-series outputs in S04) in a way that mid-tier models cannot reliably handle.
@@ -772,6 +770,8 @@ Table~\ref{tab:appendix-lost-by-label} reports the truth-label distribution of l
 \centering
 \small
 \setlength{\tabcolsep}{8pt}
+\caption{Truth-label distribution of lost items per model. The bottom row reports the benchmark-wide answer distribution for reference. GPT-5.2 loses 14 of 24 items (58.3\%) on truth-B questions, far above the 23.5\% B-rate of the benchmark; GPT-5.1 loses 11 of 32 (34.4\%) on truth-D questions, above the 21.0\% D-rate. Top-tier agents do not show this asymmetry.}
+\label{tab:appendix-lost-by-label}
 \begin{tabular}{lccccc}
 \toprule
 Model & A & B & C & D & Total \\
@@ -785,8 +785,6 @@ GPT-5.1 & 8 & 6 & 7 & \textbf{11} & 32 \\
 Benchmark & 63 (31.5\%) & 47 (23.5\%) & 48 (24.0\%) & 42 (21.0\%) & 200 \\
 \bottomrule
 \end{tabular}
-\caption{Truth-label distribution of lost items per model. The bottom row reports the benchmark-wide answer distribution for reference. GPT-5.2 loses 14 of 24 items (58.3\%) on truth-B questions, far above the 23.5\% B-rate of the benchmark; GPT-5.1 loses 11 of 32 (34.4\%) on truth-D questions, above the 21.0\% D-rate. Top-tier agents do not show this asymmetry.}
-\label{tab:appendix-lost-by-label}
 \end{table}
 
 Top-tier agents lose few items in absolute terms (10--14 each), so per-label proportions are noisy at this sample size; Opus's lost set is roughly proportional to the benchmark's truth distribution, while Sonnet's ten lost items are 50\% truth-C versus a 24\% benchmark base rate but the absolute count makes this difficult to interpret as a robust asymmetry. Mid-tier agents lose enough items to show clearer asymmetries: GPT-5.2's lost set is 58\% truth-B on 24 items (vs 23.5\% benchmark base rate), and GPT-5.1's is 34\% truth-D on 32 items (vs 21\% base rate). These mid-tier asymmetries are large enough relative to the absolute counts to read as systematic biases in which specific answer labels TOC fails to preserve. Combined with the per-option behavior reported in Appendix~\ref{sec:appendix-label-behavior} (where GPT-5.2 direct over-predicts B and GPT-5.1 direct over-predicts C), this suggests TOC navigation under mid-tier capability is not just stochastic but interacts with the model's existing answer-position priors.
@@ -804,7 +802,33 @@ Three findings differentiate the appendix decomposition from the aggregate reten
 \section{Rerun Stability and Per-Question Decomposition}
 \label{sec:appendix-stability}
 
-Table~\ref{tab:toc-rerun-variance} (Section~\ref{sec:toc}) reports the headline rerun calibration: \TOCRerunNumSamples{} independent TOC reruns per GPT model and Sonnet on the frozen benchmark, with sample SDs of \GPTFiveOneTOCRerunSD\,pp (GPT-5.1), \GPTFiveTwoTOCRerunSD\,pp (GPT-5.2), \GPTFiveFourTOCRerunSD\,pp (GPT-5.4), and \SonnetTOCRerunSD\,pp (Sonnet); observed ranges are \GPTFiveOneTOCRerunRange\,pp, \GPTFiveTwoTOCRerunRange\,pp, \GPTFiveFourTOCRerunRange\,pp, and \SonnetTOCRerunRange\,pp respectively. The maximum sample SD, \TOCRerunMaxSD\,pp on GPT-5.1, remains the conservative noise-floor estimate used in Section~\ref{sec:main-results}. The headline TOC accuracies for all four models (\GPTFiveOneTOC{}, \GPTFiveTwoTOC{}, \GPTFiveFourTOC{}, \SonnetTOC{}) lie within their corresponding rerun ranges. Sonnet's headline sits 0.3\,pp below its rerun mean (\SonnetTOCRerunMean) and well inside the rerun range (\SonnetTOCRerunValues); all three Sonnet reruns consumed 23.7--24.5\,M input tokens versus 20.2\,M for the original, suggesting a same-day-rerun cluster that drifted upward in token use relative to the original measurement, while accuracy remained tightly bounded. Notably, rerun stability does not track with the retention metric reported in Section~\ref{sec:diagnostic}: GPT-5.2 has the lowest retention but the smallest rerun SD, indicating that retention measures item-level tool-induced movement rather than run-to-run reproducibility.
+Table~\ref{tab:toc-rerun-variance} (Section~\ref{sec:toc}) reports the headline rerun calibration: \TOCRerunNumSamples{} independent TOC reruns per model on all five top- and mid-tier completed agents, with sample SDs of \GPTFiveOneTOCRerunSD\,pp (GPT-5.1), \GPTFiveTwoTOCRerunSD\,pp (GPT-5.2), \GPTFiveFourTOCRerunSD\,pp (GPT-5.4), \OpusTOCRerunSD\,pp (Opus), and \SonnetTOCRerunSD\,pp (Sonnet); observed ranges are \GPTFiveOneTOCRerunRange\,pp, \GPTFiveTwoTOCRerunRange\,pp, \GPTFiveFourTOCRerunRange\,pp, \OpusTOCRerunRange\,pp, and \SonnetTOCRerunRange\,pp respectively. The maximum sample SD, \TOCRerunMaxSD\,pp on GPT-5.1, remains the conservative noise-floor estimate used in Section~\ref{sec:main-results}. The headline TOC accuracies for all five models (\GPTFiveOneTOC{}, \GPTFiveTwoTOC{}, \GPTFiveFourTOC{}, \OpusTOC{}, \SonnetTOC{}) lie within their corresponding rerun ranges. Sonnet's headline sits 0.2\,pp below its rerun mean (\SonnetTOCRerunMean) and well inside the rerun range (\SonnetTOCRerunValues); Opus's three reruns all sit at or above the headline (\OpusTOCRerunValues, mean \OpusTOCRerunMean), so the spliced \OpusTOC{} headline is conservative. Notably, rerun stability does not track with the retention metric reported in Section~\ref{sec:diagnostic}: GPT-5.2 has the lowest retention but a small rerun SD of \GPTFiveTwoTOCRerunSD\,pp, indicating that retention measures item-level tool-induced movement rather than run-to-run reproducibility.
+
+\subsection{TOC Stability on the Small-Output Bulk}
+\label{sec:appendix-stability-small}
+
+Table~\ref{tab:toc-rerun-variance} reports rerun stability on the full \BenchN-item benchmark. Since the central headline-accuracy claim in Section~\ref{sec:toc} concerns the small-output bulk (the 155-item complement of the long-output union, where TOC's structured-retrieval overhead would be most visible), we recompute the same per-rerun accuracies restricted to those 155 items in Table~\ref{tab:appendix-toc-rerun-variance-small}. The mid-tier accuracy gap on the small-output bulk (GPT-5.2: $-$7.4\,pp, GPT-5.1: $-$12.9\,pp; Table~\ref{tab:capaffected-toc-verification}) exceeds the small-bulk rerun noise floor (max SD \GPTFiveOneTOCSmallRerunSD\,pp on GPT-5.1) by at least 2.4\,pp, so the small-bulk capability-tier cut is not a rerun artifact.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{TOC rerun stability restricted to the 155-item small-output bulk (complement of the 5-model long-output union). $\Delta$ columns are reruns minus original (Section~\ref{sec:toc}); tokens are total agent input tokens (M) on the 155-item slice. Same 200/155 denominator-scaling means small-bulk accuracy SDs are uniformly $\sim$1.29$\times$ the full-benchmark SDs in Table~\ref{tab:toc-rerun-variance}; the tier ordering is preserved.}
+\label{tab:appendix-toc-rerun-variance-small}
+\begin{tabular}{lccccc}
+\toprule
+Model & Orig.\ (acc, tok) & Acc $\Delta$ (pp) & Tok $\Delta$ (M) & Acc SD / Rng & Tok SD / Rng \\
+\midrule
+Claude Opus 4.6 + TOC   & \OpusTOCSmallOrig            & \OpusTOCSmallRerunAccDiff       & \OpusTOCSmallRerunTokDiff       & \OpusTOCSmallRerunSD{} / \OpusTOCSmallRerunRange       & \OpusTOCSmallRerunTokSD{} / \OpusTOCSmallRerunTokRange \\
+Claude Sonnet 4.6 + TOC & \SonnetTOCSmallOrig          & \SonnetTOCSmallRerunAccDiff     & \SonnetTOCSmallRerunTokDiff     & \SonnetTOCSmallRerunSD{} / \SonnetTOCSmallRerunRange     & \SonnetTOCSmallRerunTokSD{} / \SonnetTOCSmallRerunTokRange \\
+GPT-5.1 + TOC           & \GPTFiveOneTOCSmallOrig      & \GPTFiveOneTOCSmallRerunAccDiff & \GPTFiveOneTOCSmallRerunTokDiff & \GPTFiveOneTOCSmallRerunSD{} / \GPTFiveOneTOCSmallRerunRange & \GPTFiveOneTOCSmallRerunTokSD{} / \GPTFiveOneTOCSmallRerunTokRange \\
+GPT-5.2 + TOC           & \GPTFiveTwoTOCSmallOrig      & \GPTFiveTwoTOCSmallRerunAccDiff & \GPTFiveTwoTOCSmallRerunTokDiff & \GPTFiveTwoTOCSmallRerunSD{} / \GPTFiveTwoTOCSmallRerunRange & \GPTFiveTwoTOCSmallRerunTokSD{} / \GPTFiveTwoTOCSmallRerunTokRange \\
+GPT-5.4 + TOC           & \GPTFiveFourTOCSmallOrig     & \GPTFiveFourTOCSmallRerunAccDiff & \GPTFiveFourTOCSmallRerunTokDiff & \GPTFiveFourTOCSmallRerunSD{} / \GPTFiveFourTOCSmallRerunRange & \GPTFiveFourTOCSmallRerunTokSD{} / \GPTFiveFourTOCSmallRerunTokRange \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Per-Item Stability Decomposition for GPT-5.1 + TOC}
 
 Aggregate SD compresses item-level structure: it does not say whether the variance comes from a small set of unstable items or whether it is spread broadly across the benchmark, nor does it identify which kinds of items are most variance-prone. The remainder of this appendix completes that picture by treating every item under GPT-5.1 + TOC as a paired observation across the four available samples (the original headline run plus three reruns) and computing per-item agreement.
 
@@ -816,6 +840,8 @@ For each item $i \in \{1, \dots, \BenchN\}$, we compute the score $s_i \in \{0, 
 \centering
 \small
 \setlength{\tabcolsep}{8pt}
+\caption{GPT-5.1 + TOC per-item correctness distribution across four paired samples (original + three reruns). Only \BenchN's 41\% of items are deterministically right or wrong under this protocol--model pair; the remaining 59\% flip between correct and wrong across reruns.}
+\label{tab:appendix-stability-overall}
 \begin{tabular}{lcc}
 \toprule
 Score $s_i$ & Items & Share of \BenchN \\
@@ -830,8 +856,6 @@ Stable subset (0/4 + 4/4) & 82 & 41.0\% \\
 Variance-prone (1--3/4) & 118 & 59.0\% \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.1 + TOC per-item correctness distribution across four paired samples (original + three reruns). Only \BenchN's 41\% of items are deterministically right or wrong under this protocol--model pair; the remaining 59\% flip between correct and wrong across reruns.}
-\label{tab:appendix-stability-overall}
 \end{table}
 
 The headline finding is that the aggregate \GPTFiveOneTOCRerunSD\,pp rerun SD reflects a benchmark in which item-level outcomes are predominantly stochastic: only 41\% of items are deterministic for this model--protocol pair, and 59\% are protocol-decoding-noise sensitive. The 40 always-wrong items represent a hard core that no rerun resolved, while the 42 always-right items represent a stable competence floor. The remaining 118 items move between correct and wrong across reruns and are the items that reruns 1 through 4 actually disagree about.
@@ -844,6 +868,8 @@ Variance-prone items might cluster in specific simulator-output regimes if, for 
 \centering
 \small
 \setlength{\tabcolsep}{6pt}
+\caption{GPT-5.1 + TOC per-item stability stratified by simulator-output size bin. The variance-prone fraction rises monotonically with output size up to the 50--100k bin, where every item is variance-prone, before plateauing in the long tail (where always-wrong items begin to appear because the model cannot reliably solve the simulation regardless of rerun).}
+\label{tab:appendix-stability-by-bin}
 \begin{tabular}{lccccc}
 \toprule
 Bin & $n$ & Always right & Always wrong & Variance-prone & \% Variance-prone \\
@@ -858,8 +884,6 @@ $>$500k & 10 & 0 & 4 & 6 & 60.0\% \\
 all & 200 & 42 & 40 & 118 & 59.0\% \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.1 + TOC per-item stability stratified by simulator-output size bin. The variance-prone fraction rises monotonically with output size up to the 50--100k bin, where every item is variance-prone, before plateauing in the long tail (where always-wrong items begin to appear because the model cannot reliably solve the simulation regardless of rerun).}
-\label{tab:appendix-stability-by-bin}
 \end{table}
 
 The bin-level pattern shows that variance-prone items are not uniformly distributed: they concentrate in the mid-output-size range. On items whose simulator output is at most 10k characters, 47\% are variance-prone; the fraction climbs to 74\% in the 20--50k bin and reaches 100\% in the 50--100k bin (where TOC produces structured navigation over a non-trivial output and Raw100k still fits comfortably under the cap). In the long tail ($>$100k characters), always-wrong items begin to emerge, reflecting the boundary at which the model cannot solve the underlying simulation under any of the rerun trajectories rather than the navigation-only sensitivity that dominates the mid range.
@@ -874,6 +898,8 @@ If variance-prone items cluster on a particular answer position, this would sugg
 \centering
 \small
 \setlength{\tabcolsep}{8pt}
+\caption{GPT-5.1 + TOC per-item stability stratified by true answer label. Variance-prone fraction is highest on items with truth = B (76.6\%) and lowest on truth = D (47.6\%). Items with truth = C have a high always-wrong share (29.2\%, the highest of any label), suggesting a systematic rather than stochastic GPT-5.1 + TOC weakness on this label.}
+\label{tab:appendix-stability-by-label}
 \begin{tabular}{lccccc}
 \toprule
 Truth & $n$ & Always right & Always wrong & Variance-prone & \% Variance-prone \\
@@ -886,8 +912,6 @@ D & 42 & 11 & 11 & 20 & 47.6\% \\
 all & 200 & 42 & 40 & 118 & 59.0\% \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.1 + TOC per-item stability stratified by true answer label. Variance-prone fraction is highest on items with truth = B (76.6\%) and lowest on truth = D (47.6\%). Items with truth = C have a high always-wrong share (29.2\%, the highest of any label), suggesting a systematic rather than stochastic GPT-5.1 + TOC weakness on this label.}
-\label{tab:appendix-stability-by-label}
 \end{table}
 
 Two patterns are visible. First, variance-prone fraction is materially higher on truth-B items (76.6\%) than on truth-D items (47.6\%); GPT-5.1 + TOC reaches no stable answer on most B-correct items even after four reruns. Second, truth-C items have the highest always-wrong rate (29.2\% vs the overall 20.0\%): the model fails on these items in every rerun, suggesting a systematic weakness rather than rerun stochasticity. Combined with the per-option behavior reported in Appendix~\ref{sec:appendix-label-behavior}, this points to GPT-5.1 + TOC having both a stochastic component (especially on B-correct items) and a deterministic blind spot (on C-correct items).
@@ -910,6 +934,8 @@ To control for harness quality, we compared our custom agent against vendor-defa
 \begin{table}[h]
 \centering
 \small
+\caption{Matched cross-vendor comparison on a random 50-question subsample (seed 42), with the backbone fixed within each panel. Per-question input tokens are full-benchmark averages for custom harnesses and matched-50 averages for external CLIs. ``In tok/correct'' = ``In tok/q'' / accuracy is the cost-efficiency metric (lower is better). Custom Agent-TOC's \SDKCustomTOCAcc{} on Sonnet and \GPTFiveFourCustomTOCMatchedAcc{} on GPT-5.4 sit close to their full-benchmark headlines (\SonnetTOC{} and \GPTFiveFourTOC{}, Table~\ref{tab:main-results}; matched-50 is within 4\,pp of full-200 on Sonnet and within 1\,pp on GPT-5.4).}
+\label{tab:sdk-comparison}
 \begin{tabular}{llcrr}
 \toprule
 Backbone & Harness & Acc & In tok/q (K) & In tok/correct (K) \\
@@ -924,8 +950,6 @@ Backbone & Harness & Acc & In tok/q (K) & In tok/correct (K) \\
  & Codex CLI (external) & \CodexGPTFiveFourAcc & \CodexGPTFiveFourPerQK & \CodexGPTFiveFourPerCorrectK \\
 \bottomrule
 \end{tabular}
-\caption{Matched cross-vendor comparison on a random 50-question subsample (seed 42), with the backbone fixed within each panel. Per-question input tokens are full-benchmark averages for custom harnesses and matched-50 averages for external CLIs. ``In tok/correct'' = ``In tok/q'' / accuracy is the cost-efficiency metric (lower is better). Custom Agent-TOC's \SDKCustomTOCAcc{} on Sonnet and \GPTFiveFourCustomTOCMatchedAcc{} on GPT-5.4 sit close to their full-benchmark headlines (\SonnetTOC{} and \GPTFiveFourTOC{}, Table~\ref{tab:main-results}; matched-50 is within 4\,pp of full-200 on Sonnet and within 1\,pp on GPT-5.4).}
-\label{tab:sdk-comparison}
 \end{table}
 
 The remainder of this appendix reports configuration details and per-condition failure-mode breakdowns.
@@ -953,6 +977,8 @@ Tool-augmented evaluation should include more than final accuracy because correc
 \begin{table}[h]
 \centering
 \small
+\caption{Trajectory statistics for TOC-agent runs. Wall-clock columns are seconds per question. ``Runs'' counts PHREEQC executions per question; failed runs counts nonzero PHREEQC executions across the full run.}
+\label{tab:trajectory}
 \begin{tabular}{lcccccc}
 \toprule
 Model & Wall med. & Wall p90 & Steps med. & Runs med. & Runs mean & Failed runs \\
@@ -965,8 +991,6 @@ GPT-5.1 + TOC & \GPTFiveOneWallMedianSeconds & \GPTFiveOneWallPNinetySeconds & \
 Gemini 3 Flash Preview + TOC & \GeminiThreeFlashWallMedianSeconds & \GeminiThreeFlashWallPNinetySeconds & \GeminiThreeFlashMedianSteps & \GeminiThreeFlashMedianRuns & \GeminiThreeFlashMeanRuns & \GeminiThreeFlashFailedRuns \\
 \bottomrule
 \end{tabular}
-\caption{Trajectory statistics for TOC-agent runs. Wall-clock columns are seconds per question. ``Runs'' counts PHREEQC executions per question; failed runs counts nonzero PHREEQC executions across the full run.}
-\label{tab:trajectory}
 \end{table}
 
 \subsection{Step Count vs Accuracy on GPT-5.1 + TOC ($n$=600)}
@@ -977,6 +1001,8 @@ Combining the three GPT-5.1 TOC reruns described in Appendix~\ref{sec:appendix-s
 \centering
 \small
 \setlength{\tabcolsep}{8pt}
+\caption{GPT-5.1 + TOC: per-item accuracy bucketed by trajectory length, pooled across three independent reruns. Accuracy is approximately stable in the 5--11 step range (50--54\%), drops to 33--39\% in the 12--19 range, and collapses to 9\% in the 20--24 range. The six items reaching the 24-step ceiling are all incorrect.}
+\label{tab:appendix-step-bucket}
 \begin{tabular}{lccc}
 \toprule
 Step bucket & $n$ & Correct & Accuracy \\
@@ -990,8 +1016,6 @@ Step bucket & $n$ & Correct & Accuracy \\
 all & 600 & 292 & 48.7\% \\
 \bottomrule
 \end{tabular}
-\caption{GPT-5.1 + TOC: per-item accuracy bucketed by trajectory length, pooled across three independent reruns. Accuracy is approximately stable in the 5--11 step range (50--54\%), drops to 33--39\% in the 12--19 range, and collapses to 9\% in the 20--24 range. The six items reaching the 24-step ceiling are all incorrect.}
-\label{tab:appendix-step-bucket}
 \end{table}
 
 The bucket pattern indicates two regimes. Trajectories of 5--11 steps are productive search: the agent identifies the relevant TOC section, runs PHREEQC, inspects output, and commits to an answer at roughly the model's baseline accuracy. Trajectories of 12 or more steps correspond to retry behavior --- failed PHREEQC executions, repeated reads of the wrong section, or repeated tool calls without progress --- and accuracy collapses across this regime. The 24-step ceiling acts as a useful failure signal: for GPT-5.1 + TOC, every item that reaches the budget ceiling in our reruns is wrong.
@@ -1004,6 +1028,8 @@ For models other than GPT-5.1 we have per-item step counts only for items in the
 \centering
 \small
 \setlength{\tabcolsep}{6pt}
+\caption{Failed-item step distribution per TOC agent. ``Failed median/mean'' summarize the per-item step count on items the agent answered incorrectly. ``\% at 24-step ceiling'' is the share of failed items that reached the maximum step budget. The overall median (from Table~\ref{tab:trajectory}) reflects the full population including correct items.}
+\label{tab:appendix-failure-step-distribution}
 \begin{tabular}{lccccc}
 \toprule
 Model & Failed $n$ & Failed median & Failed mean & Overall median & \% at 24-step ceiling \\
@@ -1015,8 +1041,6 @@ GPT-5.2 + TOC & 93 & 9.0 & 10.7 & 8 & 9.7\% \\
 GPT-5.1 + TOC & 92 & 7.0 & 8.3 & 7 & 0.0\% \\
 \bottomrule
 \end{tabular}
-\caption{Failed-item step distribution per TOC agent. ``Failed median/mean'' summarize the per-item step count on items the agent answered incorrectly. ``\% at 24-step ceiling'' is the share of failed items that reached the maximum step budget. The overall median (from Table~\ref{tab:trajectory}) reflects the full population including correct items.}
-\label{tab:appendix-failure-step-distribution}
 \end{table}
 
 The failure-step distribution divides cleanly into two regimes:
@@ -1048,6 +1072,8 @@ Beyond the trajectory-length failure modes above, a coarser log-level inspection
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
+\caption{Automatic upper-level failure categories from logs (all rows are Agent-TOC). Columns: ``PHREEQC failed'' = any PHREEQC execution failed during the trajectory; ``Run OK, wrong'' = successful run but wrong final answer; ``No final'' = step-budget hit or no parseable final-answer; ``Unparseable'' = final answer present but not parseable. These are not domain-root-cause labels: they identify where to inspect trajectories before expert review.}
+\label{tab:auto-failure}
 \begin{tabular}{lcccc}
 \toprule
 Model (+ TOC) & PHREEQC failed & Run OK, wrong & No final & Unparseable \\
@@ -1058,8 +1084,6 @@ GPT-5.2 & \GPTFiveTwoErrSomeFailed & \GPTFiveTwoErrSuccessfulWrong & \GPTFiveTwo
 Gemini 3 Flash Preview & \GeminiThreeFlashErrSomeFailed & \GeminiThreeFlashErrSuccessfulWrong & \GeminiThreeFlashErrRetry & \GeminiThreeFlashErrUnparseable \\
 \bottomrule
 \end{tabular}
-\caption{Automatic upper-level failure categories from logs (all rows are Agent-TOC). Columns: ``PHREEQC failed'' = any PHREEQC execution failed during the trajectory; ``Run OK, wrong'' = successful run but wrong final answer; ``No final'' = step-budget hit or no parseable final-answer; ``Unparseable'' = final answer present but not parseable. These are not domain-root-cause labels: they identify where to inspect trajectories before expert review.}
-\label{tab:auto-failure}
 \end{table}
 
 This automatic taxonomy already shows a useful distinction. For strong agents, many residual errors are not ordinary API failures or complete simulator failures. Instead, they often involve a successful PHREEQC execution followed by a wrong final answer, or a trajectory with at least one failed PHREEQC attempt followed by an incorrect recovery. Those cases require expert review (Section~\ref{sec:failure}) to separate plausible-but-wrong simulator inputs from output-navigation and answer-mapping errors. The below-mid Gemini Flash 3 row shows a qualitatively different signature: \GeminiThreeFlashErrRetry{} of its errors fall into the step/no-final category and another \GeminiThreeFlashErrUnparseable{} into no-parse, while only \GeminiThreeFlashErrSuccessfulWrong{} are successful-run-wrong --- i.e.\ the automatic taxonomy alone is sufficient to identify non-commit as the dominant residual failure mode, without needing expert review.
@@ -1074,6 +1098,8 @@ The domain reviewer's breakdown of all 55 GPT-5.4 + Agent-TOC errors on \BenchNa
 \begin{table}[h]
 \centering
 \small
+\caption{Domain-reviewed failure taxonomy for GPT-5.4~+~Agent-TOC on \BenchName{} (55/200 errors).}
+\label{tab:appendix-gpt-failure}
 \begin{tabular}{lcc}
 \toprule
 Failure category & Count & Share of errors \\
@@ -1088,8 +1114,6 @@ No question & 1 & 2\% \\
 Total errors & 55 & 100\% \\
 \bottomrule
 \end{tabular}
-\caption{Domain-reviewed failure taxonomy for GPT-5.4~+~Agent-TOC on \BenchName{} (55/200 errors).}
-\label{tab:appendix-gpt-failure}
 \end{table}
 
 The reviewer also notes that ``the type of question gotten wrong is more widespread'' for GPT than for Opus, that ``the failure mode of right answer present but still answered wrong appears here where it doesn't in Opus,'' and that GPT ``has much more high-confidence wrong builds compared to Opus.''

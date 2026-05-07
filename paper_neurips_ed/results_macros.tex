@@ -480,48 +480,114 @@
 % 2026-05-03 and per Sonnet executed 2026-05-04; computed manually from
 % per-run summary.json files).
 \newcommand{\TOCRerunNumSamples}{3}
-\newcommand{\TOCRerunMaxSD}{5.5}
-\newcommand{\TOCRerunMaxRange}{11.0}
+\newcommand{\TOCRerunMaxSD}{4.1}     % was 5.5; post-splice (45-item uncapped TOC applied to each variance rerun)
+\newcommand{\TOCRerunMaxRange}{7.5}  % was 11.0; post-splice
 
-\newcommand{\GPTFiveOneTOCRerunValues}{43.5\%, 48.0\%, 54.5\%}
-\newcommand{\GPTFiveOneTOCRerunMean}{48.7\%}
-\newcommand{\GPTFiveOneTOCRerunSD}{5.5}
-\newcommand{\GPTFiveOneTOCRerunRange}{11.0}
-\newcommand{\GPTFiveOneTOCRerunTokens}{9.41M, 9.93M, 10.21M}
-\newcommand{\GPTFiveOneTOCRerunAccDiff}{$-$10.5, $-$6.0, $+$0.5}
-\newcommand{\GPTFiveOneTOCRerunTokDiff}{$+$2.16, $+$2.68, $+$2.96}
-\newcommand{\GPTFiveOneTOCRerunTokSD}{0.41}
-\newcommand{\GPTFiveOneTOCRerunTokRange}{0.81}
+% Opus TOC variance reruns (3 independent uncapped-TOC reruns 2026-05-06/07,
+% spliced via splice_variance_reruns.py).
+\newcommand{\OpusTOCRerunValues}{86.0\%, 84.0\%, 84.0\%}
+\newcommand{\OpusTOCRerunMean}{84.7\%}
+\newcommand{\OpusTOCRerunSD}{1.2}
+\newcommand{\OpusTOCRerunRange}{2.0}
+\newcommand{\OpusTOCRerunTokens}{20.96M, 24.46M, 22.26M}
+\newcommand{\OpusTOCRerunAccDiff}{$+$2.5, $+$0.5, $+$0.5}
+\newcommand{\OpusTOCRerunTokDiff}{$-$2.80, $+$0.70, $-$1.50}
+\newcommand{\OpusTOCRerunTokSD}{1.77}
+\newcommand{\OpusTOCRerunTokRange}{3.50}
 
-\newcommand{\GPTFiveTwoTOCRerunValues}{54.0\%, 55.0\%, 55.5\%}
-\newcommand{\GPTFiveTwoTOCRerunMean}{54.8\%}
+\newcommand{\GPTFiveOneTOCRerunValues}{49.0\%, 55.5\%, 48.0\%}    % post-splice
+\newcommand{\GPTFiveOneTOCRerunMean}{50.8\%}
+\newcommand{\GPTFiveOneTOCRerunSD}{4.1}
+\newcommand{\GPTFiveOneTOCRerunRange}{7.5}
+\newcommand{\GPTFiveOneTOCRerunTokens}{10.44M, 10.59M, 10.35M}
+\newcommand{\GPTFiveOneTOCRerunAccDiff}{$-$5.0, $+$1.5, $-$6.0}
+\newcommand{\GPTFiveOneTOCRerunTokDiff}{$+$0.93, $+$1.08, $+$0.84}
+\newcommand{\GPTFiveOneTOCRerunTokSD}{0.12}
+\newcommand{\GPTFiveOneTOCRerunTokRange}{0.23}
+
+\newcommand{\GPTFiveTwoTOCRerunValues}{56.0\%, 55.0\%, 54.5\%}    % post-splice
+\newcommand{\GPTFiveTwoTOCRerunMean}{55.2\%}
 \newcommand{\GPTFiveTwoTOCRerunSD}{0.8}
 \newcommand{\GPTFiveTwoTOCRerunRange}{1.5}
-\newcommand{\GPTFiveTwoTOCRerunTokens}{11.57M, 11.84M, 12.33M}
-\newcommand{\GPTFiveTwoTOCRerunAccDiff}{$+$0.5, $+$1.5, $+$2.0}
-\newcommand{\GPTFiveTwoTOCRerunTokDiff}{$-$0.48, $-$0.21, $+$0.28}
-\newcommand{\GPTFiveTwoTOCRerunTokSD}{0.39}
-\newcommand{\GPTFiveTwoTOCRerunTokRange}{0.76}
+\newcommand{\GPTFiveTwoTOCRerunTokens}{13.03M, 13.10M, 12.81M}
+\newcommand{\GPTFiveTwoTOCRerunAccDiff}{$+$2.0, $+$1.0, $+$0.5}
+\newcommand{\GPTFiveTwoTOCRerunTokDiff}{$-$0.89, $-$0.82, $-$1.11}
+\newcommand{\GPTFiveTwoTOCRerunTokSD}{0.15}
+\newcommand{\GPTFiveTwoTOCRerunTokRange}{0.30}
 
-\newcommand{\GPTFiveFourTOCRerunValues}{66.5\%, 72.5\%, 74.5\%}
-\newcommand{\GPTFiveFourTOCRerunMean}{71.2\%}
-\newcommand{\GPTFiveFourTOCRerunSD}{4.2}
-\newcommand{\GPTFiveFourTOCRerunRange}{8.0}
-\newcommand{\GPTFiveFourTOCRerunTokens}{11.03M, 11.18M, 11.23M}
-\newcommand{\GPTFiveFourTOCRerunAccDiff}{$-$6.0, $0.0$, $+$2.0}
-\newcommand{\GPTFiveFourTOCRerunTokDiff}{$-$0.41, $-$0.26, $-$0.21}
-\newcommand{\GPTFiveFourTOCRerunTokSD}{0.11}
-\newcommand{\GPTFiveFourTOCRerunTokRange}{0.20}
+\newcommand{\GPTFiveFourTOCRerunValues}{68.0\%, 71.5\%, 73.5\%}    % post-splice
+\newcommand{\GPTFiveFourTOCRerunMean}{71.0\%}
+\newcommand{\GPTFiveFourTOCRerunSD}{2.8}
+\newcommand{\GPTFiveFourTOCRerunRange}{5.5}
+\newcommand{\GPTFiveFourTOCRerunTokens}{11.47M, 11.79M, 11.58M}
+\newcommand{\GPTFiveFourTOCRerunAccDiff}{$-$4.5, $-$1.0, $+$1.0}
+\newcommand{\GPTFiveFourTOCRerunTokDiff}{$-$1.22, $-$0.90, $-$1.11}
+\newcommand{\GPTFiveFourTOCRerunTokSD}{0.16}
+\newcommand{\GPTFiveFourTOCRerunTokRange}{0.32}
 
-\newcommand{\SonnetTOCRerunValues}{84.5\%, 83.5\%, 85.0\%}
-\newcommand{\SonnetTOCRerunMean}{84.3\%}
-\newcommand{\SonnetTOCRerunSD}{0.8}
-\newcommand{\SonnetTOCRerunRange}{1.5}
-\newcommand{\SonnetTOCRerunTokens}{24.08M, 24.49M, 23.68M}
-\newcommand{\SonnetTOCRerunAccDiff}{$-$1.0, $-$2.0, $-$0.5}
-\newcommand{\SonnetTOCRerunTokDiff}{$+$3.89, $+$4.30, $+$3.49}
-\newcommand{\SonnetTOCRerunTokSD}{0.41}
-\newcommand{\SonnetTOCRerunTokRange}{0.81}
+% TOC stability on the 155-item small-output bulk (NOT in UNION_45).
+% Each variance rerun's accuracy/tokens recomputed on the 155 NOT_UNION items.
+% Original tokens: existing CapUnaffected macros for Sonnet/GPT; for Opus,
+% derived from \OpusTOCTokens (23.76M) - \OpusTOCNewFortyFiveTokens (8.59M).
+\newcommand{\OpusTOCSmallOrig}{87.1\%, 15.17M}
+\newcommand{\OpusTOCSmallRerunValues}{90.3\%, 87.7\%, 87.7\%}
+\newcommand{\OpusTOCSmallRerunAccDiff}{$+$3.2, $+$0.6, $+$0.6}
+\newcommand{\OpusTOCSmallRerunTokens}{12.38M, 15.87M, 13.67M}
+\newcommand{\OpusTOCSmallRerunTokDiff}{$-$2.79, $+$0.70, $-$1.50}
+\newcommand{\OpusTOCSmallRerunSD}{1.5}
+\newcommand{\OpusTOCSmallRerunRange}{2.6}
+\newcommand{\OpusTOCSmallRerunTokSD}{1.77}
+\newcommand{\OpusTOCSmallRerunTokRange}{3.50}
+
+\newcommand{\SonnetTOCSmallOrig}{87.7\%, 13.47M}
+\newcommand{\SonnetTOCSmallRerunValues}{88.4\%, 88.4\%, 87.1\%}
+\newcommand{\SonnetTOCSmallRerunAccDiff}{$+$0.6, $+$0.6, $-$0.6}
+\newcommand{\SonnetTOCSmallRerunTokens}{13.63M, 15.20M, 13.92M}
+\newcommand{\SonnetTOCSmallRerunTokDiff}{$+$0.16, $+$1.73, $+$0.45}
+\newcommand{\SonnetTOCSmallRerunSD}{0.7}
+\newcommand{\SonnetTOCSmallRerunRange}{1.3}
+\newcommand{\SonnetTOCSmallRerunTokSD}{0.83}
+\newcommand{\SonnetTOCSmallRerunTokRange}{1.56}
+
+\newcommand{\GPTFiveFourTOCSmallOrig}{77.4\%, 8.87M}
+\newcommand{\GPTFiveFourTOCSmallRerunValues}{71.6\%, 76.1\%, 78.7\%}
+\newcommand{\GPTFiveFourTOCSmallRerunAccDiff}{$-$5.8, $-$1.3, $+$1.3}
+\newcommand{\GPTFiveFourTOCSmallRerunTokens}{7.66M, 7.98M, 7.77M}
+\newcommand{\GPTFiveFourTOCSmallRerunTokDiff}{$-$1.21, $-$0.89, $-$1.10}
+\newcommand{\GPTFiveFourTOCSmallRerunSD}{3.6}
+\newcommand{\GPTFiveFourTOCSmallRerunRange}{7.1}
+\newcommand{\GPTFiveFourTOCSmallRerunTokSD}{0.16}
+\newcommand{\GPTFiveFourTOCSmallRerunTokRange}{0.32}
+
+\newcommand{\GPTFiveTwoTOCSmallOrig}{55.5\%, 8.93M}
+\newcommand{\GPTFiveTwoTOCSmallRerunValues}{58.1\%, 56.8\%, 56.1\%}
+\newcommand{\GPTFiveTwoTOCSmallRerunAccDiff}{$+$2.6, $+$1.3, $+$0.6}
+\newcommand{\GPTFiveTwoTOCSmallRerunTokens}{8.04M, 8.11M, 7.82M}
+\newcommand{\GPTFiveTwoTOCSmallRerunTokDiff}{$-$0.89, $-$0.82, $-$1.11}
+\newcommand{\GPTFiveTwoTOCSmallRerunSD}{1.0}
+\newcommand{\GPTFiveTwoTOCSmallRerunRange}{1.9}
+\newcommand{\GPTFiveTwoTOCSmallRerunTokSD}{0.15}
+\newcommand{\GPTFiveTwoTOCSmallRerunTokRange}{0.30}
+
+\newcommand{\GPTFiveOneTOCSmallOrig}{58.1\%, 4.96M}
+\newcommand{\GPTFiveOneTOCSmallRerunValues}{51.6\%, 60.0\%, 50.3\%}
+\newcommand{\GPTFiveOneTOCSmallRerunAccDiff}{$-$6.5, $+$1.9, $-$7.7}
+\newcommand{\GPTFiveOneTOCSmallRerunTokens}{5.88M, 6.03M, 5.80M}
+\newcommand{\GPTFiveOneTOCSmallRerunTokDiff}{$+$0.92, $+$1.07, $+$0.84}
+\newcommand{\GPTFiveOneTOCSmallRerunSD}{5.3}
+\newcommand{\GPTFiveOneTOCSmallRerunRange}{9.7}
+\newcommand{\GPTFiveOneTOCSmallRerunTokSD}{0.12}
+\newcommand{\GPTFiveOneTOCSmallRerunTokRange}{0.23}
+
+\newcommand{\SonnetTOCRerunValues}{84.5\%, 84.5\%, 83.5\%}        % post-splice
+\newcommand{\SonnetTOCRerunMean}{84.2\%}
+\newcommand{\SonnetTOCRerunSD}{0.6}
+\newcommand{\SonnetTOCRerunRange}{1.0}
+\newcommand{\SonnetTOCRerunTokens}{22.29M, 23.86M, 22.59M}
+\newcommand{\SonnetTOCRerunAccDiff}{$+$0.5, $+$0.5, $-$0.5}
+\newcommand{\SonnetTOCRerunTokDiff}{$+$0.15, $+$1.72, $+$0.45}
+\newcommand{\SonnetTOCRerunTokSD}{0.83}
+\newcommand{\SonnetTOCRerunTokRange}{1.56}
 
 % Cap-unaffected (163 items, output <=100k) aggregate accuracy, computed by summing
 % the four cap-unaffected bins (<=10k, 10-20k, 20-50k, 50-100k) from the per-model
