@@ -1,0 +1,6 @@
+model,toc_pct,raw100k_pct,hybrid_own_pct,hybrid_union45_pct,hybrid_canon_pct,own_long_count
+Claude Opus 4.6,83.5,83.0,,82.5,82.5,
+Claude Sonnet 4.6,84.0,83.5,83.0,82.5,83.0,38
+GPT-5.1,54.0,63.5,63.0,65.0,66.0,23
+GPT-5.2,54.0,61.5,60.0,59.5,61.0,33
+GPT-5.4,72.5,70.0,68.5,69.0,69.0,41

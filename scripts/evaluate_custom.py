@@ -11,6 +11,10 @@ Supported context modes (via --context-mode):
   summary  Question-conditioned LLM summary of result.out returned.
   rag      Embedding-based retrieval of top-k chunks from result.out,
            ranked by cosine similarity to the question.
+  grep     Metadata only returned (status, file paths/sizes, line count);
+           the agent locates evidence with a grep_file regex-search tool
+           and reads line ranges via read_file. (Keyword-search baseline;
+           grep_file is exposed to the model only in this mode.)
 
 Supports MCQ + fill-in-the-blank via dataset `task_type` field (see _common.py).
 
@@ -67,7 +71,9 @@ logger = logging.getLogger(__name__)
 
 # ── Paths & constants ───────────────────────────────────────────────────
 
-DEFAULT_DATASET = REPO_ROOT / "datasets" / "phreeqc_bench_v2.jsonl"
+# All NeurIPS-paper runs use the clean 200-item benchmark (matches the
+# "dataset" field recorded in every result/custom/*/summary.json).
+DEFAULT_DATASET = REPO_ROOT / "datasets" / "neurips_dataset_200_clean.jsonl"
 RESULT_ROOT = REPO_ROOT / "result" / "custom"
 
 # Agent configs (reuse the original PHREEQC-agent system prompt file).
@@ -100,6 +106,11 @@ MAX_SUMMARY_INPUT_CHARS = 400_000
 DEFAULT_RAG_K = 3
 DEFAULT_RAG_CHUNK_CHARS = 2000
 DEFAULT_RAG_EMBED_MODEL = "text-embedding-3-small"
+# Grep defaults. Return-size cap mirrors read_file's MAX_CHARS so neither
+# navigation tool can smuggle an unbounded payload into context.
+DEFAULT_GREP_MAX_MATCHES = 20
+DEFAULT_GREP_CONTEXT_LINES = 2
+GREP_MAX_RETURN_CHARS = 20_000
 
 # Summary mode uses a single fixed compressor across all agent models.
 # Rationale: single independent variable — swap the agent, keep the summarizer
@@ -167,6 +178,24 @@ _EXECUTE_TOOL_CONTRACTS = {
         "for the current question. Use read_file with start_line/end_line for "
         "additional sections if the retrieved excerpts are insufficient."
     ),
+    # grep mode replaces the single execute line with two lines: the metadata-only
+    # execute contract plus the grep_file tool doc (grep_file exists only in this
+    # mode, so the base system prompt files never mention it).
+    "grep": (
+        "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
+        "metadata only (status, output file paths and sizes, result.out line "
+        "count). File contents are NOT included — locate evidence with grep_file, "
+        "then read specific line ranges with read_file.\n"
+        "- grep_file(path, pattern, max_matches?, context_lines?, case_sensitive?): "
+        "Search a text file line-by-line with a regular expression "
+        "(case-insensitive by default). Returns matching line numbers with a few "
+        "lines of surrounding context. Use it to find sections, species, or "
+        "numeric fields in result.out, then read_file with start_line/end_line "
+        "to inspect the full region.\n"
+        "NOTE: In this mode, read_file on a large file WITHOUT start_line/end_line "
+        "returns no content. Always grep_file first to find line numbers, then "
+        "read the range you need."
+    ),
 }
 
 
@@ -218,12 +247,30 @@ def tool_read_file(workspace: str, path: str, start_line: str = "", end_line: st
         total = len(lines)
         sl = int(start_line) if start_line else None
         el = int(end_line) if end_line else None
+        grep_mode = _RUNTIME.get("context_mode") == "grep"
+        if grep_mode and (sl or el) and not (sl and el):
+            # Honor half-open ranges instead of silently falling through to a
+            # whole-file read (which the grep protocol gate below would refuse).
+            if sl and not el:
+                el = min(total, sl + 199)
+            else:
+                sl = max(1, el - 199)
         if sl and el:
             selected = lines[sl - 1:el]
             return {"ok": True, "total_lines": total,
                     "showing": f"lines {sl}-{el}", "content": "".join(selected)}
         if len(content) <= MAX_CHARS:
             return {"ok": True, "total_lines": total, "content": content}
+        if grep_mode:
+            # Grep protocol: no free head/tail preview on oversized files —
+            # otherwise unranged read_file becomes an inline-payload escape
+            # hatch and the run stops measuring keyword-search navigation.
+            # (Small files, e.g. SELECTED_OUTPUT .sel files, read normally.)
+            return {"ok": False, "total_lines": total,
+                    "error": (f"File is too large ({total} lines) to read without a line "
+                              "range in grep mode. Use grep_file(path, pattern) to locate "
+                              "the relevant lines, then call read_file with "
+                              "start_line/end_line.")}
         head = "".join(lines[:PREVIEW_LINES])
         tail = "".join(lines[-PREVIEW_LINES:])
         return {
@@ -239,6 +286,71 @@ def tool_list_file(workspace: str, path: str = ".") -> dict:
     try:
         full = _validate_path(workspace, path)
         return {"ok": True, "entries": sorted(os.listdir(full))}
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "error": str(e)}
+
+
+def tool_grep_file(workspace: str, path: str, pattern: str,
+                   max_matches: Any = None, context_lines: Any = None,
+                   case_sensitive: Any = None) -> dict:
+    """Regex line-search over a workspace file (the `grep` context mode's
+    navigation primitive). Returns matching line numbers with ±context_lines
+    of surrounding text. When more than max_matches lines match, the first
+    and last halves are kept (same convention as the TOC builder's section
+    trimming) since PHREEQC final results concentrate at the file tail."""
+    def _coerce_int(value: Any, default: int) -> int:
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return default
+
+    try:
+        full = _validate_path(workspace, path)
+        if not Path(full).exists():
+            return {"ok": False, "error": f"File not found: {path}"}
+
+        mm = max(1, _coerce_int(max_matches, DEFAULT_GREP_MAX_MATCHES))
+        cl = max(0, _coerce_int(context_lines, DEFAULT_GREP_CONTEXT_LINES))
+        cs = str(case_sensitive).strip().lower() in ("true", "1", "yes")
+        try:
+            rx = re.compile(pattern, 0 if cs else re.IGNORECASE)
+        except re.error as e:
+            return {"ok": False, "error": f"Invalid regular expression: {e}"}
+
+        lines = Path(full).read_text(encoding="utf-8", errors="replace").splitlines()
+        total_lines = len(lines)
+        hits = [i for i, ln in enumerate(lines) if rx.search(ln)]
+        total_matches = len(hits)
+        if not total_matches:
+            return {"ok": True, "total_lines": total_lines, "total_matches": 0,
+                    "matches": [],
+                    "hint": "No lines matched. Try a shorter pattern or different keyword."}
+
+        clipped = total_matches > mm
+        if clipped:
+            half = max(1, mm // 2)
+            hits = hits[:half] + hits[-(mm - half):]
+
+        matches: list[dict[str, Any]] = []
+        budget = GREP_MAX_RETURN_CHARS
+        for i in hits:
+            lo, hi = max(0, i - cl), min(total_lines, i + cl + 1)
+            block = "\n".join(f"{n + 1}: {lines[n]}" for n in range(lo, hi))
+            if budget - len(block) < 0:
+                clipped = True
+                break
+            budget -= len(block)
+            matches.append({"line": i + 1, "context": block})
+
+        result: dict[str, Any] = {"ok": True, "total_lines": total_lines,
+                                  "total_matches": total_matches,
+                                  "showing": len(matches), "matches": matches}
+        if clipped:
+            result["truncated"] = True
+            result["hint"] = (f"{total_matches} lines matched; showing {len(matches)} "
+                              "(earliest and latest). Narrow the pattern, or use "
+                              "read_file with start_line/end_line around a match.")
+        return result
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "error": str(e)}
 
@@ -536,6 +648,16 @@ def tool_execute_phreeqc(workspace: str, input_path: str) -> dict:
             result["result_out_rag_hits"] = top
             result["hint"] = ("Top-k retrieved excerpts are in result_out_rag_hits, "
                               "ordered by relevance. Use read_file for additional sections.")
+        elif mode == "grep":
+            # Keyword-search protocol: metadata only — no TOC, no content.
+            # Line count is the grep-world analogue of what TOC's line numbers
+            # reveal about file length (cf. `wc -l`), so the agent can target
+            # the tail with read_file without a wasted probe step.
+            result["result_out_total_lines"] = len(content.splitlines())
+            result["hint"] = ("File contents are NOT included. Use grep_file(path, pattern) "
+                              "to locate relevant lines in result.out, then read_file with "
+                              "start_line/end_line to inspect the surrounding region. "
+                              "read_file without a line range returns no content for large files.")
         else:
             return {"ok": False, "error": f"Unknown context_mode: {mode}"}
 
@@ -552,6 +674,7 @@ TOOL_DISPATCH = {
     "read_file": lambda ws, args: tool_read_file(ws, **args),
     "list_file": lambda ws, args: tool_list_file(ws, **args),
     "execute_phreeqc": lambda ws, args: tool_execute_phreeqc(ws, **args),
+    "grep_file": lambda ws, args: tool_grep_file(ws, **args),
 }
 
 TOOL_SPECS = [
@@ -589,6 +712,38 @@ TOOL_SPECS = [
                        "properties": {"input_path": {"type": "string"}},
                        "required": ["input_path"]}}},
 ]
+
+# grep_file is appended to the spec list ONLY in grep mode, so runs in every
+# other context mode present the exact tool surface of the paper's original
+# protocols (a TOC rerun with grep_file available would be a different protocol).
+GREP_TOOL_SPEC = {
+    "type": "function", "function": {
+        "name": "grep_file",
+        "description": ("Search a text file line-by-line with a regular expression "
+                        "(case-insensitive by default). Returns matching line numbers "
+                        "with surrounding context lines. Use read_file with "
+                        "start_line/end_line to inspect a region around a match."),
+        "parameters": {"type": "object",
+                       "properties": {
+                           "path": {"type": "string",
+                                    "description": "Relative path to the file, e.g. result.out."},
+                           "pattern": {"type": "string",
+                                       "description": "Regular expression to search for."},
+                           "max_matches": {"type": "integer",
+                                           "description": "Max matching lines to return (default 20). "
+                                                          "When exceeded, earliest and latest matches are kept."},
+                           "context_lines": {"type": "integer",
+                                             "description": "Lines of context around each match (default 2)."},
+                           "case_sensitive": {"type": "boolean",
+                                              "description": "Match case-sensitively (default false)."},
+                       },
+                       "required": ["path", "pattern"]}}}
+
+
+def _tool_specs_for_mode(mode: str) -> list[dict[str, Any]]:
+    if mode == "grep":
+        return TOOL_SPECS + [GREP_TOOL_SPEC]
+    return TOOL_SPECS
 
 
 # ── Logging ─────────────────────────────────────────────────────────────
@@ -632,6 +787,7 @@ def _run_agent(prompt: str, workspace: str, model: str, max_steps: int,
 
     anthropic = _is_anthropic_model(model)
     gemini = _is_gemini_model(model)
+    tool_specs = _tool_specs_for_mode(_RUNTIME["context_mode"])
 
     for step in range(1, max_steps + 1):
         if anthropic and step == max_steps - 1:
@@ -648,7 +804,7 @@ def _run_agent(prompt: str, workspace: str, model: str, max_steps: int,
                 kwargs: dict[str, Any] = {
                     "model": model,
                     "messages": messages,
-                    "tools": TOOL_SPECS,
+                    "tools": tool_specs,
                     "tool_choice": "auto",
                 }
                 if gemini:
@@ -822,7 +978,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--model", required=True,
                    help="litellm model string, e.g. claude-opus-4-6, gpt-5.2, gemini/gemini-2.5-pro")
     p.add_argument("--name", required=True, help="Run name for result subfolder.")
-    p.add_argument("--context-mode", choices=("full", "toc", "summary", "rag"),
+    p.add_argument("--context-mode", choices=("full", "toc", "summary", "rag", "grep"),
                    required=True, help="Tool-return handler for execute_phreeqc.")
     p.add_argument("--max-steps", type=int, default=24)
     p.add_argument("--workers", type=int, default=4)
