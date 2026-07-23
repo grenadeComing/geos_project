@@ -8,7 +8,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 
 **Artifact reproducibility — partially done.** We agree that the submitted anonymous artifact was incomplete. The two full 200-item Gemini 3 Flash agent runs were completed on May 3, 2026 but accidentally omitted during packaging; we have now added their summaries, per-item results, workspaces, and logs. We also fixed the dataset/result path mismatch in the analysis entry point and documented the artifact update. We should only claim end-to-end reproduction of Tables 2, 3, and 5 after every referenced condition has been restored and the clean-clone command has been verified.
 
-**Numeric/free-response evaluation — pending.** We constructed a 182-item numeric-answer version of the benchmark, using simulator-derived targets and numeric tolerances instead of answer options. Existing raw agent artifacts are incomplete, so the minimal defensible plan is to rerun the selected GPT conditions and release all per-item outputs before reporting the comparison. This directly tests whether the tool/no-tool gap survives removal of MCQ distractors.
+**Numeric/free-response evaluation — done.** We constructed a 182-item numeric-answer version of the benchmark, using simulator-derived targets and numeric tolerances instead of answer options. On the same items, GPT-5.4 scores 2/182 (1.1%) under Direct and 4/182 (2.2%) under CoT, versus 93/182 (51.1%; 95% Wilson CI 43.9–58.3%) with PHREEQC access under Agent-TOC. The tool run answers all 182 items with zero execution errors. Relative to Direct, it changes 91 items from wrong to correct and none from correct to wrong; relative to CoT, the paired counts are 90 gains and one loss. This directly shows that the tool/no-tool gap survives removal of MCQ labels and distractors.
 
 **Validation and human baseline — limitation.** The dataset was authored and checked by one aqueous-geochemistry expert, not by multiple independent experts. We cannot responsibly add an independent-expert agreement statistic or human baseline during rebuttal. We will correct “expert-validated”/plural-reviewer wording to “expert-authored and simulator-verified,” document the expert’s role and credentials, report the executable uniqueness checks, and state the missing independent validation and human baseline explicitly.
 
@@ -18,7 +18,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 
 **Relation to prior work.** The finding that tools can help is not itself new. What the controlled deterministic setting adds is attribution: it separates net gain from loss of previously correct items, protocol sensitivity from run-to-run variance, and simulator execution failure from navigation/commit failure on identical executable tasks. We will make this contrast to ScienceAgentBench and ToRA explicit.
 
-**MCQ concern.** The 182-item numeric-answer subset removes answer labels and distractors while preserving the underlying simulator questions. We will report only newly verified runs with released per-item artifacts; the key test is no-tool versus PHREEQC-agent performance, not exact agreement with every MCQ percentage. **Status: pending selected GPT reruns.**
+**MCQ concern.** The 182-item numeric-answer subset removes answer labels and distractors while preserving the underlying simulator questions. GPT-5.4 + Agent-TOC reaches 51.1%, compared with 1.1% Direct and 2.2% CoT. The 49–50 pp tool advantage therefore cannot be produced by answer-position bias or distractor elimination. The new run is complete (182/182 graded, zero errors), and we will release its per-item results, workspaces, and logs.
 
 **Effective size and reuse.** The 200 questions come from 21 scenario/setup families and often query different output fields or time steps from the same underlying scenario. Each benchmark item is evaluated in a separate isolated agent session, so agents cannot reuse a simulation across items. We will state both facts prominently rather than presenting 200 as 200 unrelated simulator setups.
 
@@ -26,7 +26,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 
 ## Reviewer MmtE
 
-**Numeric/free-response subset.** The 182-item numeric subset directly tests scientific value recovery before A/B/C/D mapping. We will release its prompts, targets/tolerances, per-item predictions, and exact/tolerance-based grading. **Status: dataset and no-tool runs exist; selected agent runs must be rerun and verified.**
+**Numeric/free-response subset.** The 182-item numeric subset directly tests scientific value recovery before A/B/C/D mapping. GPT-5.4 scores 1.1% Direct, 2.2% CoT, and 51.1% with Agent-TOC; the agent produces a graded numeric answer on every item. We will release the prompts, targets/tolerances, per-item predictions, workspaces/logs, and tolerance-based grading. **Status: complete and integrity-checked.**
 
 **Harness and 24-step budget.** We agree that harness choices are part of the measured compound system. The existing all-model trajectory analysis already separates the mechanisms: 0% of GPT-5.1 and 9.7% of GPT-5.2 failures reach the ceiling, versus 62–68% for top-tier failures, while Gemini’s TOC regression is explicitly a navigation/commit-rate effect (median 9 TOC reads versus 2 under Raw100k). We will avoid presenting the 24-step result as model-only capability and will state that a larger-budget ablation remains future work.
 
@@ -46,6 +46,8 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 - [x] Record original run timestamps separately from the later artifact-update commit.
 - [x] Verify the analysis command from the anonymous repository root and record its generated files.
 - [ ] Account for every artifact underlying Tables 2, 3, and 5; do not claim full reproduction before this is complete.
-- [ ] Rerun and release the minimal selected GPT numeric-answer and Raw100k-repeat conditions.
+- [x] Rerun and verify the minimal GPT-5.4 numeric-answer agent condition.
+- [x] Add the numeric subset and all three GPT-5.4 result directories to the anonymous artifact, with a one-command analysis script and checksums.
+- [ ] Run Raw100k repeats only if the remaining budget and rebuttal space justify them.
 - [ ] Replace plural/independent expert-validation claims in the paper and metadata.
 - [ ] Narrow title/generalization language and define capability tiers formally.
