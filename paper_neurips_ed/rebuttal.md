@@ -42,7 +42,7 @@ Removing choices makes the task harder, but the tool advantage over the stronger
 
 Sonnet remains within 1 pp across both retrieval interfaces and Raw100k, whereas both mid-tier GPT models remain well below Raw100k under either retrieval interface. The same tier pattern therefore persists without PHREEQC's section-level TOC design. Nor is the mid-tier gap caused by the step ceiling: only 0% of GPT-5.1 and 9.7% of GPT-5.2 failed TOC items reach step 24; their dominant failure is early wrong commitment. Gemini 3 Flash is different: 117/200 TOC trajectories reach the ceiling versus 57/200 under Raw100k. We therefore state its degradation specifically as interface overhead under this 24-step harness, not as an intrinsic model property.
 
-**3. Do the key TOC-versus-Raw100k comparisons survive new independent repeats? Yes.** On July 23, 2026, we reran the two models requested and released both complete 200-item runs:
+**3. Do the key TOC-versus-Raw100k comparisons survive new independent repeats? Yes.** We reran the two requested models and released both complete 200-item runs:
 
 | Model | Original Raw100k | Raw100k repeat | TOC rerun range |
 | --- | ---: | ---: | ---: |
