@@ -4,7 +4,14 @@ Thank you for recognizing the value of the kept/gained/lost decomposition and ca
 
 **Scope and relation to prior work.** We agree that the present evidence is a controlled case study of one deterministic simulator, not evidence about arbitrary multi-tool scientific workflows. We will narrow the title and remove the statement that the capability-tier interaction “likely transfers” to other simulators. A second simulator would require new domain-expert item construction and validation and cannot be added responsibly during rebuttal. Relative to ScienceAgentBench and ToRA, our contribution is not the already-known observation that tools can help. The deterministic, paired setting exposes effects hidden by aggregate accuracy: which previously correct items are lost, whether protocol gaps exceed rerun variation, and whether failure occurs during simulator construction, execution, output navigation, or final commitment. We will make this distinction explicit.
 
-**Numeric-answer evaluation.** We added a 182-item numeric-answer subset that removes answer labels and distractors while retaining the simulator-derived targets. With GPT-5.4 on the same items, Direct obtains 2/182 (1.1%), CoT 4/182 (2.2%), and Agent-TOC with PHREEQC access 93/182 (51.1%; 95% Wilson CI 43.9–58.3%). The tool run grades all 182 items with zero execution errors. Relative to Direct, it gains 91 items and loses none; relative to CoT, it gains 90 and loses one. Thus the approximately 49–50 pp tool advantage persists without answer-position bias or distractor elimination. The updated artifact includes the dataset, targets and tolerances, per-item predictions, complete agent workspaces/logs, and a one-command analysis.
+**Numeric-answer evaluation.** We added a numeric-answer version of every item with an unambiguous scalar target (182/200), removing answer labels and distractors while preserving the underlying simulator task. Results on this same 182-item set are:
+
+| Answer format | Direct | CoT | Agent-TOC + PHREEQC | Tool vs. better no-tool |
+| --- | ---: | ---: | ---: | ---: |
+| MCQ | 48/182 (26.4%) | 60/182 (33.0%) | 131/182 (72.0%) | +39.0 pp |
+| Numeric/FIB | 2/182 (1.1%) | 4/182 (2.2%) | 93/182 (51.1%) | +48.9 pp |
+
+Removing the choices lowers absolute accuracy, as expected, but does not explain the tool-access result: the advantage over the stronger no-tool baseline increases from 39.0 to 48.9 pp. The numeric tool run grades all 182 items with zero execution errors (95% Wilson CI 43.9–58.3%). Relative to Direct it gains 91 items and loses none; relative to CoT it gains 90 and loses one. We updated the anonymous repository with the dataset, targets/tolerances, per-item predictions, complete workspaces/logs, and a one-command analysis; further implementation and grading details are available there.
 
 **Effective size, reuse, human baseline, and tier labels.** The 200 items come from 21 scenario/setup families; multiple items may query different fields or time steps from one setup. We will state this prominently and retain scenario-clustered uncertainty. Every item is evaluated in a separate isolated agent session, so no simulation or workspace is reused across questions. We cannot provide an independent human baseline: the only available aqueous-geochemistry expert authored and simulator-checked the items, so evaluating that same person would introduce direct item-construction leakage and would not constitute an independent baseline. We will report this limitation rather than make a near-human claim. Finally, “top/mid/below-mid” will be defined only as empirical groupings induced by the observed protocol and failure patterns in this benchmark, not intrinsic model-family rankings.
 
@@ -12,7 +19,14 @@ Thank you for recognizing the value of the kept/gained/lost decomposition and ca
 
 Thank you for highlighting the diagnostic value of the benchmark and for suggesting the two most useful robustness checks.
 
-**Numeric/free-response subset.** We added the 182-item numeric-answer experiment described above. GPT-5.4 scores 1.1% with Direct, 2.2% with CoT, and 51.1% with Agent-TOC. This directly tests recovery of the scientific value before A/B/C/D mapping and shows that the main tool-access conclusion is not an MCQ shortcut. All prompts, numeric targets/tolerances, predictions, workspaces, logs, and grading code are included in the updated artifact.
+**Numeric/free-response subset.** We added a numeric-answer version of every item with an unambiguous scalar target (182/200). On the same items:
+
+| Answer format | Direct | CoT | Agent-TOC + PHREEQC | Tool vs. better no-tool |
+| --- | ---: | ---: | ---: | ---: |
+| MCQ | 48/182 (26.4%) | 60/182 (33.0%) | 131/182 (72.0%) | +39.0 pp |
+| Numeric/FIB | 2/182 (1.1%) | 4/182 (2.2%) | 93/182 (51.1%) | +48.9 pp |
+
+Thus removing choices makes the task harder but strengthens the relative tool/no-tool separation. This directly tests recovery of the scientific value before A/B/C/D mapping and rules out MCQ shortcuts as the explanation for the main tool-access finding. We updated the anonymous repository with all prompts, targets/tolerances, predictions, complete agent workspaces/logs, and grading code; further details are available there.
 
 **Harness and 24-step ceiling.** We agree that the result measures a compound system, including the harness and interface. We will make that scope explicit. The existing all-model trajectory evidence also separates the relevant mechanisms: 0% of GPT-5.1 and 9.7% of GPT-5.2 failures reach the 24-step ceiling, compared with 62–68% of top-tier failures; the mid-tier failed-item median step counts (7–9) are approximately their overall medians. Moreover, the prompt does not disclose the step budget. These observations argue that the mid-tier TOC regression is primarily premature commitment/navigation behavior rather than ceiling exhaustion. For Gemini 3 Flash, in contrast, we explicitly attribute the TOC regression to interface overhead and non-commitment (median nine TOC reads versus two reads under Raw100k). We will not generalize the fixed-budget result beyond this harness, and leave broader budget/retrieval-granularity ablations to future work.
 
