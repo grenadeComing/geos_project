@@ -21,7 +21,7 @@ Removing choices lowers absolute accuracy but increases the advantage over the s
 
 # Response to Reviewer MmtE
 
-Thank you for highlighting the benchmark's diagnostic value. We completed the requested numeric-answer evaluation and Raw100k repeats, and added a model-agnostic retrieval ablation.
+Thank you for highlighting the benchmark's diagnostic value. We address your three questions below.
 
 **1. Does the result survive numeric/free-response evaluation? Yes.** We converted every item with an unambiguous scalar target (182/200), rather than only a small subset, and evaluated GPT-5.4 under Direct, CoT, and Agent-TOC. On these same items:
 
