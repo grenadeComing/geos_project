@@ -38,9 +38,18 @@ Thank you for running the artifact and identifying concrete release failures. Th
 
 **1. Are complete per-question runs now available for every condition?** No—not for every legacy condition. Some original condition-specific trajectories were not retained. Technically, the released code can execute these conditions again against the current model endpoints; however, those executions would be new rebuttal-period observations, not restorations of the missing original trajectories, because closed-model endpoints may drift. Repeating the entire missing sweep is also beyond our remaining evaluation budget: the retained original Opus Raw100k run alone consumed 46.77M input and 0.37M output tokens (a several-hundred-dollar run at the API pricing used for the study), and the omitted set spans multiple 200-item conditions. We therefore make the availability boundary explicit rather than present new runs as recovered originals.
 
-We restored the two accidentally omitted *original* complete Gemini 3 Flash runs (TOC: 47/200; Raw100k: 94/200); their summaries and per-question logs record the original May 3, 2026 execution times, while the later Git commit records only the packaging correction. We also release all other retained original trajectories, with especially extensive original evidence for Opus: its complete Raw100k run, three complete TOC reruns, 45-item uncapped-TOC runs, and failure-case workspaces. The release additionally includes the external-harness runs and complete trajectories for every rebuttal-period run. These original materials provide independently inspectable evidence of the released harness, tool calls, simulator execution, log schema, and failure behavior, although they do not substitute for a missing condition-specific trajectory.
+The updated Table 1–5 evidence boundary is:
 
-For the legacy conditions whose trajectories were not retained, we instead release the exact per-item correctness vectors or aggregate sufficient statistics preserved from the original analysis. These records make the published numerical comparisons reproducible but are explicitly labeled as derived records, not restored logs. We will correct the manuscript's overly broad trajectory-availability claim and distinguish **numerical reproducibility** from **trajectory availability** throughout.
+| Published result | What is now released |
+| --- | --- |
+| **Table 1: main results** | Complete original Direct/CoT runs for all models and the complete Opus Raw100k run (internally dated May 6, 2026); the remaining Agent-TOC/Raw100k cells are preserved in the original-analysis 1,000-row per-item outcome snapshot. |
+| **Table 2: retention** | Complete original Direct outcomes plus the same lossless per-item Agent-TOC/Raw100k snapshot; this exactly determines every kept/gained/lost cell. |
+| **Table 3: TOC reruns** | **Packaging omission only.** We located and restored the 12 omitted complete Sonnet/GPT rerun directories. Together with the three Opus reruns and five 45-item splice runs already present, all 15 reruns are now available with 200 workspaces/logs each. Internal summaries/logs date these runs to May 3–7, 2026, before submission. |
+| **Table 4: small/long split** | All five complete 45-item uncapped-TOC runs plus the preserved per-item and bin/token records used in the original analysis. |
+| **Table 5: Raw100k/Raw500k** | Preserved pre-submission bin counts and token means plus original failure-case workspaces; some complete successful trajectories were not retained. |
+| **Gemini §4.3** | **Packaging omission only.** Both original complete 200-item runs are restored (TOC 47/200; Raw100k 94/200), with internal summaries/logs dated May 3, 2026. |
+
+Thus none of the Table 1–5 values were inferred backward from displayed paper cells. Tables 1, 2, 4, and 5 partly rely on original *processed outcome records*: these retain exactly the per-item correctness or bin count/token statistics required by the published metric, but not every prompt, tool call, and simulator file. Table 3 and the Gemini analysis now have complete original trajectories. We will correct the manuscript's overly broad trajectory-availability claim and distinguish **complete trajectories** from **original processed outcomes** throughout.
 
 **2. What exact commands now work?** We fixed the dataset and `result`/`results` path mismatches and removed the analysis guard. From the anonymous repository root,
 
@@ -54,7 +63,7 @@ now analyzes every complete run physically present in the release and records it
 node analysis/reproduce_published_tables.js
 ```
 
-This regenerates every numerical cell in Tables 2, 3, and 5 and reports **113/113 checks passed**. Table 2 is recomputed from complete Direct outcomes and a lossless 1,000-row Agent-TOC/Raw100k correctness snapshot; Tables 3 and 5 use the retained correct-count and exact input-token sufficient statistics. Input provenance, checksums, and the artifact-update history are documented in the repository.
+This regenerates every numerical cell in Tables 2, 3, and 5 and reports **113/113 checks passed**. Table 2 is recomputed from complete Direct outcomes and the preserved lossless 1,000-row Agent-TOC/Raw100k outcome snapshot; Table 3 is rebuilt directly from all 15 complete rerun trajectory sets plus the five released 45-item splice trajectories; and Table 5 uses the preserved pre-submission bin counts and token means. Input provenance, checksums, and the artifact-update history are documented in the repository.
 
 **3. Title and scope.** We agree that the original title generalizes beyond the evidence. We will revise it to *“PHREEQC-MCQ-200: A Diagnostic Benchmark for Tool-Augmented LLM Agents on a Geochemical Simulator”* and frame the empirical conclusions as a PHREEQC case study rather than evidence about all scientific simulators.
 
