@@ -51,24 +51,18 @@ Fortunately, for the last category, we retained the corresponding pre-submission
 
 We will revise the manuscript to distinguish complete logs from retained per-item outcomes. Rerunning conditions whose logs were lost would produce new closed-model observations, not recover the originals, and a full rerun is beyond our budget (one Opus Raw100k run alone used 46.77M input and 0.37M output tokens).
 
-**2. What exact commands now work?** We fixed the dataset and `result`/`results` path mismatches and removed the analysis guard. From the anonymous repository root,
-
-```bash
-node analysis/analyze_results.js
-```
-
-now analyzes every complete run physically present in the release and records its path and integrity status. To regenerate the previously non-reproducible published tables, run:
+**2. What is the exact reproduction command?** From the anonymous repository root, run:
 
 ```bash
 node analysis/reproduce_published_tables.js
 ```
 
-This regenerates every numerical cell in Tables 2, 3, and 5 and reports **113/113 checks passed**. Table 2 is recomputed from complete Direct outcomes and the preserved lossless 1,000-row Agent-TOC/Raw100k outcome snapshot; Table 3 is rebuilt directly from all 15 complete rerun trajectory sets plus the five released 45-item splice trajectories; and Table 5 uses the preserved pre-submission bin counts and token means. Input provenance, checksums, and the artifact-update history are documented in the repository.
+It regenerates every previously non-reproducible numerical cell in Tables 2, 3, and 5 and reports **113/113 checks passed**. We also fixed the path errors and removed the guard, so `node analysis/analyze_results.js` now runs directly on the released layout.
 
-**3. Title and scope.** We agree that the original title generalizes beyond the evidence. We will revise it to *“PHREEQC-MCQ-200: A Diagnostic Benchmark for Tool-Augmented LLM Agents on a Geochemical Simulator”* and frame the empirical conclusions as a PHREEQC case study rather than evidence about all scientific simulators.
+**3. How many experts authored and reviewed the items?** One domain-qualified co-author authored and simulator-checked all items. This author is a doctoral researcher in civil/environmental engineering, with undergraduate training in earth/environmental sciences and mathematics and prior computational-geoscience research. There was no independent second expert; therefore, there is no inter-expert agreement statistic or recorded rejection rate. We will replace “expert-validated” with “expert-authored and simulator-verified.”
 
-**4. How was expert review performed?** The original paper and Croissant metadata overstated the procedure. One domain-qualified co-author authored and simulator-checked the items. This co-author is a doctoral researcher in civil/environmental engineering, with undergraduate training in earth/environmental sciences and mathematics and prior research in subsurface flow, geologic carbon storage, and computational geoscience. There was no independent expert panel, agreement statistic, or recorded rejection rate. We corrected the metadata and will replace “expert-validated” with “expert-authored and simulator-verified.” We will state the executable acceptance criteria: successful execution with the frozen simulator/database, a unique target supported by the output, plausible distractors, and question clarity. These checks establish simulator-consistent ground truth, not independent expert validation; the latter remains future work.
+**4. Do labels survive PHREEQC or database revisions?** We did not test this and do not claim version invariance. The benchmark ground truth is frozen to PHREEQC 3.8.6 and the released `phreeqc.dat`; stability under another point release or database revision is unknown and will be stated as a limitation.
 
-**5. Do labels survive PHREEQC or database revisions?** We did not test this and do not claim version invariance. Ground truth is defined for PHREEQC 3.8.6 with the released `phreeqc.dat`. We will add explicit version/database provenance and state that label stability under another PHREEQC point release or thermodynamic database revision is unknown.
+**5. Why no open-weight models, and does the result extend to them?** Within our evaluation budget, we prioritized paired tool/no-tool protocol comparisons across six frontier models from three vendors. We did not evaluate open-weight models and therefore do not claim that the capability-by-interface interaction extends to them. We will narrow the claim accordingly and identify open-weight evaluation as future work.
 
-**6. Why no open-weight models, and does the tier interaction extend to them?** The evaluation budget was allocated to paired protocol comparisons across six frontier models from three vendors, so open-weight models were omitted. Consequently, we have no evidence that the observed capability-by-interface interaction extends to open-weight models. We will scope the claim to the evaluated systems and identify open-weight evaluation as future work.
+**Additional scope concern.** We agree that the original title is broader than the evidence. We will revise it to *“PHREEQC-MCQ-200: A Diagnostic Benchmark for Tool-Augmented LLM Agents on a Geochemical Simulator”* and present the conclusions as a PHREEQC case study.
