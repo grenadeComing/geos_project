@@ -36,24 +36,20 @@ Thus removing choices makes the task harder but strengthens the relative tool/no
 
 Thank you for running the artifact and identifying concrete release failures. The reviewer is correct that the submitted package was incomplete; we do not claim that the omitted files were available at review time.
 
-**1. Are complete per-question runs now available for every condition?** Most of the original run evidence was preserved; the initial anonymous release primarily omitted files during packaging. We have now restored the omitted complete Gemini runs and 12 complete TOC rerun directories. Together with the material already present, the release contains complete original Direct/CoT runs, all 15 full TOC reruns, all five 45-item TOC splice runs, Opus Raw100k, both Gemini conditions, the external-harness runs, and extensive original failure-case workspaces. Only a smaller subset of legacy headline TOC/Raw100k/Raw500k conditions lacks complete successful-item trajectories.
+**1. Are complete per-question runs now available for every condition?** Most original experimental evidence was retained. The conditions fall into only three categories: **already available**, **accidentally omitted from the anonymous package and now restored**, or **complete logs lost but exact per-item outcomes retained in the failure analysis**.
 
-The updated Table 1–5 evidence boundary is:
+Fortunately, for the last category, we retained the corresponding pre-submission failure-analysis packages. Each failure directory identifies one incorrect item; those item IDs and their complement preserve the exact per-item correctness vector. Thus, although the complete prompt/tool-call logs were lost for a small number of legacy conditions, the experimental numbers were not lost. These are retained original analysis records—not estimates inferred backward from the aggregate values printed in the paper. The released verification script confirms exact item-ID agreement between the failure analysis and saved outcome snapshots for 12 model/protocol conditions.
 
-| Published result | What is now released |
+| Result | Status |
 | --- | --- |
-| **Table 1: main results** | Complete original Direct/CoT runs for all models and the complete Opus Raw100k run (internally dated May 6, 2026); the remaining Agent-TOC/Raw100k cells are preserved in the original-analysis 1,000-row per-item outcome snapshot. |
-| **Table 2: retention** | Complete original Direct outcomes plus the same lossless per-item Agent-TOC/Raw100k snapshot; this exactly determines every kept/gained/lost cell. |
-| **Table 3: TOC reruns** | **Packaging omission only.** We located and restored the 12 omitted complete Sonnet/GPT rerun directories. Together with the three Opus reruns and five 45-item splice runs already present, all 15 reruns are now available with 200 workspaces/logs each. Internal summaries/logs date these runs to May 3–7, 2026, before submission. |
-| **Table 4: small/long split** | All five complete 45-item uncapped-TOC runs plus the preserved per-item and bin/token records used in the original analysis. |
-| **Table 5: Raw100k/Raw500k** | Preserved pre-submission bin counts and token means plus original failure-case workspaces; some complete successful trajectories were not retained. |
-| **Gemini §4.3** | **Packaging omission only.** Both original complete 200-item runs are restored (TOC 47/200; Raw100k 94/200), with internal summaries/logs dated May 3, 2026. |
+| **Table 1** | **Already available:** Direct/CoT and Opus Raw100k. **Failure-analysis recovery:** the remaining Agent conditions. |
+| **Table 2** | **Failure-analysis recovery:** the exact paired per-item outcomes determine every kept/gained/lost count. |
+| **Table 3** | **Accidentally omitted; now restored:** all 15 original TOC reruns are now released. |
+| **Table 4** | **Already available:** all five 45-item runs. **Failure-analysis recovery:** their baseline outcomes. |
+| **Table 5** | **Failure-analysis recovery:** exact outcome counts, together with the retained bin/token statistics. |
+| **Gemini §4.3** | **Accidentally omitted; now restored:** both complete original 200-item runs. |
 
-Thus none of the Table 1–5 values were inferred backward from displayed paper cells or created after review. For the smaller subset whose trajectory directories were not retained, the original analysis had already preserved the complete per-item correctness vectors or bin-level count/token records used to produce the paper. These original *processed outcome records* exactly regenerate the reported metrics, although they do not contain every prompt, tool call, and simulator file. Table 3 and the Gemini analysis now have complete original trajectories. We will correct the manuscript's overly broad trajectory-availability claim and distinguish **complete trajectories** from **original processed outcomes** throughout.
-
-The per-item recovery is independently auditable from the released pre-submission failure-analysis queues, not inferred from aggregate accuracies. Each directory identifies one failed item; its complement identifies the correct items. For baseline TOC, the released queues contain exactly 31/29/55/93/92 failed-item directories for Opus/Sonnet/GPT-5.4/GPT-5.2/GPT-5.1, matching the zero-valued item IDs in the preserved 1,000-row outcome snapshot with no discrepancies. The Raw100k queues likewise match all 33/60/77/73 failures for Sonnet/GPT-5.4/GPT-5.2/GPT-5.1, and Raw500k matches all 51/73/84 failures for GPT-5.4/GPT-5.2/GPT-5.1; Opus Raw100k is available as a complete original run. Applying the five complete 45-item TOC splice runs to these baseline item outcomes produces the final published vectors. Thus the recovery is traceable to retained per-question failure records and original analysis snapshots, not to the paper's displayed totals.
-
-The released code can rerun the remaining conditions against current endpoints, but those would be new rebuttal-period runs rather than the original records. A complete replacement sweep is beyond our remaining budget: the retained Opus Raw100k run alone consumed 46.77M input and 0.37M output tokens. We therefore release the preserved original outcomes transparently instead of presenting new runs as recovered originals.
+We will correct the manuscript's overly broad trajectory-availability statement and explicitly distinguish **complete trajectories** from **retained original outcomes**. The remaining conditions can technically be rerun against current endpoints, but those would be new rebuttal-period observations rather than the original closed-model executions. A complete replacement sweep is also beyond our remaining budget: the retained Opus Raw100k run alone consumed 46.77M input and 0.37M output tokens.
 
 **2. What exact commands now work?** We fixed the dataset and `result`/`results` path mismatches and removed the analysis guard. From the anonymous repository root,
 
