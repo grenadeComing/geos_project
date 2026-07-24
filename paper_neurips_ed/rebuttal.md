@@ -36,13 +36,13 @@ Thus removing choices makes the task harder but strengthens the relative tool/no
 
 Thank you for running the artifact and identifying concrete release failures. The reviewer is correct that the submitted package was incomplete; we do not claim that the omitted files were available at review time.
 
-**Artifact correction.** We fixed the dataset and `result`/`results` path mismatches and removed the analysis guard. From the anonymous repository root, the analysis entry point is now:
+**Artifact correction.** We fixed the dataset and `result`/`results` path mismatches and removed the analysis guard. We also added a dedicated published-table reproduction command; from the anonymous repository root, run:
 
 ```bash
-node analysis/analyze_results.js
+node analysis/reproduce_published_tables.js
 ```
 
-We also restored both original complete 200-item Gemini 3 Flash runs: Agent-TOC is 47/200 (23.5%) and Raw100k is 94/200 (47.0%). Their internal metadata and logs record the original May 3, 2026 executions; the later Git commit records only the packaging correction. Checksums and an artifact-update manifest are included. The updated repository additionally contains the complete numeric-answer experiment and the two new Raw100k repeats. For legacy conditions whose complete workspaces were not retained, we distinguish numerical reproducibility from trajectory availability: we expose the retained derived/per-item records and do not describe reconstructed correctness records as restored trajectories. We will also correct the manuscript’s overly broad claim that every original trajectory is available.
+This regenerates every numerical cell in Tables 2, 3, and 5 and reports 113/113 checks passed. Table 2 is recomputed from complete Direct outcomes and a lossless 1,000-row Agent-TOC/Raw100k correctness snapshot; Tables 3 and 5 are recomputed from the retained correct-count and input-token sufficient statistics. We also restored both original complete 200-item Gemini 3 Flash runs: Agent-TOC is 47/200 (23.5%) and Raw100k is 94/200 (47.0%). Their internal metadata/logs record the original May 3, 2026 executions; the later Git commit records only the packaging correction. Checksums, input provenance, and an artifact-update manifest are included, together with the complete numeric-answer experiment and two new Raw100k repeats. For legacy conditions whose complete workspaces were not retained, we distinguish numerical reproducibility from trajectory availability: the numerical tables now reproduce exactly, but derived correctness/sufficient-statistic snapshots are not presented as restored trajectories. We will correct the manuscript’s overly broad trajectory-availability claim accordingly.
 
 **Expert validation.** The original wording and Croissant metadata overstated the procedure. One aqueous-geochemistry expert authored and simulator-checked the items; there was no independent expert panel, inter-rater agreement statistic, rejection rate, or independent human baseline. We have corrected the metadata and will replace “expert-validated” with “expert-authored and simulator-verified.” We will document the executable acceptance criteria: successful execution with the frozen simulator/database, a unique target supported by the output, plausible distractors, and question clarity. Independent expert validation remains future work.
 
