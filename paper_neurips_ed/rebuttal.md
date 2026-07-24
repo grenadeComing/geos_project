@@ -2,24 +2,30 @@
 
 Thank you for recognizing the value of the kept/gained/lost decomposition and capability-stratified failure analysis.
 
-**Scope and relation to prior work.** We agree that the present evidence is a controlled case study of one deterministic simulator, not evidence about arbitrary multi-tool scientific workflows. We will narrow the title and remove the statement that the capability-tier interaction “likely transfers” to other simulators. A second simulator would require new domain-expert item construction and validation and cannot be added responsibly during rebuttal. Relative to ScienceAgentBench and ToRA, our contribution is not the already-known observation that tools can help. The deterministic, paired setting exposes effects hidden by aggregate accuracy: which previously correct items are lost, whether protocol gaps exceed rerun variation, and whether failure occurs during simulator construction, execution, output navigation, or final commitment. We will make this distinction explicit.
-
-**Numeric-answer evaluation.** We added a numeric-answer version of every item with an unambiguous scalar target (182/200), removing answer labels and distractors while preserving the underlying simulator task. Results on this same 182-item set are:
+**1. Does the MCQ format explain the tool-access result? No.** We converted every item with an unambiguous scalar target (182/200) to numeric free response and evaluated GPT-5.4 under Direct, CoT, and Agent-TOC, removing labels and distractors while preserving the simulator task:
 
 | Answer format | Direct | CoT | Agent-TOC + PHREEQC | Tool vs. better no-tool |
 | --- | ---: | ---: | ---: | ---: |
 | MCQ | 48/182 (26.4%) | 60/182 (33.0%) | 131/182 (72.0%) | +39.0 pp |
 | Numeric/FIB | 2/182 (1.1%) | 4/182 (2.2%) | 93/182 (51.1%) | +48.9 pp |
 
-Removing the choices lowers absolute accuracy, as expected, but does not explain the tool-access result: the advantage over the stronger no-tool baseline increases from 39.0 to 48.9 pp. The numeric tool run grades all 182 items with zero execution errors (95% Wilson CI 43.9–58.3%). Relative to Direct it gains 91 items and loses none; relative to CoT it gains 90 and loses one. We updated the anonymous repository with the dataset, targets/tolerances, per-item predictions, complete workspaces/logs, and a one-command analysis; further implementation and grading details are available there.
+Removing choices lowers absolute accuracy but increases the advantage over the stronger no-tool baseline from +39.0 to +48.9 pp. Relative to Direct, Agent-TOC gains 91 items and loses none; relative to CoT, it gains 90 and loses one. Thus distractor elimination or answer-position preference cannot explain the main tool-access finding. The complete dataset, targets/tolerances, predictions, workspaces/logs, and grading code are released.
 
-**Effective size, reuse, human baseline, and tier labels.** The 200 items come from 21 scenario/setup families; multiple items may query different fields or time steps from one setup. We will state this prominently and retain scenario-clustered uncertainty. Every item is evaluated in a separate isolated agent session, so no simulation or workspace is reused across questions. We cannot provide an independent human baseline: the same domain-qualified co-author authored and simulator-checked the items, so evaluating that person would introduce direct item-construction leakage and would not constitute an independent baseline. This co-author is a doctoral researcher in civil/environmental engineering, with undergraduate training in earth/environmental sciences and mathematics and prior research in subsurface flow, geologic carbon storage, and computational geoscience. We will report the lack of an independent baseline rather than make a near-human claim. Finally, “top/mid/below-mid” will be defined only as empirical groupings induced by the observed protocol and failure patterns in this benchmark, not intrinsic model-family rankings.
+**2. What is the effective benchmark size, and are simulations reused?** The benchmark contains 21 distinct scenario/setup families, not 200 independent scientific setups; items within a family may query different output fields or time steps. We will state this prominently and retain scenario-clustered uncertainty. Operationally, however, all 200 items are evaluated in separate isolated agent sessions. No input, simulator output, or workspace is shared across items, so every tool-using agent must independently construct and execute its simulation.
+
+**3. What accuracy do human experts achieve?** We do not have an independent human baseline and will not make a near-human-performance claim. The one domain-qualified co-author who authored and simulator-checked the items cannot serve as an unbiased baseline because of direct item-construction leakage. This author is a doctoral researcher in civil/environmental engineering, with undergraduate training in earth/environmental sciences and mathematics and prior computational-geoscience research.
+
+**4. Has the interaction been tested on another simulator? No, and we will not claim that it has.** We will remove the statement that the interaction “likely transfers” and scope the empirical claim to PHREEQC. A second simulator benchmark requires a new domain expert and independently constructed, simulator-verified items; substituting an unvalidated second domain would weaken rather than strengthen the evaluation. We did add a generic keyword-search interface that uses no PHREEQC section headers. The same pattern persists: Sonnet scores 84.0/83.0/83.5% under TOC/Grep/Raw100k, while GPT-5.2 scores 54.0/51.0/61.5% and GPT-5.1 scores 54.0/46.5/63.5%. This shows that the within-PHREEQC result is not specific to the TOC regex, while leaving cross-simulator generalization open.
+
+**5. What does the controlled setting add beyond prior tool-use benchmarks?** Our contribution is not the already-known observation that tools can help. Holding the simulator, database, questions, and grading fixed enables direct paired measurement of which no-tool-correct items are lost after tool access, whether protocol gaps exceed rerun variation, and whether failure occurs during simulator construction, execution, output navigation, or answer commitment. Multi-tool selection and composition are complementary questions; this benchmark deliberately isolates reliability after the simulator has been selected. We will sharpen this distinction from ScienceAgentBench and ToRA.
+
+**6. How are the tier labels defined?** They are benchmark-specific response groups, not intrinsic model rankings: “top” models match or exceed Raw100k under TOC; “mid” models benefit from PHREEQC access but perform better under Raw100k than TOC; and “below-mid” denotes the observed Gemini 3 regime in which TOC overhead reduces aggregate accuracy through non-commitment. We will add these operational definitions to Table 1.
 
 # Response to Reviewer MmtE
 
 Thank you for highlighting the benchmark's diagnostic value. We completed the requested numeric-answer evaluation and Raw100k repeats, and added a model-agnostic retrieval ablation.
 
-**1. Does the result survive numeric/free-response evaluation? Yes.** We converted every item with an unambiguous scalar target (182/200), rather than only a small subset. On these same items:
+**1. Does the result survive numeric/free-response evaluation? Yes.** We converted every item with an unambiguous scalar target (182/200), rather than only a small subset, and evaluated GPT-5.4 under Direct, CoT, and Agent-TOC. On these same items:
 
 | Answer format | Direct | CoT | Agent-TOC + PHREEQC | Tool vs. better no-tool |
 | --- | ---: | ---: | ---: | ---: |
@@ -38,7 +44,7 @@ Removing choices makes the task harder, but the tool advantage over the stronger
 
 Sonnet remains within 1 pp across both retrieval interfaces and Raw100k, whereas both mid-tier GPT models remain well below Raw100k under either retrieval interface. The same tier pattern therefore persists without PHREEQC's section-level TOC design. Nor is the mid-tier gap caused by the step ceiling: only 0% of GPT-5.1 and 9.7% of GPT-5.2 failed TOC items reach step 24; their dominant failure is early wrong commitment. Gemini 3 Flash is different: 117/200 TOC trajectories reach the ceiling versus 57/200 under Raw100k. We therefore state its degradation specifically as interface overhead under this 24-step harness, not as an intrinsic model property.
 
-**3. Do the key TOC-versus-Raw100k comparisons survive Raw100k repeats? Yes.** We ran the two models requested:
+**3. Do the key TOC-versus-Raw100k comparisons survive new independent repeats? Yes.** On July 23, 2026, we reran the two models requested and released both complete 200-item runs:
 
 | Model | Original Raw100k | Raw100k repeat | TOC rerun range |
 | --- | ---: | ---: | ---: |
