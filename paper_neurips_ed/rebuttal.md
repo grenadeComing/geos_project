@@ -17,20 +17,35 @@ Removing the choices lowers absolute accuracy, as expected, but does not explain
 
 # Response to Reviewer MmtE
 
-Thank you for highlighting the diagnostic value of the benchmark and for suggesting the two most useful robustness checks.
+Thank you for highlighting the benchmark's diagnostic value. We completed the requested numeric-answer evaluation and Raw100k repeats, and added a model-agnostic retrieval ablation.
 
-**Numeric/free-response subset.** We added a numeric-answer version of every item with an unambiguous scalar target (182/200). On the same items:
+**1. Does the result survive numeric/free-response evaluation? Yes.** We converted every item with an unambiguous scalar target (182/200), rather than only a small subset. On these same items:
 
 | Answer format | Direct | CoT | Agent-TOC + PHREEQC | Tool vs. better no-tool |
 | --- | ---: | ---: | ---: | ---: |
 | MCQ | 48/182 (26.4%) | 60/182 (33.0%) | 131/182 (72.0%) | +39.0 pp |
 | Numeric/FIB | 2/182 (1.1%) | 4/182 (2.2%) | 93/182 (51.1%) | +48.9 pp |
 
-Thus removing choices makes the task harder but strengthens the relative tool/no-tool separation. This directly tests recovery of the scientific value before A/B/C/D mapping and rules out MCQ shortcuts as the explanation for the main tool-access finding. We updated the anonymous repository with all prompts, targets/tolerances, predictions, complete agent workspaces/logs, and grading code; further details are available there.
+Removing choices makes the task harder, but the tool advantage over the stronger no-tool baseline increases from +39.0 to +48.9 pp. Relative to Direct, Agent-TOC gains 91 items and loses none; relative to CoT, it gains 90 and loses one. Thus option selection cannot explain the main tool-access result. The dataset, targets/tolerances, predictions, complete workspaces/logs, and grading code are released.
 
-**Harness and 24-step ceiling.** We agree that the result measures a compound system, including the harness and interface. We will make that scope explicit. The existing all-model trajectory evidence also separates the relevant mechanisms: 0% of GPT-5.1 and 9.7% of GPT-5.2 failures reach the 24-step ceiling, compared with 62–68% of top-tier failures; the mid-tier failed-item median step counts (7–9) are approximately their overall medians. Moreover, the prompt does not disclose the step budget. These observations argue that the mid-tier TOC regression is primarily premature commitment/navigation behavior rather than ceiling exhaustion. For Gemini 3 Flash, in contrast, we explicitly attribute the TOC regression to interface overhead and non-commitment (median nine TOC reads versus two reads under Raw100k). We will not generalize the fixed-budget result beyond this harness, and leave broader budget/retrieval-granularity ablations to future work.
+**2. Is the TOC capability-tier effect only a consequence of the 24-step budget or PHREEQC-specific section retrieval? No for the mid-tier comparison; Gemini remains budget-specific.** We added a generic Agent-Grep protocol that uses keyword search plus ranged reads, with the same agent loop, 24-step budget, and grading:
 
-**Repeated Raw100k runs.** We completed the requested independent Raw100k repeats. GPT-5.1 changes from 127/200 (63.5%) to 122/200 (61.0%; 95% Wilson CI 54.1–67.5%), and GPT-5.2 from 123/200 (61.5%) to 127/200 (63.5%; 56.6–69.9%). Both repeats remain above the entire corresponding TOC rerun ranges (GPT-5.1: 48.0–55.5%; GPT-5.2: 54.5–56.0%). Aggregate changes are only -2.5 and +2.0 pp, although 59–60 item outcomes flip: GPT-5.1 has 95 both-correct / 27 repeat-only / 32 original-only / 46 both-wrong outcomes, and GPT-5.2 has 95 / 32 / 28 / 45. This reinforces rather than weakens our distinction between aggregate stability and item-level retention. Both complete 200-item repeat runs and the paired analysis are released. Claims about Raw500k and external harnesses will remain explicitly single-run findings.
+| Model | Agent-TOC | Agent-Grep | Agent-Raw100k |
+| --- | ---: | ---: | ---: |
+| Claude Sonnet 4.6 | 84.0% | 83.0% | 83.5% |
+| GPT-5.2 | 54.0% | 51.0% | 61.5% |
+| GPT-5.1 | 54.0% | 46.5% | 63.5% |
+
+Sonnet remains within 1 pp across both retrieval interfaces and Raw100k, whereas both mid-tier GPT models remain well below Raw100k under either retrieval interface. The same tier pattern therefore persists without PHREEQC's section-level TOC design. Nor is the mid-tier gap caused by the step ceiling: only 0% of GPT-5.1 and 9.7% of GPT-5.2 failed TOC items reach step 24; their dominant failure is early wrong commitment. Gemini 3 Flash is different: 117/200 TOC trajectories reach the ceiling versus 57/200 under Raw100k. We therefore state its degradation specifically as interface overhead under this 24-step harness, not as an intrinsic model property.
+
+**3. Do the key TOC-versus-Raw100k comparisons survive Raw100k repeats? Yes.** We ran the two models requested:
+
+| Model | Original Raw100k | Raw100k repeat | TOC rerun range |
+| --- | ---: | ---: | ---: |
+| GPT-5.1 | 63.5% | 61.0% | 48.0–55.5% |
+| GPT-5.2 | 61.5% | 63.5% | 54.5–56.0% |
+
+Both Raw100k repeats remain above the entire corresponding TOC rerun range; each original Raw100k score also lies within the repeat's 95% Wilson CI. At the same time, 59–60 per-item outcomes change, reinforcing the paper's distinction between aggregate stability and item-level reliability. Both complete 200-item repeat runs and the paired analysis are released. We will label Raw500k and external-harness conclusions as single-run results.
 
 # Response to Reviewer h7Cb
 
