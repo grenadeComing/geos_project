@@ -36,18 +36,18 @@ Thus removing choices makes the task harder but strengthens the relative tool/no
 
 Thank you for running the artifact and identifying concrete release failures. The reviewer is correct that the submitted package was incomplete; we do not claim that the omitted files were available at review time.
 
-**1. Are complete per-question runs now available for every condition?** Most original experimental evidence was retained. The conditions fall into only three categories: **already available**, **accidentally omitted from the anonymous package and now restored**, or **complete logs lost but exact per-item outcomes retained in the failure analysis**.
+**1. Are complete per-question runs now available for every condition?** Most original experimental evidence was retained. There are three simple cases: (1) the files were included in the anonymous artifact reviewed by h7Cb; (2) we had the original files but forgot to include them in that package, and have now added them; or (3) the complete logs were not retained, but the pre-submission failure analysis preserved the exact per-item results.
 
 Fortunately, for the last category, we retained the corresponding pre-submission failure-analysis packages. Each failure directory identifies one incorrect item; those item IDs and their complement preserve the exact per-item correctness vector. Thus, although the complete prompt/tool-call logs were lost for a small number of legacy conditions, the experimental numbers were not lost. These are retained original analysis records—not estimates inferred backward from the aggregate values printed in the paper. The released verification script confirms exact item-ID agreement between the failure analysis and saved outcome snapshots for 12 model/protocol conditions.
 
 | Result | Status |
 | --- | --- |
-| **Table 1** | **Already available:** Direct/CoT and Opus Raw100k. **Failure-analysis recovery:** the remaining Agent conditions. |
-| **Table 2** | **Failure-analysis recovery:** the exact paired per-item outcomes determine every kept/gained/lost count. |
-| **Table 3** | **Accidentally omitted; now restored:** all 15 original TOC reruns are now released. |
-| **Table 4** | **Already available:** all five 45-item runs. **Failure-analysis recovery:** their baseline outcomes. |
-| **Table 5** | **Failure-analysis recovery:** exact outcome counts, together with the retained bin/token statistics. |
-| **Gemini §4.3** | **Accidentally omitted; now restored:** both complete original 200-item runs. |
+| **Table 1** | The Direct/CoT and Opus Raw100k files were in the original anonymous artifact. For the remaining Agent conditions, the complete logs were not retained, but their exact per-item results were preserved in the failure analysis. |
+| **Table 2** | The Direct files were in the original anonymous artifact. The Agent per-item results were preserved in the failure analysis, which exactly determines every kept/gained/lost count. |
+| **Table 3** | We forgot to package 12 of the 15 original TOC reruns. We have now added them, so all 15 original reruns are released. |
+| **Table 4** | All five 45-item runs were in the original anonymous artifact. Their baseline per-item results were preserved in the failure analysis. |
+| **Table 5** | The complete logs were not retained, but the exact results were preserved in the failure analysis together with the original bin/token statistics. |
+| **Gemini §4.3** | We forgot to package both complete original Gemini runs. We have now added them. |
 
 We will correct the manuscript's overly broad trajectory-availability statement and explicitly distinguish **complete trajectories** from **retained original outcomes**. The remaining conditions can technically be rerun against current endpoints, but those would be new rebuttal-period observations rather than the original closed-model executions. A complete replacement sweep is also beyond our remaining budget: the retained Opus Raw100k run alone consumed 46.77M input and 0.37M output tokens.
 
