@@ -47,7 +47,7 @@ Fortunately, for the last category, we retained the corresponding pre-submission
 | **Table 3** | We forgot to package 12 of the 15 original TOC reruns. We have now added them, so all 15 original reruns are released. The embedded timestamps in their run summaries and per-item logs date the runs to May 3–7, 2026, before submission, rather than the rebuttal period. |
 | **Table 4** | All five 45-item runs were in the original anonymous artifact. Their baseline per-item results were preserved in the failure analysis. |
 | **Table 5** | The complete logs were not retained, but the exact results were preserved in the failure analysis together with the original bin/token statistics. |
-| **Gemini §4.3** | We forgot to package both complete original Gemini runs. We have now added them. |
+| **Gemini §4.3** | We forgot to package both complete original Gemini runs. We have now added them. The embedded timestamps in their run summaries and per-item logs date both runs to May 3, 2026, before submission, rather than the rebuttal period. |
 
 We will correct the manuscript's overly broad trajectory-availability statement and explicitly distinguish **complete trajectories** from **retained original outcomes**. The remaining conditions can technically be rerun against current endpoints, but those would be new rebuttal-period observations rather than the original closed-model executions. A complete replacement sweep is also beyond our remaining budget: the retained Opus Raw100k run alone consumed 46.77M input and 0.37M output tokens.
 
