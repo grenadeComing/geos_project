@@ -30,7 +30,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 
 **Harness and 24-step budget.** We agree that harness choices are part of the measured compound system. The existing all-model trajectory analysis already separates the mechanisms: 0% of GPT-5.1 and 9.7% of GPT-5.2 failures reach the ceiling, versus 62–68% for top-tier failures, while Gemini’s TOC regression is explicitly a navigation/commit-rate effect (median 9 TOC reads versus 2 under Raw100k). We will avoid presenting the 24-step result as model-only capability and will state that a larger-budget ablation remains future work.
 
-**Uneven rerun coverage.** The current paper has three TOC reruns per top/mid-tier model but less repeat evidence for Raw100k/Raw500k and external harnesses. Under the rebuttal budget, we will prioritize Raw100k repeats for GPT-5.1 and GPT-5.2, release the complete runs, and label all unrepeated comparisons as single-run evidence. **Status: pending.**
+**Uneven rerun coverage.** We completed an independent GPT-5.2 Raw100k repeat: 127/200 (63.5%; 95% Wilson CI 56.6–69.9%) versus the published run's 123/200 (61.5%), a 2.0 pp aggregate difference. The paired outcomes are 95 both correct, 32 repeat-only correct, 28 original-only correct, and 45 both wrong (77.2% retention of originally correct items). Thus the aggregate Raw100k advantage over the 54.5–56.0% TOC rerun range is stable, while substantial item-level churn remains—directly reinforcing our distinction between aggregate rerun stability and retention. The complete repeat has 200 workspaces, 200 result rows, zero errors, and will be released. **GPT-5.1 Raw100k repeat: pending.**
 
 ## Reviewer h7Cb
 
@@ -48,6 +48,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 - [ ] Account for every artifact underlying Tables 2, 3, and 5; do not claim full reproduction before this is complete.
 - [x] Rerun and verify the minimal GPT-5.4 numeric-answer agent condition.
 - [x] Add the numeric subset and all three GPT-5.4 result directories to the anonymous artifact, with a one-command analysis script and checksums.
-- [ ] Run Raw100k repeats only if the remaining budget and rebuttal space justify them.
+- [x] Complete and integrity-check the GPT-5.2 Raw100k repeat.
+- [ ] Complete GPT-5.1 Raw100k repeat, then release both repeat runs with a compact comparison script.
 - [ ] Replace plural/independent expert-validation claims in the paper and metadata.
 - [ ] Narrow title/generalization language and define capability tiers formally.
