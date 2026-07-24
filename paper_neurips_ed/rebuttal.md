@@ -49,7 +49,7 @@ Fortunately, for the last category, we retained the corresponding pre-submission
 | **Table 5** | The complete logs were not retained, but the exact results were preserved in the failure analysis together with the original bin/token statistics. |
 | **Gemini §4.3** | We forgot to package both complete original Gemini runs. We have now added them. The embedded timestamps in their run summaries and per-item logs date both runs to May 3, 2026, before submission, rather than the rebuttal period. |
 
-We will correct the manuscript's overly broad trajectory-availability statement and explicitly distinguish **complete trajectories** from **retained original outcomes**. The remaining conditions can technically be rerun against current endpoints, but those would be new rebuttal-period observations rather than the original closed-model executions. A complete replacement sweep is also beyond our remaining budget: the retained Opus Raw100k run alone consumed 46.77M input and 0.37M output tokens.
+We will revise the manuscript to distinguish complete logs from retained per-item outcomes. Rerunning conditions whose logs were lost would produce new closed-model observations, not recover the originals, and a full rerun is beyond our budget (one Opus Raw100k run alone used 46.77M input and 0.37M output tokens).
 
 **2. What exact commands now work?** We fixed the dataset and `result`/`results` path mismatches and removed the analysis guard. From the anonymous repository root,
 
