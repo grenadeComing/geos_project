@@ -44,7 +44,7 @@ Fortunately, for the last category, we retained the corresponding pre-submission
 | --- | --- |
 | **Table 1** | The Direct/CoT and Opus Raw100k files were in the original anonymous artifact. For the remaining Agent conditions, the complete logs were not retained, but their exact per-item results were preserved in the failure analysis. |
 | **Table 2** | The Direct files were in the original anonymous artifact. The Agent per-item results were preserved in the failure analysis, which exactly determines every kept/gained/lost count. |
-| **Table 3** | We forgot to package 12 of the 15 original TOC reruns. We have now added them, so all 15 original reruns are released. |
+| **Table 3** | We forgot to package 12 of the 15 original TOC reruns. We have now added them, so all 15 original reruns are released. The embedded timestamps in their run summaries and per-item logs date the runs to May 3–7, 2026, before submission, rather than the rebuttal period. |
 | **Table 4** | All five 45-item runs were in the original anonymous artifact. Their baseline per-item results were preserved in the failure analysis. |
 | **Table 5** | The complete logs were not retained, but the exact results were preserved in the failure analysis together with the original bin/token statistics. |
 | **Gemini §4.3** | We forgot to package both complete original Gemini runs. We have now added them. |
