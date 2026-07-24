@@ -30,7 +30,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 
 **Harness and 24-step budget.** We agree that harness choices are part of the measured compound system. The existing all-model trajectory analysis already separates the mechanisms: 0% of GPT-5.1 and 9.7% of GPT-5.2 failures reach the ceiling, versus 62–68% for top-tier failures, while Gemini’s TOC regression is explicitly a navigation/commit-rate effect (median 9 TOC reads versus 2 under Raw100k). We will avoid presenting the 24-step result as model-only capability and will state that a larger-budget ablation remains future work.
 
-**Uneven rerun coverage.** We completed an independent GPT-5.2 Raw100k repeat: 127/200 (63.5%; 95% Wilson CI 56.6–69.9%) versus the published run's 123/200 (61.5%), a 2.0 pp aggregate difference. The paired outcomes are 95 both correct, 32 repeat-only correct, 28 original-only correct, and 45 both wrong (77.2% retention of originally correct items). Thus the aggregate Raw100k advantage over the 54.5–56.0% TOC rerun range is stable, while substantial item-level churn remains—directly reinforcing our distinction between aggregate rerun stability and retention. The complete repeat has 200 workspaces, 200 result rows, zero errors, and will be released. **GPT-5.1 Raw100k repeat: pending.**
+**Uneven rerun coverage.** We completed independent Raw100k repeats for both requested models. GPT-5.1 changes from 127/200 (63.5%) to 122/200 (61.0%; 95% Wilson CI 54.1–67.5%), and GPT-5.2 from 123/200 (61.5%) to 127/200 (63.5%; 56.6–69.9%): aggregate differences of only −2.5 and +2.0 pp. Both repeats remain above their entire TOC rerun ranges (GPT-5.1: 48.0–55.5%; GPT-5.2: 54.5–56.0%). Item-level churn is nevertheless substantial: GPT-5.1 has 95 both-correct / 27 repeat-only / 32 original-only / 46 both-wrong outcomes (74.8% retention), and GPT-5.2 has 95 / 32 / 28 / 45 (77.2% retention). This directly reinforces our distinction between aggregate rerun stability and item-level retention. Both complete repeats contain 200 workspaces and result rows with zero errors and will be released.
 
 ## Reviewer h7Cb
 
@@ -49,6 +49,7 @@ Status labels: **done** = supported by a checked artifact or existing analysis; 
 - [x] Rerun and verify the minimal GPT-5.4 numeric-answer agent condition.
 - [x] Add the numeric subset and all three GPT-5.4 result directories to the anonymous artifact, with a one-command analysis script and checksums.
 - [x] Complete and integrity-check the GPT-5.2 Raw100k repeat.
-- [ ] Complete GPT-5.1 Raw100k repeat, then release both repeat runs with a compact comparison script.
+- [x] Complete and integrity-check the GPT-5.1 Raw100k repeat.
+- [x] Add both Raw100k repeat runs to the anonymous artifact with a compact pre-rebuttal correctness snapshot, provenance note, checksums, and one-command comparison script.
 - [ ] Replace plural/independent expert-validation claims in the paper and metadata.
 - [ ] Narrow title/generalization language and define capability tiers formally.
