@@ -1,3 +1,19 @@
+# Response to Meta Review
+
+Thank you for summarizing the reviews. We addressed each priority raised in the meta-review.
+
+**Artifact.** Most original experiment records were preserved. We forgot to include the complete original Gemini runs and 12 complete TOC reruns in the initial anonymous package; we have now uploaded them, and their internal timestamps confirm that they were run before submission. For a smaller number of conditions used in Tables 2 and 5, some chat and tool logs for correctly answered items were not retained. However, the original results were preserved in our pre-submission failure analysis: every incorrect item was recorded, so the correct items are exactly the remaining items. We released these records and added one command that reproduces every numerical cell in Tables 2, 3, and 5. Thus, Table 3 now has all original trajectories, while Tables 2 and 5 have the exact original results but not every successful-item trajectory.
+
+**Numeric/free-response evaluation.** We converted all 182 items with unambiguous scalar targets to numeric free response. On the same items, GPT-5.4 scored 2/182 with Direct, 4/182 with CoT, and 93/182 with Agent-TOC. Removing the choices makes the task harder but increases the tool advantage over the stronger no-tool baseline from 39.0 to 48.9 percentage points.
+
+**Expert-validation details.** The items were authored and simulator-checked by one domain-qualified co-author: a doctoral researcher in civil/environmental engineering with prior training and research in earth science, mathematics, and computational geoscience. There was no independent expert reviewer, agreement rate, or rejection rate. We corrected the released metadata and will state this directly in the paper revision.
+
+**Human baseline.** We do not have an independent human baseline. The item author cannot provide an unbiased baseline because they already know the questions and simulation results. We will therefore not describe the reported model scores as near-human performance.
+
+**Scope and relation to prior work.** We have not tested a second simulator and will remove the statement that the result “likely transfers” beyond PHREEQC. We will also sharpen the contribution: the paper does not claim the already-known result that tools can help; it provides controlled, paired measurements of which answers are gained and lost after tool access, how well previously correct answers are retained, and how output-access design changes model behavior. New independent Raw100k repeats and a generic keyword-search interface preserve the key within-PHREEQC comparison.
+
+We hope these changes address the meta-review's main concerns while clearly stating what could and could not be recovered or evaluated.
+
 # Response to Reviewer 3hnF
 
 Thank you for recognizing the value of the kept/gained/lost decomposition and capability-stratified failure analysis.
