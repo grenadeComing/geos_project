@@ -10,7 +10,7 @@ Thank you for summarizing the reviews. We addressed each priority raised in the 
 
 **Human baseline.** We do not have an independent human baseline. The item author cannot provide an unbiased baseline because they already know the questions and simulation results. We will therefore not describe the reported model scores as near-human performance.
 
-**Scope and relation to prior work.** We have not tested a second simulator and will remove the statement that the result “likely transfers” beyond PHREEQC. We will also sharpen the contribution: the paper does not claim the already-known result that tools can help; it provides controlled, paired measurements of which answers are gained and lost after tool access, how well previously correct answers are retained, and how output-access design changes model behavior. New independent Raw100k repeats and a generic keyword-search interface preserve the key within-PHREEQC comparison.
+**Scope and relation to prior work.** We have not tested a second simulator. Whether the interaction extends beyond PHREEQC remains an open question that we would like to test in future work; we will not present it as an empirical conclusion of this paper. We will also sharpen the contribution: the paper does not claim the already-known result that tools can help; it provides controlled, paired measurements of which answers are gained and lost after tool access, how well previously correct answers are retained, and how output-access design changes model behavior. New independent Raw100k repeats and a generic keyword-search interface preserve the key within-PHREEQC comparison.
 
 We hope these changes address the meta-review's main concerns while clearly stating what could and could not be recovered or evaluated.
 
