@@ -25,3 +25,4 @@ build_dataset.jsonl
 *.pdf
 *.png
 *.svg
+paper_neurips_ed/rebuttal.md
