@@ -1,0 +1,15 @@
+# Alternative: truly 10/10/5 mol initial gas (partial pressures 0.4/0.4/0.2 atm, V chosen so n_total~25 mol)
+SOLUTION 1
+    temp      150
+    pH        7
+    pe        4
+    -water    1
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 1
+    -volume 868
+    -temperature 150
+    CH4(g) 0.4
+    CO2(g) 0.4
+    NH3(g) 0.2
+END

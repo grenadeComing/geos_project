@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>PHREEQC-MCQ-200 Recheck</title>
+<style>:root{color-scheme:light;--paper:#f5f7f6;--surface:#fff;--ink:#1b2925;--muted:#5a6964;--line:#d7dedb;--accent:#1f6f63;--accent-ink:#fff;--accent-soft:#e2efec;
+--wrong:#b3261e;--wrong-bg:#fbe9e7;--susp:#9a5b00;--susp-bg:#fdf0dc;--ok:#2e7a4d;--ok-bg:#e3f2e8;--field:#fff;--field-line:#b9c6c1;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#121816;--surface:#1a2220;--ink:#e3ebe8;--muted:#9aaaa4;--line:#2e3a37;--accent:#6cc2b3;--accent-ink:#0d1a17;--accent-soft:#1d3531;
+--wrong:#ff8a80;--wrong-bg:#3a1c1a;--susp:#f0b35c;--susp-bg:#36280f;--ok:#7fd29f;--ok-bg:#15301f;--field:#141b19;--field-line:#3a4845}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#121816;--surface:#1a2220;--ink:#e3ebe8;--muted:#9aaaa4;--line:#2e3a37;--accent:#6cc2b3;--accent-ink:#0d1a17;--accent-soft:#1d3531;
+--wrong:#ff8a80;--wrong-bg:#3a1c1a;--susp:#f0b35c;--susp-bg:#36280f;--ok:#7fd29f;--ok-bg:#15301f;--field:#141b19;--field-line:#3a4845}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 var(--sans);padding-inline:16px;padding-block:0 64px}
+main,.intro,.toolbar-inner{max-width:980px;margin:0 auto}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}h1{font-size:1.8rem;font-weight:650}h2{font-size:1.25rem;font-weight:650}
+p{margin:0}a{color:var(--accent)}code{font-family:var(--mono);font-size:.92em}
+.eyebrow{font:600 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.intro{display:grid;gap:12px;padding-block:32px 20px}.intro p,.how{max-width:72ch}.muted{color:var(--muted)}
+.how{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.fields{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+label{display:block}input[type=text],textarea,select{font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--field-line);border-radius:6px;padding:8px 10px;width:100%;margin-top:4px}
+textarea{resize:vertical;line-height:1.5}.mono,input.mono{font-family:var(--mono);font-size:.88rem}
+button,.file-button{font:inherit;font-weight:500;padding:8px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;position:relative}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.file-button input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible,.file-button:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding-block:10px}
+.toolbar-inner{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.progress{font:600 .9rem var(--mono);font-variant-numeric:tabular-nums}.bar{flex:1 1 140px;height:6px;border-radius:3px;background:var(--line);overflow:hidden;min-width:100px}.bar span{display:block;height:100%;background:var(--accent);width:0}
+.toggle{display:flex;gap:6px;align-items:center;font-size:.88rem}.actions{display:flex;flex-wrap:wrap;gap:8px}
+.status-line{font-size:.8rem;color:var(--muted);width:100%}.status-line.error{color:var(--wrong);font-weight:600}
+main{display:grid;gap:28px;padding-top:24px}
+.toc ol{margin:0;padding-left:1.4em;display:grid;gap:2px;font-size:.92rem}.toc a[data-done="true"]{color:var(--ok)}.toc a[data-done="true"]::after{content:" ✓"}
+.groups{display:grid;gap:28px}
+.group{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px}
+.group-head{display:flex;gap:12px;align-items:baseline}.grow{flex:1}
+.gnum{font:650 .85rem var(--mono);color:var(--accent-ink);background:var(--accent);border-radius:999px;min-width:1.8em;height:1.8em;display:inline-grid;place-items:center}
+.count{font:600 .8rem var(--mono);color:var(--muted);white-space:nowrap}.count.all{color:var(--ok)}
+.explain{max-width:76ch}
+.group-decision{border:0;margin:0;padding:12px 14px;background:var(--accent-soft);border-radius:8px;display:grid;gap:8px;min-width:0}
+legend{font:650 .72rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0;margin-bottom:6px}
+.group-decision legend{float:left;width:100%;margin-bottom:0;color:var(--accent)}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+.choices{display:flex;flex-wrap:wrap;gap:6px}.choices label{display:flex;gap:7px;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:6px;cursor:pointer;font-size:.9rem;background:var(--surface)}
+.choices label:has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.choices input{accent-color:var(--accent);margin:0}
+.suggest{font:650 .62rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.scenario-block{display:grid;gap:6px;margin-top:6px;padding-top:14px;border-top:1px solid var(--line)}
+.scenario-head{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}.sid{font:650 .85rem var(--mono);color:var(--accent)}.stitle{font-weight:600}
+.from{font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.setup-text{padding:10px 12px;background:var(--paper);border-radius:6px;font-size:.9rem}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.qblock,.setup-card{border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:grid;gap:10px;background:var(--surface)}
+.qblock.done,.setup-card.done{border-color:var(--ok)}
+.setup-card{background:var(--paper)}.setup-card .setup-text{background:var(--surface)}
+.card-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}.qid{font:650 1rem var(--mono)}
+.pill{font:650 .68rem/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;padding:5px 9px;border-radius:999px;background:var(--susp-bg);color:var(--susp);white-space:nowrap}
+.pill.wrong_key{background:var(--wrong-bg);color:var(--wrong)}.pill.verified,.pill.done{background:var(--ok-bg);color:var(--ok)}.pill.todo{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.stem{font-weight:550}.stem.missing{color:var(--wrong);font-style:italic;font-weight:500}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:3px}.opts li{display:flex;gap:10px;align-items:baseline;padding:3px 8px;border-radius:5px;font-family:var(--mono);font-size:.9rem}
+.opts li.key{background:var(--accent-soft)}.opts li.match{box-shadow:inset 0 0 0 1.5px var(--ok)}.letter{font-weight:650;color:var(--muted);width:1.1em}
+.tag{font:650 .62rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}.tag.run{color:var(--ok)}
+.finding{margin:0;display:grid;gap:2px;padding:10px 12px;border-left:3px solid var(--susp);background:var(--paper);border-radius:0 6px 6px 0}
+dt{font:650 .66rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}dd{margin:0 0 6px;overflow-wrap:anywhere}dd:last-child{margin-bottom:0}
+.issue{padding:10px 12px;border-left:3px solid var(--susp);background:var(--surface);border-radius:0 6px 6px 0}
+.override{display:flex;gap:7px;align-items:center;font-size:.85rem;color:var(--muted);cursor:pointer}.override input{accent-color:var(--accent);margin:0}
+.own[hidden],.panel[hidden],.qblock[hidden],.setup-card[hidden],.group[hidden]{display:none}
+.panel{display:grid;gap:10px;padding:12px 14px;border-radius:6px;background:var(--accent-soft)}
+.opt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.small{max-width:180px}
+.field-label{font-size:.85rem;color:var(--muted)}
+.reveal summary{cursor:pointer;color:var(--muted);font-size:.88rem}.reveal[open] summary{margin-bottom:6px}
+.copy{float:right;padding:3px 10px;font-size:.8rem}
+pre{font:.78rem/1.5 var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px;overflow-x:auto;margin:6px 0 0;clear:both}
+.qlist{display:grid;gap:12px}.qrow{display:grid;gap:6px;padding-top:10px;border-top:1px solid var(--line)}.qrow .stem{font-size:.92rem}
+.section-intro{color:var(--muted);max-width:72ch}
+.inputs{display:grid;gap:8px}.input-row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.need{font-size:.78rem;color:var(--susp);font-weight:600}.files{display:flex;flex-wrap:wrap;gap:6px;width:100%}.files:empty{display:none}
+.chip{display:inline-flex;gap:6px;align-items:center;font:.8rem var(--mono);padding:3px 4px 3px 9px;border-radius:999px;background:var(--accent-soft)}
+.chip button{padding:0 7px;border:0;background:transparent;font-size:1rem;line-height:1.2}
+@media (max-width:640px){.opt-grid{grid-template-columns:1fr}h1{font-size:1.45rem}.group{padding:16px 14px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="intro">
+  <div class="eyebrow">Answer-key recheck · 2026-09-30</div>
+  <h1>PHREEQC-MCQ-200 recheck</h1>
+  <p>Sachit, we re-ran your 200 questions in PHREEQC 3.8.6 with the frozen <code>phreeqc.dat</code>. For 158 of them we reproduced your key exactly; they are not listed here. The other 42, and 7 scenario setups, are grouped below by the kind of problem, which comes to about 17 decisions.</p>
+  <ul class="how">
+    <li>Each group has one decision that applies to all its questions. Under any question you can choose <b>Use a different decision</b> to override it.</li>
+    <li>Every question is shown in full, as you wrote it: setup, question, and A–D with your key marked. Our PHREEQC value and what we found are in the box under it.</li>
+    <li>If you change a key or revise a question, the fields to fill in appear under that question.</li>
+    <li>Your work saves in this browser as you go. Press <b>Download my review</b> when you are done (or to pause), and send us the file. This page makes no network requests and sends nothing by itself.</li>
+  </ul>
+  <p class="muted">Our numbers come from our own inputs, which you can open and copy on each scenario. For S09 and S11–S20 we did not have your input files, so please check our setup against yours and attach your files at the bottom if you still have them.</p>
+  <div class="fields">
+    <label style="flex:1 1 260px">Your name<input type="text" id="reviewer" maxlength="120" autocomplete="name"></label>
+    <label class="file-button">Restore a downloaded review<input type="file" id="restore" accept=".json,application/json"></label>
+  </div>
+</header>
+<div class="toolbar"><div class="toolbar-inner">
+  <span class="progress" id="progress-count"></span>
+  <div class="bar" aria-hidden="true"><span id="progress-bar"></span></div>
+  <label class="toggle"><input type="checkbox" id="only-open"> Show only what still needs a decision</label>
+  <div class="actions"><button type="button" class="primary" id="download">Download my review</button></div>
+  <p class="status-line" id="status-line" role="status" aria-live="polite"></p>
+</div></div>
+<main>
+  <nav class="toc" aria-label="Groups"><ol id="toc"></ol></nav>
+  <div id="groups" class="groups"></div>
+  <section aria-labelledby="h-inputs" class="group">
+    <h2 id="h-inputs">Your PHREEQC input files</h2>
+    <p class="section-intro">Optional but very helpful. Attached files are stored inside the downloaded file (up to 1 MB each).</p>
+    <div id="input-rows" class="inputs"></div>
+  </section>
+</main>
+<noscript>This page needs JavaScript. It makes no network requests.</noscript>
+<script id="recheck-data" type="application/json">{"meta":{"dataset_sha256":"eee19ade89350ed500b6438174599e1e9c13ddb6f598fd80b8cab0dff4f27549","verification_sha256":"303fa519734865faf8a3f22c4f28fef0dedc2e35ffdcfb6319c1e4f5e080f8ff","date":"2026-09-30"},"groups":[{"setups":[],"labels":{},"perQuestion":false,"id":"wrong-key","title":"The key looks wrong","ids":[22],"options":["change_key","keep","revise","drop"],"suggested":"change_key","explain":"PHREEQC reproduces a different option than the key, and the result does not change with solver settings."},{"setups":[],"labels":{},"perQuestion":false,"id":"missing-stem","title":"The question sentence is missing","ids":[4,37,78],"options":["revise","drop"],"suggested":"revise","explain":"Only the setup and options A–D are in the dataset, so a reader cannot tell what is being asked. Write the question sentence for each, or drop them."},{"setups":[],"labels":{},"perQuestion":false,"id":"moles-molality","title":"Asks for moles, but the key is the molality","ids":[54,64,66],"options":["revise","change_key","keep","drop"],"suggested":"revise","explain":"In these systems the mass of water is not 1 kg (2.26 kg in S06, 1.78 kg in S07), so moles and molality differ. The keyed option equals the molality. Change \"moles\" to \"molality\" in the question, or change the options to moles."},{"setups":[],"labels":{},"perQuestion":false,"id":"unstable","title":"Redox values that PHREEQC does not pin down","ids":[1,8,48,108,115,118,119,125,128,130,133,136,138,140,145,166,192],"options":["drop","revise","keep"],"suggested":"drop","explain":"These ask for pe or a value that follows from it (log IAP or SI of H2(g), O2(g), CH4(g), sulfur; H2 molality) in systems with no redox couple to fix it. Changing solver settings moves the value by more than the gap between options: in S14, pe is 10.741 with default settings and −0.920 with a tighter convergence tolerance. Rewording cannot fix this. Drop them, or revise each to ask for a quantity that is well defined."},{"setups":[],"labels":{},"perQuestion":false,"id":"s16-location","title":"S16: a solution property asked \"at exchange N\"","ids":[151,153,159,160],"options":["revise","keep","drop"],"suggested":"revise","explain":"Specific conductance, saturation index and log IAP belong to the solution in a cell, not to the exchanger. The key matches when \"exchange N\" is read as cell N. For Q153, \"Na at exchange 1\" could also mean NaX on the exchanger, which matches no option. Saying \"solution in cell N\" removes the doubt."},{"setups":["S17"],"labels":{"keep":"Keep them; the setup fix resolves these"},"perQuestion":false,"id":"s17-units","title":"S17: concentrations have no units","ids":[163,164,165,167,168,169,170,171,172],"options":["keep","revise","drop"],"suggested":"keep","explain":"With PHREEQC’s default unit (mmol/kgw) no solid solution forms and none of these keys match. With mol/kgw every one of them matches exactly. Adding the unit to the setup text fixes all nine. (Q166, the pe in this scenario, is in the redox group.)"},{"setups":["S01"],"labels":{},"perQuestion":false,"id":"s01-steps","title":"S01: reaction-step numbering","ids":[5,6],"options":["revise","change_key","keep","drop"],"suggested":"revise","explain":"Q5 and Q6 ask about reaction step 47, but their keys match step 48. Q7, also at step 47, matches step 47. Either the questions should say step 48, or the options should be recomputed for step 47."},{"setups":[],"labels":{},"perQuestion":true,"id":"one-off","title":"Other single issues","ids":[3,56,186],"options":["keep","change_key","revise","drop"],"explain":"Each of these has its own problem, so decide them one by one."},{"setups":["S05","S06","S07","S09","S12"],"labels":{},"perQuestion":false,"id":"setup-text","title":"Setup text does not match your input","ids":[],"explain":"The setup text that every question in these scenarios starts with does not describe the input that produced the keys, or leaves out something the answers depend on. A reader who follows the text literally gets different numbers. Most of these questions are otherwise verified, so a corrected setup text would make the whole scenario usable."}],"scenarios":[{"id":"S01","title":"Calcite dissolution at 100°C","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","issue":"For Q5 and Q6 the key matches PHREEQC reaction step 48 rather than step 47, while Q7 matches step 47, so the step numbering in the key is inconsistent. pe is poorly poised in this system and moves by more than the option spacing under different kinetic integrator settings.","from_test":"test1","setup_source":"Sachit input (test1)","input":"SOLUTION 1\n    temp      100\n    pH        5\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    C(4)      0.5\n    Mn(2)     1\n    -water    1 # kg\nKINETICS 1\nCalcite\n    -formula  CaCO3  1\n    -m        1\n    -m0       1\n    -parms        10.0   0.001\n-steps       1000 in 100 steps # seconds\nSELECTED_OUTPUT 1\n    -file s01.sel\n    -reset false\n    -step true\n    -high_precision true\nUSER_PUNCH 1\n    -headings pH pe totC SI_Arag SI_Calc Calcite_m Calcite_dm\n    10 PUNCH -LA(\"H+\"), -LA(\"e-\"), TOT(\"C\"), SI(\"Aragonite\"), SI(\"Calcite\"), KIN(\"Calcite\"), KIN_DELTA(\"Calcite\")\nEND","needs_input":false,"questions":[{"id":1,"status":"unstable","status_label":"Unstable value","stem":"At reaction step 100, what is the redox potential pe?","options":{"A":"7.366","B":"7.367","C":"7.365","D":"7.364"},"key":"D"},{"id":2,"status":"verified","status_label":"Verified","stem":"At reaction step 100, what is the pH?","options":{"A":"5.535","B":"5.537","C":"5.534","D":"5.538"},"key":"C"},{"id":3,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"At reaction step 100, what is the molality of carbon?","options":{"A":"5.276e-04","B":"5.278-04","C":"5.274e-04","D":"5.277e-04"},"key":"A"},{"id":4,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"","options":{"A":"-4.35","B":"-4.34","C":"-4.38","D":"-4.36"},"key":"A"},{"id":5,"status":"no_match","status_label":"No option matches","stem":"At reaction step 47, what is the pH?","options":{"A":"5.324","B":"5.327","C":"5.325","D":"5.326"},"key":"D"},{"id":6,"status":"no_match","status_label":"No option matches","stem":"At reaction step 47, what is the molality of carbon","options":{"A":"5.142e-04","B":"5.141e-04","C":"5.140e-04","D":"5.145e-04"},"key":"B"},{"id":7,"status":"verified","status_label":"Verified","stem":"At reaction step 47, what is the saturation index of Aragonite?","options":{"A":"-5.04","B":"-5.08","C":"-5.06","D":"-5.07"},"key":"C"},{"id":8,"status":"unstable","status_label":"Unstable value","stem":"At reaction step 47, what is the redox potential pe?","options":{"A":"7.606","B":"7.602","C":"7.603","D":"7.604"},"key":"A"}]},{"id":"S02","title":"Calcite dissolution at 200°C","preamble":"1 mole of Calcite (CaCO3​) reacts with an acidic pH 2 solution at 200 degrees Celsius. The initial solution contains 10 mmol/kgw of Copper (Cu2+) and 5 mmol/kgw of Barium, with an oxidation potential (pe) of 4. Model the reaction kinetics over a 1000-second duration (using 100 time steps), using a specific surface area of 1.0 and a rate constant of 10.","issue":null,"from_test":"test2","setup_source":"Sachit input (test2)","input":"SOLUTION 1\n    temp      200\n    pH        2\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    Cu(2)     10\n    Ba        5\n    -water    1 # kg\n\nKINETICS 1\nCalcite\n    -formula  CaCO3  1\n    -m        1\n    -m0       1\n    -parms    1 10\n-steps       1000 in 100 steps # seconds\nSELECTED_OUTPUT 1\n    -file s02.sel\n    -reset false\n    -step true\n    -high_precision true\nUSER_PUNCH 1\n    -headings pH pe SI_With mCO2 Alk Calcite_m\n    10 PUNCH -LA(\"H+\"), -LA(\"e-\"), SI(\"Witherite\"), MOL(\"CO2\"), ALK, KIN(\"Calcite\")\nEND","needs_input":false,"questions":[]},{"id":"S03","title":"Albite dissolution with H₂S","preamble":"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).","issue":null,"from_test":"test3","setup_source":"Sachit input (test3)","input":"SOLUTION 1\n    temp      200\n    pH        2\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    Fe(3)     4\n    Fe(2)     4\n    -water    1 # kg\n\n\nKINETICS 1\nAlbite\n    -formula  NaAlSi3O8  1\n    -m        1\n    -m0       1\n    -parms    1 10\n    -tol      1e-08\n-steps       1000 in 100 steps # seconds\n-step_divide 1\n-runge_kutta 3\n-bad_step_max 500\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1\n    -volume 1\n    -temperature 200\n    H2S(g)    5\nSELECTED_OUTPUT 1\n    -file s03.sel\n    -reset false\n    -step true\n    -high_precision true\nUSER_PUNCH 1\n    -headings Fe3p pH pe Alb_m Alb_dm Si mu Fe3 Ba SI_Goe H2Sg_m H2Sg_dm S Na Al Fe\n    10 PUNCH MOL(\"Fe+3\"), -LA(\"H+\"), -LA(\"e-\"), KIN(\"Albite\"), KIN_DELTA(\"Albite\"), TOT(\"Si\"), MU, TOT(\"Fe(3)\"), TOT(\"Ba\"), SI(\"Goethite\"), GAS(\"H2S(g)\"), 0, TOT(\"S\"), TOT(\"Na\"), TOT(\"Al\"), TOT(\"Fe\")\nEND","needs_input":false,"questions":[]},{"id":"S04","title":"Solution mixing and heating","preamble":"Simulate the mixing of two aqueous solutions in 1:1 proportions: the first containing 50 mmol/kg of dissolved inorganic carbon and the second containing 50 mmol/kg of calcium, as it is heated from 20°C to 200°C in 10 discrete steps, accounting for the precipitation and dissolution of calcite.","issue":null,"from_test":"test4","setup_source":"Sachit input (test4)","input":"TITLE Mixing Carbonate and Calcium Solutions with Heating\n\n# Solution 1: Carbonate-rich water\nSOLUTION 1\n    temp      20\n    units     mmol/kgw\n    C(4)      50\n    # pH is adjusted for charge balance\n    pH        10 charge \n\n# Solution 2: Calcium-rich water\nSOLUTION 2\n    temp      20\n    units     mmol/kgw\n    Ca        50\n    # pH is adjusted for charge balance\n    pH        7 charge\n\n# Mix the two solutions in equal parts (1 kg each)\nMIX 1\n    1    1.0\n    2    1.0\n\n# Heat the mixture from 20C to 200C\nREACTION_TEMPERATURE 1\n    20.0 200.0 in 10 steps\n\n# Track the precipitation of Calcite and changes in chemistry\nSELECTED_OUTPUT 1\n    -file         mix_heating.sel\n    -temperature  true\n    -pH           true\n    -totals       Ca C\n    -si           Calcite  Aragonite  CO2(g)\n    -equilibrium_phases  Calcite\nEQUILIBRIUM_PHASES 1\n    Calcite   0 0\nUSER_PUNCH 1\n    -headings mu rho logIAP_cc C4 Ca_mol C4_mol\n    10 PUNCH MU, RHO, SI(\"Calcite\")+LK_PHASE(\"Calcite\"), TOT(\"C(4)\"), TOT(\"Ca\")*TOT(\"water\"), TOT(\"C(4)\")*TOT(\"water\")\nEND","needs_input":false,"questions":[]},{"id":"S05","title":"Mineral–gas equilibrium","preamble":"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.","issue":"The text copies the GAS_PHASE keywords literally: \"a 1 atm gas phase … CO2 at partial pressure 1 atm, CH4 at 5 atm, H2S at 10 atm\" is physically contradictory (the partials sum to 16 atm) and the 1 L volume is not stated. The default PHREEQC reading happens to reproduce your input, but the earlier wording (\"1:5:10 molar ratio\") was clearer.","from_test":"test5","setup_source":"Sachit input (test5)","input":"SOLUTION 1\n    temp      100\n    units     mmol/kgw\n    Ca        50\n    # pH is adjusted for charge balance\n    pH        7 charge\n\n\nEQUILIBRIUM_PHASES 1\n    Calcite   0 0\n    Gypsum    0 0\n    Aragonite 0 0\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1\n    -volume 1\n    -temperature 25\n    CO2(g)    1\n    CH4(g)    5\n    H2S(g)    10\nEND","needs_input":false,"questions":[{"id":37,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"","options":{"A":"6.536","B":"6.533","C":"6.531","D":"6.530"},"key":"C"},{"id":38,"status":"verified","status_label":"Verified","stem":"What is the saturation index of aragonite?","options":{"A":"-0.47","B":"-0.45","C":"-0.44","D":"-0.43"},"key":"B"},{"id":39,"status":"verified","status_label":"Verified","stem":"What is the pe in the solution?","options":{"A":"-4.646","B":"-4.644","C":"-4.645","D":"-4.647"},"key":"A"},{"id":40,"status":"verified","status_label":"Verified","stem":"How many moles of calcite have precipitated?","options":{"A":"3.644e-02","B":"3.646e-02","C":"3.647e-02","D":"3.645e-02"},"key":"B"},{"id":41,"status":"verified","status_label":"Verified","stem":"How many moles of CH4 gas dissolved into solution?","options":{"A":"2.913e-04","B":"2.916e-04","C":"2.912e-04","D":"2.911e-04"},"key":"A"},{"id":42,"status":"verified","status_label":"Verified","stem":"Which gas had the most moles dissolve?","options":{"A":"CO2","B":"H2S","C":"CH4","D":"All the same"},"key":"B"},{"id":43,"status":"verified","status_label":"Verified","stem":"What is the molality of S in solution?","options":{"A":"4.737e-02","B":"4.738e-02","C":"4.736e-02","D":"4.735e-02"},"key":"A"},{"id":44,"status":"verified","status_label":"Verified","stem":"What is the specific conductance of the solution?","options":{"A":"7949","B":"7943","C":"7944","D":"7948"},"key":"D"},{"id":45,"status":"verified","status_label":"Verified","stem":"What is the alkalinity of the solution?","options":{"A":"2.690e-02","B":"2.694e-02","C":"2.692e-02","D":"2.693e-02"},"key":"B"},{"id":46,"status":"verified","status_label":"Verified","stem":"How many species of Ca are present in solution?","options":{"A":"6","B":"8","C":"7","D":"4"},"key":"A"}]},{"id":"S06","title":"Multi-mineral equilibrium","preamble":"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.","issue":"The text says \"pure water solution at pH 3\", but your input uses \"pH 3 charge\", which charge-balances the starting solution (to pH 6.119). A participant who sets a fixed pH 3 as written matches none of the keyed values. The text should say the pH is adjusted for charge balance.","from_test":"test6","setup_source":"Sachit input (test6)","input":"SOLUTION 1\n    temp      100\n    units     mmol/kgw    # pH is adjusted for charge balance\n    pH        3 charge\n\nEQUILIBRIUM_PHASES 1\n    K-mica    0 10\n    Kaolinite 0 10\n    Dolomite  0 10\n    Epsomite  0 10\n    Fe(OH)3(a) 0 10\n    Halite    0 10\nEND","needs_input":false,"questions":[{"id":47,"status":"verified","status_label":"Verified","stem":"What is the pH of the solution?","options":{"A":"5.506","B":"5.509","C":"5.507","D":"5.508"},"key":"B"},{"id":48,"status":"unstable","status_label":"Unstable value","stem":"What is the pe of the solution?","options":{"A":"9.266","B":"9.268","C":"9.263","D":"9.265"},"key":"D"},{"id":49,"status":"verified","status_label":"Verified","stem":"What is the specific conductance of the solution?","options":{"A":"124109","B":"124104","C":"124108","D":"124103"},"key":"C"},{"id":50,"status":"verified","status_label":"Verified","stem":"What is the molality of Al (OH) 4- in the solution?","options":{"A":"2.243e-06","B":"2.242e-06","C":"2.241e-06","D":"2.240e-06"},"key":"B"},{"id":51,"status":"verified","status_label":"Verified","stem":"Is there more moles of Fe (2) or Fe (3) in solution?","options":{"A":"Fe (2)","B":"Fe (3)","C":"Same","D":"N/A"},"key":"B"},{"id":52,"status":"verified","status_label":"Verified","stem":"Are there fewer species of Fe (2) or Fe (3) in solution?","options":{"A":"Fe (2)","B":"Fe (3)","C":"same","D":"n/a"},"key":"A"},{"id":53,"status":"verified","status_label":"Verified","stem":"How many species of Al are in solution?","options":{"A":"5","B":"6","C":"8","D":"4"},"key":"C"},{"id":54,"status":"no_match","status_label":"No option matches","stem":"How many moles of Mg are in solution?","options":{"A":"4.432e+00","B":"4.434e+00","C":"4.430e+00","D":"4.431e+00"},"key":"A"},{"id":55,"status":"verified","status_label":"Verified","stem":"What is the saturation index of Mirabilite?","options":{"A":"-1.92","B":"-1.89","C":"-1.91","D":"-1.90"},"key":"D"},{"id":56,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"How many moles of kaolinite dissolved?","options":{"A":"4.496e-05","B":"4.499e-05","C":"4.498e-05","D":"4.500e-05"},"key":"B"}]},{"id":"S07","title":"Barium solution and minerals","preamble":"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].","issue":"Same issue as S06: the text says \"pH 5\", your input uses \"pH 5 charge\" (starting pH 11.343). A fixed pH 5 as written matches none of the keyed values.","from_test":"test7","setup_source":"Sachit input (test7)","input":"SOLUTION 1\n    temp      100\n    pH        5 charge\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    Ba        100\n    -water    1 # kg\n\n\nEQUILIBRIUM_PHASES 1\n    Talc      0 10\n    Rhodochrosite 0 10\n    Sepiolite 0 10\n    Sepiolite(d) 0 10\n    Pb(OH)2   0 10\n\nEND","needs_input":false,"questions":[{"id":57,"status":"verified","status_label":"Verified","stem":"What is the pH?","options":{"A":"7.417","B":"7.416","C":"7.414","D":"7.418"},"key":"A"},{"id":58,"status":"verified","status_label":"Verified","stem":"What is the specific conductance?","options":{"A":"10113","B":"10114","C":"10115","D":"10116"},"key":"D"},{"id":59,"status":"verified","status_label":"Verified","stem":"What is the ionic strength of the solution?","options":{"A":"1.684e-01","B":"1.685e-01","C":"1.686e-01","D":"1.688e-01"},"key":"B"},{"id":60,"status":"verified","status_label":"Verified","stem":"Which mineral dissolved the most?","options":{"A":"Rhodochrosite","B":"Sepiolite and Sepiolite(d)","C":"Talc","D":"None"},"key":"B"},{"id":61,"status":"verified","status_label":"Verified","stem":"Which mineral had net precipitation?","options":{"A":"Talc","B":"Rhodochrosite","C":"Sepiolite(d)","D":"None"},"key":"A"},{"id":62,"status":"verified","status_label":"Verified","stem":"How many moles of talc were present in the final assemblage?","options":{"A":"2.332e+01","B":"2.334e+01","C":"2.330e+01","D":"2.333e+01"},"key":"D"},{"id":63,"status":"verified","status_label":"Verified","stem":"How many species of C (4) are present in the solution?","options":{"A":"16","B":"13","C":"9","D":"4"},"key":"B"},{"id":64,"status":"no_match","status_label":"No option matches","stem":"How many moles of CO3-2 are present in solution?","options":{"A":"3.326e-07","B":"3.327e-07","C":"3.324e-07","D":"3.323e-07"},"key":"A"},{"id":65,"status":"verified","status_label":"Verified","stem":"What is the saturation index of Sepiolite(d)?","options":{"A":"-8.81","B":"-8.83","C":"-8.82","D":"-8.86"},"key":"C"},{"id":66,"status":"no_match","status_label":"No option matches","stem":"How many moles of Mn (3) are present in solution?","options":{"A":"6.938e-18","B":"6.936e-18","C":"6.933e-18","D":"6.932e-18"},"key":"C"}]},{"id":"S08","title":"Pyrite oxidation","preamble":"Simulate the equilibrium oxidation of Pyrite in 1 kg of pure water at 25°C. The system starts at a neutral pH (7.0) and is exposed to a constant atmospheric oxygen source (log PO2​​=−0.7). Allow up to 0.1 moles of Pyrite to react and the potential precipitation of Goethite and Gypsum.","issue":null,"from_test":"test8","setup_source":"Sachit input (test8)","input":"TITLE Pyrite Oxidation Equilibrium\nSOLUTION 1 Pure Water\n    temp      25\n    pH        7.0\n    pe        4.0\n    units     mmol/kgw\n    water     1 # kg\n\nEQUILIBRIUM_PHASES 1\n    Pyrite    0.0  0.1    # Dissolve up to 0.1 moles of Pyrite\n    O2(g)     -0.7 10.0   # Maintain atmospheric oxygen contact (log P = -0.7)\n    Goethite  0.0  0.0    # Allow secondary iron minerals to precipitate\n    Gypsum    0.0  0.0    # Allow gypsum to form if Ca is present (not in this simple case)\n\nSELECTED_OUTPUT","needs_input":false,"questions":[]},{"id":"S09","title":"CH₄ / CO₂ / NH₃ gas equilibrium","preamble":"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).","issue":"The text says \"10 moles of Methane, 10 moles of CO2 and 5 moles of NH3\", but the key is reproduced only when 10, 10 and 5 are entered as GAS_PHASE partial pressures (atm), which gives about 0.30, 0.30 and 0.15 mol. Truly 10/10/5 mol gives pH 6.991 and matches no option.","from_test":null,"setup_source":"literal reading (test9 has answer letters only)","input":"SOLUTION 1\n    temp      150\n    pH        7\n    pe        4\n    -water    1\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1\n    -temperature 150\n    CH4(g) 10\n    CO2(g) 10\n    NH3(g) 5\nEND","needs_input":true,"questions":[{"id":77,"status":"verified","status_label":"Verified","stem":"What is the pH?","options":{"A":"6.614","B":"6.615","C":"6.617","D":"6.618"},"key":"D"},{"id":78,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"","options":{"A":"0.91720","B":"0.91723","C":"0.91721","D":"0.91722"},"key":"A"},{"id":79,"status":"verified","status_label":"Verified","stem":"What is the saturation index of N2?","options":{"A":"2.08","B":"2.07","C":"2.09","D":"2.05"},"key":"C"},{"id":80,"status":"verified","status_label":"Verified","stem":"How many species of C (4) are present in solution?","options":{"A":"4","B":"3","C":"0","D":"1"},"key":"A"},{"id":81,"status":"verified","status_label":"Verified","stem":"Is the molality of NH4+ or NH3 higher?","options":{"A":"NH4+","B":"NH3","C":"Same","D":"N/A"},"key":"A"},{"id":82,"status":"verified","status_label":"Verified","stem":"What is the alkalinity?","options":{"A":"5.161e-03","B":"5.160e-03","C":"5.162e-03","D":"5.165e-03"},"key":"B"},{"id":83,"status":"verified","status_label":"Verified","stem":"What is the molality of N in solution?","options":{"A":"1.475e-01","B":"1.478e-01","C":"1.474e-01","D":"1.476e-01"},"key":"D"},{"id":84,"status":"verified","status_label":"Verified","stem":"What is the specific conductance of the solution?","options":{"A":"774","B":"773","C":"770","D":"772"},"key":"A"},{"id":85,"status":"verified","status_label":"Verified","stem":"What was the delta of moles of CH4?","options":{"A":"5.275e-02","B":"5.277e-02","C":"5.276e-02","D":"5.278e-02"},"key":"B"},{"id":86,"status":"verified","status_label":"Verified","stem":"What is the pe of the final solution?","options":{"A":"-5.196","B":"-5.200","C":"-5.198","D":"-5.199"},"key":"D"}]},{"id":"S10","title":"Chrysotile and talc equilibrium","preamble":"Simulate a solution of pure water at pH 7 and 150°C at equilibrium with 10 moles of chrysotile and 10 moles of talc.","issue":null,"from_test":"test10","setup_source":"Sachit input (test10)","input":"SOLUTION 1\n    temp      150\n    pH        7\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    -water    1 # kg\n\nEQUILIBRIUM_PHASES 1\n    Chrysotile 0 10\n    Talc      0 10","needs_input":false,"questions":[]},{"id":"S11","title":"Calcium–alkalinity solution","preamble":"Create a solution at 25 degrees C, pH 7.5, 100 mg/L Ca, and 250 mg/L Alkalinity as CaCO3.","issue":null,"from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    temp      25\n    pH        7.5\n    units     mg/L\n    Ca        100\n    Alkalinity 250 as CaCO3\nEND","needs_input":true,"questions":[]},{"id":"S12","title":"River water–seawater mixing","preamble":"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.","issue":"\"Cl 10\" and \"Cl 19000\" have no units; the key is consistent with the default mmol/kgw. With no cations the mixed solution is almost entirely charge-imbalanced (19 mol/kgw Cl), so pe is undefined and the setup is not physically realistic.","from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1 River water\n    pH  6.0\n    Cl  10\nSOLUTION 2 Seawater\n    pH  8.1\n    Cl  19000\nEND\nMIX 1\n    1  0.7\n    2  0.3\nEND","needs_input":true,"questions":[{"id":106,"status":"verified","status_label":"Verified","stem":"What is the molality of Cl?","options":{"A":"5.707e+00","B":"5.710e+00","C":"5.709e+00","D":"5.708e+00"},"key":"A"},{"id":107,"status":"verified","status_label":"Verified","stem":"What is the pH of the mixture?","options":{"A":"6.732","B":"6.730","C":"6.733","D":"6.731"},"key":"C"},{"id":108,"status":"unstable","status_label":"Unstable value","stem":"What is the pe of the mixture?","options":{"A":"11.241","B":"11.240","C":"11.244","D":"11.243"},"key":"C"},{"id":109,"status":"verified","status_label":"Verified","stem":"what is the electrical balance?","options":{"A":"-5.703e+00","B":"-5.707e+00","C":"-5.709e+00","D":"-5.710e+00"},"key":"B"},{"id":110,"status":"verified","status_label":"Verified","stem":"What is the viscosity of the mixture?","options":{"A":"0.89229","B":"0.89829","C":"0.89429","D":"0.89329"},"key":"D"},{"id":111,"status":"verified","status_label":"Verified","stem":"What is the specific conductance of the mixture?","options":{"A":"263753","B":"263768","C":"263761","D":"263760"},"key":"D"},{"id":112,"status":"verified","status_label":"Verified","stem":"What is the saturation index of H2O (g)?","options":{"A":"-1.55","B":"-1.51","C":"-1.54","D":"-1.53"},"key":"A"},{"id":113,"status":"verified","status_label":"Verified","stem":"What is the activity of H+ in the mixture?","options":{"A":"1.850e-07","B":"1.852e-07","C":"1.851e-07","D":"1.855e-07"},"key":"C"},{"id":114,"status":"verified","status_label":"Verified","stem":"What is the molality of HCl?","options":{"A":"1.286e-08","B":"1.285e-08","C":"1.283e-08","D":"1.280e-08"},"key":"A"},{"id":115,"status":"unstable","status_label":"Unstable value","stem":"What is the log IAP of O2(g)?","options":{"A":"-14.22","B":"-14.26","C":"-14.19","D":"-14.32"},"key":"B"}]},{"id":"S13","title":"Stepwise sulfuric acid addition","preamble":"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.","issue":"pe and redox-derived values in acidified pure water have no redox couple to fix them, and change with solver settings.","from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    pH 7.0\nREACTION 1\n    H2SO4 1\n    0.001 0.005 0.01 0.05 0.1 moles\nEND","needs_input":true,"questions":[]},{"id":"S14","title":"Gypsum equilibrium","preamble":"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.","issue":"Pure water with gypsum has no redox couple, so pe-derived values (pe, SI sulfur, H2) change with solver settings. Tightening the convergence tolerance moves pe from 10.741 to −0.920.","from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    pH 7.0\nEQUILIBRIUM_PHASES 1\n    Gypsum 0 10\nEND","needs_input":true,"questions":[]},{"id":"S15","title":"CO₂ equilibrium","preamble":"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.","issue":"Pure water with CO2 has no redox couple, so pe-derived values change with solver settings.","from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    pH 7.0\n    temp 25\nEQUILIBRIUM_PHASES 1\n    CO2(g) -3.4 10\nEND","needs_input":true,"questions":[]},{"id":"S16","title":"1D transport and ion exchange","preamble":"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.","issue":null,"from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 0\n    pH 7.0\n    Na 1.0\n    Cl 1.0\nSOLUTION 1-10\n    pH 7.0\n    Ca 1.0\n    Cl 2.0\nEXCHANGE 1-10\n    X 0.001\n    -equilibrate 1\nTRANSPORT\n    -cells 10\n    -shifts 10\n    -print_cells 1-10\n    -print_frequency 1\nEND","needs_input":true,"questions":[]},{"id":"S17","title":"Ca–Sr carbonate solid solution","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","issue":"Ca 0.01, Sr 0.01 and alkalinity 0.04 have no units. With the PHREEQC default (mmol/kgw) no solid solution forms and nothing matches; with mol/kgw every non-redox key reproduces uniquely. The text should state mol/kgw.","from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    units mol/kgw\n    pH 7\n    temp 25\n    Ca 0.01\n    Sr 0.01\n    Alkalinity 0.04\nSOLID_SOLUTIONS 1\n    Ca_Sr_carbonate\n        -comp1 Calcite 0.0\n        -comp2 Strontianite 0.0\nEND","needs_input":true,"questions":[{"id":163,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the mole fraction of Strontianite in the solid solution?","options":{"A":"6.17e-01","B":"6.10e-01","C":"6.12e-01","D":"6.13e-01"},"key":"D"},{"id":164,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the pH of the resulting solution?","options":{"A":"6.020","B":"6.022","C":"6.021","D":"6.026"},"key":"B"},{"id":165,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the specific conductance of the solution?","options":{"A":"1000","B":"999","C":"1001","D":"1005"},"key":"C"},{"id":166,"status":"unstable","status_label":"Unstable value","stem":"What is the pe of the resulting solution?","options":{"A":"11.829","B":"11.828","C":"11.824","D":"11.827"},"key":"D"},{"id":167,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the activity of Ca+2?","options":{"A":"2.643e-03","B":"2.641e-03","C":"2.647e-03","D":"2.649e-03"},"key":"C"},{"id":168,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the ionic strength of the resulting solution?","options":{"A":"1.659e-02","B":"1.655e-02","C":"1.654e-02","D":"1.651e-02"},"key":"B"},{"id":169,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"How many moles of calcite are present?","options":{"A":"5.55e-03","B":"5.59e-03","C":"5.52e-03","D":"5.51e-03"},"key":"A"},{"id":170,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the molality of C(4) in the resulting solution?","options":{"A":"3.237e-02","B":"3.234e-02","C":"3.228e-02","D":"3.230e-02"},"key":"D"},{"id":171,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the saturation index of Strontianite?","options":{"A":"-0.21","B":"-0.19","C":"-0.20","D":"-0.17"},"key":"A"},{"id":172,"status":"ambiguous","status_label":"Ambiguous or defective text","stem":"What is the saturation index of Calcite?","options":{"A":"-0.44","B":"-0.41","C":"-0.46","D":"-0.43"},"key":"B"}]},{"id":"S18","title":"Heating a Ba–sulfate solution","preamble":"Create a solution at 25 degrees C, 2.0 mg/L Ba, 15.0 mg/L S(6). Raise the temperature from 25 to 95 in 5 steps.","issue":null,"from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    temp 25\n    units mg/L\n    Ba 2.0\n    S(6) 15.0\nREACTION_TEMPERATURE 1\n    25 95 in 5 steps\nEND","needs_input":true,"questions":[]},{"id":"S19","title":"Methane gas partitioning","preamble":"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).","issue":null,"from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    temp 15\n    units mmol/kgw\n    C(-4) 5.0\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1.0\n    -temperature 15\n    CH4(g) 0\nEND","needs_input":true,"questions":[]},{"id":"S20","title":"Evaporation and precipitation","preamble":"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.","issue":null,"from_test":null,"setup_source":"literal reading of the question text","input":"SOLUTION 1\n    temp 25\n    pH 8.0\n    units ppm\n    Ca 50\n    Mg 12\n    Na 20\n    K 2\n    Alkalinity 150\n    S(6) 40\n    Cl 15\nREACTION 1\n    H2O -1\n    50.0 moles\nEQUILIBRIUM_PHASES 1\n    Calcite 0 0\n    Gypsum 0 0\n    Halite 0 0\nEND","needs_input":true,"questions":[]}],"items":[{"id":1,"scenario_id":"S01","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","stem":"At reaction step 100, what is the redox potential pe?","options":{"A":"7.366","B":"7.367","C":"7.365","D":"7.364"},"key":"D","matched":[],"computed":"7.405 (default); 7.429 with -cvode; 7.561 with kinetics -tol 1e-10","note":"No option (7.364-7.367) matches 7.405; pe is poorly poised and changes by >0.02 under integrator/tolerance variants, so the 3rd decimal cannot discriminate options."},{"id":3,"scenario_id":"S01","group":"one-off","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","stem":"At reaction step 100, what is the molality of carbon?","options":{"A":"5.276e-04","B":"5.278-04","C":"5.274e-04","D":"5.277e-04"},"key":"A","matched":["A"],"computed":"5.276e-04","note":"The keyed value reproduces (C = 5.276e-04), but option B is malformed (\"5.278-04\", missing the \"e\"), so the options need fixing."},{"id":4,"scenario_id":"S01","group":"missing-stem","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","stem":"","options":{"A":"-4.35","B":"-4.34","C":"-4.38","D":"-4.36"},"key":"A","matched":["A"],"computed":"SI Aragonite at step 100 = -4.35","note":"The question stem is missing (only options given); in the authors' earlier version this was SI(Aragonite) at step 100, which computes to -4.35 = A."},{"id":5,"scenario_id":"S01","group":"s01-steps","status":"no_match","status_label":"No option matches","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","stem":"At reaction step 47, what is the pH?","options":{"A":"5.324","B":"5.327","C":"5.325","D":"5.326"},"key":"D","matched":[],"computed":"5.321","note":"Step 47 pH = 5.321 matches no option; PHREEQC's step 48 gives 5.326 (gold D), suggesting an off-by-one step in the key."},{"id":6,"scenario_id":"S01","group":"s01-steps","status":"no_match","status_label":"No option matches","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","stem":"At reaction step 47, what is the molality of carbon","options":{"A":"5.142e-04","B":"5.141e-04","C":"5.140e-04","D":"5.145e-04"},"key":"B","matched":[],"computed":"5.138e-04","note":"Step 47 C = 5.138e-04 matches no option; step 48 gives 5.141e-04 (gold B), same off-by-one pattern."},{"id":8,"scenario_id":"S01","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Model the kinetic dissolution of 1 mole of Calcite (CaCO3​) in a hydrothermal solution at 100°C, pe of 4 and pH 5, containing 0.5 mmol/kgw of dissolved inorganic carbon and 1 mmol/kgw of Manganese. The simulation should track the reaction over 1000 seconds, broken into 100 discrete time steps. Use a kinetic rate law based on a specific surface area of 10.0 and a rate constant of 0.001.","stem":"At reaction step 47, what is the redox potential pe?","options":{"A":"7.606","B":"7.602","C":"7.603","D":"7.604"},"key":"A","matched":[],"computed":"7.573 (default); 7.525 with -cvode; -0.023 with kinetics -tol 1e-10","note":"No option matches 7.573; step 48 gives 7.604 (option D, not gold A). pe is poorly poised and varies wildly under integrator settings."},{"id":22,"scenario_id":"S03","group":"wrong-key","status":"wrong_key","status_label":"Likely wrong key","preamble":"Model the kinetic dissolution of 1 mole of Albite  over 1000 seconds (100 time steps) in a pH 2 solution at 200°C containing 4 mmol/kgw Fe+3 and 4mmol/kgw Fe+2 using a specific surface area of 1.0 and a rate constant of 10. Simultaneously, equilibrate the solution with a fixed-pressure gas phase containing 5 atmospheres of Hydrogen Sulfide (H2​S).","stem":"At reaction step 10, is there more or less Fe (3) in solution compared to reaction step 100?","options":{"A":"More","B":"Less","C":"Same","D":"N/A"},"key":"A","matched":["B"],"computed":"Fe(3) total 3.468e-10 (step 10) vs 3.560e-10 (step 100)","note":"Total Fe(3) is lower at step 10, so the answer is Less (B), stable across variants. Only the free Fe+3 ion (6.587e-13 vs 6.151e-13) is higher at step 10, which would give the key's A."},{"id":37,"scenario_id":"S05","group":"missing-stem","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Simulate the equilibration of a 100°C solution containing 50 mmol/kgw Ca (pH charge-balanced) with a mineral assemblage of Calcite, Gypsum, and Aragonite. Simultaneously equilibrate the system with a 1 atm gas phase (at 25°C) composed of CO2 at partial pressure 1 atm, CH4 at partial pressure 5 atm, and H2S at partial pressure 10 atm.","stem":"","options":{"A":"6.536","B":"6.533","C":"6.531","D":"6.530"},"key":"C","matched":["C"],"computed":"pH = 6.531","note":"Question text has no stem (the 'What is the pH' sentence is missing); the options are pH-like and the computed pH 6.531 matches C uniquely, but the item is defective as written."},{"id":48,"scenario_id":"S06","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.","stem":"What is the pe of the solution?","options":{"A":"9.266","B":"9.268","C":"9.263","D":"9.265"},"key":"D","matched":["D"],"computed":"9.265 (default); 9.223 with stab3 KNOBS","note":"Default run gives 9.265 (D), but KNOBS stab3 (iterations 500, step_size 50, pe_step_size 5, diagonal_scale) gives 9.223. The system has no well-defined redox couple, so pe is not stable at the digit that separates the options."},{"id":54,"scenario_id":"S06","group":"moles-molality","status":"no_match","status_label":"No option matches","preamble":"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.","stem":"How many moles of Mg are in solution?","options":{"A":"4.432e+00","B":"4.434e+00","C":"4.430e+00","D":"4.431e+00"},"key":"A","matched":[],"computed":"moles 1.002e+01 (molality 4.432e+00)","note":"The question asks for moles. PHREEQC prints Mg Moles = 1.002e+01 (mass of water 2.260 kg), which matches no option. The molality 4.432e+00 matches A uniquely, so the key uses molality while calling it moles."},{"id":56,"scenario_id":"S06","group":"one-off","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Simulate a 100°C pure water solution at pH 3 at equilibrium with 10 moles each of K-mica, Kaolinite, Dolomite, Epsomite, Amorphous Ferric Hydroxide [Fe(OH)3(a)], and Halite.","stem":"How many moles of kaolinite dissolved?","options":{"A":"4.496e-05","B":"4.499e-05","C":"4.498e-05","D":"4.500e-05"},"key":"B","matched":["B"],"computed":"Delta +4.499e-05 (precipitated)","note":"Kaolinite Delta is +4.499e-05, meaning it precipitated rather than dissolved (Epsomite's Delta is -10 for full dissolution; Al mass balance agrees: K-mica dissolves 3.207e-05). The magnitude matches B uniquely, but the question's premise is wrong and no option allows 0 or 'precipitated'."},{"id":64,"scenario_id":"S07","group":"moles-molality","status":"no_match","status_label":"No option matches","preamble":"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].","stem":"How many moles of CO3-2 are present in solution?","options":{"A":"3.326e-07","B":"3.327e-07","C":"3.324e-07","D":"3.323e-07"},"key":"A","matched":[],"computed":"molality 3.326e-07; moles 5.935e-07","note":"The question asks for moles. Moles = 3.3262e-07 m x 1.7843 kg = 5.935e-07, which matches no option. The printed molality 3.326e-07 matches A uniquely."},{"id":66,"scenario_id":"S07","group":"moles-molality","status":"no_match","status_label":"No option matches","preamble":"Simulate the geochemical equilibration of 1 kg of a 100°C aqueous solution at pH 5 containing 100 mmol/kgw of dissolved Barium at equilibrium with a mineral assemblage consisting of 10 moles each of Talc, Rhodochrosite, Sepiolite (including the disordered form), and Lead Hydroxide [Pb(OH)2​].","stem":"How many moles of Mn (3) are present in solution?","options":{"A":"6.938e-18","B":"6.936e-18","C":"6.933e-18","D":"6.932e-18"},"key":"C","matched":[],"computed":"molality 6.933e-18; moles 1.237e-17","note":"The question asks for moles. Moles = 6.9325e-18 x 1.7843 = 1.237e-17, which matches no option. The printed Mn(3) molality 6.933e-18 matches C uniquely and was stable across KNOBS variants."},{"id":78,"scenario_id":"S09","group":"missing-stem","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Simulate the equilibration of 1 kg of pure water at 150°C (neutral pH 7, pe 4) with a fixed-pressure gas phase. The gas phase is also maintained at 150°C and a total pressure of 1 atm, consisting of a mixture of 10 moles of Methane (CH4​), 10 moles of Carbon Dioxide (CO2​), and 5 moles of Ammonia (NH3​).","stem":"","options":{"A":"0.91720","B":"0.91723","C":"0.91721","D":"0.91722"},"key":"A","matched":["A"],"computed":"Density 0.91720 g/cm3","note":"The question stem is missing (only options). The original author question (test9 Q2) asked for density; printed density 0.91720 matches A, but without a stem the item cannot be scored fairly."},{"id":108,"scenario_id":"S12","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.","stem":"What is the pe of the mixture?","options":{"A":"11.241","B":"11.240","C":"11.244","D":"11.243"},"key":"C","matched":[],"computed":"-1.091 (range -1.030 to -1.115 across KNOBS/order variants)","note":"pe of the mix has no redox couple and changes at the first decimal with solver settings; no run gives ~11.24 (no option matches). The gold 11.244 is internally consistent with gold O2 log IAP -14.26 at pH 6.733, i.e. it reflects a different (oxidised) numerical solution."},{"id":115,"scenario_id":"S12","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create a solution of river water, pH 6.0 and Cl 10, and seawater. pH 8.1 and Cl 19000. Mix them at a 0.7:0.3 ratio.","stem":"What is the log IAP of O2(g)?","options":{"A":"-14.22","B":"-14.26","C":"-14.19","D":"-14.32"},"key":"B","matched":[],"computed":"-63.60 (range -63.36 to -63.70 across variants)","note":"O2(g) log IAP follows the unstable pe (varies in the first decimal between runs) and is ~-63.6 in every run, far from all options (-14.19 to -14.32); gold corresponds to pe ~11.244."},{"id":118,"scenario_id":"S13","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.","stem":"What is the pe of the final solution?","options":{"A":"5.596","B":"5.587","C":"5.591","D":"5.590"},"key":"C","matched":[],"computed":"5.101 (default)","note":"Default gives 5.101 (no option matches); variants give 5.296, 5.421, 4.707, 5.598, 5.610. Unpoised redox, value is set by convergence residuals."},{"id":119,"scenario_id":"S13","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid.","stem":"What is the log IAP of H2 (g) in the final solution?","options":{"A":"-16.38","B":"-16.36","C":"-16.31","D":"-16.33"},"key":"B","matched":[],"computed":"-15.38 (default)","note":"Default -15.38 (no option); variants -15.77, -16.02, -14.59, -16.37, -16.40. Tracks the unstable pe."},{"id":125,"scenario_id":"S13","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 Add in steps .001, 0.005, 0.01, 0.05 , and 0.1 moles of sulfuric acid to solution 1.","stem":"What is the pe at reaction step 4?","options":{"A":"16.658","B":"16.652","C":"16.655","D":"16.654"},"key":"C","matched":["C"],"computed":"16.655 (default)","note":"Default matches C exactly, but -convergence_tolerance 1e-12 gives 16.604 (no option); unpoised redox."},{"id":128,"scenario_id":"S14","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.","stem":"What is the pe of the solution?","options":{"A":"10.741","B":"10.749","C":"10.737","D":"10.740"},"key":"D","matched":["A"],"computed":"10.741 (default)","note":"Default prints 10.741 = option A, not gold D; with convergence_tolerance 1e-12 (or -high_precision) pe = -0.920. Unpoised redox."},{"id":130,"scenario_id":"S14","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.","stem":"What is the saturation index of Sulfur?","options":{"A":"-87.52","B":"-87.51","C":"-87.56","D":"-87.59"},"key":"C","matched":["C"],"computed":"-87.56 (default)","note":"Default matches C; tight tolerance gives -17.59 (pe -0.92). Redox-dependent."},{"id":133,"scenario_id":"S14","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 and place it at equilibrium with 10 moles of gypsum.","stem":"What is the molality of H2?","options":{"A":"1.719e-39","B":"1.712e-39","C":"1.710e-39","D":"1.708e-39"},"key":"C","matched":[],"computed":"1.707e-39 (default)","note":"Default 1.707e-39 matches no option; step_size/pe_step_size variants give 1.705-1.709e-39, tight tolerance 3.58e-16."},{"id":136,"scenario_id":"S15","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.","stem":"What is the pe?","options":{"A":"0.360","B":"0.366","C":"0.361","D":"0.363"},"key":"B","matched":["B"],"computed":"0.366 (default)","note":"Default matches B; convergence_tolerance 1e-12 gives 0.018 (no option). Unpoised redox."},{"id":138,"scenario_id":"S15","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.","stem":"What is the alkalinity?","options":{"A":"1.219e-09","B":"1.218e-09","C":"1.212e-09","D":"1.217e-09"},"key":"D","matched":["D"],"computed":"1.217e-09 (default)","note":"Default matches D; tight tolerance gives 1.216e-09 (no option). Value is essentially the charge-balance residual (-1.217e-09 electrical balance), a numerical artifact."},{"id":140,"scenario_id":"S15","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create an initial solution of pure water at pH 7.0 and 25 degrees Celsius. Place it in equilibrium with 10 moles of CO2 at -3.4 log PCO2.","stem":"What is the saturation index of CH4?","options":{"A":"-25.42","B":"-25.40","C":"-25.45","D":"-25.48"},"key":"D","matched":["D"],"computed":"-25.48 (default)","note":"Default matches D; tight tolerance gives -22.70. Redox-dependent."},{"id":145,"scenario_id":"S16","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.","stem":"What is the pe of solution 1 at transport step 10?","options":{"A":"10.732","B":"10.734","C":"10.733","D":"10.730"},"key":"C","matched":["C"],"computed":"10.733 (default)","note":"Default matches C; KNOBS -step_size 10 gives 10.803 (no option). Unpoised redox (Na/Ca/Cl only)."},{"id":151,"scenario_id":"S16","group":"s16-location","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.","stem":"What is the specific conductance at exchange site 8 at transport step 4?","options":{"A":"252","B":"256","C":"258","D":"255"},"key":"D","matched":["D"],"computed":"255","note":"The key reproduces if \"exchange site 8\" is read as cell 8, but specific conductance is a solution property, so the location wording should say solution/cell 8."},{"id":153,"scenario_id":"S16","group":"s16-location","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.","stem":"What is the molality of Na at exchange 1 at transport step 6?","options":{"A":"9.895e-04","B":"9.889e-04","C":"9.890e-04","D":"9.893e-04"},"key":"C","matched":["C"],"computed":"9.890e-04 (9.8899e-04)","note":"\"Molality of Na at exchange 1\" has two readings: dissolved Na in cell 1 (9.890e-04, the key) or NaX on the exchanger (1.543e-04, no option). The wording should say which."},{"id":159,"scenario_id":"S16","group":"s16-location","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.","stem":"What is the saturation index of Halite at exchange 3 at transport step 10?","options":{"A":"-7.64","B":"-7.61","C":"-7.58","D":"-7.60"},"key":"B","matched":["B"],"computed":"-7.61","note":"The key reproduces if \"exchange 3\" is read as cell 3, but a halite saturation index is a solution property, so the location wording should say solution/cell 3."},{"id":160,"scenario_id":"S16","group":"s16-location","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Set up a 1D transport problem with 10 cells and 10 shifts. The initial solution is at pH 7.0, Ca 1.0, and Cl 2.0 . The infilling solution is pH 7.0, Na 1.0, Cl 1.0. For all 10 cells, define 0.001 moles of exchange site, equilibrate 1.","stem":"What is the log IAP of H2 (g) at exchange 3 at transport step 10?","options":{"A":"-14.24","B":"-14.28","C":"-14.21","D":"-14.23"},"key":"A","matched":["A"],"computed":"-14.24","note":"The key reproduces if \"exchange 3\" is read as cell 3, but log IAP of H2(g) is a solution property, so the location wording should say solution/cell 3."},{"id":163,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the mole fraction of Strontianite in the solid solution?","options":{"A":"6.17e-01","B":"6.10e-01","C":"6.12e-01","D":"6.13e-01"},"key":"D","matched":["D"],"computed":"6.13e-01 (mol/kgw); 0.00e+00 (mmol/kgw)","note":"No units are given. Mole fraction 6.13e-01 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":164,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the pH of the resulting solution?","options":{"A":"6.020","B":"6.022","C":"6.021","D":"6.026"},"key":"B","matched":["B"],"computed":"6.022 (mol/kgw); 7.000 (mmol/kgw)","note":"No units are given. pH 6.022 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":165,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the specific conductance of the solution?","options":{"A":"1000","B":"999","C":"1001","D":"1005"},"key":"C","matched":["C"],"computed":"1001 (mol/kgw); 4 (mmol/kgw)","note":"No units are given. SC 1001 uS/cm under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":166,"scenario_id":"S17","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the pe of the resulting solution?","options":{"A":"11.829","B":"11.828","C":"11.824","D":"11.827"},"key":"D","matched":[],"computed":"11.850 default (mol/kgw); KNOBS variants 11.851, 11.854, 11.786, 11.663, 12.109; 10.950 (mmol/kgw)","note":"No well-defined redox couple (only trace O2/H2); pe shifts by up to ~0.45 with solver settings, and the default 11.850 matches no option (options span 11.824-11.829). Units also missing."},{"id":167,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the activity of Ca+2?","options":{"A":"2.643e-03","B":"2.641e-03","C":"2.647e-03","D":"2.649e-03"},"key":"C","matched":["C"],"computed":"2.647e-03 (mol/kgw); 9.645e-06 (mmol/kgw)","note":"No units are given. Ca+2 activity 2.647e-03 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":168,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the ionic strength of the resulting solution?","options":{"A":"1.659e-02","B":"1.655e-02","C":"1.654e-02","D":"1.651e-02"},"key":"B","matched":["B"],"computed":"1.655e-02 (mol/kgw); 6.010e-05 (mmol/kgw)","note":"No units are given. I 1.655e-02 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":169,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"How many moles of calcite are present?","options":{"A":"5.55e-03","B":"5.59e-03","C":"5.52e-03","D":"5.51e-03"},"key":"A","matched":["A"],"computed":"5.55e-03 (mol/kgw); 0.00e+00 (mmol/kgw)","note":"No units are given. Calcite component 5.55e-03 mol under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":170,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the molality of C(4) in the resulting solution?","options":{"A":"3.237e-02","B":"3.234e-02","C":"3.228e-02","D":"3.230e-02"},"key":"D","matched":["D"],"computed":"3.230e-02 (mol/kgw); 4.888e-05 (mmol/kgw)","note":"No units are given. C(4) 3.230e-02 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":171,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the saturation index of Strontianite?","options":{"A":"-0.21","B":"-0.19","C":"-0.20","D":"-0.17"},"key":"A","matched":["A"],"computed":"-0.21 (mol/kgw); -3.48 (mmol/kgw)","note":"No units are given. SI Strontianite -0.21 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":172,"scenario_id":"S17","group":"s17-units","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at pH 7, 25 degrees, 0.01 Ca, 0.01 Sr, and 0.04 alkalinity. Create a solid solution of Ca_Sr_carbonate with comp1 Calcite 0.0 and comp2 Strontianite 0.0.","stem":"What is the saturation index of Calcite?","options":{"A":"-0.44","B":"-0.41","C":"-0.46","D":"-0.43"},"key":"B","matched":["B"],"computed":"-0.41 (mol/kgw); -4.27 (mmol/kgw)","note":"No units are given. SI Calcite -0.41 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."},{"id":186,"scenario_id":"S19","group":"one-off","status":"ambiguous","status_label":"Ambiguous or defective text","preamble":"Create a solution at 15 degrees C with 5.0 mmol/kgw of C(-4). Set a gas phase at fixed pressure of 1.0, 15 degrees C, and 0 CH4(g).","stem":"What is the molality of HC03- in solution?","options":{"A":"2.355e-09","B":"2.353e-09","C":"2.352e-09","D":"2.350e-09"},"key":"A","matched":["A"],"computed":"2.355e-09","note":"The keyed value reproduces, but the species is written \"HC03-\" with a digit zero instead of the letter O."},{"id":192,"scenario_id":"S20","group":"unstable","status":"unstable","status_label":"Unstable value","preamble":"Initialize a solution at 25 degrees C, pH 8.0, with 50 ppm Ca, 12 ppm Mg, 20 ppm Na, 2 ppm K, 150 ppm Alkalinity, 40 ppm S(6), 15 ppm Cl. Using this solution. remove 50.0 moles of water and set equilibrium phases of calcite, gypsum, and halite with 0 moles of each present initially.","stem":"What is the pe of the resulting solution?","options":{"A":"11.749","B":"11.752","C":"11.750","D":"11.753"},"key":"C","matched":["C"],"computed":"11.750 default; 11.750 with 6 variants, 11.766 (step_size 10), 11.782 (numerical_derivatives)","note":"Default matches C, but pe changes at the 2nd decimal with solver settings while options differ at the 3rd decimal; no well-defined redox couple."}]}</script>
+<script>(() => {
+  'use strict';
+  const data = JSON.parse(document.getElementById('recheck-data').textContent);
+  const $ = id => document.getElementById(id);
+  const storageKey = 'phreeqc-author-recheck-v2:' + data.meta.verification_sha256;
+  const LETTERS = ['A', 'B', 'C', 'D'];
+  const DECISIONS = {keep: 'Keep as is', change_key: 'Change the key', revise: 'Revise the question', drop: 'Drop'};
+  const SETUP_DECISIONS = {revise_setup: 'Revise the setup text', text_ok: 'Setup text is fine as is'};
+  const MAX_FILE = 1024 * 1024;
+  const scenarioById = new Map(data.scenarios.map(s => [s.id, s]));
+  const groupById = new Map(data.groups.map(g => [g.id, g]));
+  const setupIds = data.groups.flatMap(g => g.setups);
+  let storageOK = true;
+  let state = fresh();
+
+  function fresh() {
+    return {
+      reviewer: '', updated_at: null,
+      groups: Object.fromEntries(data.groups.map(g => [g.id, {decision: '', comment: ''}])),
+      questions: Object.fromEntries(data.items.map(q => [q.id, {
+        override: false, decision: '', new_key: '', stem: q.stem, options: {...q.options}, revised_key: q.key, comment: ''
+      }])),
+      setups: Object.fromEntries(setupIds.map(id => [id, {decision: '', setup: scenarioById.get(id).preamble, comment: ''}])),
+      inputs: Object.fromEntries(data.scenarios.map(s => [s.id, []]))
+    };
+  }
+  const str = (v, max, what) => {
+    if (typeof v !== 'string' || v.length > max) throw new Error('Invalid ' + what + '.');
+    return v;
+  };
+
+  // A question follows its group's decision unless it is overridden or the group is decided per question.
+  function ownDecision(q) { return groupById.get(q.group).perQuestion || state.questions[q.id].override; }
+  function effective(q) { return ownDecision(q) ? state.questions[q.id].decision : state.groups[q.group].decision; }
+  function questionDone(q) {
+    const a = state.questions[q.id], d = effective(q);
+    if (d === 'keep' || d === 'drop') return true;
+    if (d === 'change_key') return LETTERS.includes(a.new_key) && a.new_key !== q.key;
+    if (d === 'revise') return Boolean(a.stem.trim()) && LETTERS.every(k => a.options[k].trim()) && LETTERS.includes(a.revised_key);
+    return false;
+  }
+  function setupDone(id) {
+    const a = state.setups[id];
+    return a.decision === 'text_ok' || (a.decision === 'revise_setup' && Boolean(a.setup.trim()));
+  }
+
+  function record() {
+    return {
+      schema: 'phreeqc-author-recheck', schema_version: 2,
+      dataset_sha256: data.meta.dataset_sha256, verification_sha256: data.meta.verification_sha256,
+      reviewer: state.reviewer.trim(), updated_at: state.updated_at, exported_at: new Date().toISOString(),
+      settled: {questions: data.items.filter(questionDone).length, of_questions: data.items.length,
+        setups: setupIds.filter(setupDone).length, of_setups: setupIds.length},
+      groups: data.groups.map(g => ({id: g.id, title: g.title, question_ids: g.ids, ...state.groups[g.id]})),
+      questions: data.items.map(q => {
+        const a = state.questions[q.id];
+        return {id: q.id, scenario_id: q.scenario_id, group: q.group, status: q.status, original_key: q.key,
+          decision: effective(q), decided_by: ownDecision(q) ? 'question' : 'group', complete: questionDone(q),
+          override: a.override, own_decision: a.decision, new_key: a.new_key, stem: a.stem, options: a.options,
+          revised_key: a.revised_key, comment: a.comment};
+      }),
+      scenarios: setupIds.map(id => ({id, complete: setupDone(id), original_setup: scenarioById.get(id).preamble, ...state.setups[id]})),
+      inputs: data.scenarios.flatMap(s => state.inputs[s.id].map(f => ({scenario_id: s.id, ...f})))
+    };
+  }
+  function fromRecord(rec) {
+    if (!rec || rec.schema !== 'phreeqc-author-recheck' || rec.schema_version !== 2) throw new Error('This is not a review file from this page.');
+    if (rec.verification_sha256 !== data.meta.verification_sha256 || rec.dataset_sha256 !== data.meta.dataset_sha256) {
+      throw new Error('This file belongs to a different version of the review.');
+    }
+    const next = fresh();
+    next.reviewer = str(rec.reviewer, 120, 'reviewer name');
+    next.updated_at = rec.updated_at || null;
+    for (const g of data.groups) {
+      const r = (rec.groups || []).find(x => x.id === g.id);
+      if (!r) throw new Error('Group "' + g.title + '" is missing from the file.');
+      if (r.decision !== '' && !g.options.includes(r.decision)) throw new Error('Invalid decision for group "' + g.title + '".');
+      next.groups[g.id] = {decision: r.decision, comment: str(r.comment, 8000, 'comment')};
+    }
+    for (const q of data.items) {
+      const r = (rec.questions || []).find(x => x.id === q.id);
+      if (!r) throw new Error('Q' + q.id + ' is missing from the file.');
+      if (typeof r.override !== 'boolean') throw new Error('Invalid override for Q' + q.id + '.');
+      if (r.own_decision !== '' && !Object.hasOwn(DECISIONS, r.own_decision)) throw new Error('Invalid decision for Q' + q.id + '.');
+      if (r.new_key !== '' && !LETTERS.includes(r.new_key)) throw new Error('Invalid key for Q' + q.id + '.');
+      if (!LETTERS.includes(r.revised_key)) throw new Error('Invalid revised key for Q' + q.id + '.');
+      next.questions[q.id] = {override: r.override, decision: r.own_decision, new_key: r.new_key, stem: str(r.stem, 4000, 'question text'),
+        options: Object.fromEntries(LETTERS.map(k => [k, str((r.options || {})[k], 1000, 'option')])),
+        revised_key: r.revised_key, comment: str(r.comment, 8000, 'comment')};
+    }
+    for (const id of setupIds) {
+      const r = (rec.scenarios || []).find(x => x.id === id);
+      if (!r) throw new Error(id + ' is missing from the file.');
+      if (r.decision !== '' && !Object.hasOwn(SETUP_DECISIONS, r.decision)) throw new Error('Invalid decision for ' + id + '.');
+      next.setups[id] = {decision: r.decision, setup: str(r.setup, 8000, 'setup text'), comment: str(r.comment, 8000, 'comment')};
+    }
+    for (const f of rec.inputs || []) {
+      if (!next.inputs[f.scenario_id]) throw new Error('Unknown scenario in attached files.');
+      next.inputs[f.scenario_id].push({filename: str(f.filename, 200, 'file name'), text: str(f.text, MAX_FILE, 'file content')});
+    }
+    return next;
+  }
+
+  const refreshers = [];
+  function refreshAll() { refreshers.forEach(f => f()); progress(); }
+  function save() {
+    state.updated_at = new Date().toISOString();
+    try { localStorage.setItem(storageKey, JSON.stringify(record())); storageOK = true; } catch (_) { storageOK = false; }
+    status();
+  }
+  function changed() { save(); refreshAll(); }
+  function status(message) {
+    const el = $('status-line');
+    el.classList.toggle('error', !storageOK);
+    el.textContent = message || (!storageOK ? 'Browser storage is unavailable. Download your review before closing this page.' :
+      state.updated_at ? 'Saved in this browser at ' + new Date(state.updated_at).toLocaleTimeString() + '. Download the file to send it back.' :
+      'Your work saves in this browser as you go. Download the file to send it back.');
+  }
+
+  function el(tag, cls, content) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (content !== undefined) n.textContent = content;
+    return n;
+  }
+  function labelled(text, control, cls) { const l = el('label', cls); l.append(el('span', 'field-label', text), control); return l; }
+  function textInput(value, onInput, id) {
+    const i = el('input', 'mono'); i.type = 'text'; i.value = value; if (id) i.id = id;
+    i.addEventListener('input', () => onInput(i.value)); return i;
+  }
+  function area(value, rows, onInput, id) {
+    const t = el('textarea'); t.rows = rows; t.value = value; if (id) t.id = id;
+    t.addEventListener('input', () => onInput(t.value)); return t;
+  }
+  function keySelect(value, onChange, id) {
+    const s = el('select', 'small'); s.id = id;
+    s.append(new Option('Choose…', ''));
+    LETTERS.forEach(k => s.append(new Option(k, k)));
+    s.value = value; s.addEventListener('change', () => onChange(s.value)); return s;
+  }
+  function radios(name, entries, value, onChange, suggested) {
+    const box = el('div', 'choices');
+    for (const [v, label] of entries) {
+      const l = el('label'); const r = el('input'); r.type = 'radio'; r.name = name; r.value = v; r.id = name + '-' + v;
+      r.checked = value === v; r.addEventListener('change', () => onChange(v));
+      l.append(r, el('span', '', label));
+      if (v === suggested) l.append(el('span', 'suggest', 'suggested'));
+      box.append(l);
+    }
+    return box;
+  }
+  function badge() { return el('span', 'pill todo', 'To decide'); }
+  function setBadge(b, done, partial) {
+    b.className = 'pill ' + (done ? 'done' : 'todo');
+    b.textContent = done ? 'Settled' : partial ? 'Needs input' : 'To decide';
+  }
+  function stemLine(stem) {
+    return stem ? el('p', 'stem pre', stem) : el('p', 'stem missing', 'No question sentence. Only the setup and options A–D are in the dataset.');
+  }
+  function optionList(options, key, matched) {
+    const ol = el('ol', 'opts');
+    for (const k of LETTERS) {
+      const li = el('li', [k === key ? 'key' : '', matched.includes(k) ? 'match' : ''].join(' ').trim());
+      li.append(el('span', 'letter', k), el('span', 'pre', options[k]));
+      if (k === key) li.append(el('span', 'tag', 'your key'));
+      if (matched.includes(k)) li.append(el('span', 'tag run', 'our run'));
+      ol.append(li);
+    }
+    return ol;
+  }
+  function scenarioLabel(s) {
+    const box = el('div', 'scenario-head');
+    box.append(el('span', 'sid', s.id), el('span', 'stitle', s.title));
+    if (s.from_test) box.append(el('span', 'from', 'from your ' + s.from_test));
+    return box;
+  }
+  function copyBlock(title, content) {
+    const d = el('details', 'reveal');
+    const sum = el('summary', '', title);
+    const pre = el('pre', '', content);
+    const copy = el('button', 'copy', 'Copy'); copy.type = 'button';
+    copy.addEventListener('click', () => {
+      const done = () => { copy.textContent = 'Copied'; setTimeout(() => { copy.textContent = 'Copy'; }, 1500); };
+      const select = () => {
+        const r = document.createRange(); r.selectNodeContents(pre);
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+        copy.textContent = 'Selected: press Ctrl/Cmd+C';
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(content).then(done, select); else select();
+    });
+    d.append(sum, copy, pre);
+    return d;
+  }
+
+  function questionBlock(q, group) {
+    const a = () => state.questions[q.id];
+    const box = el('article', 'qblock'); box.id = 'q' + q.id;
+    const head = el('div', 'card-head');
+    const b = badge();
+    head.append(el('span', 'qid', 'Q' + q.id), el('span', 'pill ' + q.status, q.status_label), el('span', 'grow'), b);
+    const finding = el('dl', 'finding');
+    finding.append(el('dt', '', 'Our PHREEQC value'), el('dd', 'mono', q.computed || '—'), el('dt', '', 'What we found'), el('dd', '', q.note));
+
+    const own = el('div', 'own');
+    let overrideBox = null;
+    if (!group.perQuestion) {
+      overrideBox = el('label', 'override');
+      const cb = el('input'); cb.type = 'checkbox'; cb.id = 'override-' + q.id; cb.checked = a().override;
+      cb.addEventListener('change', () => { a().override = cb.checked; changed(); });
+      overrideBox.append(cb, el('span', '', 'Use a different decision for this question'));
+    }
+    own.append(radios('decision-' + q.id, Object.entries(DECISIONS), a().decision, v => { a().decision = v; changed(); }));
+
+    const keyPanel = el('div', 'panel');
+    keyPanel.append(labelled('Correct answer for Q' + q.id, keySelect(a().new_key, v => { a().new_key = v; changed(); }, 'newkey-' + q.id)));
+    const revisePanel = el('div', 'panel');
+    revisePanel.append(labelled('Question sentence', area(a().stem, 2, v => { a().stem = v; changed(); }, 'stem-' + q.id)));
+    const grid = el('div', 'opt-grid');
+    for (const k of LETTERS) grid.append(labelled('Option ' + k, textInput(a().options[k], v => { a().options[k] = v; changed(); }, 'opt-' + q.id + '-' + k)));
+    revisePanel.append(grid, labelled('Correct answer after revision', keySelect(a().revised_key, v => { a().revised_key = v; changed(); }, 'revkey-' + q.id)));
+    const note = el('details', 'reveal');
+    note.append(el('summary', '', 'Comment on this question'), area(a().comment, 2, v => { a().comment = v; save(); }, 'comment-' + q.id));
+    note.open = Boolean(a().comment);
+
+    box.append(head, stemLine(q.stem), optionList(q.options, q.key, q.matched), finding);
+    if (overrideBox) box.append(overrideBox);
+    box.append(own, keyPanel, revisePanel, note);
+    refreshers.push(() => {
+      own.hidden = !ownDecision(q);
+      const d = effective(q);
+      keyPanel.hidden = d !== 'change_key';
+      revisePanel.hidden = d !== 'revise';
+      const done = questionDone(q);
+      setBadge(b, done, Boolean(d));
+      box.classList.toggle('done', done);
+      box.hidden = $('only-open').checked && done;
+    });
+    return box;
+  }
+
+  function setupPanel(id) {
+    const s = scenarioById.get(id), a = () => state.setups[id];
+    const box = el('article', 'setup-card'); box.id = 'setup-' + id;
+    const head = el('div', 'card-head'); const b = badge();
+    head.append(scenarioLabel(s), el('span', 'grow'), b);
+    const current = el('div'); current.append(el('span', 'field-label', 'Setup text as written'), el('p', 'setup-text pre', s.preamble));
+    const list = el('details', 'reveal');
+    list.append(el('summary', '', 'Show all ' + s.questions.length + ' questions in ' + id));
+    const rows = el('div', 'qlist');
+    for (const q of s.questions) {
+      const row = el('div', 'qrow'); const top = el('div', 'card-head');
+      const label = q.status === 'verified' ? el('span', 'qid', 'Q' + q.id) : el('a', 'qid', 'Q' + q.id);
+      if (q.status !== 'verified') label.href = '#q' + q.id;
+      top.append(label, el('span', 'pill ' + q.status, q.status_label));
+      row.append(top, stemLine(q.stem), optionList(q.options, q.key, [])); rows.append(row);
+    }
+    list.append(rows);
+    const fs = el('fieldset'); fs.append(el('legend', '', 'Decision for the ' + id + ' setup'));
+    const panel = el('div', 'panel');
+    panel.append(labelled('Revised setup text', area(a().setup, 5, v => { a().setup = v; changed(); }, 'setuptext-' + id)));
+    fs.append(radios('setup-' + id, Object.entries(SETUP_DECISIONS), a().decision, v => { a().decision = v; changed(); }), panel);
+    const note = el('details', 'reveal');
+    note.append(el('summary', '', 'Comment on this setup'), area(a().comment, 2, v => { a().comment = v; save(); }));
+    note.open = Boolean(a().comment);
+    box.append(head, el('p', 'issue', s.issue), current, list, copyBlock('Input we ran (' + s.setup_source + ')', s.input), fs, note);
+    refreshers.push(() => {
+      panel.hidden = a().decision !== 'revise_setup';
+      const done = setupDone(id);
+      setBadge(b, done, Boolean(a().decision));
+      box.classList.toggle('done', done);
+      box.hidden = $('only-open').checked && done;
+    });
+    return box;
+  }
+
+  function groupCard(g, index) {
+    const section = el('section', 'group'); section.id = 'group-' + g.id;
+    const head = el('div', 'group-head');
+    const count = el('span', 'count');
+    head.append(el('span', 'gnum', String(index + 1)), el('h2', 'grow', g.title), count);
+    section.append(head, el('p', 'explain', g.explain));
+    for (const id of g.setups) section.append(setupPanel(id));
+    const items = data.items.filter(q => q.group === g.id);
+    if (items.length && !g.perQuestion) {
+      const decide = el('fieldset', 'group-decision');
+      decide.append(el('legend', '', items.length > 1 ? 'Decision for all ' + items.length + ' questions below' : 'Decision for this question'));
+      decide.append(radios('group-' + g.id, g.options.map(o => [o, g.labels[o] || DECISIONS[o]]), state.groups[g.id].decision,
+        v => { state.groups[g.id].decision = v; changed(); }, g.suggested));
+      const note = el('details', 'reveal');
+      note.append(el('summary', '', 'Comment on this group'), area(state.groups[g.id].comment, 2, v => { state.groups[g.id].comment = v; save(); }));
+      note.open = Boolean(state.groups[g.id].comment);
+      decide.append(note);
+      section.append(decide);
+    }
+    let lastScenario = null;
+    for (const q of items) {
+      if (q.scenario_id !== lastScenario) {
+        lastScenario = q.scenario_id;
+        const s = scenarioById.get(q.scenario_id);
+        const block = el('div', 'scenario-block'); block.append(scenarioLabel(s));
+        if (!g.setups.includes(s.id)) block.append(el('p', 'setup-text pre', s.preamble));
+        section.append(block);
+      }
+      section.append(questionBlock(q, g));
+    }
+    refreshers.push(() => {
+      const total = items.length + g.setups.length;
+      const done = items.filter(questionDone).length + g.setups.filter(setupDone).length;
+      count.textContent = done + ' of ' + total + ' settled';
+      count.classList.toggle('all', done === total);
+      section.hidden = $('only-open').checked && done === total;
+      const link = $('toc-' + g.id);
+      if (link) link.dataset.done = String(done === total);
+    });
+    return section;
+  }
+
+  function inputRow(s) {
+    const row = el('div', 'input-row');
+    row.append(el('span', 'sid', s.id), el('span', 'grow', s.title + (s.from_test ? ' · from your ' + s.from_test : '')));
+    if (s.needs_input) row.append(el('span', 'need', 'We don’t have your input'));
+    const button = el('label', 'file-button', 'Attach input files');
+    const file = el('input'); file.type = 'file'; file.multiple = true; file.id = 'attach-' + s.id;
+    file.accept = '.pqi,.in,.txt,.phr,.pqo,.out,text/plain';
+    button.append(file);
+    const list = el('div', 'files');
+    function draw() {
+      list.replaceChildren(...state.inputs[s.id].map((f, i) => {
+        const chip = el('span', 'chip', f.filename);
+        const x = el('button', '', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Remove ' + f.filename);
+        x.addEventListener('click', () => { state.inputs[s.id].splice(i, 1); save(); draw(); });
+        chip.append(x); return chip;
+      }));
+    }
+    file.addEventListener('change', async () => {
+      for (const f of file.files) {
+        if (f.size > MAX_FILE) { status(f.name + ' is larger than 1 MB and was not attached.'); continue; }
+        state.inputs[s.id].push({filename: f.name, text: await f.text()});
+      }
+      file.value = ''; save(); draw();
+    });
+    row.append(button, list); draw();
+    return row;
+  }
+
+  function progress() {
+    const q = data.items.filter(questionDone).length, s = setupIds.filter(setupDone).length;
+    const total = data.items.length + setupIds.length;
+    $('progress-count').textContent = (q + s) + ' of ' + total + ' settled';
+    $('progress-bar').style.width = (100 * (q + s) / total) + '%';
+  }
+
+  function render() {
+    refreshers.length = 0;
+    $('reviewer').value = state.reviewer;
+    $('toc').replaceChildren(...data.groups.map(g => {
+      const li = el('li'); const a = el('a', '', g.title); a.href = '#group-' + g.id; a.id = 'toc-' + g.id;
+      const n = g.ids.length + g.setups.length;
+      li.append(a, el('span', 'muted', ' · ' + (g.ids.length ? g.ids.length + ' question' + (g.ids.length > 1 ? 's' : '') : '') +
+        (g.ids.length && g.setups.length ? ' + ' : '') + (g.setups.length ? g.setups.length + ' setup' + (g.setups.length > 1 ? 's' : '') : '')));
+      return n ? li : null;
+    }).filter(Boolean));
+    $('groups').replaceChildren(...data.groups.map(groupCard));
+    $('input-rows').replaceChildren(...data.scenarios.map(inputRow));
+    refreshAll(); status();
+  }
+
+  try {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) state = fromRecord(JSON.parse(saved));
+  } catch (_) {
+    storageOK = false;
+  }
+  $('reviewer').addEventListener('input', () => { state.reviewer = $('reviewer').value; save(); });
+  $('only-open').addEventListener('change', refreshAll);
+  $('download').addEventListener('click', () => {
+    const rec = record();
+    const who = (rec.reviewer || 'author').replace(/[^A-Za-z0-9_-]/g, '_');
+    const name = 'phreeqc_recheck_' + who + '_' + rec.exported_at.replace(/[:.]/g, '-') + '.json';
+    const url = URL.createObjectURL(new Blob([JSON.stringify(rec, null, 2)], {type: 'application/json'}));
+    const link = el('a'); link.href = url; link.download = name;
+    document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 10000);
+    status('Downloaded ' + name + ' (' + (rec.settled.questions + rec.settled.setups) + ' of ' +
+      (rec.settled.of_questions + rec.settled.of_setups) + ' settled). Send this file back; you can download again any time.');
+  });
+  $('restore').addEventListener('change', async () => {
+    const f = $('restore').files[0];
+    if (!f) return;
+    try {
+      if (f.size > 20 * 1024 * 1024) throw new Error('File is too large.');
+      const next = fromRecord(JSON.parse(await f.text()));
+      if (!confirm('Replace the answers on this page with the ones in ' + f.name + '?')) return;
+      state = next; save(); render(); status('Restored your review from ' + f.name + '.');
+    } catch (error) { status('Could not restore: ' + error.message + ' Nothing was changed.'); }
+    finally { $('restore').value = ''; }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

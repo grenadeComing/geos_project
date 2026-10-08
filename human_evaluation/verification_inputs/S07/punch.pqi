@@ -1,0 +1,25 @@
+SOLUTION 1
+    temp      100
+    pH        5 charge
+    pe        4
+    redox     pe
+    units     mmol/kgw
+    density   1
+    Ba        100
+    -water    1 # kg
+
+
+EQUILIBRIUM_PHASES 1
+    Talc      0 10
+    Rhodochrosite 0 10
+    Sepiolite 0 10
+    Sepiolite(d) 0 10
+    Pb(OH)2   0 10
+
+SELECTED_OUTPUT
+ -file punch.sel
+ -reset false
+USER_PUNCH
+ -headings mass_w CO3_molal CO3_moles Mn3_molal Mn3_moles
+ 10 PUNCH TOT("water"), MOL("CO3-2"), MOL("CO3-2")*TOT("water"), TOT("Mn(3)"), TOT("Mn(3)")*TOT("water")
+END

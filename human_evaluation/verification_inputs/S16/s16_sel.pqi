@@ -1,0 +1,26 @@
+SOLUTION 0
+    pH 7.0
+    Na 1.0
+    Cl 1.0
+SOLUTION 1-10
+    pH 7.0
+    Ca 1.0
+    Cl 2.0
+EXCHANGE 1-10
+    X 0.001
+    -equilibrate 1
+SELECTED_OUTPUT 1
+    -file s16.sel
+    -reset false
+    -step true
+    -solution true
+    -pe true
+    -molalities NaX CaX2 Na+
+    -totals Na
+USER_PUNCH
+    -headings eqfrac_CaX2
+    10 PUNCH 2*MOL("CaX2")/0.001
+TRANSPORT
+    -cells 10
+    -shifts 10
+END

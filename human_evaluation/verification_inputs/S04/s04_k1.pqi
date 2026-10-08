@@ -1,0 +1,43 @@
+KNOBS
+ -convergence_tolerance 1e-12
+TITLE Mixing Carbonate and Calcium Solutions with Heating
+
+# Solution 1: Carbonate-rich water
+SOLUTION 1
+    temp      20
+    units     mmol/kgw
+    C(4)      50
+    # pH is adjusted for charge balance
+    pH        10 charge 
+
+# Solution 2: Calcium-rich water
+SOLUTION 2
+    temp      20
+    units     mmol/kgw
+    Ca        50
+    # pH is adjusted for charge balance
+    pH        7 charge
+
+# Mix the two solutions in equal parts (1 kg each)
+MIX 1
+    1    1.0
+    2    1.0
+
+# Heat the mixture from 20C to 200C
+REACTION_TEMPERATURE 1
+    20.0 200.0 in 10 steps
+
+# Track the precipitation of Calcite and changes in chemistry
+SELECTED_OUTPUT 1
+    -file         mix_k1.sel
+    -temperature  true
+    -pH           true
+    -totals       Ca C
+    -si           Calcite  Aragonite  CO2(g)
+    -equilibrium_phases  Calcite
+EQUILIBRIUM_PHASES 1
+    Calcite   0 0
+USER_PUNCH 1
+    -headings mu rho logIAP_cc C4 Ca_mol C4_mol
+    10 PUNCH MU, RHO, SI("Calcite")+LK_PHASE("Calcite"), TOT("C(4)"), TOT("Ca")*TOT("water"), TOT("C(4)")*TOT("water")
+END

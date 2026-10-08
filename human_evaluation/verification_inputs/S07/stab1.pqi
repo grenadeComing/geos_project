@@ -1,0 +1,21 @@
+KNOBS
+ -convergence_tolerance 1e-12
+SOLUTION 1
+    temp      100
+    pH        5 charge
+    pe        4
+    redox     pe
+    units     mmol/kgw
+    density   1
+    Ba        100
+    -water    1 # kg
+
+
+EQUILIBRIUM_PHASES 1
+    Talc      0 10
+    Rhodochrosite 0 10
+    Sepiolite 0 10
+    Sepiolite(d) 0 10
+    Pb(OH)2   0 10
+
+END

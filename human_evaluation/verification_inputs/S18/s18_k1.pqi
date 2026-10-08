@@ -1,0 +1,10 @@
+KNOBS
+  -convergence_tolerance 1e-12
+SOLUTION 1
+    temp 25
+    units mg/L
+    Ba 2.0
+    S(6) 15.0
+REACTION_TEMPERATURE 1
+    25 95 in 5 steps
+END

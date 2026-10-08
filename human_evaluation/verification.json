@@ -1,0 +1,4147 @@
+{
+ "date": "2026-09-30",
+ "phreeqc_version": "3.8.6",
+ "source_file": "neurips_dataset_200_clean.jsonl",
+ "source_sha256": "eee19ade89350ed500b6438174599e1e9c13ddb6f598fd80b8cab0dff4f27549",
+ "database_sha256": "9a8230260463041cec921d08b217640422089700b43d56b7da36f6c85ccd38c7",
+ "method": "For S01–S10 we used your original input files from LLM_Questions_SC (test1–10); they belong to an earlier option set but define the setup. test9 contains answer letters only, so S09 and all of S11–S20 were set up from the most literal reading of the question text with PHREEQC defaults. We never tuned an input to hit the key. Where nothing matched, we tried a few documented alternative readings (step numbering, units, charge balance). Redox-sensitive values were re-run with tighter or different KNOBS and kinetic-integrator settings; if the printed value changed at the digit that separates the options, the item is marked unstable.",
+ "model_runs": 19,
+ "scenarios": [
+  {
+   "id": "S01",
+   "setup_source": "Sachit input (test1)",
+   "main_input": "verification_inputs/S01/s01.pqi",
+   "setup_notes": "For Q5 and Q6 the key matches PHREEQC reaction step 48 rather than step 47, while Q7 matches step 47, so the step numbering in the key is inconsistent. pe is poorly poised in this system and moves by more than the option spacing under different kinetic integrator settings. Setup detail: Authors' test1 input used verbatim (SOLUTION 1 100 C, pH 5, pe 4, C(4) 0.5, Mn(2) 1 mmol/kgw; KINETICS Calcite m=m0=1, parms 10 0.001, 1000 s in 100 steps; Calcite RATES from frozen phreeqc.dat). Only SELECTED_OUTPUT/USER_PUNCH added. Stability variants: KNOBS convergence_tolerance 1e-12/1e-15, iterations, step_size/pe_step_size, diagonal_scale (no change); -runge_kutta 6 (no change); -cvode true and kinetics -tol 1e-10 (pe changes strongly). The system has no well-poised redox couple (only Mn(2)/Mn(3) traces, O2 ~1e-15): pe jitters non-monotonically step to step (e.g. 7.573, 7.604, 7.601, 7.540, 7.634 at steps 47-51). Several gold values for 'step 47' (pH, C) match PHREEQC's step 48 instead.",
+   "issue": "For Q5 and Q6 the key matches PHREEQC reaction step 48 rather than step 47, while Q7 matches step 47, so the step numbering in the key is inconsistent. pe is poorly poised in this system and moves by more than the option spacing under different kinetic integrator settings.",
+   "input": "SOLUTION 1\n    temp      100\n    pH        5\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    C(4)      0.5\n    Mn(2)     1\n    -water    1 # kg\nKINETICS 1\nCalcite\n    -formula  CaCO3  1\n    -m        1\n    -m0       1\n    -parms        10.0   0.001\n-steps       1000 in 100 steps # seconds\nSELECTED_OUTPUT 1\n    -file s01.sel\n    -reset false\n    -step true\n    -high_precision true\nUSER_PUNCH 1\n    -headings pH pe totC SI_Arag SI_Calc Calcite_m Calcite_dm\n    10 PUNCH -LA(\"H+\"), -LA(\"e-\"), TOT(\"C\"), SI(\"Aragonite\"), SI(\"Calcite\"), KIN(\"Calcite\"), KIN_DELTA(\"Calcite\")\nEND"
+  },
+  {
+   "id": "S02",
+   "setup_source": "Sachit input (test2)",
+   "main_input": "verification_inputs/S02/s02.pqi",
+   "setup_notes": "Authors' test2 input used verbatim (SOLUTION 200 C, pH 2, pe 4, Cu(2) 10, Ba 5 mmol/kgw; KINETICS Calcite m=m0=1, parms 1 10, 1000 s in 100 steps). Only SELECTED_OUTPUT/USER_PUNCH added. KNOBS -convergence_tolerance 1e-12 rerun gives identical values. No asked quantity is redox-sensitive.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp      200\n    pH        2\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    Cu(2)     10\n    Ba        5\n    -water    1 # kg\n\nKINETICS 1\nCalcite\n    -formula  CaCO3  1\n    -m        1\n    -m0       1\n    -parms    1 10\n-steps       1000 in 100 steps # seconds\nSELECTED_OUTPUT 1\n    -file s02.sel\n    -reset false\n    -step true\n    -high_precision true\nUSER_PUNCH 1\n    -headings pH pe SI_With mCO2 Alk Calcite_m\n    10 PUNCH -LA(\"H+\"), -LA(\"e-\"), SI(\"Witherite\"), MOL(\"CO2\"), ALK, KIN(\"Calcite\")\nEND"
+  },
+  {
+   "id": "S03",
+   "setup_source": "Sachit input (test3)",
+   "main_input": "verification_inputs/S03/s03.pqi",
+   "setup_notes": "Authors' test3 input used verbatim (SOLUTION 200 C, pH 2, pe 4, Fe(3) 4, Fe(2) 4 mmol/kgw; KINETICS Albite parms 1 10, tol 1e-8, 1000 s in 100 steps, RK3; GAS_PHASE fixed_pressure 1 atm, volume 1 L, 200 C, H2S(g) 5). Albite RATES from frozen phreeqc.dat. Only SELECTED_OUTPUT/USER_PUNCH added. Redox is poised by Fe(2)/Fe(3) and S(-2)/S(6); KNOBS variants (convergence_tolerance 1e-12/1e-15, tolerance 1e-17, step_size/pe_step_size/iterations, diagonal_scale, kinetics tol 1e-10) give identical values at printed precision.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp      200\n    pH        2\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    Fe(3)     4\n    Fe(2)     4\n    -water    1 # kg\n\n\nKINETICS 1\nAlbite\n    -formula  NaAlSi3O8  1\n    -m        1\n    -m0       1\n    -parms    1 10\n    -tol      1e-08\n-steps       1000 in 100 steps # seconds\n-step_divide 1\n-runge_kutta 3\n-bad_step_max 500\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1\n    -volume 1\n    -temperature 200\n    H2S(g)    5\nSELECTED_OUTPUT 1\n    -file s03.sel\n    -reset false\n    -step true\n    -high_precision true\nUSER_PUNCH 1\n    -headings Fe3p pH pe Alb_m Alb_dm Si mu Fe3 Ba SI_Goe H2Sg_m H2Sg_dm S Na Al Fe\n    10 PUNCH MOL(\"Fe+3\"), -LA(\"H+\"), -LA(\"e-\"), KIN(\"Albite\"), KIN_DELTA(\"Albite\"), TOT(\"Si\"), MU, TOT(\"Fe(3)\"), TOT(\"Ba\"), SI(\"Goethite\"), GAS(\"H2S(g)\"), 0, TOT(\"S\"), TOT(\"Na\"), TOT(\"Al\"), TOT(\"Fe\")\nEND"
+  },
+  {
+   "id": "S04",
+   "setup_source": "Sachit input (test4)",
+   "main_input": "verification_inputs/S04/s04.pqi",
+   "setup_notes": "Authors' test4 input used verbatim (SOLUTION 1 C(4) 50 mmol/kgw, pH 10 charge; SOLUTION 2 Ca 50, pH 7 charge; both 20 C; MIX 1:1 (2 kg water); REACTION_TEMPERATURE 20-200 in 10 steps (20,40,...,200 C); EQUILIBRIUM_PHASES Calcite 0 0). A USER_PUNCH was added (MU, RHO, log IAP, moles). 'Precipitated' is read as moles of Calcite in the equilibrium phase (cumulative, whole 2 kg system). KNOBS -convergence_tolerance 1e-12 rerun gives the same values except pe (not asked) and a last-digit change in Ca at 180 C.",
+   "issue": null,
+   "input": "TITLE Mixing Carbonate and Calcium Solutions with Heating\n\n# Solution 1: Carbonate-rich water\nSOLUTION 1\n    temp      20\n    units     mmol/kgw\n    C(4)      50\n    # pH is adjusted for charge balance\n    pH        10 charge \n\n# Solution 2: Calcium-rich water\nSOLUTION 2\n    temp      20\n    units     mmol/kgw\n    Ca        50\n    # pH is adjusted for charge balance\n    pH        7 charge\n\n# Mix the two solutions in equal parts (1 kg each)\nMIX 1\n    1    1.0\n    2    1.0\n\n# Heat the mixture from 20C to 200C\nREACTION_TEMPERATURE 1\n    20.0 200.0 in 10 steps\n\n# Track the precipitation of Calcite and changes in chemistry\nSELECTED_OUTPUT 1\n    -file         mix_heating.sel\n    -temperature  true\n    -pH           true\n    -totals       Ca C\n    -si           Calcite  Aragonite  CO2(g)\n    -equilibrium_phases  Calcite\nEQUILIBRIUM_PHASES 1\n    Calcite   0 0\nUSER_PUNCH 1\n    -headings mu rho logIAP_cc C4 Ca_mol C4_mol\n    10 PUNCH MU, RHO, SI(\"Calcite\")+LK_PHASE(\"Calcite\"), TOT(\"C(4)\"), TOT(\"Ca\")*TOT(\"water\"), TOT(\"C(4)\")*TOT(\"water\")\nEND"
+  },
+  {
+   "id": "S05",
+   "setup_source": "Sachit input (test5)",
+   "main_input": "verification_inputs/S05/author.pqi",
+   "setup_notes": "The text copies the GAS_PHASE keywords literally: \"a 1 atm gas phase … CO2 at partial pressure 1 atm, CH4 at 5 atm, H2S at 10 atm\" is physically contradictory (the partials sum to 16 atm) and the 1 L volume is not stated. The default PHREEQC reading happens to reproduce your input, but the earlier wording (\"1:5:10 molar ratio\") was clearer. Setup detail: Authors' input (test5) run unchanged: SOLUTION 100 C, Ca 50 mmol/kgw, pH 7 charge; EQUILIBRIUM_PHASES Calcite/Gypsum/Aragonite 0 0; GAS_PHASE -fixed_pressure -pressure 1 -volume 1 -temperature 25 with CO2(g) 1, CH4(g) 5, H2S(g) 10. In PHREEQC these numbers are INITIAL partial pressures used only to compute initial moles (P_i*1 L/RT at 25 C: 0.04525, 0.2262, 0.4525 mol, a 1:5:10 ratio); the phase is then held at a total pressure of 1 atm at 100 C. So the benchmark wording ('1 atm gas phase ... CO2 at partial pressure 1 atm, CH4 5 atm, H2S 10 atm') copies the input keywords literally. It is physically self-contradictory (the partial pressures sum to 16 atm) and does not state the 1 L initial volume. Because 1 L, 25 C, 1 atm and fixed pressure are all PHREEQC GAS_PHASE defaults, the most literal PHREEQC reading gives a result identical to the authors' input (alt_gasdefaults.pqi, output identical). The original question wording ('1:5:10 molar ratio') is the physically meaningful one. Redox is set by the CH4/CO2 and H2S/SO4 couples; Stable across 3 KNOBS variants (convergence_tolerance 1e-12; iterations/step_size/pe_step_size/tolerance changes; diagonal_scale).",
+   "issue": "The text copies the GAS_PHASE keywords literally: \"a 1 atm gas phase … CO2 at partial pressure 1 atm, CH4 at 5 atm, H2S at 10 atm\" is physically contradictory (the partials sum to 16 atm) and the 1 L volume is not stated. The default PHREEQC reading happens to reproduce your input, but the earlier wording (\"1:5:10 molar ratio\") was clearer.",
+   "input": "SOLUTION 1\n    temp      100\n    units     mmol/kgw\n    Ca        50\n    # pH is adjusted for charge balance\n    pH        7 charge\n\n\nEQUILIBRIUM_PHASES 1\n    Calcite   0 0\n    Gypsum    0 0\n    Aragonite 0 0\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1\n    -volume 1\n    -temperature 25\n    CO2(g)    1\n    CH4(g)    5\n    H2S(g)    10\nEND"
+  },
+  {
+   "id": "S06",
+   "setup_source": "Sachit input (test6)",
+   "main_input": "verification_inputs/S06/author.pqi",
+   "setup_notes": "The text says \"pure water solution at pH 3\", but your input uses \"pH 3 charge\", which charge-balances the starting solution (to pH 6.119). A participant who sets a fixed pH 3 as written matches none of the keyed values. The text should say the pH is adjusted for charge balance. Setup detail: Authors' input (test6, file 'Answers+ Code.txt') run unchanged: SOLUTION 100 C, no solutes, pH 3 charge (the initial solution charge-balances to pH 6.119, so 'pH 3' is only a starting guess); EQUILIBRIUM_PHASES K-mica, Kaolinite, Dolomite, Epsomite, Fe(OH)3(a), Halite each 0 10. The benchmark text says 'pure water solution at pH 3' and does not mention charge balance. A literal fixed pH 3 without charge (alt_nocharge.pqi) gives different values (pH 5.502, pe 9.275, SC 124101, Al(OH)4- 2.216e-06, kaolinite +4.579e-05), none equal to the gold options, so the charge keyword is essential and the text does not describe it faithfully. Epsomite and Halite dissolve completely, and mass of water rises to 2.260 kg, so molality and moles differ by a factor of 2.26. Redox is poorly defined (only trace O2 carried over from pe 4, and Fe(3) from Fe(OH)3(a)). With KNOBS -iterations 500 -step_size 50 -pe_step_size 5 -diagonal_scale true, pe moved from 9.265 to 9.223, and only redox-sensitive values changed.",
+   "issue": "The text says \"pure water solution at pH 3\", but your input uses \"pH 3 charge\", which charge-balances the starting solution (to pH 6.119). A participant who sets a fixed pH 3 as written matches none of the keyed values. The text should say the pH is adjusted for charge balance.",
+   "input": "SOLUTION 1\n    temp      100\n    units     mmol/kgw    # pH is adjusted for charge balance\n    pH        3 charge\n\nEQUILIBRIUM_PHASES 1\n    K-mica    0 10\n    Kaolinite 0 10\n    Dolomite  0 10\n    Epsomite  0 10\n    Fe(OH)3(a) 0 10\n    Halite    0 10\nEND"
+  },
+  {
+   "id": "S07",
+   "setup_source": "Sachit input (test7)",
+   "main_input": "verification_inputs/S07/author.pqi",
+   "setup_notes": "Same issue as S06: the text says \"pH 5\", your input uses \"pH 5 charge\" (starting pH 11.343). A fixed pH 5 as written matches none of the keyed values. Setup detail: Authors' input (test7) run unchanged: SOLUTION 100 C, pH 5 charge, pe 4, Ba 100 mmol/kgw, 1 kg water (the initial solution charge-balances to pH 11.343); EQUILIBRIUM_PHASES Talc, Rhodochrosite, Sepiolite, Sepiolite(d), Pb(OH)2 each 0 10. The benchmark text says 'at pH 5' without mentioning charge balance. A literal fixed pH 5 (alt_nocharge.pqi) gives pH 5.786 and SC 10013, which match no option, so the charge keyword is essential and the text omits it. Mass of water after reaction is 1.784 kg, so species moles = 1.784 x molality. Redox is set by O2 carried over from the pe-4, pH-11.3 initial solution (O(0) 2.6e-05 m). pe 7.873 and all answer values were identical in 3 KNOBS variants.",
+   "issue": "Same issue as S06: the text says \"pH 5\", your input uses \"pH 5 charge\" (starting pH 11.343). A fixed pH 5 as written matches none of the keyed values.",
+   "input": "SOLUTION 1\n    temp      100\n    pH        5 charge\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    Ba        100\n    -water    1 # kg\n\n\nEQUILIBRIUM_PHASES 1\n    Talc      0 10\n    Rhodochrosite 0 10\n    Sepiolite 0 10\n    Sepiolite(d) 0 10\n    Pb(OH)2   0 10\n\nEND"
+  },
+  {
+   "id": "S08",
+   "setup_source": "Sachit input (test8)",
+   "main_input": "verification_inputs/S08/author.pqi",
+   "setup_notes": "Authors' input (test8) run unchanged: SOLUTION pure water 25 C, pH 7, pe 4, 1 kg; EQUILIBRIUM_PHASES Pyrite 0 0.1, O2(g) -0.7 10, Goethite 0 0, Gypsum 0 0 (no Ca, so Gypsum is inactive and PHREEQC warns). The input ends with an empty SELECTED_OUTPUT and no END; it runs fine. The text describes this setup faithfully. All 0.1 mol pyrite dissolves, Goethite precipitates 6.182e-02 mol, and mass of water is 0.9969 kg. Redox is fixed by O2(g) at log P -0.7. All answer values were identical in 3 KNOBS variants.",
+   "issue": null,
+   "input": "TITLE Pyrite Oxidation Equilibrium\nSOLUTION 1 Pure Water\n    temp      25\n    pH        7.0\n    pe        4.0\n    units     mmol/kgw\n    water     1 # kg\n\nEQUILIBRIUM_PHASES 1\n    Pyrite    0.0  0.1    # Dissolve up to 0.1 moles of Pyrite\n    O2(g)     -0.7 10.0   # Maintain atmospheric oxygen contact (log P = -0.7)\n    Goethite  0.0  0.0    # Allow secondary iron minerals to precipitate\n    Gypsum    0.0  0.0    # Allow gypsum to form if Ca is present (not in this simple case)\n\nSELECTED_OUTPUT"
+  },
+  {
+   "id": "S09",
+   "setup_source": "literal reading (test9 has answer letters only)",
+   "main_input": "verification_inputs/S09/s09.pqi",
+   "setup_notes": "The text says \"10 moles of Methane, 10 moles of CO2 and 5 moles of NH3\", but the key is reproduced only when 10, 10 and 5 are entered as GAS_PHASE partial pressures (atm), which gives about 0.30, 0.30 and 0.15 mol. Truly 10/10/5 mol gives pH 6.991 and matches no option. Setup detail: No author input exists for S09 (test9/Answers+Code.txt contains only answer letters). Literal PHREEQC input: SOLUTION 1 (150 C, pH 7, pe 4, 1 kg water) + GAS_PHASE 1 -fixed_pressure, -pressure 1, -temperature 150, CH4(g) 10, CO2(g) 10, NH3(g) 5. NOTE: in GAS_PHASE these numbers are partial pressures (atm), not moles; PHREEQC computes initial moles 0.2983/0.2983/0.1491 (default 1 L). The question text says '10 moles'. This setup reproduces every original-author answer (test9 answer key) and every gold value. An alternative with truly 10/10/5 mol initial gas (pp 0.4/0.4/0.2, V=868 L) gives pH 6.991, pe -5.566, SC 1598, density 0.91951, N2(g) SI 3.59, i.e. matches no option. Results unchanged under three KNOBS variants (convergence_tolerance 1e-12; iterations/step_size/pe_step_size; convergence_tolerance 1e-14 + tolerance 1e-18). pe is buffered by CH4/CO2 and N2/NH4+ couples.",
+   "issue": "The text says \"10 moles of Methane, 10 moles of CO2 and 5 moles of NH3\", but the key is reproduced only when 10, 10 and 5 are entered as GAS_PHASE partial pressures (atm), which gives about 0.30, 0.30 and 0.15 mol. Truly 10/10/5 mol gives pH 6.991 and matches no option.",
+   "input": "SOLUTION 1\n    temp      150\n    pH        7\n    pe        4\n    -water    1\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1\n    -temperature 150\n    CH4(g) 10\n    CO2(g) 10\n    NH3(g) 5\nEND"
+  },
+  {
+   "id": "S10",
+   "setup_source": "Sachit input (test10)",
+   "main_input": "verification_inputs/S10/s10.pqi",
+   "setup_notes": "Author input from test10/Answers+Code.txt used verbatim: SOLUTION 1 temp 150, pH 7, pe 4, redox pe, units mmol/kgw, density 1, -water 1; EQUILIBRIUM_PHASES 1 Chrysotile 0 10, Talc 0 10. It matches the benchmark text. Values read from reaction step 1. Stability: identical results for convergence_tolerance 1e-12 / 1e-10 / 1e-14+tolerance 1e-18, larger iterations/step sizes, diagonal_scale, and splitting the equilibration into a separate USE simulation with reversed phase order. One KNOBS variant (pe_step_size 1, step_size 2) failed to converge (ERROR, invalid result) and was disregarded.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp      150\n    pH        7\n    pe        4\n    redox     pe\n    units     mmol/kgw\n    density   1\n    -water    1 # kg\n\nEQUILIBRIUM_PHASES 1\n    Chrysotile 0 10\n    Talc      0 10"
+  },
+  {
+   "id": "S11",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S11/s11.pqi",
+   "setup_notes": "No author input exists. Literal reading: SOLUTION 1 temp 25, pH 7.5, units mg/L, Ca 100, Alkalinity 250 as CaCO3 (default pe 4, 1 kg water, no charge balancing). Values read from Initial solution 1. PHREEQC warns that the gfw for alkalinity should be Ca.5(CO3).5 and uses 50.0455 g/eq (standard behaviour for 'as CaCO3'). Redox quantities (O2(g), H2) are determined by the input pe 4, so they are well-defined; KNOBS convergence_tolerance 1e-12 gives an identical output block.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp      25\n    pH        7.5\n    units     mg/L\n    Ca        100\n    Alkalinity 250 as CaCO3\nEND"
+  },
+  {
+   "id": "S12",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S12/s12.pqi",
+   "setup_notes": "\"Cl 10\" and \"Cl 19000\" have no units; the key is consistent with the default mmol/kgw. With no cations the mixed solution is almost entirely charge-imbalanced (19 mol/kgw Cl), so pe is undefined and the setup is not physically realistic. Setup detail: No author input exists. Literal reading with PHREEQC defaults (units mmol/kgw, 25 C, pe 4, 1 kg water, no charge balance): SOLUTION 1 river pH 6.0 Cl 10; SOLUTION 2 seawater pH 8.1 Cl 19000; MIX 1: 1 0.7, 2 0.3. Values read from the mix (reaction step 1). The default-unit reading is consistent with the answers: Cl = 0.7*0.010 + 0.3*19.000 = 5.707 mol/kgw and electrical balance -5.707 eq match the gold options (a mg/L reading would give ~0.16 molal and match nothing). Note that 19000 mmol/kgw Cl (19 molal, no cations) is physically unrealistic, and the solution is 100% charge-imbalanced. The mix has no redox couple: pe is set by the H/O mass-balance residual and is numerically unstable (pe from -1.030 to -1.115 across 7 KNOBS variants and 2 reorderings; one KNOBS variant ended with a convergence ERROR). All non-redox values are identical across all runs.",
+   "issue": "\"Cl 10\" and \"Cl 19000\" have no units; the key is consistent with the default mmol/kgw. With no cations the mixed solution is almost entirely charge-imbalanced (19 mol/kgw Cl), so pe is undefined and the setup is not physically realistic.",
+   "input": "SOLUTION 1 River water\n    pH  6.0\n    Cl  10\nSOLUTION 2 Seawater\n    pH  8.1\n    Cl  19000\nEND\nMIX 1\n    1  0.7\n    2  0.3\nEND"
+  },
+  {
+   "id": "S13",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S13/s13.pqi",
+   "setup_notes": "pe and redox-derived values in acidified pure water have no redox couple to fix them, and change with solver settings. Setup detail: SOLUTION 1 pH 7.0 (pure water, pe 4, 25 C) + REACTION 1 H2SO4 1; 0.001 0.005 0.01 0.05 0.1 moles (default non-incremental REACTION; step 5 total = 0.1 mol, 'final' = step 5). Reaction step N = PHREEQC 'Reaction step N.'. KNOBS variants tested: -convergence_tolerance 1e-12/1e-14, -iterations 400/1000, -step_size 10, -pe_step_size 2/20, -diagonal_scale true, and a combination. pH, I, activities and viscosity identical in all runs; pe/H2(g) vary strongly (unpoised system, no redox couple). tol 1e-15 fails to converge after step 1.",
+   "issue": "pe and redox-derived values in acidified pure water have no redox couple to fix them, and change with solver settings.",
+   "input": "SOLUTION 1\n    pH 7.0\nREACTION 1\n    H2SO4 1\n    0.001 0.005 0.01 0.05 0.1 moles\nEND"
+  },
+  {
+   "id": "S14",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S14/s14.pqi",
+   "setup_notes": "Pure water with gypsum has no redox couple, so pe-derived values (pe, SI sulfur, H2) change with solver settings. Tightening the convergence tolerance moves pe from 10.741 to −0.920. Setup detail: SOLUTION 1 pH 7.0 + EQUILIBRIUM_PHASES 1 Gypsum 0 10 (reaction step 1). KNOBS variants tested: -convergence_tolerance 1e-12/1e-14, -iterations 400/1000, -step_size 10, -pe_step_size 2/20, -diagonal_scale true, and a combination. Note: SELECTED_OUTPUT -high_precision true alone also tightens convergence and flips pe from 10.741 to -0.920. Non-redox quantities identical in all runs; high-precision mu = 4.17371e-02.",
+   "issue": "Pure water with gypsum has no redox couple, so pe-derived values (pe, SI sulfur, H2) change with solver settings. Tightening the convergence tolerance moves pe from 10.741 to −0.920.",
+   "input": "SOLUTION 1\n    pH 7.0\nEQUILIBRIUM_PHASES 1\n    Gypsum 0 10\nEND"
+  },
+  {
+   "id": "S15",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S15/s15.pqi",
+   "setup_notes": "Pure water with CO2 has no redox couple, so pe-derived values change with solver settings. Setup detail: SOLUTION 1 pH 7.0 temp 25 + EQUILIBRIUM_PHASES 1 CO2(g) -3.4 10. KNOBS variants tested: -convergence_tolerance 1e-12/1e-14, -iterations 400/1000, -step_size 10, -pe_step_size 2/20, -diagonal_scale true, and a combination. pH, I, activities, delta, log IAP CO2 stable; pe, CH4(g) SI and the ~1e-9 alkalinity residual change under tight tolerance.",
+   "issue": "Pure water with CO2 has no redox couple, so pe-derived values change with solver settings.",
+   "input": "SOLUTION 1\n    pH 7.0\n    temp 25\nEQUILIBRIUM_PHASES 1\n    CO2(g) -3.4 10\nEND"
+  },
+  {
+   "id": "S16",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S16/s16.pqi",
+   "setup_notes": "SOLUTION 0 (pH 7, Na 1, Cl 1 mmol/kgw), SOLUTION 1-10 (pH 7, Ca 1, Cl 2), EXCHANGE 1-10 X 0.001 -equilibrate 1, TRANSPORT -cells 10 -shifts 10 (defaults: length 1, disp 0, flux/flux, forward), -print_cells 1-10 -print_frequency 1. Mapping: 'solution N' and 'exchange N' = cell N; 'transport (step) K' = 'Transport step K.' block (shift K). Same results with and without an END before TRANSPORT. Exchange-species 'molality' read as moles (PHREEQC -molalities for exchange species gives moles). KNOBS variants tested: -convergence_tolerance 1e-12/1e-14, -iterations 400/1000, -step_size 10, -pe_step_size 2/20, -diagonal_scale true, and a combination. Only pe in cell 1 at shift 10 changed (step_size 10 -> 10.803).",
+   "issue": null,
+   "input": "SOLUTION 0\n    pH 7.0\n    Na 1.0\n    Cl 1.0\nSOLUTION 1-10\n    pH 7.0\n    Ca 1.0\n    Cl 2.0\nEXCHANGE 1-10\n    X 0.001\n    -equilibrate 1\nTRANSPORT\n    -cells 10\n    -shifts 10\n    -print_cells 1-10\n    -print_frequency 1\nEND"
+  },
+  {
+   "id": "S17",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S17/s17_mol.pqi",
+   "setup_notes": "Ca 0.01, Sr 0.01 and alkalinity 0.04 have no units. With the PHREEQC default (mmol/kgw) no solid solution forms and nothing matches; with mol/kgw every non-redox key reproduces uniquely. The text should state mol/kgw. Setup detail: SOLUTION pH 7, 25 C, Ca 0.01, Sr 0.01, Alkalinity 0.04; SOLID_SOLUTIONS Ca_Sr_carbonate -comp1 Calcite 0.0 -comp2 Strontianite 0.0 (ideal, no Guggenheim parameters). Default mmol/kgw reading: solution strongly undersaturated (SI Calcite -4.27, Strontianite -3.48), SS moles 0, pH 7.000, SC 4, I 6.010e-05, Ca+2 act 9.645e-06, C(4) 4.888e-05, pe 10.950 -> no option matches anywhere. mol/kgw reading reproduces all non-pe gold answers. Stability: 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives); all non-redox values unchanged, pe varied 11.663-12.109.",
+   "issue": "Ca 0.01, Sr 0.01 and alkalinity 0.04 have no units. With the PHREEQC default (mmol/kgw) no solid solution forms and nothing matches; with mol/kgw every non-redox key reproduces uniquely. The text should state mol/kgw.",
+   "input": "SOLUTION 1\n    units mol/kgw\n    pH 7\n    temp 25\n    Ca 0.01\n    Sr 0.01\n    Alkalinity 0.04\nSOLID_SOLUTIONS 1\n    Ca_Sr_carbonate\n        -comp1 Calcite 0.0\n        -comp2 Strontianite 0.0\nEND"
+  },
+  {
+   "id": "S18",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S18/s18.pqi",
+   "setup_notes": "SOLUTION temp 25, units mg/L, Ba 2.0, S(6) 15.0 (default gfw as SO4 per phreeqc.dat), pH 7 / pe 4 defaults; REACTION_TEMPERATURE 25 95 in 5 steps. Step numbering: step 1 = 25.00 C, 2 = 42.50, 3 = 60.00, 4 = 77.50, 5 = 95.00 C (endpoints inclusive). Ba and S(6) are conservative (no phases), so their molalities are identical at all steps. None of the asked quantities is redox-sensitive; pH/SC/I/SI unchanged under KNOBS variants.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp 25\n    units mg/L\n    Ba 2.0\n    S(6) 15.0\nREACTION_TEMPERATURE 1\n    25 95 in 5 steps\nEND"
+  },
+  {
+   "id": "S19",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S19/s19.pqi",
+   "setup_notes": "SOLUTION temp 15, units mmol/kgw, C(-4) 5.0 (pH 7, pe 4 defaults); GAS_PHASE -fixed_pressure -pressure 1.0 -temperature 15 CH4(g) 0. Results read from batch-reaction step 1. Redox is set by the CH4/C(4) couple produced in the reaction; all redox-dependent values (pe, CO2, HCO3-, SI CO2(g), I) were identical across 8 KNOBS variants.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp 15\n    units mmol/kgw\n    C(-4) 5.0\nGAS_PHASE 1\n    -fixed_pressure\n    -pressure 1.0\n    -temperature 15\n    CH4(g) 0\nEND"
+  },
+  {
+   "id": "S20",
+   "setup_source": "literal reading of the question text",
+   "main_input": "verification_inputs/S20/s20.pqi",
+   "setup_notes": "SOLUTION temp 25, pH 8.0, units ppm, Ca 50, Mg 12, Na 20, K 2, Alkalinity 150 (phreeqc.dat default gfw, i.e. as CaCO3), S(6) 40, Cl 15; REACTION 1 H2O -1, 50.0 moles (single step); EQUILIBRIUM_PHASES Calcite 0 0, Gypsum 0 0, Halite 0 0. Mass of water after reaction 9.921e-02 kg. Only calcite precipitates (8.042e-04 mol). pe is not constrained (only trace O2/S(-2)); it varied 11.750/11.766/11.782 across KNOBS variants, all other values unchanged.",
+   "issue": null,
+   "input": "SOLUTION 1\n    temp 25\n    pH 8.0\n    units ppm\n    Ca 50\n    Mg 12\n    Na 20\n    K 2\n    Alkalinity 150\n    S(6) 40\n    Cl 15\nREACTION 1\n    H2O -1\n    50.0 moles\nEQUILIBRIUM_PHASES 1\n    Calcite 0 0\n    Gypsum 0 0\n    Halite 0 0\nEND"
+  }
+ ],
+ "questions": [
+  {
+   "id": 1,
+   "scenario": "S01",
+   "quantity": "pe at step 100",
+   "gold": "D",
+   "gold_value": "7.364",
+   "computed": "7.405 (default); 7.429 with -cvode; 7.561 with kinetics -tol 1e-10",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "No option (7.364-7.367) matches 7.405; pe is poorly poised and changes by >0.02 under integrator/tolerance variants, so the 3rd decimal cannot discriminate options.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "D",
+    "majority_count": 6
+   }
+  },
+  {
+   "id": 2,
+   "scenario": "S01",
+   "quantity": "pH at step 100",
+   "gold": "C",
+   "gold_value": "5.534",
+   "computed": "5.534 (5.53449)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Stable under all KNOBS variants; note the unrounded value 5.53449 is at a rounding edge and -cvode true gives 5.535 (option A).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "C",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 3,
+   "scenario": "S01",
+   "quantity": "total C molality at step 100",
+   "gold": "A",
+   "gold_value": "5.276e-04",
+   "computed": "5.276e-04",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "The keyed value reproduces (C = 5.276e-04), but option B is malformed (\"5.278-04\", missing the \"e\"), so the options need fixing.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 4,
+   "scenario": "S01",
+   "quantity": "(missing stem) presumably SI Aragonite at step 100",
+   "gold": "A",
+   "gold_value": "-4.35",
+   "computed": "SI Aragonite at step 100 = -4.35",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "The question stem is missing (only options given); in the authors' earlier version this was SI(Aragonite) at step 100, which computes to -4.35 = A.",
+   "agent_status": "ambiguous",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "A",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 5,
+   "scenario": "S01",
+   "quantity": "pH at step 47",
+   "gold": "D",
+   "gold_value": "5.326",
+   "computed": "5.321",
+   "matched_options": [],
+   "status": "no_match",
+   "note": "Step 47 pH = 5.321 matches no option; PHREEQC's step 48 gives 5.326 (gold D), suggesting an off-by-one step in the key.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "D",
+    "majority_count": 5
+   }
+  },
+  {
+   "id": 6,
+   "scenario": "S01",
+   "quantity": "total C molality at step 47",
+   "gold": "B",
+   "gold_value": "5.141e-04",
+   "computed": "5.138e-04",
+   "matched_options": [],
+   "status": "no_match",
+   "note": "Step 47 C = 5.138e-04 matches no option; step 48 gives 5.141e-04 (gold B), same off-by-one pattern.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "B",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 7,
+   "scenario": "S01",
+   "quantity": "SI Aragonite at step 47",
+   "gold": "C",
+   "gold_value": "-5.06",
+   "computed": "-5.06",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Step 47 SI(Aragonite) = -5.06 (step 48 would give -5.04 = option A); stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "C",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 8,
+   "scenario": "S01",
+   "quantity": "pe at step 47",
+   "gold": "A",
+   "gold_value": "7.606",
+   "computed": "7.573 (default); 7.525 with -cvode; -0.023 with kinetics -tol 1e-10",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "No option matches 7.573; step 48 gives 7.604 (option D, not gold A). pe is poorly poised and varies wildly under integrator settings.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 0,
+    "majority": "D",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 9,
+   "scenario": "S02",
+   "quantity": "pH at step 100",
+   "gold": "A",
+   "gold_value": "2.129",
+   "computed": "2.129",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Printed pH 2.129; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "B",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 10,
+   "scenario": "S02",
+   "quantity": "SI Witherite at step 100",
+   "gold": "C",
+   "gold_value": "-9.36",
+   "computed": "-9.36",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Printed SI(Witherite) -9.36 (unrounded -9.357).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 0,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 11,
+   "scenario": "S02",
+   "quantity": "molality of CO2 species at step 100",
+   "gold": "A",
+   "gold_value": "1.590e-03",
+   "computed": "1.590e-03",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Species CO2 molality 1.590e-03 (total C(4) is 1.591e-03 = option C, so reading the species vs total matters; the question says CO2).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "A",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 12,
+   "scenario": "S02",
+   "quantity": "total alkalinity at step 100",
+   "gold": "B",
+   "gold_value": "-9.260e-03",
+   "computed": "-9.260e-03",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Printed Total alkalinity -9.260e-03 eq/kg.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 4,
+    "majority": "A",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 13,
+   "scenario": "S02",
+   "quantity": "pH at step 10",
+   "gold": "C",
+   "gold_value": "2.013",
+   "computed": "2.013",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Printed pH 2.013.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 14,
+   "scenario": "S02",
+   "quantity": "moles calcite remaining at step 10",
+   "gold": "D",
+   "gold_value": "9.998e-01",
+   "computed": "9.998e-01",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Kinetics Total Moles 9.998e-01 (delta -1.808e-04).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "D",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 15,
+   "scenario": "S02",
+   "quantity": "SI witherite step 10 vs step 100",
+   "gold": "B",
+   "gold_value": "Lower",
+   "computed": "-10.53 (step 10) vs -9.36 (step 100)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Step 10 SI is lower.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "B",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 16,
+   "scenario": "S02",
+   "quantity": "number of C(4) vs Cu(2) species at step 10",
+   "gold": "B",
+   "gold_value": "More C(4)",
+   "computed": "C(4): 11 species listed with nonzero molality; Cu(2): 9",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Counted species listed under C(4) and Cu(2) in Distribution of species at step 10 (all nonzero); with a 1e-10 molality cutoff it is 6 vs 4, still More C(4).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 17,
+   "scenario": "S03",
+   "quantity": "moles albite dissolved at step 100",
+   "gold": "A",
+   "gold_value": "2.293e-04",
+   "computed": "2.293e-04",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Kinetics Delta Moles -2.293e-04 (cumulative from start).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 18,
+   "scenario": "S03",
+   "quantity": "pe at step 100",
+   "gold": "D",
+   "gold_value": "-0.081",
+   "computed": "-0.081 (-0.08056)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Stable under all KNOBS/tolerance variants (Fe(2)/Fe(3)-poised).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 4,
+    "majority": "C",
+    "majority_count": 5
+   }
+  },
+  {
+   "id": 19,
+   "scenario": "S03",
+   "quantity": "moles Si in solution at step 100",
+   "gold": "C",
+   "gold_value": "6.879e-04",
+   "computed": "6.879e-04",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Solution composition Si moles 6.879e-04 (1 kg water).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 2,
+    "majority": "A",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 20,
+   "scenario": "S03",
+   "quantity": "element with highest dissolved molality at step 100",
+   "gold": "C",
+   "gold_value": "S",
+   "computed": "S 3.041e-02 > Fe 8.000e-03 > Na = Al 2.293e-04",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Compared element totals in Solution composition; S is highest (also H2S is the most abundant solute species).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "C",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 21,
+   "scenario": "S03",
+   "quantity": "ionic strength at step 100",
+   "gold": "B",
+   "gold_value": "2.166e-02",
+   "computed": "2.166e-02",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Printed ionic strength 2.166e-02.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "A",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 22,
+   "scenario": "S03",
+   "quantity": "Fe(3) at step 10 vs step 100",
+   "gold": "A",
+   "gold_value": "More",
+   "computed": "Fe(3) total 3.468e-10 (step 10) vs 3.560e-10 (step 100)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "wrong_key",
+   "note": "Total Fe(3) is lower at step 10, so the answer is Less (B), stable across variants. Only the free Fe+3 ion (6.587e-13 vs 6.151e-13) is higher at step 10, which would give the key's A.",
+   "agent_status": "wrong_key",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "B",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 23,
+   "scenario": "S03",
+   "quantity": "Ba+2 at step 10 vs step 70",
+   "gold": "D",
+   "gold_value": "Neither exist",
+   "computed": "Ba not in the system",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "No Ba in solution or reactants at any step.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "D",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 24,
+   "scenario": "S03",
+   "quantity": "moles H2S gas dissolved at step 100",
+   "gold": "A",
+   "gold_value": "3.041e-02",
+   "computed": "gas delta -3.041e-02 (initial 1.302e-01, final 9.975e-02); total S in solution 3.041e-02",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Gas phase Delta = -3.041e-02 mol.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "A",
+    "majority_count": 6
+   }
+  },
+  {
+   "id": 25,
+   "scenario": "S03",
+   "quantity": "SI Goethite at step 100",
+   "gold": "D",
+   "gold_value": "-1.72",
+   "computed": "-1.72 (-1.717)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Redox-dependent but stable under all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "D",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 26,
+   "scenario": "S03",
+   "quantity": "number of Si species at step 100",
+   "gold": "A",
+   "gold_value": "3",
+   "computed": "3 (H4SiO4, H3SiO4-, H2SiO4-2)",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Counted species listed under Si in Distribution of species, all nonzero.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 27,
+   "scenario": "S04",
+   "quantity": "pH at 20 C",
+   "gold": "A",
+   "gold_value": "10.037",
+   "computed": "10.037",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Step 1 (20 C) printed pH 10.037.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "A",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 28,
+   "scenario": "S04",
+   "quantity": "pH at 180 C",
+   "gold": "D",
+   "gold_value": "7.400",
+   "computed": "7.400 (7.39985)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Step 9 (180 C) printed pH 7.400; unrounded 7.39985.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "D",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 29,
+   "scenario": "S04",
+   "quantity": "moles calcite precipitated at 200 C",
+   "gold": "B",
+   "gold_value": "4.987e-02",
+   "computed": "4.987e-02",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Equilibrium-phase Calcite moles 4.9869e-02 at step 10.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "B",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 30,
+   "scenario": "S04",
+   "quantity": "moles calcite precipitated at 100 C",
+   "gold": "D",
+   "gold_value": "4.972e-02",
+   "computed": "4.972e-02",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Calcite moles 4.9721e-02 at step 5 (100 C).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "D",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 31,
+   "scenario": "S04",
+   "quantity": "ionic strength at 100 C",
+   "gold": "C",
+   "gold_value": "4.066e-04",
+   "computed": "4.066e-04",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Printed ionic strength 4.066e-04.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 32,
+   "scenario": "S04",
+   "quantity": "number of Ca species at 160 C",
+   "gold": "C",
+   "gold_value": "4",
+   "computed": "4 (Ca+2, CaHCO3+, CaCO3, CaOH+)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Counted species listed under Ca in Distribution of species at 160 C, all nonzero (smallest CaOH+ 5.1e-10).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "C",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 33,
+   "scenario": "S04",
+   "quantity": "SI aragonite at 160 C",
+   "gold": "A",
+   "gold_value": "-0.82",
+   "computed": "-0.82 (-0.8194)",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Printed SI(Aragonite) -0.82.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "A",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 34,
+   "scenario": "S04",
+   "quantity": "moles C(4) vs Ca at 20 C",
+   "gold": "C",
+   "gold_value": "Same",
+   "computed": "C(4) 2.388e-04 mol = Ca 2.388e-04 mol",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Equal totals (1.193e-04 mol/kgw each; C(-4) = 0).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "C",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 35,
+   "scenario": "S04",
+   "quantity": "density at 200 C",
+   "gold": "B",
+   "gold_value": "0.86468",
+   "computed": "0.86468",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Printed Density 0.86468 g/cm3.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 36,
+   "scenario": "S04",
+   "quantity": "log IAP calcite at 200 C",
+   "gold": "D",
+   "gold_value": "-12.26",
+   "computed": "-12.26",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Printed log IAP -12.26 (SI 0.00).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "D",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 37,
+   "scenario": "S05",
+   "quantity": "pH (question stem missing)",
+   "gold": "C",
+   "gold_value": "6.531",
+   "computed": "pH = 6.531",
+   "matched_options": [
+    "C"
+   ],
+   "status": "ambiguous",
+   "note": "Question text has no stem (the 'What is the pH' sentence is missing); the options are pH-like and the computed pH 6.531 matches C uniquely, but the item is defective as written.",
+   "agent_status": "ambiguous",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "C",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 38,
+   "scenario": "S05",
+   "quantity": "SI aragonite",
+   "gold": "B",
+   "gold_value": "-0.45",
+   "computed": "-0.45",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Aragonite SI -0.45 in the phase assemblage and SI table.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "B",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 39,
+   "scenario": "S05",
+   "quantity": "pe",
+   "gold": "A",
+   "gold_value": "-4.646",
+   "computed": "-4.646",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "pe -4.646 (redox equilibrium), unchanged in all KNOBS variants; redox is fixed by the CH4/CO2 gas couple.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 40,
+   "scenario": "S05",
+   "quantity": "moles calcite precipitated",
+   "gold": "B",
+   "gold_value": "3.646e-02",
+   "computed": "Delta 3.646e-02",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Calcite final 3.646e-02 mol from 0 initial.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 41,
+   "scenario": "S05",
+   "quantity": "moles CH4 dissolved",
+   "gold": "A",
+   "gold_value": "2.913e-04",
+   "computed": "gas Delta -2.913e-04",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "CH4(g) moles in gas phase 2.262e-01 -> 2.259e-01, Delta -2.913e-04.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "A",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 42,
+   "scenario": "S05",
+   "quantity": "gas with most moles dissolved",
+   "gold": "B",
+   "gold_value": "H2S",
+   "computed": "H2S -4.743e-02; CO2 -3.697e-02; CH4 -2.913e-04",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "H2S has the largest gas-phase decrease.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "B",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 43,
+   "scenario": "S05",
+   "quantity": "molality S",
+   "gold": "A",
+   "gold_value": "4.737e-02",
+   "computed": "4.737e-02",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Solution composition S molality 4.737e-02.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 44,
+   "scenario": "S05",
+   "quantity": "specific conductance",
+   "gold": "D",
+   "gold_value": "7948",
+   "computed": "7948 uS/cm",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Specific Conductance (uS/cm, 100 C) = 7948.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "D",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 45,
+   "scenario": "S05",
+   "quantity": "alkalinity",
+   "gold": "B",
+   "gold_value": "2.694e-02",
+   "computed": "2.694e-02 eq/kg",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Total alkalinity 2.694e-02 eq/kg.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "B",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 46,
+   "scenario": "S05",
+   "quantity": "number of Ca species",
+   "gold": "A",
+   "gold_value": "6",
+   "computed": "6",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Six species listed under Ca in Distribution of species, all with nonzero molality: Ca+2, CaHCO3+, CaSO4, CaCO3, CaOH+, CaHSO4+.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 47,
+   "scenario": "S06",
+   "quantity": "pH",
+   "gold": "B",
+   "gold_value": "5.509",
+   "computed": "5.509",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "pH 5.509 (charge balance); unchanged across all KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "D",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 48,
+   "scenario": "S06",
+   "quantity": "pe",
+   "gold": "D",
+   "gold_value": "9.265",
+   "computed": "9.265 (default); 9.223 with stab3 KNOBS",
+   "matched_options": [
+    "D"
+   ],
+   "status": "unstable",
+   "note": "Default run gives 9.265 (D), but KNOBS stab3 (iterations 500, step_size 50, pe_step_size 5, diagonal_scale) gives 9.223. The system has no well-defined redox couple, so pe is not stable at the digit that separates the options.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "D",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 49,
+   "scenario": "S06",
+   "quantity": "specific conductance",
+   "gold": "C",
+   "gold_value": "124108",
+   "computed": "124108 uS/cm",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "SC (uS/cm, 100 C) = 124108, stable across variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "C",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 50,
+   "scenario": "S06",
+   "quantity": "molality Al(OH)4-",
+   "gold": "B",
+   "gold_value": "2.242e-06",
+   "computed": "2.242e-06",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Al(OH)4- molality 2.242e-06, stable across variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 3,
+    "majority": "C",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 51,
+   "scenario": "S06",
+   "quantity": "more moles Fe(2) or Fe(3)",
+   "gold": "B",
+   "gold_value": "Fe(3)",
+   "computed": "Fe(3) 4.323e-04 m vs Fe(2) 1.153e-08 m (1.27e-08 in stab3)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Fe(3) exceeds Fe(2) by about 4 orders of magnitude in every variant, so the qualitative answer is robust despite the pe instability.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "B",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 52,
+   "scenario": "S06",
+   "quantity": "fewer species Fe(2) or Fe(3)",
+   "gold": "A",
+   "gold_value": "Fe(2)",
+   "computed": "Fe(2): 11 listed / 9 nonzero; Fe(3): 13 listed / 12 nonzero",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Fe(2) has fewer species under either counting rule (all listed rows, or only nonzero molality).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 53,
+   "scenario": "S06",
+   "quantity": "number of Al species",
+   "gold": "C",
+   "gold_value": "8",
+   "computed": "8",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Eight species listed under Al, all with nonzero printed molality (AlHSO4+2 3.020e-23).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 54,
+   "scenario": "S06",
+   "quantity": "moles Mg in solution",
+   "gold": "A",
+   "gold_value": "4.432e+00",
+   "computed": "moles 1.002e+01 (molality 4.432e+00)",
+   "matched_options": [],
+   "status": "no_match",
+   "note": "The question asks for moles. PHREEQC prints Mg Moles = 1.002e+01 (mass of water 2.260 kg), which matches no option. The molality 4.432e+00 matches A uniquely, so the key uses molality while calling it moles.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "A",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 55,
+   "scenario": "S06",
+   "quantity": "SI mirabilite",
+   "gold": "D",
+   "gold_value": "-1.90",
+   "computed": "-1.90",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Mirabilite SI -1.90, stable across variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "D",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 56,
+   "scenario": "S06",
+   "quantity": "moles kaolinite dissolved",
+   "gold": "B",
+   "gold_value": "4.499e-05",
+   "computed": "Delta +4.499e-05 (precipitated)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "ambiguous",
+   "note": "Kaolinite Delta is +4.499e-05, meaning it precipitated rather than dissolved (Epsomite's Delta is -10 for full dissolution; Al mass balance agrees: K-mica dissolves 3.207e-05). The magnitude matches B uniquely, but the question's premise is wrong and no option allows 0 or 'precipitated'.",
+   "agent_status": "ambiguous",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "B",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 57,
+   "scenario": "S07",
+   "quantity": "pH",
+   "gold": "A",
+   "gold_value": "7.417",
+   "computed": "7.417",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "pH 7.417 (charge balance).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "A",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 58,
+   "scenario": "S07",
+   "quantity": "specific conductance",
+   "gold": "D",
+   "gold_value": "10116",
+   "computed": "10116 uS/cm",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "SC (uS/cm, 100 C) = 10116.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "D",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 59,
+   "scenario": "S07",
+   "quantity": "ionic strength",
+   "gold": "B",
+   "gold_value": "1.685e-01",
+   "computed": "1.685e-01",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Ionic strength 1.685e-01 mol/kgw.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "B",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 60,
+   "scenario": "S07",
+   "quantity": "mineral dissolved most",
+   "gold": "B",
+   "gold_value": "Sepiolite and Sepiolite(d)",
+   "computed": "Sepiolite -10, Sepiolite(d) -10, Rhodochrosite -3.160e-04, Pb(OH)2 -2.216e-08, Talc +13.33",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Both sepiolites dissolve completely (10 mol each), far more than Rhodochrosite; Talc precipitates.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "B",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 61,
+   "scenario": "S07",
+   "quantity": "mineral with net precipitation",
+   "gold": "A",
+   "gold_value": "Talc",
+   "computed": "Talc Delta +1.333e+01",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Talc is the only phase with a positive Delta.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "A",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 62,
+   "scenario": "S07",
+   "quantity": "final moles talc",
+   "gold": "D",
+   "gold_value": "2.333e+01",
+   "computed": "2.333e+01",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Talc final 2.333e+01 mol.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 19,
+    "majority": "D",
+    "majority_count": 19
+   }
+  },
+  {
+   "id": 63,
+   "scenario": "S07",
+   "quantity": "number of C(4) species",
+   "gold": "B",
+   "gold_value": "13",
+   "computed": "13",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Thirteen species listed under C(4), all with nonzero molality (lowest MgCO3 4.383e-15).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "B",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 64,
+   "scenario": "S07",
+   "quantity": "moles CO3-2",
+   "gold": "A",
+   "gold_value": "3.326e-07",
+   "computed": "molality 3.326e-07; moles 5.935e-07",
+   "matched_options": [],
+   "status": "no_match",
+   "note": "The question asks for moles. Moles = 3.3262e-07 m x 1.7843 kg = 5.935e-07, which matches no option. The printed molality 3.326e-07 matches A uniquely.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 65,
+   "scenario": "S07",
+   "quantity": "SI Sepiolite(d)",
+   "gold": "C",
+   "gold_value": "-8.82",
+   "computed": "-8.82",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Sepiolite(d) SI -8.82.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "A",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 66,
+   "scenario": "S07",
+   "quantity": "moles Mn(3)",
+   "gold": "C",
+   "gold_value": "6.933e-18",
+   "computed": "molality 6.933e-18; moles 1.237e-17",
+   "matched_options": [],
+   "status": "no_match",
+   "note": "The question asks for moles. Moles = 6.9325e-18 x 1.7843 = 1.237e-17, which matches no option. The printed Mn(3) molality 6.933e-18 matches C uniquely and was stable across KNOBS variants.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 2,
+    "majority": "D",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 67,
+   "scenario": "S08",
+   "quantity": "pH",
+   "gold": "C",
+   "gold_value": "0.945",
+   "computed": "0.945",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "pH 0.945.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 68,
+   "scenario": "S08",
+   "quantity": "SI pyrite",
+   "gold": "B",
+   "gold_value": "-219.43",
+   "computed": "-219.43",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Pyrite SI -219.43 (fully dissolved).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "B",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 69,
+   "scenario": "S08",
+   "quantity": "pe",
+   "gold": "A",
+   "gold_value": "19.678",
+   "computed": "19.678",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "pe 19.678, fixed by O2(g) equilibrium; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "A",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 70,
+   "scenario": "S08",
+   "quantity": "specific conductance",
+   "gold": "C",
+   "gold_value": "55866",
+   "computed": "55866 uS/cm",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "SC (uS/cm, 25 C) = 55866.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 71,
+   "scenario": "S08",
+   "quantity": "alkalinity",
+   "gold": "A",
+   "gold_value": "-3.630e-01",
+   "computed": "-3.630e-01 eq/kg",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Total alkalinity -3.630e-01 eq/kg.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "A",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 72,
+   "scenario": "S08",
+   "quantity": "number of Fe(3) species",
+   "gold": "A",
+   "gold_value": "10",
+   "computed": "10",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Ten species listed under Fe(3), all with nonzero molality (lowest Fe(OH)4- 2.979e-22).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "A",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 73,
+   "scenario": "S08",
+   "quantity": "SI hematite",
+   "gold": "D",
+   "gold_value": "2.01",
+   "computed": "2.01",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Hematite SI 2.01.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "D",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 74,
+   "scenario": "S08",
+   "quantity": "molality H+",
+   "gold": "A",
+   "gold_value": "1.438e-01",
+   "computed": "1.438e-01",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "H+ molality 1.438e-01.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "A",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 75,
+   "scenario": "S08",
+   "quantity": "molality S(6)",
+   "gold": "B",
+   "gold_value": "2.006e-01",
+   "computed": "2.006e-01",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "S(6) molality 2.006e-01.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "B",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 76,
+   "scenario": "S08",
+   "quantity": "more moles Fe(2) or Fe(3)",
+   "gold": "B",
+   "gold_value": "Fe(3)",
+   "computed": "Fe(3) 3.830e-02 m vs Fe(2) 2.028e-10 m",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Fe(3) dominates by 8 orders of magnitude.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "B",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 77,
+   "scenario": "S09",
+   "quantity": "pH after gas equilibration",
+   "gold": "D",
+   "gold_value": "6.618",
+   "computed": "6.618",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Printed pH = 6.618 (charge balance), identical in all KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "D",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 78,
+   "scenario": "S09",
+   "quantity": "(no stem) value ~0.9172x; options match printed density g/cm3",
+   "gold": "A",
+   "gold_value": "0.91720",
+   "computed": "Density 0.91720 g/cm3",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "The question stem is missing (only options). The original author question (test9 Q2) asked for density; printed density 0.91720 matches A, but without a stem the item cannot be scored fairly.",
+   "agent_status": "ambiguous",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "A",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 79,
+   "scenario": "S09",
+   "quantity": "SI of N2(g)",
+   "gold": "C",
+   "gold_value": "2.09",
+   "computed": "2.09",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "N2(g) SI = 2.09 (log IAP -1.15, log K -3.24); stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "C",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 80,
+   "scenario": "S09",
+   "quantity": "number of C(4) species in solution",
+   "gold": "A",
+   "gold_value": "4",
+   "computed": "4 (CO2, HCO3-, (CO2)2, CO3-2)",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Counted species listed under C(4) in Distribution of species, all with nonzero molality (smallest CO3-2 5.503e-07).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "A",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 81,
+   "scenario": "S09",
+   "quantity": "NH4+ vs NH3 molality",
+   "gold": "A",
+   "gold_value": "NH4+",
+   "computed": "NH4+ 2.578e-03 > NH3 2.558e-03",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "NH4+ molality exceeds NH3 by ~1%; same in all KNOBS variants. Matches original author answer (test9 Q6, A=NH4+).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "A",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 82,
+   "scenario": "S09",
+   "quantity": "total alkalinity (eq/kg)",
+   "gold": "B",
+   "gold_value": "5.160e-03",
+   "computed": "5.160e-03",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Total alkalinity printed 5.160e-03 eq/kg; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "B",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 83,
+   "scenario": "S09",
+   "quantity": "molality of N (total)",
+   "gold": "D",
+   "gold_value": "1.476e-01",
+   "computed": "1.476e-01",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Solution composition N molality 1.476e-01 (mostly N2(aq), N(0) 1.425e-01).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "D",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 84,
+   "scenario": "S09",
+   "quantity": "specific conductance (uS/cm, 150 C)",
+   "gold": "A",
+   "gold_value": "774",
+   "computed": "774",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Printed SC = 774 uS/cm; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 85,
+   "scenario": "S09",
+   "quantity": "delta moles CH4(g) in gas phase",
+   "gold": "B",
+   "gold_value": "5.277e-02",
+   "computed": "5.277e-02",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Gas phase table Delta for CH4(g) = 5.277e-02 (positive: CH4 moves into gas); stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "B",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 86,
+   "scenario": "S09",
+   "quantity": "pe of final solution",
+   "gold": "D",
+   "gold_value": "-5.199",
+   "computed": "-5.199",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "pe = -5.199 (adjusted to redox equilibrium), set by CH4/CO2 and N couples; identical under all KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "D",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 87,
+   "scenario": "S10",
+   "quantity": "pH",
+   "gold": "D",
+   "gold_value": "7.492",
+   "computed": "7.492",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Printed pH 7.492 (charge balance); stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "D",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 88,
+   "scenario": "S10",
+   "quantity": "specific conductance (uS/cm, 150 C)",
+   "gold": "B",
+   "gold_value": "46",
+   "computed": "46",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Printed SC = 46; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "B",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 89,
+   "scenario": "S10",
+   "quantity": "pe",
+   "gold": "D",
+   "gold_value": "3.508",
+   "computed": "3.508",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "pe 3.508 (adjusted to redox equilibrium from the pe-4 water); no redox couple besides H2O, but value identical in all converged KNOBS variants and the split-simulation variant.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "D",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 90,
+   "scenario": "S10",
+   "quantity": "ionic strength (mol/kgw)",
+   "gold": "A",
+   "gold_value": "8.538e-05",
+   "computed": "8.538e-05",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Printed ionic strength 8.538e-05; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "A",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 91,
+   "scenario": "S10",
+   "quantity": "log IAP of Chrysotile",
+   "gold": "C",
+   "gold_value": "21.14",
+   "computed": "21.14",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Chrysotile log IAP 21.14 (SI 0.00, at equilibrium).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "C",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 92,
+   "scenario": "S10",
+   "quantity": "number of Si species",
+   "gold": "C",
+   "gold_value": "3",
+   "computed": "3 (H4SiO4, H3SiO4-, H2SiO4-2)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Counted species listed under Si in Distribution of species, all with nonzero molality (smallest H2SiO4-2 5.429e-11).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 19,
+    "majority": "C",
+    "majority_count": 19
+   }
+  },
+  {
+   "id": 93,
+   "scenario": "S10",
+   "quantity": "SI of Chalcedony",
+   "gold": "D",
+   "gold_value": "-2.36",
+   "computed": "-2.36",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Chalcedony SI -2.36; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "D",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 94,
+   "scenario": "S10",
+   "quantity": "SI of Quartz",
+   "gold": "C",
+   "gold_value": "-2.21",
+   "computed": "-2.21",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Quartz SI -2.21; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 95,
+   "scenario": "S10",
+   "quantity": "molality of MgOH+",
+   "gold": "C",
+   "gold_value": "6.816e-06",
+   "computed": "6.816e-06",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "MgOH+ molality 6.816e-06; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "C",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 96,
+   "scenario": "S10",
+   "quantity": "more Mg or Si in solution",
+   "gold": "A",
+   "gold_value": "Mg",
+   "computed": "Mg 2.904e-05 > Si 1.346e-05 mol/kgw",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Compared total element molalities in Solution composition.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 19,
+    "majority": "A",
+    "majority_count": 19
+   }
+  },
+  {
+   "id": 97,
+   "scenario": "S11",
+   "quantity": "molality of Alkalinity",
+   "gold": "C",
+   "gold_value": "4.997e-03",
+   "computed": "4.997e-03",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Solution composition 'Alkalinity 4.997e-03' molal.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "C",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 98,
+   "scenario": "S11",
+   "quantity": "molality of Ca",
+   "gold": "A",
+   "gold_value": "2.496e-03",
+   "computed": "2.496e-03",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Solution composition Ca 2.496e-03 molal.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "A",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 99,
+   "scenario": "S11",
+   "quantity": "total carbon (mol/kg)",
+   "gold": "D",
+   "gold_value": "5.287e-03",
+   "computed": "5.287e-03",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Printed Total carbon = Total CO2 = 5.287e-03 mol/kg.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "D",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 100,
+   "scenario": "S11",
+   "quantity": "electrical balance (eq)",
+   "gold": "A",
+   "gold_value": "-5.431e-06",
+   "computed": "-5.431e-06",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Printed electrical balance -5.431e-06 eq.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "A",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 101,
+   "scenario": "S11",
+   "quantity": "specific conductance (uS/cm, 25 C)",
+   "gold": "D",
+   "gold_value": "463",
+   "computed": "463",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Printed SC = 463.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "D",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 102,
+   "scenario": "S11",
+   "quantity": "SI of Aragonite",
+   "gold": "A",
+   "gold_value": "0.40",
+   "computed": "0.40",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Aragonite SI 0.40.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 103,
+   "scenario": "S11",
+   "quantity": "SI of O2(g)",
+   "gold": "C",
+   "gold_value": "-37.19",
+   "computed": "-37.19",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "O2(g) SI -37.19, fixed by input pe 4 and pH 7.5; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "C",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 104,
+   "scenario": "S11",
+   "quantity": "activity of CO2",
+   "gold": "D",
+   "gold_value": "3.197e-04",
+   "computed": "3.197e-04",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "CO2 activity 3.197e-04 (its molality 3.193e-04 equals distractor A).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "D",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 105,
+   "scenario": "S11",
+   "quantity": "activity of H2",
+   "gold": "A",
+   "gold_value": "7.079e-27",
+   "computed": "7.079e-27",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "H2 activity 7.079e-27 (molality 7.067e-27, not an option); fixed by input pe 4.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "A",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 106,
+   "scenario": "S12",
+   "quantity": "molality of Cl in mixture",
+   "gold": "A",
+   "gold_value": "5.707e+00",
+   "computed": "5.707e+00",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Cl 5.707e+00 molal in the mix; consistent with default mmol/kgw units; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "A",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 107,
+   "scenario": "S12",
+   "quantity": "pH of mixture",
+   "gold": "C",
+   "gold_value": "6.733",
+   "computed": "6.733",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "pH 6.733 in all runs.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 4,
+    "majority": "A",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 108,
+   "scenario": "S12",
+   "quantity": "pe of mixture",
+   "gold": "C",
+   "gold_value": "11.244",
+   "computed": "-1.091 (range -1.030 to -1.115 across KNOBS/order variants)",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "pe of the mix has no redox couple and changes at the first decimal with solver settings; no run gives ~11.24 (no option matches). The gold 11.244 is internally consistent with gold O2 log IAP -14.26 at pH 6.733, i.e. it reflects a different (oxidised) numerical solution.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 2,
+    "majority": "D",
+    "majority_count": 5
+   }
+  },
+  {
+   "id": 109,
+   "scenario": "S12",
+   "quantity": "electrical balance (eq)",
+   "gold": "B",
+   "gold_value": "-5.707e+00",
+   "computed": "-5.707e+00",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Electrical balance -5.707e+00 eq (unbalanced Cl-); stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "B",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 110,
+   "scenario": "S12",
+   "quantity": "viscosity (mPa s)",
+   "gold": "D",
+   "gold_value": "0.89329",
+   "computed": "0.89329",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Viscosity 0.89329 mPa s; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 111,
+   "scenario": "S12",
+   "quantity": "specific conductance (uS/cm, 25 C)",
+   "gold": "D",
+   "gold_value": "263760",
+   "computed": "263760",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "SC 263760 in all runs.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "D",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 112,
+   "scenario": "S12",
+   "quantity": "SI of H2O(g)",
+   "gold": "A",
+   "gold_value": "-1.55",
+   "computed": "-1.55",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "H2O(g) SI -1.55 (log IAP -0.04 from aw 0.903); stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 1,
+    "majority": "B",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 113,
+   "scenario": "S12",
+   "quantity": "activity of H+",
+   "gold": "C",
+   "gold_value": "1.851e-07",
+   "computed": "1.851e-07",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "H+ activity 1.851e-07; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "C",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 114,
+   "scenario": "S12",
+   "quantity": "molality of HCl",
+   "gold": "A",
+   "gold_value": "1.286e-08",
+   "computed": "1.286e-08",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "HCl molality 1.286e-08; stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 115,
+   "scenario": "S12",
+   "quantity": "log IAP of O2(g)",
+   "gold": "B",
+   "gold_value": "-14.26",
+   "computed": "-63.60 (range -63.36 to -63.70 across variants)",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "O2(g) log IAP follows the unstable pe (varies in the first decimal between runs) and is ~-63.6 in every run, far from all options (-14.19 to -14.32); gold corresponds to pe ~11.244.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "B",
+    "majority_count": 6
+   }
+  },
+  {
+   "id": 116,
+   "scenario": "S13",
+   "quantity": "pH, final step (5)",
+   "gold": "A",
+   "gold_value": "1.013",
+   "computed": "1.013",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable in all KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "A",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 117,
+   "scenario": "S13",
+   "quantity": "ionic strength, final step",
+   "gold": "D",
+   "gold_value": "1.391e-01",
+   "computed": "1.391e-01",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Stable in all KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "D",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 118,
+   "scenario": "S13",
+   "quantity": "pe, final step",
+   "gold": "C",
+   "gold_value": "5.591",
+   "computed": "5.101 (default)",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "Default gives 5.101 (no option matches); variants give 5.296, 5.421, 4.707, 5.598, 5.610. Unpoised redox, value is set by convergence residuals.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 0,
+    "majority": "D",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 119,
+   "scenario": "S13",
+   "quantity": "log IAP H2(g), final step",
+   "gold": "B",
+   "gold_value": "-16.36",
+   "computed": "-15.38 (default)",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "Default -15.38 (no option); variants -15.77, -16.02, -14.59, -16.37, -16.40. Tracks the unstable pe.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 4,
+    "majority": "D",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 120,
+   "scenario": "S13",
+   "quantity": "activity H+, final step",
+   "gold": "A",
+   "gold_value": "9.706e-02",
+   "computed": "9.706e-02",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable in all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 121,
+   "scenario": "S13",
+   "quantity": "pH, reaction step 1",
+   "gold": "B",
+   "gold_value": "2.751",
+   "computed": "2.751",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Stable in all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "B",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 122,
+   "scenario": "S13",
+   "quantity": "viscosity, reaction step 1",
+   "gold": "B",
+   "gold_value": "0.89064",
+   "computed": "0.89064",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Stable in all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 123,
+   "scenario": "S13",
+   "quantity": "pH, reaction step 2",
+   "gold": "D",
+   "gold_value": "2.124",
+   "computed": "2.124",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Stable in all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "D",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 124,
+   "scenario": "S13",
+   "quantity": "activity H+, reaction step 2",
+   "gold": "A",
+   "gold_value": "7.513e-03",
+   "computed": "7.513e-03",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable in all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 125,
+   "scenario": "S13",
+   "quantity": "pe, reaction step 4",
+   "gold": "C",
+   "gold_value": "16.655",
+   "computed": "16.655 (default)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "unstable",
+   "note": "Default matches C exactly, but -convergence_tolerance 1e-12 gives 16.604 (no option); unpoised redox.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "C",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 126,
+   "scenario": "S14",
+   "quantity": "pH",
+   "gold": "A",
+   "gold_value": "7.066",
+   "computed": "7.066",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "A",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 127,
+   "scenario": "S14",
+   "quantity": "ionic strength",
+   "gold": "C",
+   "gold_value": "4.174e-02",
+   "computed": "4.174e-02 (high precision 4.173706e-02)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Option A (4.1741e-02) is a near-duplicate; the full-precision value 4.17371e-02 rounds to C and not to A. Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "A",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 128,
+   "scenario": "S14",
+   "quantity": "pe",
+   "gold": "D",
+   "gold_value": "10.740",
+   "computed": "10.741 (default)",
+   "matched_options": [
+    "A"
+   ],
+   "status": "unstable",
+   "note": "Default prints 10.741 = option A, not gold D; with convergence_tolerance 1e-12 (or -high_precision) pe = -0.920. Unpoised redox.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 4,
+    "majority": "A",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 129,
+   "scenario": "S14",
+   "quantity": "SI anhydrite",
+   "gold": "A",
+   "gold_value": "-0.30",
+   "computed": "-0.30",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 19,
+    "majority": "A",
+    "majority_count": 19
+   }
+  },
+  {
+   "id": 130,
+   "scenario": "S14",
+   "quantity": "SI Sulfur",
+   "gold": "C",
+   "gold_value": "-87.56",
+   "computed": "-87.56 (default)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "unstable",
+   "note": "Default matches C; tight tolerance gives -17.59 (pe -0.92). Redox-dependent.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "C",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 131,
+   "scenario": "S14",
+   "quantity": "activity OH-",
+   "gold": "C",
+   "gold_value": "1.178e-07",
+   "computed": "1.178e-07",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "C",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 132,
+   "scenario": "S14",
+   "quantity": "molality CaHSO4+",
+   "gold": "A",
+   "gold_value": "3.162e-09",
+   "computed": "3.162e-09",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable (3.1617e-09).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "C",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 133,
+   "scenario": "S14",
+   "quantity": "molality H2",
+   "gold": "C",
+   "gold_value": "1.710e-39",
+   "computed": "1.707e-39 (default)",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "Default 1.707e-39 matches no option; step_size/pe_step_size variants give 1.705-1.709e-39, tight tolerance 3.58e-16.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 1,
+    "majority": "D",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 134,
+   "scenario": "S14",
+   "quantity": "final moles gypsum",
+   "gold": "A",
+   "gold_value": "9.985e+00",
+   "computed": "9.985e+00",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable (9.98495).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "A",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 135,
+   "scenario": "S15",
+   "quantity": "pH",
+   "gold": "A",
+   "gold_value": "5.610",
+   "computed": "5.610",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "A",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 136,
+   "scenario": "S15",
+   "quantity": "pe",
+   "gold": "B",
+   "gold_value": "0.366",
+   "computed": "0.366 (default)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "unstable",
+   "note": "Default matches B; convergence_tolerance 1e-12 gives 0.018 (no option). Unpoised redox.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "B",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 137,
+   "scenario": "S15",
+   "quantity": "ionic strength",
+   "gold": "C",
+   "gold_value": "2.461e-06",
+   "computed": "2.461e-06",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "C",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 138,
+   "scenario": "S15",
+   "quantity": "total alkalinity",
+   "gold": "D",
+   "gold_value": "1.217e-09",
+   "computed": "1.217e-09 (default)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "unstable",
+   "note": "Default matches D; tight tolerance gives 1.216e-09 (no option). Value is essentially the charge-balance residual (-1.217e-09 electrical balance), a numerical artifact.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "D",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 139,
+   "scenario": "S15",
+   "quantity": "delta CO2(g) moles",
+   "gold": "A",
+   "gold_value": "-1.600e-05",
+   "computed": "-1.600e-05",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "A",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 140,
+   "scenario": "S15",
+   "quantity": "SI CH4(g)",
+   "gold": "D",
+   "gold_value": "-25.48",
+   "computed": "-25.48 (default)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "unstable",
+   "note": "Default matches D; tight tolerance gives -22.70. Redox-dependent.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "D",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 141,
+   "scenario": "S15",
+   "quantity": "activity H+",
+   "gold": "B",
+   "gold_value": "2.456e-06",
+   "computed": "2.456e-06",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 142,
+   "scenario": "S15",
+   "quantity": "molality OH-",
+   "gold": "A",
+   "gold_value": "4.129e-09",
+   "computed": "4.129e-09",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "A",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 143,
+   "scenario": "S15",
+   "quantity": "log IAP CO2(g)",
+   "gold": "C",
+   "gold_value": "-4.87",
+   "computed": "-4.87",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "C",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 144,
+   "scenario": "S16",
+   "quantity": "pe, cell 10, shift 10",
+   "gold": "A",
+   "gold_value": "-1.452",
+   "computed": "-1.452",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable in all variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 145,
+   "scenario": "S16",
+   "quantity": "pe, cell 1, shift 10",
+   "gold": "C",
+   "gold_value": "10.733",
+   "computed": "10.733 (default)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "unstable",
+   "note": "Default matches C; KNOBS -step_size 10 gives 10.803 (no option). Unpoised redox (Na/Ca/Cl only).",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "C",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 146,
+   "scenario": "S16",
+   "quantity": "moles CaX2, exchange 1, shift 5",
+   "gold": "A",
+   "gold_value": "4.284e-04",
+   "computed": "4.284e-04",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 10,
+    "majority": "A",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 147,
+   "scenario": "S16",
+   "quantity": "specific conductance, cell 1, shift 5",
+   "gold": "D",
+   "gold_value": "123",
+   "computed": "123",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "D",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 148,
+   "scenario": "S16",
+   "quantity": "total Na, cell 1, shift 5",
+   "gold": "B",
+   "gold_value": "9.871e-04",
+   "computed": "9.871e-04",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "B",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 149,
+   "scenario": "S16",
+   "quantity": "NaX (moles), exchange 1, shift 4",
+   "gold": "B",
+   "gold_value": "1.304e-04",
+   "computed": "1.304e-04",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "'Molality' of an exchange species read as moles (selected output m_NaX = 1.3040e-04). Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "B",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 150,
+   "scenario": "S16",
+   "quantity": "equiv. fraction CaX2, exchange 8, shift 4",
+   "gold": "A",
+   "gold_value": "1.000e+00",
+   "computed": "1.000e+00",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Cell 8 still untouched by the Na front at shift 4 (CaX2 = 5.0000e-04, fraction exactly 1). Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "A",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 151,
+   "scenario": "S16",
+   "quantity": "specific conductance, 'exchange site 8', shift 4",
+   "gold": "D",
+   "gold_value": "255",
+   "computed": "255",
+   "matched_options": [
+    "D"
+   ],
+   "status": "ambiguous",
+   "note": "The key reproduces if \"exchange site 8\" is read as cell 8, but specific conductance is a solution property, so the location wording should say solution/cell 8.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "B",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 152,
+   "scenario": "S16",
+   "quantity": "equiv. fraction CaX2, exchange 1, shift 6",
+   "gold": "B",
+   "gold_value": "8.457e-01",
+   "computed": "8.457e-01",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "B",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 153,
+   "scenario": "S16",
+   "quantity": "molality Na, 'exchange 1', shift 6",
+   "gold": "C",
+   "gold_value": "9.890e-04",
+   "computed": "9.890e-04 (9.8899e-04)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "ambiguous",
+   "note": "\"Molality of Na at exchange 1\" has two readings: dissolved Na in cell 1 (9.890e-04, the key) or NaX on the exchanger (1.543e-04, no option). The wording should say which.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "C",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 154,
+   "scenario": "S16",
+   "quantity": "viscosity, cell 1, shift 6",
+   "gold": "C",
+   "gold_value": "0.89026",
+   "computed": "0.89026",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "C",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 155,
+   "scenario": "S16",
+   "quantity": "molality Ca+2, cell 1, shift 6",
+   "gold": "A",
+   "gold_value": "5.506e-06",
+   "computed": "5.506e-06",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "A",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 156,
+   "scenario": "S16",
+   "quantity": "moles NaX, exchange 4, shift 10",
+   "gold": "A",
+   "gold_value": "9.498e-05",
+   "computed": "9.498e-05",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 157,
+   "scenario": "S16",
+   "quantity": "molality HCl, cell 4, shift 10",
+   "gold": "C",
+   "gold_value": "3.320e-11",
+   "computed": "3.320e-11",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Option A (3.323e-11) is the HCl activity; the molality is C. Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "C",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 158,
+   "scenario": "S16",
+   "quantity": "SI H2O(g), cell 4, shift 10",
+   "gold": "D",
+   "gold_value": "-1.50",
+   "computed": "-1.50",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "D",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 159,
+   "scenario": "S16",
+   "quantity": "SI Halite, 'exchange 3', shift 10",
+   "gold": "B",
+   "gold_value": "-7.61",
+   "computed": "-7.61",
+   "matched_options": [
+    "B"
+   ],
+   "status": "ambiguous",
+   "note": "The key reproduces if \"exchange 3\" is read as cell 3, but a halite saturation index is a solution property, so the location wording should say solution/cell 3.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "B",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 160,
+   "scenario": "S16",
+   "quantity": "log IAP H2(g), 'exchange 3', shift 10",
+   "gold": "A",
+   "gold_value": "-14.24",
+   "computed": "-14.24",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "The key reproduces if \"exchange 3\" is read as cell 3, but log IAP of H2(g) is a solution property, so the location wording should say solution/cell 3.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 161,
+   "scenario": "S16",
+   "quantity": "activity Na+, cell 3, shift 10",
+   "gold": "A",
+   "gold_value": "9.444e-04",
+   "computed": "9.444e-04",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Stable.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "B",
+    "majority_count": 10
+   }
+  },
+  {
+   "id": 162,
+   "scenario": "S16",
+   "quantity": "total alkalinity, cell 3, shift 10",
+   "gold": "A",
+   "gold_value": "1.417e-09",
+   "computed": "1.417e-09",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Residual-level value, but unchanged in all KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "A",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 163,
+   "scenario": "S17",
+   "quantity": "mole fraction Strontianite in SS",
+   "gold": "D",
+   "gold_value": "6.13e-01",
+   "computed": "6.13e-01 (mol/kgw); 0.00e+00 (mmol/kgw)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. Mole fraction 6.13e-01 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "D",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 164,
+   "scenario": "S17",
+   "quantity": "pH after SS equilibrium",
+   "gold": "B",
+   "gold_value": "6.022",
+   "computed": "6.022 (mol/kgw); 7.000 (mmol/kgw)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. pH 6.022 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "B",
+    "majority_count": 6
+   }
+  },
+  {
+   "id": 165,
+   "scenario": "S17",
+   "quantity": "specific conductance",
+   "gold": "C",
+   "gold_value": "1001",
+   "computed": "1001 (mol/kgw); 4 (mmol/kgw)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. SC 1001 uS/cm under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 7,
+    "majority": "C",
+    "majority_count": 7
+   }
+  },
+  {
+   "id": 166,
+   "scenario": "S17",
+   "quantity": "pe",
+   "gold": "D",
+   "gold_value": "11.827",
+   "computed": "11.850 default (mol/kgw); KNOBS variants 11.851, 11.854, 11.786, 11.663, 12.109; 10.950 (mmol/kgw)",
+   "matched_options": [],
+   "status": "unstable",
+   "note": "No well-defined redox couple (only trace O2/H2); pe shifts by up to ~0.45 with solver settings, and the default 11.850 matches no option (options span 11.824-11.829). Units also missing.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "D",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 167,
+   "scenario": "S17",
+   "quantity": "activity Ca+2",
+   "gold": "C",
+   "gold_value": "2.647e-03",
+   "computed": "2.647e-03 (mol/kgw); 9.645e-06 (mmol/kgw)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. Ca+2 activity 2.647e-03 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "C",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 168,
+   "scenario": "S17",
+   "quantity": "ionic strength",
+   "gold": "B",
+   "gold_value": "1.655e-02",
+   "computed": "1.655e-02 (mol/kgw); 6.010e-05 (mmol/kgw)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. I 1.655e-02 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "B",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 169,
+   "scenario": "S17",
+   "quantity": "moles calcite in SS",
+   "gold": "A",
+   "gold_value": "5.55e-03",
+   "computed": "5.55e-03 (mol/kgw); 0.00e+00 (mmol/kgw)",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. Calcite component 5.55e-03 mol under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "A",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 170,
+   "scenario": "S17",
+   "quantity": "molality C(4)",
+   "gold": "D",
+   "gold_value": "3.230e-02",
+   "computed": "3.230e-02 (mol/kgw); 4.888e-05 (mmol/kgw)",
+   "matched_options": [
+    "D"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. C(4) 3.230e-02 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 8,
+    "majority": "D",
+    "majority_count": 8
+   }
+  },
+  {
+   "id": 171,
+   "scenario": "S17",
+   "quantity": "SI Strontianite",
+   "gold": "A",
+   "gold_value": "-0.21",
+   "computed": "-0.21 (mol/kgw); -3.48 (mmol/kgw)",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. SI Strontianite -0.21 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 5,
+    "majority": "C",
+    "majority_count": 5
+   }
+  },
+  {
+   "id": 172,
+   "scenario": "S17",
+   "quantity": "SI Calcite",
+   "gold": "B",
+   "gold_value": "-0.41",
+   "computed": "-0.41 (mol/kgw); -4.27 (mmol/kgw)",
+   "matched_options": [
+    "B"
+   ],
+   "status": "ambiguous",
+   "note": "No units are given. SI Calcite -0.41 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings.",
+   "agent_status": "no_match",
+   "models": {
+    "runs": 19,
+    "correct": 6,
+    "majority": "B",
+    "majority_count": 6
+   }
+  },
+  {
+   "id": 173,
+   "scenario": "S18",
+   "quantity": "pH step 5 (95 C)",
+   "gold": "B",
+   "gold_value": "6.178",
+   "computed": "6.178",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "pH 6.178 at step 5 (95 C). Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "B",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 174,
+   "scenario": "S18",
+   "quantity": "SC step 5",
+   "gold": "C",
+   "gold_value": "77",
+   "computed": "77",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Specific conductance 77 uS/cm at 95 C. Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "C",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 175,
+   "scenario": "S18",
+   "quantity": "ionic strength step 5",
+   "gold": "B",
+   "gold_value": "3.385e-04",
+   "computed": "3.385e-04",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "I 3.385e-04 at step 5. Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "B",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 176,
+   "scenario": "S18",
+   "quantity": "molality Ba step 5",
+   "gold": "D",
+   "gold_value": "1.456e-05",
+   "computed": "1.456e-05",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Ba 1.456e-05 mol/kgw (same at every step, no phases).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "D",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 177,
+   "scenario": "S18",
+   "quantity": "SI Barite step 5",
+   "gold": "A",
+   "gold_value": "0.72",
+   "computed": "0.72",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "SI Barite 0.72 at 95 C. Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "A",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 178,
+   "scenario": "S18",
+   "quantity": "SI Barite step 4",
+   "gold": "A",
+   "gold_value": "0.76",
+   "computed": "0.76",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "SI Barite 0.76 at step 4 (77.5 C); step 5 gives 0.72, which is option B, so step numbering matters and the 25-C-as-step-1 numbering matches gold. Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "A",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 179,
+   "scenario": "S18",
+   "quantity": "SC step 4",
+   "gold": "C",
+   "gold_value": "63",
+   "computed": "63",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "SC 63 uS/cm at step 4 (77.5 C). Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 11,
+    "majority": "C",
+    "majority_count": 11
+   }
+  },
+  {
+   "id": 180,
+   "scenario": "S18",
+   "quantity": "SI Barite step 3",
+   "gold": "B",
+   "gold_value": "0.83",
+   "computed": "0.83",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "SI Barite 0.83 at step 3 (60 C). Stable across 3 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "B",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 181,
+   "scenario": "S18",
+   "quantity": "molality S(6) step 3",
+   "gold": "B",
+   "gold_value": "1.561e-04",
+   "computed": "1.561e-04",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "S(6) 1.561e-04 mol/kgw (conservative, same at all steps).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "B",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 182,
+   "scenario": "S19",
+   "quantity": "viscosity",
+   "gold": "B",
+   "gold_value": "1.13757",
+   "computed": "1.13757",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Viscosity 1.13757 mPa s. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "B",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 183,
+   "scenario": "S19",
+   "quantity": "moles CH4(g)",
+   "gold": "C",
+   "gold_value": "2.992e-03",
+   "computed": "2.992e-03",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Final CH4(g) 2.992e-03 mol in gas phase. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 18,
+    "majority": "C",
+    "majority_count": 18
+   }
+  },
+  {
+   "id": 184,
+   "scenario": "S19",
+   "quantity": "molality C(-4)",
+   "gold": "B",
+   "gold_value": "2.008e-03",
+   "computed": "2.008e-03",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "C(-4) 2.008e-03 mol/kgw. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 185,
+   "scenario": "S19",
+   "quantity": "SI CO2(g)",
+   "gold": "D",
+   "gold_value": "-7.86",
+   "computed": "-7.86",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "SI CO2(g) -7.86. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "D",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 186,
+   "scenario": "S19",
+   "quantity": "molality HCO3- (typed 'HC03-')",
+   "gold": "A",
+   "gold_value": "2.355e-09",
+   "computed": "2.355e-09",
+   "matched_options": [
+    "A"
+   ],
+   "status": "ambiguous",
+   "note": "The keyed value reproduces, but the species is written \"HC03-\" with a digit zero instead of the letter O.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "A",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 187,
+   "scenario": "S19",
+   "quantity": "pe",
+   "gold": "C",
+   "gold_value": "-4.584",
+   "computed": "-4.584",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "pe -4.584. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "C",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 188,
+   "scenario": "S19",
+   "quantity": "molality CO2(aq)",
+   "gold": "C",
+   "gold_value": "6.277e-10",
+   "computed": "6.277e-10",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "CO2 species 6.277e-10 mol/kgw. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 17,
+    "majority": "C",
+    "majority_count": 17
+   }
+  },
+  {
+   "id": 189,
+   "scenario": "S19",
+   "quantity": "density",
+   "gold": "A",
+   "gold_value": "0.99906",
+   "computed": "0.99906",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "Density 0.99906 g/cm3. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 16,
+    "majority": "A",
+    "majority_count": 16
+   }
+  },
+  {
+   "id": 190,
+   "scenario": "S19",
+   "quantity": "ionic strength",
+   "gold": "A",
+   "gold_value": "7.434e-08",
+   "computed": "7.434e-08",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "I 7.434e-08 mol/kgw. Unchanged across 8 KNOBS variants (convergence_tolerance 1e-12/1e-15, iterations, step_size, pe_step_size, diagonal_scale, numerical_derivatives).",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 191,
+   "scenario": "S20",
+   "quantity": "pH",
+   "gold": "D",
+   "gold_value": "6.489",
+   "computed": "6.489",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "pH 6.489 (charge balance). Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "D",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 192,
+   "scenario": "S20",
+   "quantity": "pe",
+   "gold": "C",
+   "gold_value": "11.750",
+   "computed": "11.750 default; 11.750 with 6 variants, 11.766 (step_size 10), 11.782 (numerical_derivatives)",
+   "matched_options": [
+    "C"
+   ],
+   "status": "unstable",
+   "note": "Default matches C, but pe changes at the 2nd decimal with solver settings while options differ at the 3rd decimal; no well-defined redox couple.",
+   "agent_status": "unstable",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "C",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 193,
+   "scenario": "S20",
+   "quantity": "specific conductance",
+   "gold": "B",
+   "gold_value": "2432",
+   "computed": "2432",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "SC 2432 uS/cm. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 194,
+   "scenario": "S20",
+   "quantity": "viscosity",
+   "gold": "D",
+   "gold_value": "0.90895",
+   "computed": "0.90895",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Viscosity 0.90895 mPa s. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "D",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 195,
+   "scenario": "S20",
+   "quantity": "moles calcite precipitated",
+   "gold": "D",
+   "gold_value": "8.042e-04",
+   "computed": "8.042e-04",
+   "matched_options": [
+    "D"
+   ],
+   "status": "verified",
+   "note": "Calcite delta 8.042e-04 mol. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 9,
+    "majority": "D",
+    "majority_count": 9
+   }
+  },
+  {
+   "id": 196,
+   "scenario": "S20",
+   "quantity": "molality Ca+2",
+   "gold": "B",
+   "gold_value": "3.868e-03",
+   "computed": "3.868e-03",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "Ca+2 species molality 3.868e-03 (total Ca 4.472e-03, not an option). Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 12,
+    "majority": "B",
+    "majority_count": 12
+   }
+  },
+  {
+   "id": 197,
+   "scenario": "S20",
+   "quantity": "activity Cl-",
+   "gold": "C",
+   "gold_value": "3.571e-03",
+   "computed": "3.571e-03",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "Cl- activity 3.571e-03. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 15,
+    "majority": "C",
+    "majority_count": 15
+   }
+  },
+  {
+   "id": 198,
+   "scenario": "S20",
+   "quantity": "SI Anhydrite",
+   "gold": "C",
+   "gold_value": "-1.27",
+   "computed": "-1.27",
+   "matched_options": [
+    "C"
+   ],
+   "status": "verified",
+   "note": "SI Anhydrite -1.27. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "C",
+    "majority_count": 14
+   }
+  },
+  {
+   "id": 199,
+   "scenario": "S20",
+   "quantity": "SI Hexahydrite",
+   "gold": "A",
+   "gold_value": "-3.98",
+   "computed": "-3.98",
+   "matched_options": [
+    "A"
+   ],
+   "status": "verified",
+   "note": "SI Hexahydrite -3.98. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 13,
+    "majority": "A",
+    "majority_count": 13
+   }
+  },
+  {
+   "id": 200,
+   "scenario": "S20",
+   "quantity": "SI Thenardite",
+   "gold": "B",
+   "gold_value": "-6.84",
+   "computed": "-6.84",
+   "matched_options": [
+    "B"
+   ],
+   "status": "verified",
+   "note": "SI Thenardite -6.84. Unchanged across 8 KNOBS variants.",
+   "agent_status": "verified",
+   "models": {
+    "runs": 19,
+    "correct": 14,
+    "majority": "B",
+    "majority_count": 14
+   }
+  }
+ ]
+}

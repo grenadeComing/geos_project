@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>PHREEQC · Human evaluation</title>
+  <style>/* STYLES */</style>
+</head>
+<body>
+  <header class="topbar">
+    <div><div class="eyebrow">PHREEQC · RESEARCH EVALUATION</div><h1>Human response workbook</h1></div>
+    <span class="version" id="question-count"></span>
+  </header>
+  <section class="setup" aria-label="Participant details and instructions">
+    <div class="setup-fields">
+      <label>Participant code <span class="required">required</span><input id="participant" maxlength="64" placeholder="e.g. P01 — do not enter your name" autocomplete="off"></label>
+      <label>PHREEQC experience <span class="secondary">optional</span><input id="experience" maxlength="240" placeholder="e.g. 3 years; reactive transport" autocomplete="off"></label>
+    </div>
+    <details id="instructions" open>
+      <summary>Before you begin</summary>
+      <div class="instruction-copy">
+        <p>Answer independently using PHREEQC 3.8.6 with the <strong>phreeqc.dat file provided with this worksheet</strong>. Do not use the phreeqc.dat installed with PHREEQC; it is a different file and gives different numbers. Documentation and a calculator are allowed; do not use LLM assistants, answer keys, or other participants’ answers.</p>
+        <p>Each scenario shares a simulation setting. You may reuse your own simulation within a scenario. Keep your input and output files in one folder per scenario, named by its scenario ID (for example S02), and send them separately to the organizer. This page records answers; it does not execute PHREEQC.</p>
+        <p>Choose A–D, or <strong>E — I don’t know</strong>. E is an abstention, not an extra scientific answer; it is distinct from a blank response and from any original “N/A” option. No correctness feedback is shown. You can change answers until finalization.</p>
+        <p>If you think a question is flawed (missing information, no correct option, more than one correct option, unclear wording), still choose your best answer or E, then switch on <strong>Report a problem</strong> and pick a reason. A short note helps. Reports go to the question author and do not change your score.</p>
+        <p>Progress is saved in this browser when storage is available. Keep using the same file location and browser, and download backups. When finished, download the final JSON and send it to the organizer; nothing is uploaded automatically. Follow the organizer’s separate consent instructions.</p>
+        <p class="secondary" id="version-info"></p>
+      </div>
+    </details>
+  </section>
+  <div class="workbook">
+    <aside class="sidebar" aria-label="Scenario navigation">
+      <div class="progress-title"><strong id="total-progress">0 answered</strong><span id="idk-progress">0 unsure</span></div>
+      <progress id="progress" value="0" aria-label="Answered questions"></progress>
+      <p id="save-status" class="save-status" role="status">Ready</p>
+      <details id="scenario-navigation" open><summary>Scenarios</summary><nav id="scenario-list" aria-label="Choose scenario"></nav></details>
+      <div class="sidebar-actions">
+        <button id="backup" type="button">Download backup</button>
+        <label class="file-button">Restore a JSON file<input id="restore" type="file" accept=".json,application/json"></label>
+        <button id="finish" class="primary" type="button">Finish & export</button>
+      </div>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+      <p class="secondary privacy">Offline only. No account, analytics, or external requests.</p>
+    </aside>
+    <main id="main" aria-label="Current scenario">
+      <div class="scenario-heading"><div><div id="scenario-position" class="eyebrow"></div><h2 id="scenario-title"></h2></div><span id="scenario-progress" class="scenario-badge"></span></div>
+      <section class="preamble-panel"><h3>Shared simulation setting</h3><p id="preamble" class="preserve"></p></section>
+      <div id="questions"></div>
+      <section class="simulation-record">
+        <h3>Your simulation record <span class="secondary">optional</span></h3>
+        <label>How did you use PHREEQC for this scenario?<select id="reuse"><option value="not_recorded">Not recorded</option><option value="shared_run">Reused one simulation across questions</option><option value="multiple_runs">Used multiple runs / revised inputs</option><option value="no_run">Did not run PHREEQC</option></select></label>
+        <label>Input / output filenames or brief notes<textarea id="simulation-notes" rows="2" maxlength="4000" placeholder="e.g. S01/calcite.pqi; S01/calcite.out. Send the actual files separately."></textarea></label>
+      </section>
+      <div class="pager"><button id="previous" type="button">← Previous scenario</button><button id="next" class="primary" type="button">Next scenario →</button></div>
+    </main>
+  </div>
+  <dialog id="finish-dialog" aria-labelledby="finish-title">
+    <h2 id="finish-title">Finalize your responses?</h2>
+    <p id="finish-summary"></p>
+    <p>This locks editing in this page and downloads a final JSON file. Send that file, together with your simulation inputs and outputs, to the organizer. You can download the final file again later.</p>
+    <div class="dialog-actions"><button id="cancel-finish" type="button">Keep editing</button><button id="confirm-finish" class="primary" type="button">Lock & download final JSON</button></div>
+  </dialog>
+  <noscript>This workbook requires JavaScript. It makes no network requests.</noscript>
+  <script id="questionnaire-data" type="application/json">/* DATA */</script>
+  <script>/* APP */</script>
+</body>
+</html>

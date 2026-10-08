@@ -1,0 +1,15 @@
+KNOBS
+ -diagonal_scale true
+SOLUTION 1
+    temp      100
+    units     mmol/kgw    # pH is adjusted for charge balance
+    pH        3 charge
+
+EQUILIBRIUM_PHASES 1
+    K-mica    0 10
+    Kaolinite 0 10
+    Dolomite  0 10
+    Epsomite  0 10
+    Fe(OH)3(a) 0 10
+    Halite    0 10
+END

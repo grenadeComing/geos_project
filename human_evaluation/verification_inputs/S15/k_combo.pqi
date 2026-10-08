@@ -1,0 +1,11 @@
+KNOBS
+-convergence_tolerance 1e-12
+-iterations 1000
+-step_size 10
+-pe_step_size 2
+SOLUTION 1
+    pH 7.0
+    temp 25
+EQUILIBRIUM_PHASES 1
+    CO2(g) -3.4 10
+END

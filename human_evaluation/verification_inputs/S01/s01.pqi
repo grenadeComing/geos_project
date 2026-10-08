@@ -1,0 +1,26 @@
+SOLUTION 1
+    temp      100
+    pH        5
+    pe        4
+    redox     pe
+    units     mmol/kgw
+    density   1
+    C(4)      0.5
+    Mn(2)     1
+    -water    1 # kg
+KINETICS 1
+Calcite
+    -formula  CaCO3  1
+    -m        1
+    -m0       1
+    -parms        10.0   0.001
+-steps       1000 in 100 steps # seconds
+SELECTED_OUTPUT 1
+    -file s01.sel
+    -reset false
+    -step true
+    -high_precision true
+USER_PUNCH 1
+    -headings pH pe totC SI_Arag SI_Calc Calcite_m Calcite_dm
+    10 PUNCH -LA("H+"), -LA("e-"), TOT("C"), SI("Aragonite"), SI("Calcite"), KIN("Calcite"), KIN_DELTA("Calcite")
+END

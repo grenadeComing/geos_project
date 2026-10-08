@@ -1,0 +1,16 @@
+KNOBS
+    -convergence_tolerance 1e-14
+    -tolerance 1e-18
+SOLUTION 1
+    temp      150
+    pH        7
+    pe        4
+    -water    1
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 1
+    -temperature 150
+    CH4(g) 10
+    CO2(g) 10
+    NH3(g) 5
+END

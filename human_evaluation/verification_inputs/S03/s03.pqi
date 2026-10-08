@@ -1,0 +1,38 @@
+SOLUTION 1
+    temp      200
+    pH        2
+    pe        4
+    redox     pe
+    units     mmol/kgw
+    density   1
+    Fe(3)     4
+    Fe(2)     4
+    -water    1 # kg
+
+
+KINETICS 1
+Albite
+    -formula  NaAlSi3O8  1
+    -m        1
+    -m0       1
+    -parms    1 10
+    -tol      1e-08
+-steps       1000 in 100 steps # seconds
+-step_divide 1
+-runge_kutta 3
+-bad_step_max 500
+GAS_PHASE 1
+    -fixed_pressure
+    -pressure 1
+    -volume 1
+    -temperature 200
+    H2S(g)    5
+SELECTED_OUTPUT 1
+    -file s03.sel
+    -reset false
+    -step true
+    -high_precision true
+USER_PUNCH 1
+    -headings Fe3p pH pe Alb_m Alb_dm Si mu Fe3 Ba SI_Goe H2Sg_m H2Sg_dm S Na Al Fe
+    10 PUNCH MOL("Fe+3"), -LA("H+"), -LA("e-"), KIN("Albite"), KIN_DELTA("Albite"), TOT("Si"), MU, TOT("Fe(3)"), TOT("Ba"), SI("Goethite"), GAS("H2S(g)"), 0, TOT("S"), TOT("Na"), TOT("Al"), TOT("Fe")
+END

@@ -1,0 +1,14 @@
+KNOBS
+  -step_size 10
+SOLUTION 1
+    units mol/kgw
+    pH 7
+    temp 25
+    Ca 0.01
+    Sr 0.01
+    Alkalinity 0.04
+SOLID_SOLUTIONS 1
+    Ca_Sr_carbonate
+        -comp1 Calcite 0.0
+        -comp2 Strontianite 0.0
+END

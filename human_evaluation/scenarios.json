@@ -1,0 +1,22 @@
+[
+  {"id": "S01", "start": 1, "end": 8, "title": "Calcite dissolution at 100°C", "summary": "Kinetic calcite dissolution at 100 °C: pH, pe, carbon and saturation indices at different reaction steps", "hold": "Only 2 verified items; the key uses inconsistent reaction-step numbering (Q5/Q6 match step 48, Q7 matches step 47)."},
+  {"id": "S02", "start": 9, "end": 16, "title": "Calcite dissolution at 200°C", "summary": "Kinetic calcite dissolution at 200 °C in a Cu/Ba solution: composition changes at different reaction steps"},
+  {"id": "S03", "start": 17, "end": 26, "title": "Albite dissolution with H₂S", "summary": "Kinetic albite dissolution with an H₂S gas phase: dissolved amounts, redox, species and mineral saturation"},
+  {"id": "S04", "start": 27, "end": 36, "title": "Solution mixing and heating", "summary": "Mixing a carbon and a calcium solution while heating from 20 °C to 200 °C: calcite precipitation and properties at each temperature"},
+  {"id": "S05", "start": 37, "end": 46, "title": "Mineral–gas equilibrium", "summary": "Calcite/gypsum/aragonite equilibrium with a CO₂–CH₄–H₂S gas phase"},
+  {"id": "S06", "start": 47, "end": 56, "title": "Multi-mineral equilibrium", "summary": "Acidic water at 100 °C equilibrated with six minerals: pH, pe, conductance, species and dissolved amounts", "hold": "The text says \"pH 3\" but the key requires a charge-balanced starting solution (\"pH 3 charge\"); a literal reading matches none of the keys."},
+  {"id": "S07", "start": 57, "end": 66, "title": "Barium solution and minerals", "summary": "Ba-bearing water at 100 °C equilibrated with talc, rhodochrosite, sepiolite and Pb(OH)₂", "hold": "The text says \"pH 5\" but the key requires a charge-balanced starting solution (\"pH 5 charge\"); a literal reading matches none of the keys."},
+  {"id": "S08", "start": 67, "end": 76, "title": "Pyrite oxidation", "summary": "Pyrite oxidation under fixed O₂: pH, pe, ion composition and mineral saturation"},
+  {"id": "S09", "start": 77, "end": 86, "title": "CH₄ / CO₂ / NH₃ gas equilibrium", "summary": "Water at 150 °C equilibrated with a fixed-pressure CH₄/CO₂/NH₃ gas phase", "hold": "The text says \"10 moles\"/\"5 moles\" of gas, but the key requires those numbers as GAS_PHASE partial pressures; a literal reading matches no option."},
+  {"id": "S10", "start": 87, "end": 96, "title": "Chrysotile and talc equilibrium", "summary": "Water at 150 °C equilibrated with chrysotile and talc: water chemistry, species and saturation"},
+  {"id": "S11", "start": 97, "end": 105, "title": "Calcium–alkalinity solution", "summary": "Ca–alkalinity solution at 25 °C: total carbon, charge balance, activities and saturation"},
+  {"id": "S12", "start": 106, "end": 115, "title": "River water–seawater mixing", "summary": "River water and seawater mixed 0.7:0.3: pH, pe, viscosity, activities"},
+  {"id": "S13", "start": 116, "end": 125, "title": "Stepwise sulfuric acid addition", "summary": "Stepwise sulfuric acid addition to pure water: final state and pH, pe, activities at different steps"},
+  {"id": "S14", "start": 126, "end": 134, "title": "Gypsum equilibrium", "summary": "Pure water equilibrated with gypsum: pH, pe, ion composition and remaining gypsum"},
+  {"id": "S15", "start": 135, "end": 143, "title": "CO₂ equilibrium", "summary": "Pure water at 25 °C equilibrated with CO₂ at log PCO₂ −3.4: pH, pe, alkalinity and activities"},
+  {"id": "S16", "start": 144, "end": 162, "title": "1D transport and ion exchange", "summary": "1D transport with ion exchange, 10 cells and 10 shifts: outputs at different cells and steps"},
+  {"id": "S17", "start": 163, "end": 172, "title": "Ca–Sr carbonate solid solution", "summary": "Ca–Sr carbonate solid solution: component mole fractions, water chemistry and saturation indices", "hold": "No units on Ca, Sr and alkalinity; the key requires mol/kgw, so no item is verified under the stated text."},
+  {"id": "S18", "start": 173, "end": 181, "title": "Heating a Ba–sulfate solution", "summary": "Ba/sulfate water heated from 25 °C to 95 °C: barite saturation and chemistry at each step"},
+  {"id": "S19", "start": 182, "end": 190, "title": "Methane gas partitioning", "summary": "C(−4) water at 15 °C with a CH₄ gas phase: partitioning, density, viscosity and species"},
+  {"id": "S20", "start": 191, "end": 200, "title": "Evaporation and precipitation", "summary": "Evaporative concentration with mineral precipitation: pH, pe, Ca, Cl activity and saturation indices"}
+]

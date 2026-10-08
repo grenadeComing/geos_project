@@ -1,0 +1,582 @@
+{
+  "study_id": "phreeqc-human-100-v2",
+  "pool_rule": "phreeqc_verified_items_only",
+  "source_file": "neurips_dataset_200_clean.jsonl",
+  "source_sha256": "eee19ade89350ed500b6438174599e1e9c13ddb6f598fd80b8cab0dff4f27549",
+  "database_sha256": "9a8230260463041cec921d08b217640422089700b43d56b7da36f6c85ccd38c7",
+  "verification_sha256": "303fa519734865faf8a3f22c4f28fef0dedc2e35ffdcfb6319c1e4f5e080f8ff",
+  "phreeqc_version": "3.8.6",
+  "seed": "phreeqc-human-100-v2-20260930",
+  "sampling": "Eligible items are those whose answer key was reproduced by an independent PHREEQC 3.8.6 run with the frozen database (status \"verified\" in verification.json). Within each scenario, rank eligible items by SHA-256(seed|scenario_id|question_id), take the five smallest hashes, and display them in original ID order. Scenarios marked \"hold\" in scenarios.json (scenario-level text defects) are not sampled. Answer letters and model outcomes do not enter the ranking.",
+  "questions_per_scenario": 5,
+  "original_question_count": 200,
+  "excluded_ids": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    8,
+    22,
+    37,
+    48,
+    54,
+    56,
+    64,
+    66,
+    78,
+    108,
+    115,
+    118,
+    119,
+    125,
+    128,
+    130,
+    133,
+    136,
+    138,
+    140,
+    145,
+    151,
+    153,
+    159,
+    160,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    186,
+    192
+  ],
+  "scenario_count": 15,
+  "question_count": 75,
+  "held_scenarios": [
+    {
+      "id": "S01",
+      "reason": "Only 2 verified items; the key uses inconsistent reaction-step numbering (Q5/Q6 match step 48, Q7 matches step 47)."
+    },
+    {
+      "id": "S06",
+      "reason": "The text says \"pH 3\" but the key requires a charge-balanced starting solution (\"pH 3 charge\"); a literal reading matches none of the keys."
+    },
+    {
+      "id": "S07",
+      "reason": "The text says \"pH 5\" but the key requires a charge-balanced starting solution (\"pH 5 charge\"); a literal reading matches none of the keys."
+    },
+    {
+      "id": "S09",
+      "reason": "The text says \"10 moles\"/\"5 moles\" of gas, but the key requires those numbers as GAS_PHASE partial pressures; a literal reading matches no option."
+    },
+    {
+      "id": "S17",
+      "reason": "No units on Ca, Sr and alkalinity; the key requires mol/kgw, so no item is verified under the stated text."
+    }
+  ],
+  "selection_sha256": "5b7d96e1832e58d3ab743bf08dabebac2b7f42663de4fdc50a00320c226aeca8",
+  "sampling_pool_size": 132,
+  "exclusions": [
+    {
+      "id": 1,
+      "status": "unstable",
+      "note": "No option (7.364-7.367) matches 7.405; pe is poorly poised and changes by >0.02 under integrator/tolerance variants, so the 3rd decimal cannot discriminate options."
+    },
+    {
+      "id": 3,
+      "status": "ambiguous",
+      "note": "The keyed value reproduces (C = 5.276e-04), but option B is malformed (\"5.278-04\", missing the \"e\"), so the options need fixing."
+    },
+    {
+      "id": 4,
+      "status": "ambiguous",
+      "note": "The question stem is missing (only options given); in the authors' earlier version this was SI(Aragonite) at step 100, which computes to -4.35 = A."
+    },
+    {
+      "id": 5,
+      "status": "no_match",
+      "note": "Step 47 pH = 5.321 matches no option; PHREEQC's step 48 gives 5.326 (gold D), suggesting an off-by-one step in the key."
+    },
+    {
+      "id": 6,
+      "status": "no_match",
+      "note": "Step 47 C = 5.138e-04 matches no option; step 48 gives 5.141e-04 (gold B), same off-by-one pattern."
+    },
+    {
+      "id": 8,
+      "status": "unstable",
+      "note": "No option matches 7.573; step 48 gives 7.604 (option D, not gold A). pe is poorly poised and varies wildly under integrator settings."
+    },
+    {
+      "id": 22,
+      "status": "wrong_key",
+      "note": "Total Fe(3) is lower at step 10, so the answer is Less (B), stable across variants. Only the free Fe+3 ion (6.587e-13 vs 6.151e-13) is higher at step 10, which would give the key's A."
+    },
+    {
+      "id": 37,
+      "status": "ambiguous",
+      "note": "Question text has no stem (the 'What is the pH' sentence is missing); the options are pH-like and the computed pH 6.531 matches C uniquely, but the item is defective as written."
+    },
+    {
+      "id": 48,
+      "status": "unstable",
+      "note": "Default run gives 9.265 (D), but KNOBS stab3 (iterations 500, step_size 50, pe_step_size 5, diagonal_scale) gives 9.223. The system has no well-defined redox couple, so pe is not stable at the digit that separates the options."
+    },
+    {
+      "id": 54,
+      "status": "no_match",
+      "note": "The question asks for moles. PHREEQC prints Mg Moles = 1.002e+01 (mass of water 2.260 kg), which matches no option. The molality 4.432e+00 matches A uniquely, so the key uses molality while calling it moles."
+    },
+    {
+      "id": 56,
+      "status": "ambiguous",
+      "note": "Kaolinite Delta is +4.499e-05, meaning it precipitated rather than dissolved (Epsomite's Delta is -10 for full dissolution; Al mass balance agrees: K-mica dissolves 3.207e-05). The magnitude matches B uniquely, but the question's premise is wrong and no option allows 0 or 'precipitated'."
+    },
+    {
+      "id": 64,
+      "status": "no_match",
+      "note": "The question asks for moles. Moles = 3.3262e-07 m x 1.7843 kg = 5.935e-07, which matches no option. The printed molality 3.326e-07 matches A uniquely."
+    },
+    {
+      "id": 66,
+      "status": "no_match",
+      "note": "The question asks for moles. Moles = 6.9325e-18 x 1.7843 = 1.237e-17, which matches no option. The printed Mn(3) molality 6.933e-18 matches C uniquely and was stable across KNOBS variants."
+    },
+    {
+      "id": 78,
+      "status": "ambiguous",
+      "note": "The question stem is missing (only options). The original author question (test9 Q2) asked for density; printed density 0.91720 matches A, but without a stem the item cannot be scored fairly."
+    },
+    {
+      "id": 108,
+      "status": "unstable",
+      "note": "pe of the mix has no redox couple and changes at the first decimal with solver settings; no run gives ~11.24 (no option matches). The gold 11.244 is internally consistent with gold O2 log IAP -14.26 at pH 6.733, i.e. it reflects a different (oxidised) numerical solution."
+    },
+    {
+      "id": 115,
+      "status": "unstable",
+      "note": "O2(g) log IAP follows the unstable pe (varies in the first decimal between runs) and is ~-63.6 in every run, far from all options (-14.19 to -14.32); gold corresponds to pe ~11.244."
+    },
+    {
+      "id": 118,
+      "status": "unstable",
+      "note": "Default gives 5.101 (no option matches); variants give 5.296, 5.421, 4.707, 5.598, 5.610. Unpoised redox, value is set by convergence residuals."
+    },
+    {
+      "id": 119,
+      "status": "unstable",
+      "note": "Default -15.38 (no option); variants -15.77, -16.02, -14.59, -16.37, -16.40. Tracks the unstable pe."
+    },
+    {
+      "id": 125,
+      "status": "unstable",
+      "note": "Default matches C exactly, but -convergence_tolerance 1e-12 gives 16.604 (no option); unpoised redox."
+    },
+    {
+      "id": 128,
+      "status": "unstable",
+      "note": "Default prints 10.741 = option A, not gold D; with convergence_tolerance 1e-12 (or -high_precision) pe = -0.920. Unpoised redox."
+    },
+    {
+      "id": 130,
+      "status": "unstable",
+      "note": "Default matches C; tight tolerance gives -17.59 (pe -0.92). Redox-dependent."
+    },
+    {
+      "id": 133,
+      "status": "unstable",
+      "note": "Default 1.707e-39 matches no option; step_size/pe_step_size variants give 1.705-1.709e-39, tight tolerance 3.58e-16."
+    },
+    {
+      "id": 136,
+      "status": "unstable",
+      "note": "Default matches B; convergence_tolerance 1e-12 gives 0.018 (no option). Unpoised redox."
+    },
+    {
+      "id": 138,
+      "status": "unstable",
+      "note": "Default matches D; tight tolerance gives 1.216e-09 (no option). Value is essentially the charge-balance residual (-1.217e-09 electrical balance), a numerical artifact."
+    },
+    {
+      "id": 140,
+      "status": "unstable",
+      "note": "Default matches D; tight tolerance gives -22.70. Redox-dependent."
+    },
+    {
+      "id": 145,
+      "status": "unstable",
+      "note": "Default matches C; KNOBS -step_size 10 gives 10.803 (no option). Unpoised redox (Na/Ca/Cl only)."
+    },
+    {
+      "id": 151,
+      "status": "ambiguous",
+      "note": "The key reproduces if \"exchange site 8\" is read as cell 8, but specific conductance is a solution property, so the location wording should say solution/cell 8."
+    },
+    {
+      "id": 153,
+      "status": "ambiguous",
+      "note": "\"Molality of Na at exchange 1\" has two readings: dissolved Na in cell 1 (9.890e-04, the key) or NaX on the exchanger (1.543e-04, no option). The wording should say which."
+    },
+    {
+      "id": 159,
+      "status": "ambiguous",
+      "note": "The key reproduces if \"exchange 3\" is read as cell 3, but a halite saturation index is a solution property, so the location wording should say solution/cell 3."
+    },
+    {
+      "id": 160,
+      "status": "ambiguous",
+      "note": "The key reproduces if \"exchange 3\" is read as cell 3, but log IAP of H2(g) is a solution property, so the location wording should say solution/cell 3."
+    },
+    {
+      "id": 163,
+      "status": "ambiguous",
+      "note": "No units are given. Mole fraction 6.13e-01 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 164,
+      "status": "ambiguous",
+      "note": "No units are given. pH 6.022 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 165,
+      "status": "ambiguous",
+      "note": "No units are given. SC 1001 uS/cm under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 166,
+      "status": "unstable",
+      "note": "No well-defined redox couple (only trace O2/H2); pe shifts by up to ~0.45 with solver settings, and the default 11.850 matches no option (options span 11.824-11.829). Units also missing."
+    },
+    {
+      "id": 167,
+      "status": "ambiguous",
+      "note": "No units are given. Ca+2 activity 2.647e-03 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 168,
+      "status": "ambiguous",
+      "note": "No units are given. I 1.655e-02 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 169,
+      "status": "ambiguous",
+      "note": "No units are given. Calcite component 5.55e-03 mol under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 170,
+      "status": "ambiguous",
+      "note": "No units are given. C(4) 3.230e-02 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 171,
+      "status": "ambiguous",
+      "note": "No units are given. SI Strontianite -0.21 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 172,
+      "status": "ambiguous",
+      "note": "No units are given. SI Calcite -0.41 under mol/kgw. Literal default units (mmol/kgw) give no solid-solution formation (both components 0 moles) and match no option; the text gives no units, and with 'units mol/kgw' the value matches the gold option uniquely and is stable across KNOBS settings."
+    },
+    {
+      "id": 186,
+      "status": "ambiguous",
+      "note": "The keyed value reproduces, but the species is written \"HC03-\" with a digit zero instead of the letter O."
+    },
+    {
+      "id": 192,
+      "status": "unstable",
+      "note": "Default matches C, but pe changes at the 2nd decimal with solver settings while options differ at the 3rd decimal; no well-defined redox couple."
+    }
+  ],
+  "scenario_notes": "S13 merges original text groups Q116–124 and Q125 (same sulfuric-acid setup; Q125 adds \"to solution 1\"). Scenario labels S14–S20 therefore differ from the older 21-stem analysis. Always join results by original question ID.",
+  "scenarios": [
+    {
+      "id": "S02",
+      "start": 9,
+      "end": 16,
+      "title": "Calcite dissolution at 200°C",
+      "summary": "Kinetic calcite dissolution at 200 °C in a Cu/Ba solution: composition changes at different reaction steps",
+      "original_count": 8,
+      "eligible_count": 8,
+      "excluded_ids": [],
+      "selected_ids": [
+        10,
+        12,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "id": "S03",
+      "start": 17,
+      "end": 26,
+      "title": "Albite dissolution with H₂S",
+      "summary": "Kinetic albite dissolution with an H₂S gas phase: dissolved amounts, redox, species and mineral saturation",
+      "original_count": 10,
+      "eligible_count": 9,
+      "excluded_ids": [
+        22
+      ],
+      "selected_ids": [
+        18,
+        20,
+        21,
+        24,
+        26
+      ]
+    },
+    {
+      "id": "S04",
+      "start": 27,
+      "end": 36,
+      "title": "Solution mixing and heating",
+      "summary": "Mixing a carbon and a calcium solution while heating from 20 °C to 200 °C: calcite precipitation and properties at each temperature",
+      "original_count": 10,
+      "eligible_count": 10,
+      "excluded_ids": [],
+      "selected_ids": [
+        27,
+        28,
+        29,
+        31,
+        32
+      ]
+    },
+    {
+      "id": "S05",
+      "start": 37,
+      "end": 46,
+      "title": "Mineral–gas equilibrium",
+      "summary": "Calcite/gypsum/aragonite equilibrium with a CO₂–CH₄–H₂S gas phase",
+      "original_count": 10,
+      "eligible_count": 9,
+      "excluded_ids": [
+        37
+      ],
+      "selected_ids": [
+        38,
+        39,
+        41,
+        44,
+        46
+      ]
+    },
+    {
+      "id": "S08",
+      "start": 67,
+      "end": 76,
+      "title": "Pyrite oxidation",
+      "summary": "Pyrite oxidation under fixed O₂: pH, pe, ion composition and mineral saturation",
+      "original_count": 10,
+      "eligible_count": 10,
+      "excluded_ids": [],
+      "selected_ids": [
+        67,
+        68,
+        69,
+        71,
+        72
+      ]
+    },
+    {
+      "id": "S10",
+      "start": 87,
+      "end": 96,
+      "title": "Chrysotile and talc equilibrium",
+      "summary": "Water at 150 °C equilibrated with chrysotile and talc: water chemistry, species and saturation",
+      "original_count": 10,
+      "eligible_count": 10,
+      "excluded_ids": [],
+      "selected_ids": [
+        88,
+        89,
+        90,
+        93,
+        95
+      ]
+    },
+    {
+      "id": "S11",
+      "start": 97,
+      "end": 105,
+      "title": "Calcium–alkalinity solution",
+      "summary": "Ca–alkalinity solution at 25 °C: total carbon, charge balance, activities and saturation",
+      "original_count": 9,
+      "eligible_count": 9,
+      "excluded_ids": [],
+      "selected_ids": [
+        99,
+        102,
+        103,
+        104,
+        105
+      ]
+    },
+    {
+      "id": "S12",
+      "start": 106,
+      "end": 115,
+      "title": "River water–seawater mixing",
+      "summary": "River water and seawater mixed 0.7:0.3: pH, pe, viscosity, activities",
+      "original_count": 10,
+      "eligible_count": 8,
+      "excluded_ids": [
+        108,
+        115
+      ],
+      "selected_ids": [
+        106,
+        109,
+        110,
+        111,
+        112
+      ]
+    },
+    {
+      "id": "S13",
+      "start": 116,
+      "end": 125,
+      "title": "Stepwise sulfuric acid addition",
+      "summary": "Stepwise sulfuric acid addition to pure water: final state and pH, pe, activities at different steps",
+      "original_count": 10,
+      "eligible_count": 7,
+      "excluded_ids": [
+        118,
+        119,
+        125
+      ],
+      "selected_ids": [
+        117,
+        120,
+        121,
+        123,
+        124
+      ]
+    },
+    {
+      "id": "S14",
+      "start": 126,
+      "end": 134,
+      "title": "Gypsum equilibrium",
+      "summary": "Pure water equilibrated with gypsum: pH, pe, ion composition and remaining gypsum",
+      "original_count": 9,
+      "eligible_count": 6,
+      "excluded_ids": [
+        128,
+        130,
+        133
+      ],
+      "selected_ids": [
+        126,
+        127,
+        129,
+        132,
+        134
+      ]
+    },
+    {
+      "id": "S15",
+      "start": 135,
+      "end": 143,
+      "title": "CO₂ equilibrium",
+      "summary": "Pure water at 25 °C equilibrated with CO₂ at log PCO₂ −3.4: pH, pe, alkalinity and activities",
+      "original_count": 9,
+      "eligible_count": 6,
+      "excluded_ids": [
+        136,
+        138,
+        140
+      ],
+      "selected_ids": [
+        137,
+        139,
+        141,
+        142,
+        143
+      ]
+    },
+    {
+      "id": "S16",
+      "start": 144,
+      "end": 162,
+      "title": "1D transport and ion exchange",
+      "summary": "1D transport with ion exchange, 10 cells and 10 shifts: outputs at different cells and steps",
+      "original_count": 19,
+      "eligible_count": 14,
+      "excluded_ids": [
+        145,
+        151,
+        153,
+        159,
+        160
+      ],
+      "selected_ids": [
+        147,
+        149,
+        156,
+        157,
+        158
+      ]
+    },
+    {
+      "id": "S18",
+      "start": 173,
+      "end": 181,
+      "title": "Heating a Ba–sulfate solution",
+      "summary": "Ba/sulfate water heated from 25 °C to 95 °C: barite saturation and chemistry at each step",
+      "original_count": 9,
+      "eligible_count": 9,
+      "excluded_ids": [],
+      "selected_ids": [
+        173,
+        174,
+        177,
+        178,
+        181
+      ]
+    },
+    {
+      "id": "S19",
+      "start": 182,
+      "end": 190,
+      "title": "Methane gas partitioning",
+      "summary": "C(−4) water at 15 °C with a CH₄ gas phase: partitioning, density, viscosity and species",
+      "original_count": 9,
+      "eligible_count": 8,
+      "excluded_ids": [
+        186
+      ],
+      "selected_ids": [
+        182,
+        184,
+        187,
+        188,
+        190
+      ]
+    },
+    {
+      "id": "S20",
+      "start": 191,
+      "end": 200,
+      "title": "Evaporation and precipitation",
+      "summary": "Evaporative concentration with mineral precipitation: pH, pe, Ca, Cl activity and saturation indices",
+      "original_count": 10,
+      "eligible_count": 9,
+      "excluded_ids": [
+        192
+      ],
+      "selected_ids": [
+        193,
+        195,
+        196,
+        197,
+        199
+      ]
+    }
+  ]
+}

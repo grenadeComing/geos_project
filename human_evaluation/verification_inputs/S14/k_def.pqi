@@ -1,0 +1,7 @@
+KNOBS
+-iterations 100
+SOLUTION 1
+    pH 7.0
+EQUILIBRIUM_PHASES 1
+    Gypsum 0 10
+END

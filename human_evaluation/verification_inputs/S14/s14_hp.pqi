@@ -1,0 +1,16 @@
+SOLUTION 1
+    pH 7.0
+EQUILIBRIUM_PHASES 1
+    Gypsum 0 10
+SELECTED_OUTPUT 1
+    -file s14_hp.sel
+    -high_precision true
+    -reset false
+    -pH true
+    -pe true
+    -ionic_strength true
+    -molalities H2 CaHSO4+
+    -activities OH-
+    -si Anhydrite Sulfur
+    -equilibrium_phases Gypsum
+END

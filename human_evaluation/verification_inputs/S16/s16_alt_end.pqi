@@ -1,0 +1,18 @@
+SOLUTION 0
+    pH 7.0
+    Na 1.0
+    Cl 1.0
+SOLUTION 1-10
+    pH 7.0
+    Ca 1.0
+    Cl 2.0
+EXCHANGE 1-10
+    X 0.001
+    -equilibrate 1
+END
+TRANSPORT
+    -cells 10
+    -shifts 10
+    -print_cells 1-10
+    -print_frequency 1
+END

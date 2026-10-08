@@ -1,0 +1,12 @@
+SOLUTION 1
+    temp      150
+    pH        7
+    pe        4
+    redox     pe
+    units     mmol/kgw
+    density   1
+    -water    1 # kg
+
+EQUILIBRIUM_PHASES 1
+    Chrysotile 0 10
+    Talc      0 10

@@ -1,0 +1,12 @@
+# Same chemistry, seawater numbered 1, river 2
+SOLUTION 1 Seawater
+    pH  8.1
+    Cl  19000
+SOLUTION 2 River water
+    pH  6.0
+    Cl  10
+END
+MIX 1
+    2  0.7
+    1  0.3
+END
