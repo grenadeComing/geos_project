@@ -1,0 +1,25 @@
+model,protocol,run,item_id,pair_group,stage,outcome,prediction,steps,n_execute,n_read,n_read_output,n_grep,covered_value_range,committed,summary
+gpt51,Raw,rebuttal_mcq200_raw100k_rerun_gpt51_20260723,9,Raw-loss(TOC-gain) pair,BUILD,wrong,B,8,2,1,0,0,n,y,"'pH 2 charge' (failed to converge), then a variant; ref pH 2.129 never produced. Answered B."
+gpt51,TOC,neurips200_tocfix_uncapped_capaffected45_toc_gpt51,9,Raw-loss(TOC-gain) pair,BUILD,correct,A,14,5,1,1,0,n,y,"Correct answer, but no run produced 2.129 (4 of 5 executes failed). Lucky A."
+gpt51,Raw,rebuttal_mcq200_raw100k_rerun_gpt51_20260723,17,Raw-loss(TOC-gain) pair,BUILD,wrong,B,8,1,3,2,0,n,y,"H2S(g) 1 atm, 'pH 2 charge'; ref 2.293e-04 never produced. Answered B."
+gpt51,TOC,neurips200_tocfix_uncapped_capaffected45_toc_gpt51,17,Raw-loss(TOC-gain) pair,BUILD,correct,A,11,2,4,3,0,n,y,"Correct answer, but ref 2.293e-04 not in any output. Lucky A."
+gpt51,Raw,rebuttal_mcq200_raw100k_rerun_gpt51_20260723,47,Raw-loss(TOC-gain) pair,SEEN_NOT_USED,wrong,D,7,1,2,1,0,y,y,"Inline result.out showed 'pH = 5.509', but agent read its high-precision .sel (5.508648) and answered D 5.508. The .sel-precision trap also occurs under Raw."
+gpt51,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt51,47,Raw-loss(TOC-gain) pair,OK,correct,B,8,1,3,2,0,y,y,Read result.out L110-144 'pH = 5.509' -> B.
+gpt51,Raw,rebuttal_mcq200_raw100k_rerun_gpt51_20260723,72,Raw-loss(TOC-gain) pair,SEEN_NOT_USED,wrong,D,10,3,1,0,0,y,y,Inline speciation lists 10 Fe(3) species. Answered D (7) with no reasoning.
+gpt51,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt51,72,Raw-loss(TOC-gain) pair,NOT_SEEN,correct,A,8,1,3,2,0,n,y,"'PRINT -species true -reset false' plus a hand-picked .sel list, so the full count was never visible. Answered A (10) correctly without support."
+gpt51,Raw,rebuttal_mcq200_raw100k_rerun_gpt51_20260723,116,Raw-loss(TOC-gain) pair,BUILD,wrong,B,6,2,0,0,0,n,y,Ref pH 1.013 never produced. Answered B.
+gpt51,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt51,116,Raw-loss(TOC-gain) pair,OK,correct,A,7,1,2,1,0,y,y,.sel 1.01296 -> A.
+gpt51,Raw,rebuttal_mcq200_raw100k_rerun_gpt51_20260723,174,Raw-loss(TOC-gain) pair,BUILD,wrong,B,6,2,0,0,0,n,y,SC 77 never produced. Answered B.
+gpt51,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt51,174,Raw-loss(TOC-gain) pair,OK,correct,C,11,1,6,5,0,y,y,Read result.out L320-440: SC 77 -> C.
+gpt52,Raw,rebuttal_mcq200_raw100k_rerun_gpt52_20260723,13,Raw-loss(TOC-gain) pair,BUILD,wrong,B,11,3,2,1,0,n,y,Ref pH 2.013 at step 10 never produced (681k output). Answered B.
+gpt52,TOC,neurips200_tocfix_uncapped_capaffected45_toc_gpt52,13,Raw-loss(TOC-gain) pair,OK,correct,C,16,5,3,1,0,y,y,"After 5 executes, .sel 2.01298 at step 10 -> C."
+gpt52,Raw,rebuttal_mcq200_raw100k_rerun_gpt52_20260723,17,Raw-loss(TOC-gain) pair,BUILD,wrong,C,6,1,1,0,0,n,y,Ref 2.293e-04 never produced. Answered C.
+gpt52,TOC,neurips200_tocfix_uncapped_capaffected45_toc_gpt52,17,Raw-loss(TOC-gain) pair,BUILD,correct,A,7,1,2,1,0,n,y,"Computed dissolved = 3.3181e-05, then 'This corresponds to option A (2.293e-04) per the provided choices'. Rationalized lucky guess under TOC."
+gpt52,Raw,rebuttal_mcq200_raw100k_rerun_gpt52_20260723,53,Raw-loss(TOC-gain) pair,SEEN_NOT_USED,wrong,B,8,2,1,0,0,y,y,"Inline block has 8 Al species; agent listed 7 (dropped AlHSO4+2 at 3e-23), then 'the intended count corresponds to 6 (option B)'."
+gpt52,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt52,53,Raw-loss(TOC-gain) pair,OK,correct,C,15,5,2,1,0,y,y,Read the species block: '8 aqueous Al species' -> C.
+gpt52,Raw,rebuttal_mcq200_raw100k_rerun_gpt52_20260723,76,Raw-loss(TOC-gain) pair,BUILD,wrong,A,6,1,1,0,0,n,y,"GAS_PHASE O2(g) -0.7 (a negative partial pressure, so effectively no O2) -> Fe(2) > Fe(3). Answered A, consistent with its own output."
+gpt52,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt52,76,Raw-loss(TOC-gain) pair,OK,correct,B,7,1,2,1,0,y,y,Read totals Fe(2) 2.028e-10 vs Fe(3) 3.830e-02 -> B.
+gpt52,Raw,rebuttal_mcq200_raw100k_rerun_gpt52_20260723,85,Raw-loss(TOC-gain) pair,BUILD,wrong,C,22,8,3,2,0,n,y,All 8 executes failed; nothing produced. Answered C.
+gpt52,TOC,neurips200_clean_rerun_20260503_safe_redo_run1_toc_gpt52,85,Raw-loss(TOC-gain) pair,OK,correct,B,9,2,2,1,0,y,y,Read gas-phase block: CH4 delta 5.277e-02 -> B.
+gpt52,Raw,rebuttal_mcq200_raw100k_rerun_gpt52_20260723,155,Raw-loss(TOC-gain) pair,BUILD,wrong,D,7,1,2,1,0,n,y,"Different transport build; ref 5.506e-06 not in its (untruncated, 50k) output. Answered D."
+gpt52,TOC,neurips200_tocfix_uncapped_capaffected45_toc_gpt52,155,Raw-loss(TOC-gain) pair,OK,correct,A,7,1,2,1,0,y,y,.sel 5.506245e-06 -> A.

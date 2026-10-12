@@ -1,0 +1,498 @@
+{
+ "mapping": {
+  "fitb_rows": 182,
+  "mapped_unique": 182,
+  "unmapped": [],
+  "mcq_ids_hit_twice": {},
+  "answer_value_vs_gold_option_mismatch": [],
+  "mcq_ids_without_fitb": [
+   3,
+   4,
+   15,
+   16,
+   20,
+   22,
+   23,
+   34,
+   37,
+   42,
+   51,
+   52,
+   60,
+   61,
+   76,
+   78,
+   81,
+   96
+  ],
+  "n_verified_mcq": 158,
+  "n_fitb_verified": 145,
+  "fitb_status_counts": {
+   "unstable": 17,
+   "verified": 145,
+   "no_match": 5,
+   "ambiguous": 15
+  },
+  "verified_ids_without_fitb": [
+   15,
+   16,
+   20,
+   23,
+   34,
+   42,
+   51,
+   52,
+   60,
+   61,
+   76,
+   81,
+   96
+  ],
+  "changed_cases_pairs_checked": 161,
+  "changed_cases_pairs_disagree": []
+ },
+ "subsets": {
+  "all182": {
+   "GPT-5.4 FITB (TOC = rebuttal run 2026-07-23)": {
+    "Direct": {
+     "correct": 2,
+     "n": 182,
+     "pct": 1.1
+    },
+    "CoT": {
+     "correct": 4,
+     "n": 182,
+     "pct": 2.2
+    },
+    "TOC": {
+     "correct": 93,
+     "n": 182,
+     "pct": 51.1
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 48.9,
+    "vs_direct": {
+     "gains": 91,
+     "losses": 0
+    },
+    "vs_cot": {
+     "gains": 90,
+     "losses": 1
+    }
+   },
+   "GPT-5.4 FITB (TOC = earlier run, reconstructed 101/182)": {
+    "Direct": {
+     "correct": 2,
+     "n": 182,
+     "pct": 1.1
+    },
+    "CoT": {
+     "correct": 4,
+     "n": 182,
+     "pct": 2.2
+    },
+    "TOC": {
+     "correct": 101,
+     "n": 182,
+     "pct": 55.49
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 53.3,
+    "vs_direct": {
+     "gains": 100,
+     "losses": 1
+    },
+    "vs_cot": {
+     "gains": 98,
+     "losses": 1
+    }
+   },
+   "GPT-5.4 MCQ (TOC = toc_new headline)": {
+    "Direct": {
+     "correct": 48,
+     "n": 182,
+     "pct": 26.37
+    },
+    "CoT": {
+     "correct": 60,
+     "n": 182,
+     "pct": 32.97
+    },
+    "TOC": {
+     "correct": 130,
+     "n": 182,
+     "pct": 71.43
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 38.46,
+    "vs_direct": {
+     "gains": 99,
+     "losses": 17
+    },
+    "vs_cot": {
+     "gains": 84,
+     "losses": 14
+    }
+   },
+   "GPT-5.4 MCQ (TOC = toc_old, pre cap-fix)": {
+    "Direct": {
+     "correct": 48,
+     "n": 182,
+     "pct": 26.37
+    },
+    "CoT": {
+     "correct": 60,
+     "n": 182,
+     "pct": 32.97
+    },
+    "TOC": {
+     "correct": 131,
+     "n": 182,
+     "pct": 71.98
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 39.01,
+    "vs_direct": {
+     "gains": 98,
+     "losses": 15
+    },
+    "vs_cot": {
+     "gains": 85,
+     "losses": 14
+    }
+   },
+   "Claude Sonnet 4.6 FITB": {
+    "Direct": {
+     "correct": 8,
+     "n": 182,
+     "pct": 4.4
+    },
+    "CoT": {
+     "correct": 7,
+     "n": 182,
+     "pct": 3.85
+    }
+   },
+   "Claude Sonnet 4.6 MCQ": {
+    "Direct": {
+     "correct": 68,
+     "n": 182,
+     "pct": 37.36
+    },
+    "CoT": {
+     "correct": 77,
+     "n": 182,
+     "pct": 42.31
+    },
+    "TOC": {
+     "correct": 152,
+     "n": 182,
+     "pct": 83.52
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 41.21,
+    "vs_direct": {
+     "gains": 93,
+     "losses": 9
+    },
+    "vs_cot": {
+     "gains": 86,
+     "losses": 11
+    }
+   },
+   "Claude Opus 4.6 FITB": {
+    "Direct": {
+     "correct": 12,
+     "n": 182,
+     "pct": 6.59
+    },
+    "CoT": {
+     "correct": 14,
+     "n": 182,
+     "pct": 7.69
+    }
+   },
+   "Claude Opus 4.6 MCQ": {
+    "Direct": {
+     "correct": 71,
+     "n": 182,
+     "pct": 39.01
+    },
+    "CoT": {
+     "correct": 63,
+     "n": 182,
+     "pct": 34.62
+    },
+    "TOC": {
+     "correct": 152,
+     "n": 182,
+     "pct": 83.52
+    },
+    "best_no_tool": "Direct",
+    "tool_adv_pp": 44.51,
+    "vs_direct": {
+     "gains": 93,
+     "losses": 12
+    },
+    "vs_cot": {
+     "gains": 98,
+     "losses": 9
+    }
+   },
+   "TOC rerun vs earlier run": {
+    "both": 81,
+    "rerun_only": 12,
+    "earlier_only": 20,
+    "neither": 69
+   }
+  },
+  "verified": {
+   "GPT-5.4 FITB (TOC = rebuttal run 2026-07-23)": {
+    "Direct": {
+     "correct": 2,
+     "n": 145,
+     "pct": 1.38
+    },
+    "CoT": {
+     "correct": 4,
+     "n": 145,
+     "pct": 2.76
+    },
+    "TOC": {
+     "correct": 86,
+     "n": 145,
+     "pct": 59.31
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 56.55,
+    "vs_direct": {
+     "gains": 84,
+     "losses": 0
+    },
+    "vs_cot": {
+     "gains": 83,
+     "losses": 1
+    }
+   },
+   "GPT-5.4 FITB (TOC = earlier run, reconstructed 101/182)": {
+    "Direct": {
+     "correct": 2,
+     "n": 145,
+     "pct": 1.38
+    },
+    "CoT": {
+     "correct": 4,
+     "n": 145,
+     "pct": 2.76
+    },
+    "TOC": {
+     "correct": 91,
+     "n": 145,
+     "pct": 62.76
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 60.0,
+    "vs_direct": {
+     "gains": 90,
+     "losses": 1
+    },
+    "vs_cot": {
+     "gains": 88,
+     "losses": 1
+    }
+   },
+   "GPT-5.4 MCQ (TOC = toc_new headline)": {
+    "Direct": {
+     "correct": 35,
+     "n": 145,
+     "pct": 24.14
+    },
+    "CoT": {
+     "correct": 46,
+     "n": 145,
+     "pct": 31.72
+    },
+    "TOC": {
+     "correct": 108,
+     "n": 145,
+     "pct": 74.48
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 42.76,
+    "vs_direct": {
+     "gains": 84,
+     "losses": 11
+    },
+    "vs_cot": {
+     "gains": 69,
+     "losses": 7
+    }
+   },
+   "GPT-5.4 MCQ (TOC = toc_old, pre cap-fix)": {
+    "Direct": {
+     "correct": 35,
+     "n": 145,
+     "pct": 24.14
+    },
+    "CoT": {
+     "correct": 46,
+     "n": 145,
+     "pct": 31.72
+    },
+    "TOC": {
+     "correct": 108,
+     "n": 145,
+     "pct": 74.48
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 42.76,
+    "vs_direct": {
+     "gains": 84,
+     "losses": 11
+    },
+    "vs_cot": {
+     "gains": 71,
+     "losses": 9
+    }
+   },
+   "Claude Sonnet 4.6 FITB": {
+    "Direct": {
+     "correct": 8,
+     "n": 145,
+     "pct": 5.52
+    },
+    "CoT": {
+     "correct": 7,
+     "n": 145,
+     "pct": 4.83
+    }
+   },
+   "Claude Sonnet 4.6 MCQ": {
+    "Direct": {
+     "correct": 55,
+     "n": 145,
+     "pct": 37.93
+    },
+    "CoT": {
+     "correct": 65,
+     "n": 145,
+     "pct": 44.83
+    },
+    "TOC": {
+     "correct": 132,
+     "n": 145,
+     "pct": 91.03
+    },
+    "best_no_tool": "CoT",
+    "tool_adv_pp": 46.21,
+    "vs_direct": {
+     "gains": 80,
+     "losses": 3
+    },
+    "vs_cot": {
+     "gains": 73,
+     "losses": 6
+    }
+   },
+   "Claude Opus 4.6 FITB": {
+    "Direct": {
+     "correct": 12,
+     "n": 145,
+     "pct": 8.28
+    },
+    "CoT": {
+     "correct": 12,
+     "n": 145,
+     "pct": 8.28
+    }
+   },
+   "Claude Opus 4.6 MCQ": {
+    "Direct": {
+     "correct": 57,
+     "n": 145,
+     "pct": 39.31
+    },
+    "CoT": {
+     "correct": 51,
+     "n": 145,
+     "pct": 35.17
+    },
+    "TOC": {
+     "correct": 126,
+     "n": 145,
+     "pct": 86.9
+    },
+    "best_no_tool": "Direct",
+    "tool_adv_pp": 47.59,
+    "vs_direct": {
+     "gains": 77,
+     "losses": 8
+    },
+    "vs_cot": {
+     "gains": 80,
+     "losses": 5
+    }
+   },
+   "TOC rerun vs earlier run": {
+    "both": 74,
+    "rerun_only": 12,
+    "earlier_only": 17,
+    "neither": 42
+   }
+  }
+ },
+ "regrade_disagreements": {},
+ "ungraded_rows": {
+  "GPT-5.4|Direct": 0,
+  "GPT-5.4|CoT": 2,
+  "GPT-5.4|TOC": 0,
+  "Claude Sonnet 4.6|Direct": 0,
+  "Claude Sonnet 4.6|CoT": 1,
+  "Claude Opus 4.6|Direct": 0,
+  "Claude Opus 4.6|CoT": 1
+ },
+ "sanity_check_failures": [],
+ "rebuttal_toc_numeric_exact": 36,
+ "exact_match_csv": [
+  {
+   "run": "raw100k_gpt54",
+   "total": "182",
+   "correct": "105",
+   "accuracy": "57.7%",
+   "numericExact": "90",
+   "numericExactPct": "49.5%",
+   "numericExactOfCorrect": "85.7%",
+   "correctNonExact": "15"
+  },
+  {
+   "run": "raw500k_gpt54",
+   "total": "182",
+   "correct": "107",
+   "accuracy": "58.8%",
+   "numericExact": "102",
+   "numericExactPct": "56.0%",
+   "numericExactOfCorrect": "95.3%",
+   "correctNonExact": "5"
+  },
+  {
+   "run": "toc_gpt54",
+   "total": "182",
+   "correct": "101",
+   "accuracy": "55.5%",
+   "numericExact": "41",
+   "numericExactPct": "22.5%",
+   "numericExactOfCorrect": "40.6%",
+   "correctNonExact": "60"
+  },
+  {
+   "run": "toc_sonnet46",
+   "total": "182",
+   "correct": "116",
+   "accuracy": "63.7%",
+   "numericExact": "78",
+   "numericExactPct": "42.9%",
+   "numericExactOfCorrect": "67.2%",
+   "correctNonExact": "38"
+  }
+ ]
+}

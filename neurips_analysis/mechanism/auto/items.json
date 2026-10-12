@@ -1,0 +1,3549 @@
+{
+ "2": {
+  "id": 2,
+  "scenario": "S01",
+  "kind": "numeric",
+  "quantity": "pH at step 100",
+  "gold": "C",
+  "gold_value": "5.534",
+  "options": {
+   "A": "5.535",
+   "B": "5.537",
+   "C": "5.534",
+   "D": "5.538"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "7": {
+  "id": 7,
+  "scenario": "S01",
+  "kind": "numeric",
+  "quantity": "SI Aragonite at step 47",
+  "gold": "C",
+  "gold_value": "-5.06",
+  "options": {
+   "A": "-5.04",
+   "B": "-5.08",
+   "C": "-5.06",
+   "D": "-5.07"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "gold_count": 3,
+   "have_ref": true
+  }
+ },
+ "9": {
+  "id": 9,
+  "scenario": "S02",
+  "kind": "numeric",
+  "quantity": "pH at step 100",
+  "gold": "A",
+  "gold_value": "2.129",
+  "options": {
+   "A": "2.129",
+   "B": "2.130",
+   "C": "2.126",
+   "D": "2.128"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "C",
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "10": {
+  "id": 10,
+  "scenario": "S02",
+  "kind": "numeric",
+  "quantity": "SI Witherite at step 100",
+  "gold": "C",
+  "gold_value": "-9.36",
+  "options": {
+   "A": "-9.35",
+   "B": "-9.38",
+   "C": "-9.36",
+   "D": "-9.33"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "11": {
+  "id": 11,
+  "scenario": "S02",
+  "kind": "numeric",
+  "quantity": "molality of CO2 species at step 100",
+  "gold": "A",
+  "gold_value": "1.590e-03",
+  "options": {
+   "A": "1.590e-03",
+   "B": "1.590e-04",
+   "C": "1.591e-03",
+   "D": "1.585e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "C",
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "12": {
+  "id": 12,
+  "scenario": "S02",
+  "kind": "numeric",
+  "quantity": "total alkalinity at step 100",
+  "gold": "B",
+  "gold_value": "-9.260e-03",
+  "options": {
+   "A": "-9.265e-03",
+   "B": "-9.260e-03",
+   "C": "-9.261e-03",
+   "D": "-9.262e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "13": {
+  "id": 13,
+  "scenario": "S02",
+  "kind": "numeric",
+  "quantity": "pH at step 10",
+  "gold": "C",
+  "gold_value": "2.013",
+  "options": {
+   "A": "2.014",
+   "B": "2.008",
+   "C": "2.013",
+   "D": "2.009"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "14": {
+  "id": 14,
+  "scenario": "S02",
+  "kind": "numeric",
+  "quantity": "moles calcite remaining at step 10",
+  "gold": "D",
+  "gold_value": "9.998e-01",
+  "options": {
+   "A": "9.995e-01",
+   "B": "9.988e-01",
+   "C": "9.997e-01",
+   "D": "9.998e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "gold_count": 5,
+   "have_ref": true
+  }
+ },
+ "15": {
+  "id": 15,
+  "scenario": "S02",
+  "kind": "categorical",
+  "quantity": "SI witherite step 10 vs step 100",
+  "gold": "B",
+  "gold_value": "Lower",
+  "options": {
+   "A": "Higher",
+   "B": "Lower",
+   "C": "the same",
+   "D": "N/A"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "16": {
+  "id": 16,
+  "scenario": "S02",
+  "kind": "categorical",
+  "quantity": "number of C(4) vs Cu(2) species at step 10",
+  "gold": "B",
+  "gold_value": "More C(4)",
+  "options": {
+   "A": "More Cu (2)",
+   "B": "More C (4)",
+   "C": "the same number",
+   "D": "neither are present"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "17": {
+  "id": 17,
+  "scenario": "S03",
+  "kind": "numeric",
+  "quantity": "moles albite dissolved at step 100",
+  "gold": "A",
+  "gold_value": "2.293e-04",
+  "options": {
+   "A": "2.293e-04",
+   "B": "2.294e-04",
+   "C": "2.296e-04",
+   "D": "2.298e-04"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 7,
+   "have_ref": true
+  }
+ },
+ "18": {
+  "id": 18,
+  "scenario": "S03",
+  "kind": "numeric",
+  "quantity": "pe at step 100",
+  "gold": "D",
+  "gold_value": "-0.081",
+  "options": {
+   "A": "-.080",
+   "B": "-.086",
+   "C": "-.083",
+   "D": "-.081"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "D"
+   ],
+   "gold_count": 49,
+   "have_ref": true
+  }
+ },
+ "19": {
+  "id": 19,
+  "scenario": "S03",
+  "kind": "numeric",
+  "quantity": "moles Si in solution at step 100",
+  "gold": "C",
+  "gold_value": "6.879e-04",
+  "options": {
+   "A": "6.880e-04",
+   "B": "6.882e-04",
+   "C": "6.879e-04",
+   "D": "6.883e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "20": {
+  "id": 20,
+  "scenario": "S03",
+  "kind": "categorical",
+  "quantity": "element with highest dissolved molality at step 100",
+  "gold": "C",
+  "gold_value": "S",
+  "options": {
+   "A": "Fe",
+   "B": "Na",
+   "C": "S",
+   "D": "Al"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "21": {
+  "id": 21,
+  "scenario": "S03",
+  "kind": "numeric",
+  "quantity": "ionic strength at step 100",
+  "gold": "B",
+  "gold_value": "2.166e-02",
+  "options": {
+   "A": "2.162e-02",
+   "B": "2.166e-02",
+   "C": "2.163e-02",
+   "D": "2.164e-02"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "gold_count": 3,
+   "have_ref": true
+  }
+ },
+ "23": {
+  "id": 23,
+  "scenario": "S03",
+  "kind": "categorical",
+  "quantity": "Ba+2 at step 10 vs step 70",
+  "gold": "D",
+  "gold_value": "Neither exist",
+  "options": {
+   "A": "More",
+   "B": "Less",
+   "C": "Nonzero same amount of both",
+   "D": "Neither exist in solution"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "24": {
+  "id": 24,
+  "scenario": "S03",
+  "kind": "numeric",
+  "quantity": "moles H2S gas dissolved at step 100",
+  "gold": "A",
+  "gold_value": "3.041e-02",
+  "options": {
+   "A": "3.041e-02",
+   "B": "3.044e-02",
+   "C": "3.042e-02",
+   "D": "3.040e-02"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 300,
+   "have_ref": true
+  }
+ },
+ "25": {
+  "id": 25,
+  "scenario": "S03",
+  "kind": "numeric",
+  "quantity": "SI Goethite at step 100",
+  "gold": "D",
+  "gold_value": "-1.72",
+  "options": {
+   "A": "-1.70",
+   "B": "-1.69",
+   "C": "-1.75",
+   "D": "-1.72"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "gold_count": 20,
+   "have_ref": true
+  }
+ },
+ "26": {
+  "id": 26,
+  "scenario": "S03",
+  "kind": "count",
+  "quantity": "number of Si species at step 100",
+  "gold": "A",
+  "gold_value": "3",
+  "options": {
+   "A": "3",
+   "B": "5",
+   "C": "10",
+   "D": "2"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "27": {
+  "id": 27,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "pH at 20 C",
+  "gold": "A",
+  "gold_value": "10.037",
+  "options": {
+   "A": "10.037",
+   "B": "10.036",
+   "C": "10.035",
+   "D": "10.034"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "28": {
+  "id": 28,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "pH at 180 C",
+  "gold": "D",
+  "gold_value": "7.400",
+  "options": {
+   "A": "7.405",
+   "B": "7.402",
+   "C": "7.401",
+   "D": "7.400"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "29": {
+  "id": 29,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "moles calcite precipitated at 200 C",
+  "gold": "B",
+  "gold_value": "4.987e-02",
+  "options": {
+   "A": "4.986e-02",
+   "B": "4.987e-02",
+   "C": "4.984e-02",
+   "D": "4.983e-02"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B",
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "30": {
+  "id": 30,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "moles calcite precipitated at 100 C",
+  "gold": "D",
+  "gold_value": "4.972e-02",
+  "options": {
+   "A": "4.973e-02",
+   "B": "4.971e-02",
+   "C": "4.970e-02",
+   "D": "4.972e-02"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "D"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "31": {
+  "id": 31,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "ionic strength at 100 C",
+  "gold": "C",
+  "gold_value": "4.066e-04",
+  "options": {
+   "A": "4.068e-04",
+   "B": "4.063e-04",
+   "C": "4.066e-04",
+   "D": "4.064e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "32": {
+  "id": 32,
+  "scenario": "S04",
+  "kind": "count",
+  "quantity": "number of Ca species at 160 C",
+  "gold": "C",
+  "gold_value": "4",
+  "options": {
+   "A": "2",
+   "B": "0",
+   "C": "4",
+   "D": "1"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "33": {
+  "id": 33,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "SI aragonite at 160 C",
+  "gold": "A",
+  "gold_value": "-0.82",
+  "options": {
+   "A": "-0.82",
+   "B": "-0.80",
+   "C": "-0.85",
+   "D": "-0.83"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "34": {
+  "id": 34,
+  "scenario": "S04",
+  "kind": "categorical",
+  "quantity": "moles C(4) vs Ca at 20 C",
+  "gold": "C",
+  "gold_value": "Same",
+  "options": {
+   "A": "More",
+   "B": "Less",
+   "C": "Same",
+   "D": "N/A"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "35": {
+  "id": 35,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "density at 200 C",
+  "gold": "B",
+  "gold_value": "0.86468",
+  "options": {
+   "A": "0.86469",
+   "B": "0.86468",
+   "C": "0.86463",
+   "D": "0.86465"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "36": {
+  "id": 36,
+  "scenario": "S04",
+  "kind": "numeric",
+  "quantity": "log IAP calcite at 200 C",
+  "gold": "D",
+  "gold_value": "-12.26",
+  "options": {
+   "A": "-12.29",
+   "B": "-12.21",
+   "C": "-12.23",
+   "D": "-12.26"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 5,
+   "have_ref": true
+  }
+ },
+ "38": {
+  "id": 38,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "SI aragonite",
+  "gold": "B",
+  "gold_value": "-0.45",
+  "options": {
+   "A": "-0.47",
+   "B": "-0.45",
+   "C": "-0.44",
+   "D": "-0.43"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "39": {
+  "id": 39,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "pe",
+  "gold": "A",
+  "gold_value": "-4.646",
+  "options": {
+   "A": "-4.646",
+   "B": "-4.644",
+   "C": "-4.645",
+   "D": "-4.647"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "40": {
+  "id": 40,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "moles calcite precipitated",
+  "gold": "B",
+  "gold_value": "3.646e-02",
+  "options": {
+   "A": "3.644e-02",
+   "B": "3.646e-02",
+   "C": "3.647e-02",
+   "D": "3.645e-02"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "41": {
+  "id": 41,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "moles CH4 dissolved",
+  "gold": "A",
+  "gold_value": "2.913e-04",
+  "options": {
+   "A": "2.913e-04",
+   "B": "2.916e-04",
+   "C": "2.912e-04",
+   "D": "2.911e-04"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "42": {
+  "id": 42,
+  "scenario": "S05",
+  "kind": "categorical",
+  "quantity": "gas with most moles dissolved",
+  "gold": "B",
+  "gold_value": "H2S",
+  "options": {
+   "A": "CO2",
+   "B": "H2S",
+   "C": "CH4",
+   "D": "All the same"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "43": {
+  "id": 43,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "molality S",
+  "gold": "A",
+  "gold_value": "4.737e-02",
+  "options": {
+   "A": "4.737e-02",
+   "B": "4.738e-02",
+   "C": "4.736e-02",
+   "D": "4.735e-02"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "44": {
+  "id": 44,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "specific conductance",
+  "gold": "D",
+  "gold_value": "7948",
+  "options": {
+   "A": "7949",
+   "B": "7943",
+   "C": "7944",
+   "D": "7948"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "45": {
+  "id": 45,
+  "scenario": "S05",
+  "kind": "numeric",
+  "quantity": "alkalinity",
+  "gold": "B",
+  "gold_value": "2.694e-02",
+  "options": {
+   "A": "2.690e-02",
+   "B": "2.694e-02",
+   "C": "2.692e-02",
+   "D": "2.693e-02"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "46": {
+  "id": 46,
+  "scenario": "S05",
+  "kind": "count",
+  "quantity": "number of Ca species",
+  "gold": "A",
+  "gold_value": "6",
+  "options": {
+   "A": "6",
+   "B": "8",
+   "C": "7",
+   "D": "4"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "47": {
+  "id": 47,
+  "scenario": "S06",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "B",
+  "gold_value": "5.509",
+  "options": {
+   "A": "5.506",
+   "B": "5.509",
+   "C": "5.507",
+   "D": "5.508"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "49": {
+  "id": 49,
+  "scenario": "S06",
+  "kind": "numeric",
+  "quantity": "specific conductance",
+  "gold": "C",
+  "gold_value": "124108",
+  "options": {
+   "A": "124109",
+   "B": "124104",
+   "C": "124108",
+   "D": "124103"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "50": {
+  "id": 50,
+  "scenario": "S06",
+  "kind": "numeric",
+  "quantity": "molality Al(OH)4-",
+  "gold": "B",
+  "gold_value": "2.242e-06",
+  "options": {
+   "A": "2.243e-06",
+   "B": "2.242e-06",
+   "C": "2.241e-06",
+   "D": "2.240e-06"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "51": {
+  "id": 51,
+  "scenario": "S06",
+  "kind": "categorical",
+  "quantity": "more moles Fe(2) or Fe(3)",
+  "gold": "B",
+  "gold_value": "Fe(3)",
+  "options": {
+   "A": "Fe (2)",
+   "B": "Fe (3)",
+   "C": "Same",
+   "D": "N/A"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "52": {
+  "id": 52,
+  "scenario": "S06",
+  "kind": "categorical",
+  "quantity": "fewer species Fe(2) or Fe(3)",
+  "gold": "A",
+  "gold_value": "Fe(2)",
+  "options": {
+   "A": "Fe (2)",
+   "B": "Fe (3)",
+   "C": "same",
+   "D": "n/a"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "53": {
+  "id": 53,
+  "scenario": "S06",
+  "kind": "count",
+  "quantity": "number of Al species",
+  "gold": "C",
+  "gold_value": "8",
+  "options": {
+   "A": "5",
+   "B": "6",
+   "C": "8",
+   "D": "4"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "55": {
+  "id": 55,
+  "scenario": "S06",
+  "kind": "numeric",
+  "quantity": "SI mirabilite",
+  "gold": "D",
+  "gold_value": "-1.90",
+  "options": {
+   "A": "-1.92",
+   "B": "-1.89",
+   "C": "-1.91",
+   "D": "-1.90"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "57": {
+  "id": 57,
+  "scenario": "S07",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "A",
+  "gold_value": "7.417",
+  "options": {
+   "A": "7.417",
+   "B": "7.416",
+   "C": "7.414",
+   "D": "7.418"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "58": {
+  "id": 58,
+  "scenario": "S07",
+  "kind": "numeric",
+  "quantity": "specific conductance",
+  "gold": "D",
+  "gold_value": "10116",
+  "options": {
+   "A": "10113",
+   "B": "10114",
+   "C": "10115",
+   "D": "10116"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "59": {
+  "id": 59,
+  "scenario": "S07",
+  "kind": "numeric",
+  "quantity": "ionic strength",
+  "gold": "B",
+  "gold_value": "1.685e-01",
+  "options": {
+   "A": "1.684e-01",
+   "B": "1.685e-01",
+   "C": "1.686e-01",
+   "D": "1.688e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "60": {
+  "id": 60,
+  "scenario": "S07",
+  "kind": "categorical",
+  "quantity": "mineral dissolved most",
+  "gold": "B",
+  "gold_value": "Sepiolite and Sepiolite(d)",
+  "options": {
+   "A": "Rhodochrosite",
+   "B": "Sepiolite and Sepiolite(d)",
+   "C": "Talc",
+   "D": "None"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "61": {
+  "id": 61,
+  "scenario": "S07",
+  "kind": "categorical",
+  "quantity": "mineral with net precipitation",
+  "gold": "A",
+  "gold_value": "Talc",
+  "options": {
+   "A": "Talc",
+   "B": "Rhodochrosite",
+   "C": "Sepiolite(d)",
+   "D": "None"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "62": {
+  "id": 62,
+  "scenario": "S07",
+  "kind": "numeric",
+  "quantity": "final moles talc",
+  "gold": "D",
+  "gold_value": "2.333e+01",
+  "options": {
+   "A": "2.332e+01",
+   "B": "2.334e+01",
+   "C": "2.330e+01",
+   "D": "2.333e+01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "63": {
+  "id": 63,
+  "scenario": "S07",
+  "kind": "count",
+  "quantity": "number of C(4) species",
+  "gold": "B",
+  "gold_value": "13",
+  "options": {
+   "A": "16",
+   "B": "13",
+   "C": "9",
+   "D": "4"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "65": {
+  "id": 65,
+  "scenario": "S07",
+  "kind": "numeric",
+  "quantity": "SI Sepiolite(d)",
+  "gold": "C",
+  "gold_value": "-8.82",
+  "options": {
+   "A": "-8.81",
+   "B": "-8.83",
+   "C": "-8.82",
+   "D": "-8.86"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "67": {
+  "id": 67,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "C",
+  "gold_value": "0.945",
+  "options": {
+   "A": "0.944",
+   "B": "0.943",
+   "C": "0.945",
+   "D": "0.946"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "68": {
+  "id": 68,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "SI pyrite",
+  "gold": "B",
+  "gold_value": "-219.43",
+  "options": {
+   "A": "-219.40",
+   "B": "-219.43",
+   "C": "-219.46",
+   "D": "-219.44"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "69": {
+  "id": 69,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "pe",
+  "gold": "A",
+  "gold_value": "19.678",
+  "options": {
+   "A": "19.678",
+   "B": "19.676",
+   "C": "19.679",
+   "D": "19.674"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "70": {
+  "id": 70,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "specific conductance",
+  "gold": "C",
+  "gold_value": "55866",
+  "options": {
+   "A": "55869",
+   "B": "55868",
+   "C": "55866",
+   "D": "55865"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "71": {
+  "id": 71,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "alkalinity",
+  "gold": "A",
+  "gold_value": "-3.630e-01",
+  "options": {
+   "A": "-3.630e-01",
+   "B": "-3.631e-01",
+   "C": "-3.632e-01",
+   "D": "-3.633e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "72": {
+  "id": 72,
+  "scenario": "S08",
+  "kind": "count",
+  "quantity": "number of Fe(3) species",
+  "gold": "A",
+  "gold_value": "10",
+  "options": {
+   "A": "10",
+   "B": "8",
+   "C": "5",
+   "D": "7"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "73": {
+  "id": 73,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "SI hematite",
+  "gold": "D",
+  "gold_value": "2.01",
+  "options": {
+   "A": "2.00",
+   "B": "2.03",
+   "C": "2.02",
+   "D": "2.01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "74": {
+  "id": 74,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "molality H+",
+  "gold": "A",
+  "gold_value": "1.438e-01",
+  "options": {
+   "A": "1.438e-01",
+   "B": "1.434e-01",
+   "C": "1.437e-01",
+   "D": "1.439e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "75": {
+  "id": 75,
+  "scenario": "S08",
+  "kind": "numeric",
+  "quantity": "molality S(6)",
+  "gold": "B",
+  "gold_value": "2.006e-01",
+  "options": {
+   "A": "2.008e-01",
+   "B": "2.006e-01",
+   "C": "2.003e-01",
+   "D": "2.004e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "76": {
+  "id": 76,
+  "scenario": "S08",
+  "kind": "categorical",
+  "quantity": "more moles Fe(2) or Fe(3)",
+  "gold": "B",
+  "gold_value": "Fe(3)",
+  "options": {
+   "A": "Fe (2)",
+   "B": "Fe (3)",
+   "C": "Same",
+   "D": "N/A"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "77": {
+  "id": 77,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "pH after gas equilibration",
+  "gold": "D",
+  "gold_value": "6.618",
+  "options": {
+   "A": "6.614",
+   "B": "6.615",
+   "C": "6.617",
+   "D": "6.618"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "79": {
+  "id": 79,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "SI of N2(g)",
+  "gold": "C",
+  "gold_value": "2.09",
+  "options": {
+   "A": "2.08",
+   "B": "2.07",
+   "C": "2.09",
+   "D": "2.05"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "80": {
+  "id": 80,
+  "scenario": "S09",
+  "kind": "count",
+  "quantity": "number of C(4) species in solution",
+  "gold": "A",
+  "gold_value": "4",
+  "options": {
+   "A": "4",
+   "B": "3",
+   "C": "0",
+   "D": "1"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "81": {
+  "id": 81,
+  "scenario": "S09",
+  "kind": "categorical",
+  "quantity": "NH4+ vs NH3 molality",
+  "gold": "A",
+  "gold_value": "NH4+",
+  "options": {
+   "A": "NH4+",
+   "B": "NH3",
+   "C": "Same",
+   "D": "N/A"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "82": {
+  "id": 82,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "total alkalinity (eq/kg)",
+  "gold": "B",
+  "gold_value": "5.160e-03",
+  "options": {
+   "A": "5.161e-03",
+   "B": "5.160e-03",
+   "C": "5.162e-03",
+   "D": "5.165e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "83": {
+  "id": 83,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "molality of N (total)",
+  "gold": "D",
+  "gold_value": "1.476e-01",
+  "options": {
+   "A": "1.475e-01",
+   "B": "1.478e-01",
+   "C": "1.474e-01",
+   "D": "1.476e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "84": {
+  "id": 84,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "specific conductance (uS/cm, 150 C)",
+  "gold": "A",
+  "gold_value": "774",
+  "options": {
+   "A": "774",
+   "B": "773",
+   "C": "770",
+   "D": "772"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "85": {
+  "id": 85,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "delta moles CH4(g) in gas phase",
+  "gold": "B",
+  "gold_value": "5.277e-02",
+  "options": {
+   "A": "5.275e-02",
+   "B": "5.277e-02",
+   "C": "5.276e-02",
+   "D": "5.278e-02"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "86": {
+  "id": 86,
+  "scenario": "S09",
+  "kind": "numeric",
+  "quantity": "pe of final solution",
+  "gold": "D",
+  "gold_value": "-5.199",
+  "options": {
+   "A": "-5.196",
+   "B": "-5.200",
+   "C": "-5.198",
+   "D": "-5.199"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "87": {
+  "id": 87,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "D",
+  "gold_value": "7.492",
+  "options": {
+   "A": "7.493",
+   "B": "7.494",
+   "C": "7.491",
+   "D": "7.492"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "88": {
+  "id": 88,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "specific conductance (uS/cm, 150 C)",
+  "gold": "B",
+  "gold_value": "46",
+  "options": {
+   "A": "44",
+   "B": "46",
+   "C": "47",
+   "D": "48"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "89": {
+  "id": 89,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "pe",
+  "gold": "D",
+  "gold_value": "3.508",
+  "options": {
+   "A": "3.506",
+   "B": "3.509",
+   "C": "3.504",
+   "D": "3.508"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "90": {
+  "id": 90,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "ionic strength (mol/kgw)",
+  "gold": "A",
+  "gold_value": "8.538e-05",
+  "options": {
+   "A": "8.538e-05",
+   "B": "8.539e-05",
+   "C": "8.537e-05",
+   "D": "8.536e-05"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "91": {
+  "id": 91,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "log IAP of Chrysotile",
+  "gold": "C",
+  "gold_value": "21.14",
+  "options": {
+   "A": "21.13",
+   "B": "21.15",
+   "C": "21.14",
+   "D": "21.18"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "92": {
+  "id": 92,
+  "scenario": "S10",
+  "kind": "count",
+  "quantity": "number of Si species",
+  "gold": "C",
+  "gold_value": "3",
+  "options": {
+   "A": "1",
+   "B": "2",
+   "C": "3",
+   "D": "5"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "93": {
+  "id": 93,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "SI of Chalcedony",
+  "gold": "D",
+  "gold_value": "-2.36",
+  "options": {
+   "A": "-2.33",
+   "B": "-2.37",
+   "C": "-2.30",
+   "D": "-2.36"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "94": {
+  "id": 94,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "SI of Quartz",
+  "gold": "C",
+  "gold_value": "-2.21",
+  "options": {
+   "A": "-2.20",
+   "B": "-2.24",
+   "C": "-2.21",
+   "D": "-2.28"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "95": {
+  "id": 95,
+  "scenario": "S10",
+  "kind": "numeric",
+  "quantity": "molality of MgOH+",
+  "gold": "C",
+  "gold_value": "6.816e-06",
+  "options": {
+   "A": "6.818e-06",
+   "B": "6.814e-06",
+   "C": "6.816e-06",
+   "D": "6.817e-06"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "96": {
+  "id": 96,
+  "scenario": "S10",
+  "kind": "categorical",
+  "quantity": "more Mg or Si in solution",
+  "gold": "A",
+  "gold_value": "Mg",
+  "options": {
+   "A": "Mg",
+   "B": "Si",
+   "C": "Same",
+   "D": "N/A"
+  },
+  "absmode": null,
+  "intctx": null,
+  "ref": null
+ },
+ "97": {
+  "id": 97,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "molality of Alkalinity",
+  "gold": "C",
+  "gold_value": "4.997e-03",
+  "options": {
+   "A": "4.995e-03",
+   "B": "4.993e-03",
+   "C": "4.997e-03",
+   "D": "4.999e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "98": {
+  "id": 98,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "molality of Ca",
+  "gold": "A",
+  "gold_value": "2.496e-03",
+  "options": {
+   "A": "2.496e-03",
+   "B": "2.498e-03",
+   "C": "2.495e-03",
+   "D": "2.494e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 3,
+   "have_ref": true
+  }
+ },
+ "99": {
+  "id": 99,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "total carbon (mol/kg)",
+  "gold": "D",
+  "gold_value": "5.287e-03",
+  "options": {
+   "A": "5.280e-03",
+   "B": "5.284e-03",
+   "C": "5.285e-03",
+   "D": "5.287e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 3,
+   "have_ref": true
+  }
+ },
+ "100": {
+  "id": 100,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "electrical balance (eq)",
+  "gold": "A",
+  "gold_value": "-5.431e-06",
+  "options": {
+   "A": "-5.431e-06",
+   "B": "-5.435e-06",
+   "C": "-5.436e-06",
+   "D": "-5.438e-06"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "101": {
+  "id": 101,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "specific conductance (uS/cm, 25 C)",
+  "gold": "D",
+  "gold_value": "463",
+  "options": {
+   "A": "464",
+   "B": "468",
+   "C": "473",
+   "D": "463"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "102": {
+  "id": 102,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "SI of Aragonite",
+  "gold": "A",
+  "gold_value": "0.40",
+  "options": {
+   "A": "0.40",
+   "B": "0.39",
+   "C": "0.42",
+   "D": "0.41"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "103": {
+  "id": 103,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "SI of O2(g)",
+  "gold": "C",
+  "gold_value": "-37.19",
+  "options": {
+   "A": "-37.20",
+   "B": "-37.18",
+   "C": "-37.19",
+   "D": "-37.21"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "104": {
+  "id": 104,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "activity of CO2",
+  "gold": "D",
+  "gold_value": "3.197e-04",
+  "options": {
+   "A": "3.193e-04",
+   "B": "3.199e-04",
+   "C": "3.198e-04",
+   "D": "3.197e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "105": {
+  "id": 105,
+  "scenario": "S11",
+  "kind": "numeric",
+  "quantity": "activity of H2",
+  "gold": "A",
+  "gold_value": "7.079e-27",
+  "options": {
+   "A": "7.079e-27",
+   "B": "7.070e-27",
+   "C": "7.073e-27",
+   "D": "7.075e-27"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "106": {
+  "id": 106,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "molality of Cl in mixture",
+  "gold": "A",
+  "gold_value": "5.707e+00",
+  "options": {
+   "A": "5.707e+00",
+   "B": "5.710e+00",
+   "C": "5.709e+00",
+   "D": "5.708e+00"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "107": {
+  "id": 107,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "pH of mixture",
+  "gold": "C",
+  "gold_value": "6.733",
+  "options": {
+   "A": "6.732",
+   "B": "6.730",
+   "C": "6.733",
+   "D": "6.731"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "109": {
+  "id": 109,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "electrical balance (eq)",
+  "gold": "B",
+  "gold_value": "-5.707e+00",
+  "options": {
+   "A": "-5.703e+00",
+   "B": "-5.707e+00",
+   "C": "-5.709e+00",
+   "D": "-5.710e+00"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "110": {
+  "id": 110,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "viscosity (mPa s)",
+  "gold": "D",
+  "gold_value": "0.89329",
+  "options": {
+   "A": "0.89229",
+   "B": "0.89829",
+   "C": "0.89429",
+   "D": "0.89329"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "111": {
+  "id": 111,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "specific conductance (uS/cm, 25 C)",
+  "gold": "D",
+  "gold_value": "263760",
+  "options": {
+   "A": "263753",
+   "B": "263768",
+   "C": "263761",
+   "D": "263760"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "112": {
+  "id": 112,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "SI of H2O(g)",
+  "gold": "A",
+  "gold_value": "-1.55",
+  "options": {
+   "A": "-1.55",
+   "B": "-1.51",
+   "C": "-1.54",
+   "D": "-1.53"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "113": {
+  "id": 113,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "activity of H+",
+  "gold": "C",
+  "gold_value": "1.851e-07",
+  "options": {
+   "A": "1.850e-07",
+   "B": "1.852e-07",
+   "C": "1.851e-07",
+   "D": "1.855e-07"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "114": {
+  "id": 114,
+  "scenario": "S12",
+  "kind": "numeric",
+  "quantity": "molality of HCl",
+  "gold": "A",
+  "gold_value": "1.286e-08",
+  "options": {
+   "A": "1.286e-08",
+   "B": "1.285e-08",
+   "C": "1.283e-08",
+   "D": "1.280e-08"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "116": {
+  "id": 116,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "pH, final step (5)",
+  "gold": "A",
+  "gold_value": "1.013",
+  "options": {
+   "A": "1.013",
+   "B": "1.010",
+   "C": "1.019",
+   "D": "1.018"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "117": {
+  "id": 117,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "ionic strength, final step",
+  "gold": "D",
+  "gold_value": "1.391e-01",
+  "options": {
+   "A": "1.397e-01",
+   "B": "1.394e-01",
+   "C": "1.399e-01",
+   "D": "1.391e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "120": {
+  "id": 120,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "activity H+, final step",
+  "gold": "A",
+  "gold_value": "9.706e-02",
+  "options": {
+   "A": "9.706e-02",
+   "B": "9.704e-02",
+   "C": "9.700e-02",
+   "D": "9.703e-02"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "121": {
+  "id": 121,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "pH, reaction step 1",
+  "gold": "B",
+  "gold_value": "2.751",
+  "options": {
+   "A": "2.750",
+   "B": "2.751",
+   "C": "2.748",
+   "D": "2.745"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "122": {
+  "id": 122,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "viscosity, reaction step 1",
+  "gold": "B",
+  "gold_value": "0.89064",
+  "options": {
+   "A": "0.89067",
+   "B": "0.89064",
+   "C": "0.89058",
+   "D": "0.89059"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "123": {
+  "id": 123,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "pH, reaction step 2",
+  "gold": "D",
+  "gold_value": "2.124",
+  "options": {
+   "A": "2.129",
+   "B": "2.122",
+   "C": "2.127",
+   "D": "2.124"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "124": {
+  "id": 124,
+  "scenario": "S13",
+  "kind": "numeric",
+  "quantity": "activity H+, reaction step 2",
+  "gold": "A",
+  "gold_value": "7.513e-03",
+  "options": {
+   "A": "7.513e-03",
+   "B": "7.514e-03",
+   "C": "7.512e-03",
+   "D": "7.516e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "126": {
+  "id": 126,
+  "scenario": "S14",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "A",
+  "gold_value": "7.066",
+  "options": {
+   "A": "7.066",
+   "B": "7.065",
+   "C": "7.062",
+   "D": "7.068"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "127": {
+  "id": 127,
+  "scenario": "S14",
+  "kind": "numeric",
+  "quantity": "ionic strength",
+  "gold": "C",
+  "gold_value": "4.174e-02",
+  "options": {
+   "A": "4.1741e-02",
+   "B": "4.176e-02",
+   "C": "4.174e-02",
+   "D": "4.172e-02"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "129": {
+  "id": 129,
+  "scenario": "S14",
+  "kind": "numeric",
+  "quantity": "SI anhydrite",
+  "gold": "A",
+  "gold_value": "-0.30",
+  "options": {
+   "A": "-0.30",
+   "B": "-0.35",
+   "C": "-0.28",
+   "D": "-0.34"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "131": {
+  "id": 131,
+  "scenario": "S14",
+  "kind": "numeric",
+  "quantity": "activity OH-",
+  "gold": "C",
+  "gold_value": "1.178e-07",
+  "options": {
+   "A": "1.179e-07",
+   "B": "1.176e-07",
+   "C": "1.178e-07",
+   "D": "1.172e-07"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "132": {
+  "id": 132,
+  "scenario": "S14",
+  "kind": "numeric",
+  "quantity": "molality CaHSO4+",
+  "gold": "A",
+  "gold_value": "3.162e-09",
+  "options": {
+   "A": "3.162e-09",
+   "B": "3.161e-09",
+   "C": "3.168e-09",
+   "D": "3.160e-09"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "134": {
+  "id": 134,
+  "scenario": "S14",
+  "kind": "numeric",
+  "quantity": "final moles gypsum",
+  "gold": "A",
+  "gold_value": "9.985e+00",
+  "options": {
+   "A": "9.985e+00",
+   "B": "9.986e+00",
+   "C": "9.988e+00",
+   "D": "9.980e+00"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "135": {
+  "id": 135,
+  "scenario": "S15",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "A",
+  "gold_value": "5.610",
+  "options": {
+   "A": "5.610",
+   "B": "5.619",
+   "C": "5.617",
+   "D": "5.613"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "137": {
+  "id": 137,
+  "scenario": "S15",
+  "kind": "numeric",
+  "quantity": "ionic strength",
+  "gold": "C",
+  "gold_value": "2.461e-06",
+  "options": {
+   "A": "2.462e-06",
+   "B": "2.466e-06",
+   "C": "2.461e-06",
+   "D": "2.457e-06"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "139": {
+  "id": 139,
+  "scenario": "S15",
+  "kind": "numeric",
+  "quantity": "delta CO2(g) moles",
+  "gold": "A",
+  "gold_value": "-1.600e-05",
+  "options": {
+   "A": "-1.600e-05",
+   "B": "-1.594e-05",
+   "C": "-1.500e-05",
+   "D": "-1.606e-05"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 5,
+   "have_ref": true
+  }
+ },
+ "141": {
+  "id": 141,
+  "scenario": "S15",
+  "kind": "numeric",
+  "quantity": "activity H+",
+  "gold": "B",
+  "gold_value": "2.456e-06",
+  "options": {
+   "A": "2.459e-06",
+   "B": "2.456e-06",
+   "C": "2.452e-06",
+   "D": "2.457e-06"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "142": {
+  "id": 142,
+  "scenario": "S15",
+  "kind": "numeric",
+  "quantity": "molality OH-",
+  "gold": "A",
+  "gold_value": "4.129e-09",
+  "options": {
+   "A": "4.129e-09",
+   "B": "4.136e-09",
+   "C": "4.131e-09",
+   "D": "4.122e-09"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "143": {
+  "id": 143,
+  "scenario": "S15",
+  "kind": "numeric",
+  "quantity": "log IAP CO2(g)",
+  "gold": "C",
+  "gold_value": "-4.87",
+  "options": {
+   "A": "-4.80",
+   "B": "-4.84",
+   "C": "-4.87",
+   "D": "-4.86"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "144": {
+  "id": 144,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "pe, cell 10, shift 10",
+  "gold": "A",
+  "gold_value": "-1.452",
+  "options": {
+   "A": "-1.452",
+   "B": "-1.453",
+   "C": "-1.451",
+   "D": "-1.454"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B"
+   ],
+   "gold_count": 9,
+   "have_ref": true
+  }
+ },
+ "146": {
+  "id": 146,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "moles CaX2, exchange 1, shift 5",
+  "gold": "A",
+  "gold_value": "4.284e-04",
+  "options": {
+   "A": "4.284e-04",
+   "B": "4.287e-04",
+   "C": "4.283e-04",
+   "D": "4.280e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "147": {
+  "id": 147,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "specific conductance, cell 1, shift 5",
+  "gold": "D",
+  "gold_value": "123",
+  "options": {
+   "A": "124",
+   "B": "126",
+   "C": "122",
+   "D": "123"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+   ],
+   "gold_count": 35,
+   "have_ref": true
+  }
+ },
+ "148": {
+  "id": 148,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "total Na, cell 1, shift 5",
+  "gold": "B",
+  "gold_value": "9.871e-04",
+  "options": {
+   "A": "9.875e-04",
+   "B": "9.871e-04",
+   "C": "9.872e-04",
+   "D": "9.869e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "149": {
+  "id": 149,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "NaX (moles), exchange 1, shift 4",
+  "gold": "B",
+  "gold_value": "1.304e-04",
+  "options": {
+   "A": "1.301e-04",
+   "B": "1.304e-04",
+   "C": "1.302e-04",
+   "D": "1.306e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "150": {
+  "id": 150,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "equiv. fraction CaX2, exchange 8, shift 4",
+  "gold": "A",
+  "gold_value": "1.000e+00",
+  "options": {
+   "A": "1.000e+00",
+   "B": "9.900e-01",
+   "C": "9.998e-01",
+   "D": "9.999e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "D"
+   ],
+   "gold_count": 395,
+   "have_ref": true
+  }
+ },
+ "152": {
+  "id": 152,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "equiv. fraction CaX2, exchange 1, shift 6",
+  "gold": "B",
+  "gold_value": "8.457e-01",
+  "options": {
+   "A": "8.453e-01",
+   "B": "8.457e-01",
+   "C": "8.450e-01",
+   "D": "8.452e-01"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "154": {
+  "id": 154,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "viscosity, cell 1, shift 6",
+  "gold": "C",
+  "gold_value": "0.89026",
+  "options": {
+   "A": "0.89023",
+   "B": "0.89021",
+   "C": "0.89026",
+   "D": "0.89028"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C",
+    "D"
+   ],
+   "gold_count": 6,
+   "have_ref": true
+  }
+ },
+ "155": {
+  "id": 155,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "molality Ca+2, cell 1, shift 6",
+  "gold": "A",
+  "gold_value": "5.506e-06",
+  "options": {
+   "A": "5.506e-06",
+   "B": "5.502e-06",
+   "C": "5.508e-06",
+   "D": "5.501e-06"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 4,
+   "have_ref": true
+  }
+ },
+ "156": {
+  "id": 156,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "moles NaX, exchange 4, shift 10",
+  "gold": "A",
+  "gold_value": "9.498e-05",
+  "options": {
+   "A": "9.498e-05",
+   "B": "9.496e-05",
+   "C": "9.493e-05",
+   "D": "9.491e-05"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "157": {
+  "id": 157,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "molality HCl, cell 4, shift 10",
+  "gold": "C",
+  "gold_value": "3.320e-11",
+  "options": {
+   "A": "3.323e-11",
+   "B": "3.326e-11",
+   "C": "3.320e-11",
+   "D": "3.319e-11"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "C",
+    "D"
+   ],
+   "gold_count": 39,
+   "have_ref": true
+  }
+ },
+ "158": {
+  "id": 158,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "SI H2O(g), cell 4, shift 10",
+  "gold": "D",
+  "gold_value": "-1.50",
+  "options": {
+   "A": "-1.51",
+   "B": "-1.48",
+   "C": "-1.53",
+   "D": "-1.50"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B",
+    "D"
+   ],
+   "gold_count": 113,
+   "have_ref": true
+  }
+ },
+ "161": {
+  "id": 161,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "activity Na+, cell 3, shift 10",
+  "gold": "A",
+  "gold_value": "9.444e-04",
+  "options": {
+   "A": "9.444e-04",
+   "B": "9.443e-04",
+   "C": "9.448e-04",
+   "D": "9.440e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "162": {
+  "id": 162,
+  "scenario": "S16",
+  "kind": "numeric",
+  "quantity": "total alkalinity, cell 3, shift 10",
+  "gold": "A",
+  "gold_value": "1.417e-09",
+  "options": {
+   "A": "1.417e-09",
+   "B": "1.415e-09",
+   "C": "1.419e-09",
+   "D": "1.410e-09"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 57,
+   "have_ref": true
+  }
+ },
+ "173": {
+  "id": 173,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "pH step 5 (95 C)",
+  "gold": "B",
+  "gold_value": "6.178",
+  "options": {
+   "A": "6.175",
+   "B": "6.178",
+   "C": "6.172",
+   "D": "6.171"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "174": {
+  "id": 174,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "SC step 5",
+  "gold": "C",
+  "gold_value": "77",
+  "options": {
+   "A": "76",
+   "B": "79",
+   "C": "77",
+   "D": "73"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "175": {
+  "id": 175,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "ionic strength step 5",
+  "gold": "B",
+  "gold_value": "3.385e-04",
+  "options": {
+   "A": "3.389e-04",
+   "B": "3.385e-04",
+   "C": "3.382e-04",
+   "D": "3.384e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B",
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "176": {
+  "id": 176,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "molality Ba step 5",
+  "gold": "D",
+  "gold_value": "1.456e-05",
+  "options": {
+   "A": "1.460e-05",
+   "B": "1.458e-05",
+   "C": "1.452e-05",
+   "D": "1.456e-05"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 18,
+   "have_ref": true
+  }
+ },
+ "177": {
+  "id": 177,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "SI Barite step 5",
+  "gold": "A",
+  "gold_value": "0.72",
+  "options": {
+   "A": "0.72",
+   "B": "0.77",
+   "C": "0.78",
+   "D": "0.73"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "178": {
+  "id": 178,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "SI Barite step 4",
+  "gold": "A",
+  "gold_value": "0.76",
+  "options": {
+   "A": "0.76",
+   "B": "0.72",
+   "C": "0.73",
+   "D": "0.78"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "179": {
+  "id": 179,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "SC step 4",
+  "gold": "C",
+  "gold_value": "63",
+  "options": {
+   "A": "61",
+   "B": "67",
+   "C": "63",
+   "D": "62"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "180": {
+  "id": 180,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "SI Barite step 3",
+  "gold": "B",
+  "gold_value": "0.83",
+  "options": {
+   "A": "0.82",
+   "B": "0.83",
+   "C": "0.85",
+   "D": "0.88"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "181": {
+  "id": 181,
+  "scenario": "S18",
+  "kind": "numeric",
+  "quantity": "molality S(6) step 3",
+  "gold": "B",
+  "gold_value": "1.561e-04",
+  "options": {
+   "A": "1.563e-04",
+   "B": "1.561e-04",
+   "C": "1.562e-04",
+   "D": "1.566e-04"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 18,
+   "have_ref": true
+  }
+ },
+ "182": {
+  "id": 182,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "viscosity",
+  "gold": "B",
+  "gold_value": "1.13757",
+  "options": {
+   "A": "1.13759",
+   "B": "1.13757",
+   "C": "1.13758",
+   "D": "1.13753"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "183": {
+  "id": 183,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "moles CH4(g)",
+  "gold": "C",
+  "gold_value": "2.992e-03",
+  "options": {
+   "A": "2.991e-03",
+   "B": "2.993e-03",
+   "C": "2.992e-03",
+   "D": "2.990e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "184": {
+  "id": 184,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "molality C(-4)",
+  "gold": "B",
+  "gold_value": "2.008e-03",
+  "options": {
+   "A": "2.009e-03",
+   "B": "2.008e-03",
+   "C": "2.003e-03",
+   "D": "2.002e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 5,
+   "have_ref": true
+  }
+ },
+ "185": {
+  "id": 185,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "SI CO2(g)",
+  "gold": "D",
+  "gold_value": "-7.86",
+  "options": {
+   "A": "-7.81",
+   "B": "-7.88",
+   "C": "-7.83",
+   "D": "-7.86"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "187": {
+  "id": 187,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "pe",
+  "gold": "C",
+  "gold_value": "-4.584",
+  "options": {
+   "A": "-4.587",
+   "B": "-4.588",
+   "C": "-4.584",
+   "D": "-4.581"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "188": {
+  "id": 188,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "molality CO2(aq)",
+  "gold": "C",
+  "gold_value": "6.277e-10",
+  "options": {
+   "A": "6.279e-10",
+   "B": "6.278e-10",
+   "C": "6.277e-10",
+   "D": "6.273e-10"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "189": {
+  "id": 189,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "density",
+  "gold": "A",
+  "gold_value": "0.99906",
+  "options": {
+   "A": "0.99906",
+   "B": "0.99904",
+   "C": "0.99901",
+   "D": "0.99902"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A",
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "190": {
+  "id": 190,
+  "scenario": "S19",
+  "kind": "numeric",
+  "quantity": "ionic strength",
+  "gold": "A",
+  "gold_value": "7.434e-08",
+  "options": {
+   "A": "7.434e-08",
+   "B": "7.436e-08",
+   "C": "7.437e-08",
+   "D": "7.433e-08"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "191": {
+  "id": 191,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "pH",
+  "gold": "D",
+  "gold_value": "6.489",
+  "options": {
+   "A": "6.486",
+   "B": "6.483",
+   "C": "6.481",
+   "D": "6.489"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "193": {
+  "id": 193,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "specific conductance",
+  "gold": "B",
+  "gold_value": "2432",
+  "options": {
+   "A": "2436",
+   "B": "2432",
+   "C": "2435",
+   "D": "2429"
+  },
+  "absmode": false,
+  "intctx": true,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "194": {
+  "id": 194,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "viscosity",
+  "gold": "D",
+  "gold_value": "0.90895",
+  "options": {
+   "A": "0.90897",
+   "B": "0.90899",
+   "C": "0.90893",
+   "D": "0.90895"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "195": {
+  "id": 195,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "moles calcite precipitated",
+  "gold": "D",
+  "gold_value": "8.042e-04",
+  "options": {
+   "A": "8.039e-04",
+   "B": "8.041e-04",
+   "C": "8.047e-04",
+   "D": "8.042e-04"
+  },
+  "absmode": true,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "D"
+   ],
+   "gold_count": 2,
+   "have_ref": true
+  }
+ },
+ "196": {
+  "id": 196,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "molality Ca+2",
+  "gold": "B",
+  "gold_value": "3.868e-03",
+  "options": {
+   "A": "3.863e-03",
+   "B": "3.868e-03",
+   "C": "3.866e-03",
+   "D": "3.869e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "197": {
+  "id": 197,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "activity Cl-",
+  "gold": "C",
+  "gold_value": "3.571e-03",
+  "options": {
+   "A": "3.574e-03",
+   "B": "3.569e-03",
+   "C": "3.571e-03",
+   "D": "3.577e-03"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "198": {
+  "id": 198,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "SI Anhydrite",
+  "gold": "C",
+  "gold_value": "-1.27",
+  "options": {
+   "A": "-1.29",
+   "B": "-1.26",
+   "C": "-1.27",
+   "D": "-1.23"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B",
+    "C"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "199": {
+  "id": 199,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "SI Hexahydrite",
+  "gold": "A",
+  "gold_value": "-3.98",
+  "options": {
+   "A": "-3.98",
+   "B": "-3.96",
+   "C": "-3.93",
+   "D": "-3.99"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "A"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ },
+ "200": {
+  "id": 200,
+  "scenario": "S20",
+  "kind": "numeric",
+  "quantity": "SI Thenardite",
+  "gold": "B",
+  "gold_value": "-6.84",
+  "options": {
+   "A": "-6.88",
+   "B": "-6.84",
+   "C": "-6.81",
+   "D": "-6.83"
+  },
+  "absmode": false,
+  "intctx": false,
+  "ref": {
+   "letters": [
+    "B"
+   ],
+   "gold_count": 1,
+   "have_ref": true
+  }
+ }
+}

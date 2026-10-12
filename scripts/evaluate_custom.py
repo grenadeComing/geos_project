@@ -15,6 +15,15 @@ Supported context modes (via --context-mode):
            the agent locates evidence with a grep_file regex-search tool
            and reads line ranges via read_file. (Keyword-search baseline;
            grep_file is exposed to the model only in this mode.)
+  toc_report  Uncapped TOC (as in `toc` with a large cap) plus an instruction to
+           answer from result.out as printed rather than from SELECTED_OUTPUT files.
+           Tests whether reminding the agent to read the report removes the TOC loss.
+  toc_round   Uncapped TOC plus an instruction to round values with more digits than the
+           options to the nearest option-precision value (no truncation). Names no file:
+           separates the rounding warning from naming the authoritative source.
+  hybrid   Raw result.out inline when it fits MAX_FULL_CHARS (as in `full`);
+           otherwise an uncapped section TOC (as in `toc`), so the agent
+           retrieves only the long outputs.
 
 Supports MCQ + fill-in-the-blank via dataset `task_type` field (see _common.py).
 
@@ -166,6 +175,21 @@ _EXECUTE_TOOL_CONTRACTS = {
         "or re-read a specific portion."
     ),
     "toc": _EXECUTE_TOOL_LINE,
+    "toc_report": (
+        _EXECUTE_TOOL_LINE + "\n"
+        "IMPORTANT: The authoritative values are in result.out, printed at the precision the answer options use. Before answering, read the section of result.out that contains the quantity you need and take the value exactly as printed there. Do not answer from SELECTED_OUTPUT or USER_PUNCH files: they print unrounded values that can match a neighboring option."
+    ),
+    "toc_round": (
+        _EXECUTE_TOOL_LINE + "\n"
+        "IMPORTANT: The answer options give each value at a fixed precision. If a value you read has more digits than the options, round it to the options' precision to the nearest value; do not truncate digits. Choose the option that equals the correctly rounded value."
+    ),
+    "hybrid": (
+        "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
+        "metadata plus the raw result.out content inline when it is small enough. "
+        "For a large result.out it returns a TOC instead (section names with "
+        "starting line numbers) and no content; in that case use read_file with "
+        "start_line/end_line to read the sections you need."
+    ),
     "summary": (
         "- execute_phreeqc(input_path): Run PHREEQC on an input file. Returns "
         "metadata and a question-conditioned summary of result.out. File "
@@ -634,6 +658,29 @@ def tool_execute_phreeqc(workspace: str, input_path: str) -> dict:
             result["result_out_toc"] = toc
             result["hint"] = "Use read_file with start_line/end_line to read specific sections."
 
+        elif mode == "toc_report":
+            # Same evidence as TOC, never capped, plus the report-reading reminder.
+            result["result_out_toc"] = _build_toc(out_file)
+            result["hint"] = ("Use read_file with start_line/end_line to read the section of result.out "
+                              "that contains the quantity you need. The authoritative values are in result.out, printed at the precision the answer options use. Before answering, read the section of result.out that contains the quantity you need and take the value exactly as printed there. Do not answer from SELECTED_OUTPUT or USER_PUNCH files: they print unrounded values that can match a neighboring option.")
+
+        elif mode == "toc_round":
+            # Same evidence as TOC, never capped, plus a rounding reminder that names no file.
+            result["result_out_toc"] = _build_toc(out_file)
+            result["hint"] = ("Use read_file with start_line/end_line to read specific sections. "
+                              "IMPORTANT: The answer options give each value at a fixed precision. If a value you read has more digits than the options, round it to the options' precision to the nearest value; do not truncate digits. Choose the option that equals the correctly rounded value.")
+
+        elif mode == "hybrid":
+            # Inline outputs that fit the budget; retrieve only long ones. The TOC
+            # here is built without the size cap, matching the uncapped-TOC runs.
+            if len(content) <= max_full_chars:
+                result["result_out_content"] = content
+            else:
+                result["result_out_toc"] = _build_toc(out_file)
+                result["result_out_total_chars"] = len(content)
+                result["hint"] = ("result.out is too large to inline. Use read_file with "
+                                  "start_line/end_line to read specific sections.")
+
         elif mode == "summary":
             result["result_out_summary"] = _summarize_result(
                 question, content, _RUNTIME["summary_model"])
@@ -978,7 +1025,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--model", required=True,
                    help="litellm model string, e.g. claude-opus-4-6, gpt-5.2, gemini/gemini-2.5-pro")
     p.add_argument("--name", required=True, help="Run name for result subfolder.")
-    p.add_argument("--context-mode", choices=("full", "toc", "summary", "rag", "grep"),
+    p.add_argument("--context-mode", choices=("full", "toc", "summary", "rag", "grep", "hybrid", "toc_report", "toc_round"),
                    required=True, help="Tool-return handler for execute_phreeqc.")
     p.add_argument("--max-steps", type=int, default=24)
     p.add_argument("--workers", type=int, default=4)
@@ -1177,7 +1224,7 @@ def main() -> None:
         summary["rag_embed_model"] = args.rag_embed_model
         summary["rag_k"] = args.rag_k
         summary["rag_chunk_chars"] = args.rag_chunk_chars
-    elif args.context_mode == "full":
+    elif args.context_mode in ("full", "hybrid"):
         summary["max_full_chars"] = args.max_full_chars
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 

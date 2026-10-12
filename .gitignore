@@ -26,3 +26,6 @@ build_dataset.jsonl
 *.png
 *.svg
 paper_neurips_ed/rebuttal.md
+
+# Returned human-evaluation files (participant and author data); keep local
+human_evaluation/responses/
