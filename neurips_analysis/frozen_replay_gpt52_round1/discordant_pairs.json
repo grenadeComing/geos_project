@@ -1,0 +1,2061 @@
+[
+  {
+    "item_id": 11,
+    "quantity": "molality of CO2 species at step 100",
+    "gold": "A",
+    "options": {
+      "A": "1.590e-03",
+      "B": "1.590e-04",
+      "C": "1.591e-03",
+      "D": "1.585e-03"
+    },
+    "inline_truncated": true,
+    "report_chars": 680266,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "B",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "140",
+          "showing": "lines 1-140",
+          "chars": 4386,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 3,
+      "reads": [
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "12420",
+          "end_line": "12440",
+          "showing": "lines 12420-12440",
+          "chars": 860,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "12454",
+          "end_line": "12480",
+          "showing": "lines 12454-12480",
+          "chars": 1855,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "toc_only"
+  },
+  {
+    "item_id": 39,
+    "quantity": "pe",
+    "gold": "A",
+    "options": {
+      "A": "-4.646",
+      "B": "-4.644",
+      "C": "-4.645",
+      "D": "-4.647"
+    },
+    "inline_truncated": false,
+    "report_chars": 9775,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "C",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 129,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "A->C": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 44,
+    "quantity": "specific conductance",
+    "gold": "D",
+    "options": {
+      "A": "7949",
+      "B": "7943",
+      "C": "7944",
+      "D": "7948"
+    },
+    "inline_truncated": false,
+    "report_chars": 10046,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "D",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 76,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "D",
+      "truth": "D",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 76,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "toc_only"
+  },
+  {
+    "item_id": 45,
+    "quantity": "alkalinity",
+    "gold": "B",
+    "options": {
+      "A": "2.690e-02",
+      "B": "2.694e-02",
+      "C": "2.692e-02",
+      "D": "2.693e-02"
+    },
+    "inline_truncated": false,
+    "report_chars": 9988,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "B",
+      "truth": "B",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "D",
+      "truth": "B",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "50",
+          "showing": "lines 1-50",
+          "chars": 129,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "B->D": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 47,
+    "quantity": "pH",
+    "gold": "B",
+    "options": {
+      "A": "5.506",
+      "B": "5.509",
+      "C": "5.507",
+      "D": "5.508"
+    },
+    "inline_truncated": false,
+    "report_chars": 17307,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "B",
+      "truth": "B",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "D",
+      "truth": "B",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 66,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "B->D": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 57,
+    "quantity": "pH",
+    "gold": "A",
+    "options": {
+      "A": "7.417",
+      "B": "7.416",
+      "C": "7.414",
+      "D": "7.418"
+    },
+    "inline_truncated": false,
+    "report_chars": 11350,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 66,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "A->B": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 65,
+    "quantity": "SI Sepiolite(d)",
+    "gold": "C",
+    "options": {
+      "A": "-8.81",
+      "B": "-8.83",
+      "C": "-8.82",
+      "D": "-8.86"
+    },
+    "inline_truncated": false,
+    "report_chars": 11459,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 2,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "C",
+      "truth": "C",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "A",
+      "truth": "C",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 45,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "C->A": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 68,
+    "quantity": "SI pyrite",
+    "gold": "B",
+    "options": {
+      "A": "-219.40",
+      "B": "-219.43",
+      "C": "-219.46",
+      "D": "-219.44"
+    },
+    "inline_truncated": false,
+    "report_chars": 9750,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "B",
+      "truth": "B",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 3,
+      "reads": [
+        {
+          "path": "selected.csv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 42,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "C",
+      "truth": "B",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 6,
+      "reads": [
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "190",
+          "end_line": "215",
+          "showing": "lines 190-215",
+          "chars": 1437,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "90",
+          "end_line": "104",
+          "showing": "lines 90-104",
+          "chars": 531,
+          "error": null
+        },
+        {
+          "path": "selected.csv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 42,
+          "error": null
+        },
+        {
+          "path": "logs/result.out.toc",
+          "kind": "other_output",
+          "ok": false,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 0,
+          "error": "[Errno 2] No such file or directory: '/Users/kezhang/Desktop/projects/geos_PHREEQC/geos_github/result/custom/frozen_replay_gpt52/checkpoints/item_00068/snapshot/logs/result.out.toc'"
+        }
+      ],
+      "read_failures": [
+        {
+          "step": 4,
+          "tool": "read_file",
+          "args": {
+            "path": "logs/result.out.toc"
+          },
+          "result": {
+            "ok": false,
+            "error": "[Errno 2] No such file or directory: '/Users/kezhang/Desktop/projects/geos_PHREEQC/geos_github/result/custom/frozen_replay_gpt52/checkpoints/item_00068/snapshot/logs/result.out.toc'"
+          }
+        }
+      ],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 73,
+    "quantity": "SI hematite",
+    "gold": "D",
+    "options": {
+      "A": "2.00",
+      "B": "2.03",
+      "C": "2.02",
+      "D": "2.01"
+    },
+    "inline_truncated": false,
+    "report_chars": 9811,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "B",
+      "truth": "D",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected.out",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "50",
+          "showing": "lines 1-50",
+          "chars": 42,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "D",
+      "truth": "D",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 3,
+      "reads": [
+        {
+          "path": "selected.out",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "50",
+          "showing": "lines 1-50",
+          "chars": 42,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "190",
+          "end_line": "215",
+          "showing": "lines 190-215",
+          "chars": 1469,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "toc_only"
+  },
+  {
+    "item_id": 94,
+    "quantity": "SI of Quartz",
+    "gold": "C",
+    "options": {
+      "A": "-2.20",
+      "B": "-2.24",
+      "C": "-2.21",
+      "D": "-2.28"
+    },
+    "inline_truncated": false,
+    "report_chars": 7062,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "sel.txt",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "C",
+      "truth": "C",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "A",
+      "truth": "C",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "sel.txt",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "50",
+          "showing": "lines 1-50",
+          "chars": 354,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "sel.txt",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "C->A": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 95,
+    "quantity": "molality of MgOH+",
+    "gold": "C",
+    "options": {
+      "A": "6.818e-06",
+      "B": "6.814e-06",
+      "C": "6.816e-06",
+      "D": "6.817e-06"
+    },
+    "inline_truncated": false,
+    "report_chars": 7245,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "C",
+      "truth": "C",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected.tsv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 42,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "D",
+      "truth": "C",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 3,
+      "reads": [
+        {
+          "path": "selected.tsv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 42,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "130",
+          "end_line": "155",
+          "showing": "lines 130-155",
+          "chars": 1447,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 102,
+    "quantity": "SI of Aragonite",
+    "gold": "A",
+    "options": {
+      "A": "0.40",
+      "B": "0.39",
+      "C": "0.42",
+      "D": "0.41"
+    },
+    "inline_truncated": false,
+    "report_chars": 4422,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 1,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 28,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": true,
+      "all_round_trunc_pairs_seen": {
+        "A->B": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 110,
+    "quantity": "viscosity (mPa s)",
+    "gold": "D",
+    "options": {
+      "A": "0.89229",
+      "B": "0.89829",
+      "C": "0.89429",
+      "D": "0.89329"
+    },
+    "inline_truncated": false,
+    "report_chars": 8812,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "D",
+      "truth": "D",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "A",
+      "truth": "D",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "160",
+          "end_line": "190",
+          "showing": "lines 160-190",
+          "chars": 1217,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 112,
+    "quantity": "SI of H2O(g)",
+    "gold": "A",
+    "options": {
+      "A": "-1.55",
+      "B": "-1.51",
+      "C": "-1.54",
+      "D": "-1.53"
+    },
+    "inline_truncated": false,
+    "report_chars": 8687,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "198",
+          "end_line": "212",
+          "showing": "lines 198-212",
+          "chars": 646,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 114,
+    "quantity": "molality of HCl",
+    "gold": "A",
+    "options": {
+      "A": "1.286e-08",
+      "B": "1.285e-08",
+      "C": "1.283e-08",
+      "D": "1.280e-08"
+    },
+    "inline_truncated": false,
+    "report_chars": 8751,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected.txt",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 56,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "C",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 3,
+      "reads": [
+        {
+          "path": "selected.txt",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 56,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "150",
+          "end_line": "210",
+          "showing": "lines 150-210",
+          "chars": 2633,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 141,
+    "quantity": "activity H+",
+    "gold": "B",
+    "options": {
+      "A": "2.459e-06",
+      "B": "2.456e-06",
+      "C": "2.452e-06",
+      "D": "2.457e-06"
+    },
+    "inline_truncated": false,
+    "report_chars": 6730,
+    "gold_matches_in_snapshot": [],
+    "gold_in_checkpoint_report": false,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "D",
+      "truth": "B",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "sel.tsv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 42,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {
+        "D->B": 1
+      },
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "B",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "sel.tsv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "10",
+          "showing": "lines 1-10",
+          "chars": 42,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {
+        "D->B": 1
+      },
+      "post_assistant_text": []
+    },
+    "group": "toc_only"
+  },
+  {
+    "item_id": 152,
+    "quantity": "equiv. fraction CaX2, exchange 1, shift 6",
+    "gold": "B",
+    "options": {
+      "A": "8.453e-01",
+      "B": "8.457e-01",
+      "C": "8.450e-01",
+      "D": "8.452e-01"
+    },
+    "inline_truncated": true,
+    "report_chars": 450279,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "B",
+      "truth": "B",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "sel.tsv",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": null,
+          "end_line": null,
+          "showing": null,
+          "chars": 8768,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "D",
+      "truth": "B",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 12,
+      "reads": [
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "9750",
+          "end_line": "9762",
+          "showing": "lines 9750-9762",
+          "chars": 545,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "5735",
+          "end_line": "5755",
+          "showing": "lines 5735-5755",
+          "chars": 768,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "5670",
+          "end_line": "5690",
+          "showing": "lines 5670-5690",
+          "chars": 1072,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "5630",
+          "end_line": "5645",
+          "showing": "lines 5630-5645",
+          "chars": 642,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "5595",
+          "end_line": "5620",
+          "showing": "lines 5595-5620",
+          "chars": 1413,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "5725",
+          "end_line": "5745",
+          "showing": "lines 5725-5745",
+          "chars": 775,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "7000",
+          "end_line": "7020",
+          "showing": "lines 7000-7020",
+          "chars": 910,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "6905",
+          "end_line": "6925",
+          "showing": "lines 6905-6925",
+          "chars": 1154,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "6810",
+          "end_line": "6835",
+          "showing": "lines 6810-6835",
+          "chars": 1333,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "6755",
+          "end_line": "6775",
+          "showing": "lines 6755-6775",
+          "chars": 1073,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "6715",
+          "end_line": "6745",
+          "showing": "lines 6715-6745",
+          "chars": 1323,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 157,
+    "quantity": "molality HCl, cell 4, shift 10",
+    "gold": "C",
+    "options": {
+      "A": "3.323e-11",
+      "B": "3.326e-11",
+      "C": "3.320e-11",
+      "D": "3.319e-11"
+    },
+    "inline_truncated": true,
+    "report_chars": 369219,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 39,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "selected_output_1.sel",
+        "matches": 35,
+        "kinds": [
+          "rounded"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "C",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "200",
+          "showing": "lines 1-200",
+          "chars": 7488,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        },
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {
+        "C->D": 13
+      },
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "C",
+      "truth": "C",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "200",
+          "showing": "lines 1-200",
+          "chars": 7488,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "selected_output_1.sel",
+          "source": "read",
+          "gold_kinds": [
+            "rounded"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {
+        "C->D": 13
+      },
+      "post_assistant_text": []
+    },
+    "group": "toc_only"
+  },
+  {
+    "item_id": 161,
+    "quantity": "activity Na+, cell 3, shift 10",
+    "gold": "A",
+    "options": {
+      "A": "9.444e-04",
+      "B": "9.443e-04",
+      "C": "9.448e-04",
+      "D": "9.440e-04"
+    },
+    "inline_truncated": true,
+    "report_chars": 456345,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "A",
+      "truth": "A",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "A",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 9,
+      "reads": [
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "259",
+          "end_line": "360",
+          "showing": "lines 259-360",
+          "chars": 4394,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "10060",
+          "end_line": "10110",
+          "showing": "lines 10060-10110",
+          "chars": 2367,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "10110",
+          "end_line": "10135",
+          "showing": "lines 10110-10135",
+          "chars": 993,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "9800",
+          "end_line": "9870",
+          "showing": "lines 9800-9870",
+          "chars": 3164,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "9870",
+          "end_line": "9930",
+          "showing": "lines 9870-9930",
+          "chars": 2815,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "9930",
+          "end_line": "9995",
+          "showing": "lines 9930-9995",
+          "chars": 3074,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "9650",
+          "end_line": "9685",
+          "showing": "lines 9650-9685",
+          "chars": 1447,
+          "error": null
+        },
+        {
+          "path": "result.out",
+          "kind": "report",
+          "ok": true,
+          "start_line": "9400",
+          "end_line": "9425",
+          "showing": "lines 9400-9425",
+          "chars": 1331,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": true,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 195,
+    "quantity": "moles calcite precipitated",
+    "gold": "D",
+    "options": {
+      "A": "8.039e-04",
+      "B": "8.041e-04",
+      "C": "8.047e-04",
+      "D": "8.042e-04"
+    },
+    "inline_truncated": false,
+    "report_chars": 15915,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 2,
+        "kinds": [
+          "exact"
+        ]
+      },
+      {
+        "path": "sel.txt",
+        "matches": 1,
+        "kinds": [
+          "half"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "D",
+      "truth": "D",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "D",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "sel.txt",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 43,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [
+        {
+          "path": "sel.txt",
+          "source": "read",
+          "gold_kinds": [
+            "half"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  },
+  {
+    "item_id": 197,
+    "quantity": "activity Cl-",
+    "gold": "C",
+    "options": {
+      "A": "3.574e-03",
+      "B": "3.569e-03",
+      "C": "3.571e-03",
+      "D": "3.577e-03"
+    },
+    "inline_truncated": false,
+    "report_chars": 15869,
+    "gold_matches_in_snapshot": [
+      {
+        "path": "result.out",
+        "matches": 1,
+        "kinds": [
+          "exact"
+        ]
+      }
+    ],
+    "gold_in_checkpoint_report": true,
+    "gold_in_common_prefix": [],
+    "full": {
+      "prediction": "C",
+      "truth": "C",
+      "is_correct": true,
+      "status": "submitted",
+      "calls": 1,
+      "reads": [],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": false,
+      "gold_seen_after_checkpoint": true,
+      "gold_seen_exact_after_checkpoint": true,
+      "gold_seen_sources": [
+        {
+          "path": "result.out",
+          "source": "inline",
+          "gold_kinds": [
+            "exact"
+          ]
+        }
+      ],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "toc": {
+      "prediction": "B",
+      "truth": "C",
+      "is_correct": false,
+      "status": "submitted",
+      "calls": 2,
+      "reads": [
+        {
+          "path": "selected_output_1.sel",
+          "kind": "other_output",
+          "ok": true,
+          "start_line": "1",
+          "end_line": "20",
+          "showing": "lines 1-20",
+          "chars": 66,
+          "error": null
+        }
+      ],
+      "read_failures": [],
+      "denied_mutation_or_tool_attempts": [],
+      "report_read": false,
+      "own_output_read": true,
+      "gold_seen_after_checkpoint": false,
+      "gold_seen_exact_after_checkpoint": false,
+      "gold_seen_sources": [],
+      "gold_round_to_pred_trap_seen": false,
+      "all_round_trunc_pairs_seen": {},
+      "post_assistant_text": []
+    },
+    "group": "full_only"
+  }
+]

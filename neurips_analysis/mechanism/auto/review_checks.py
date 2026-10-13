@@ -74,7 +74,7 @@ for r in csv.DictReader(open(repo + '/neurips_analysis/baseline_snapshot/spliced
 def per_item(m, protos, cols):
     g = defaultdict(list)
     for p in protos:
-        for d in U[(m, p)].values(): g[d['item_id']].append(int(bool(d['correct'])))
+        for d in R[(m, p)]: g[d['item_id']].append(int(bool(d['correct'])))
     for c in cols:
         for i in ver: g[i].append(int(head[m][i][c]))
     return g

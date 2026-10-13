@@ -1,4 +1,4 @@
-"""Generate paper/results_macros_mechanism.tex from the failure-localization outputs.
+"""Generate paper/results_macros_localization.tex from the failure-localization outputs.
 
 Usage: python3 make_macros.py <analysis_dir> <repo_root> <out.tex>
   analysis_dir: folder with labels.jsonl, summary.md and the analyze.py log (run*.log)
@@ -10,7 +10,8 @@ Conventions
     trajectories appear three times; this is what an average over the three runs means.
   * Counts of trajectories or events (trajectory totals, truncation-trap events, examples) use each
     trajectory once.
-  * Paired differences are per-item mean accuracy differences with 95% item-bootstrap intervals.
+  * Paired differences are per-item mean accuracy differences over run rows (including the shared
+    long-output rows in each spliced May run), with 95% item-bootstrap intervals.
 """
 import csv, glob, json, os, random, re, sys
 from collections import defaultdict
@@ -77,15 +78,23 @@ w('')
 log = sorted(glob.glob(os.path.join(adir, 'run*.log')), key=os.path.getmtime)[-1]
 logtxt = open(log).read()
 jobs = int(re.search(r'\[reexec\] (\d+) jobs', logtxt).group(1))
-val = re.search(r"\{True: (\d+), False: (\d+), None: (\d+)\}", logtxt)
+validation = [d.get('reexec_valid_last') for d in traj_unique.values() if d['numeric']]
 w('% --- Failure localization method')
 mac('MechTrajN', thousands(len(traj_unique)), 'unique trajectories with full logs (all models and protocols)')
 mac('MechCallsN', thousands(sum(d.get('n_exec', 0) for d in traj_unique.values())), 'execute_phreeqc calls in them, all re-run')
 mac('MechInputsN', thousands(jobs), 'distinct input decks among those calls')
-mac('MechValidOK', thousands(int(val.group(1))))
-mac('MechValidN', thousands(int(val.group(1)) + int(val.group(2)) + int(val.group(3))), 're-runs of each trajectory\'s last execution')
+mac('MechValidOK', thousands(sum(v is True for v in validation)))
+mac('MechValidN', thousands(sum(v is not None for v in validation)), 'numeric trajectories with a last execution available for comparison')
+mac('MechValidMissingN', str(sum(v is None for v in validation)), 'numeric trajectories without an available last-execution comparison')
 mac('MechNumericN', '137')
 mac('MechUnambigN', re.search(r'\*\*(\d+) are reference-unambiguous', '\n'.join(summary)).group(1))
+claude_gpt = [d for d in traj_unique.values() if d['model'].startswith(('Claude ', 'GPT-'))]
+build_failures = [d for d in claude_gpt if d['stage'] == 'BUILD']
+mac('MechBuildFailuresN', thousands(len(build_failures)), 'all Claude/GPT protocols, each trajectory once')
+mac('MechBuildNoOptionN', thousands(sum(d['n_options_present'] == 0 for d in build_failures)))
+mac('MechBuildDefaultRecoveredN', str(sum(bool(d.get('gold_in_default_print')) for d in build_failures)))
+mac('MechReexecMovedN', str(sum(d['stage'] == 'NOT_SEEN' and not d['produced_flag_without_reexec']
+                             and d['produced_flag'] for d in claude_gpt)), 'build to exposure after re-execution, each trajectory once')
 w('')
 
 # ---------------------------------------------------------------- pipeline rates (summary 2c)
@@ -206,6 +215,15 @@ for m in ['Claude Sonnet 4.6', 'GPT-5.4', 'GPT-5.2', 'GPT-5.1']:
           k, signed(100 * sum(both) / len(both)) if both else '--', k, len(both)))
 w('')
 
+# The inline GPT-5.4 run includes both printed and more-precise values; its
+# Corr. P / Corr. D cells must use the same groups as the TOC rows.
+raw_seen = [d for d in U[('GPT-5.4', 'Raw100k')] if d['numeric'] and d.get('seen_flag')]
+for prefix, kinds in [('medEx', ('exact',)), ('medUn', ('rounded_only', 'half_only'))]:
+    group = [d for d in raw_seen if d['gold_seen_kind'] in kinds]
+    mac(prefix + 'GPTFiveFourRaw', pct(sum(bool(d['correct']) for d in group), len(group)),
+        '%d/%d' % (sum(bool(d['correct']) for d in group), len(group)))
+w('')
+
 # ---------------------------------------------------------------- answer source
 w('% --- Of correct numeric answers that saw the keyed value (each trajectory once): % that saw it in the')
 w('%     report (inline, read, or search), as opposed to only in the agent\'s own selected-output files')
@@ -233,7 +251,9 @@ random.seed(20261011)
 def per_item(m, protos, headcols=()):
     g = defaultdict(list)
     for p in protos:
-        for d in U[(m, p)]:
+        # Preserve the three spliced May run rows, including their shared
+        # long-output trajectories, when averaging runs within each item.
+        for d in R[(m, p)]:
             g[d['item_id']].append(int(bool(d['correct'])))
     for col in headcols:
         for i in ver:

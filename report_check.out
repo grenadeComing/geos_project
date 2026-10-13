@@ -1,0 +1,23 @@
+[report-check] dataset=datasets/neurips_dataset_158_verified.jsonl models=gpt-5.1 gpt-5.2 rounds=toc_report:1 toc:1 toc_report:2 workers=4
+[report-check] phreeqc=/Users/kezhang/Desktop/projects/geos_PHREEQC/phreeqc-3.8.6-17100/src/phreeqc python=python3
+[report-check] results -> result/custom/report158_verified/   logs -> result/custom/report158_verified/logs/
+
+== toc_report run 1: gpt-5.1 gpt-5.2 (in parallel) ==
+  started gpt-5.1 -> result/custom/report158_verified/gpt51_tocreport_run1 (pid 1204)
+  started gpt-5.2 -> result/custom/report158_verified/gpt52_tocreport_run1 (pid 1207)
+  gpt-5.1: 99/158 correct, 4.41M input tokens
+  gpt-5.2: 106/158 correct, 7.78M input tokens
+
+== toc run 1: gpt-5.1 gpt-5.2 (in parallel) ==
+  started gpt-5.1 -> result/custom/report158_verified/gpt51_toc_run1 (pid 3323)
+  started gpt-5.2 -> result/custom/report158_verified/gpt52_toc_run1 (pid 3326)
+  gpt-5.1: 85/158 correct, 5.41M input tokens
+  gpt-5.2: 100/158 correct, 9.16M input tokens
+
+== toc_report run 2: gpt-5.1 gpt-5.2 (in parallel) ==
+  started gpt-5.1 -> result/custom/report158_verified/gpt51_tocreport_run2 (pid 6904)
+  started gpt-5.2 -> result/custom/report158_verified/gpt52_tocreport_run2 (pid 6907)
+  gpt-5.1: 96/158 correct, 5.33M input tokens
+  gpt-5.2: 105/158 correct, 7.94M input tokens
+
+[report-check] done; failed processes: 0

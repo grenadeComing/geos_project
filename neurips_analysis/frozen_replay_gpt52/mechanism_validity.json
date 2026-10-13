@@ -1,0 +1,29 @@
+{
+  "total_branches": 786,
+  "statuses": {
+    "submitted": 785,
+    "max_steps": 1
+  },
+  "no_commit": {
+    "repeat": "repeat_02",
+    "item_id": 150,
+    "condition": "toc",
+    "status": "max_steps",
+    "execute_step": 11,
+    "source_max_steps": 24,
+    "remaining_steps": 13,
+    "continuation_calls": 13,
+    "all_13_actions": "successful read_file calls",
+    "api_error": false,
+    "read_error": false
+  },
+  "read_error_events": {
+    "full": 5,
+    "toc": 10
+  },
+  "denied_mutation_or_tool_attempts": {
+    "full": 0,
+    "toc": 0
+  },
+  "observed_error_types": "Missing logs/* files or attempts to read logs directory as a file; no valid existing file rejected."
+}

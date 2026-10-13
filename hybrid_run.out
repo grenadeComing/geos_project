@@ -1,0 +1,23 @@
+[hybrid] dataset=datasets/neurips_dataset_158_verified.jsonl models=gpt-5.1 gpt-5.2 runs=3 workers=4 max_full_chars=100000
+[hybrid] phreeqc=/Users/kezhang/Desktop/projects/geos_PHREEQC/phreeqc-3.8.6-17100/src/phreeqc python=python3
+[hybrid] results -> result/custom/hybrid158_verified/   logs -> result/custom/hybrid158_verified/logs/
+
+== round 1/3: gpt-5.1 gpt-5.2 (in parallel) ==
+  started gpt-5.1 -> result/custom/hybrid158_verified/gpt51_run1 (pid 52892)
+  started gpt-5.2 -> result/custom/hybrid158_verified/gpt52_run1 (pid 52895)
+  gpt-5.1: 97/158 correct, 4.65M input tokens
+  gpt-5.2: 108/158 correct, 10.00M input tokens
+
+== round 2/3: gpt-5.1 gpt-5.2 (in parallel) ==
+  started gpt-5.1 -> result/custom/hybrid158_verified/gpt51_run2 (pid 56433)
+  started gpt-5.2 -> result/custom/hybrid158_verified/gpt52_run2 (pid 56436)
+  gpt-5.1: 95/158 correct, 4.30M input tokens
+  gpt-5.2: 105/158 correct, 8.84M input tokens
+
+== round 3/3: gpt-5.1 gpt-5.2 (in parallel) ==
+  started gpt-5.1 -> result/custom/hybrid158_verified/gpt51_run3 (pid 73691)
+  started gpt-5.2 -> result/custom/hybrid158_verified/gpt52_run3 (pid 73694)
+  gpt-5.1: 101/158 correct, 4.45M input tokens
+  gpt-5.2: 109/158 correct, 9.48M input tokens
+
+[hybrid] done; failed processes: 0

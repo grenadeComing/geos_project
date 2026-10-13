@@ -1,0 +1,19 @@
+GPT-5.2 frozen-computation replay: three rounds
+131 fixed eligible checkpoints, 19 author setups, 3 repeats per condition (786 branches).
+Full: 280/393 (71.25%); TOC: 243/393 (61.83%).
+Item-averaged TOC - Full: -9.41 pp; 95% paired-item bootstrap CI [-14.50, -4.58] pp.
+Setup-bootstrap sensitivity interval: [-13.87, -5.20] pp.
+Leave-one-setup-out range: [-10.40, -8.40] pp.
+
+Round 1: Full 92/131; TOC 81/131; difference -8.40 pp; TOC no-commit 0.
+Round 2: Full 93/131; TOC 79/131; difference -10.69 pp; TOC no-commit 1.
+Round 3: Full 95/131; TOC 83/131; difference -9.16 pp; TOC no-commit 0.
+Report at_most_100000_chars: 115 items; Full 260/345; TOC 225/345; difference -10.14 pp.
+Report over_100000_chars: 16 items; Full 20/48; TOC 18/48; difference -4.17 pp.
+
+50,000 bootstrap draws, seed 20261011; resampling retains all three rounds within each item.
+The 393 paired continuations are not treated as independent observations. No pooled McNemar test.
+Audit: every checkpoint/snapshot hash and branch fingerprint matched; all 786 final answers regraded with zero disagreements.
+One TOC branch (round 2, item 150) reached its 13 remaining steps without commitment; scored incorrect.
+Inference is conditional on the fixed source trajectories and eligible checkpoints.
+See three_round_statistics.json for complete methods, strata, setup sensitivity and source hashes.

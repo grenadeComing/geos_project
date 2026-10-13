@@ -6,6 +6,9 @@ fills vs borders, corner radii, arrow heads, bar shapes) is parameterised by a S
   A  "flat tinted cards"   borderless cards in Material-style container tints, clean azure + coral-red
   B  "tinted outlines"     the Excalidraw look of the earlier paper, but light hue-tinted strokes, teal + coral
 
+Skip rates use all 158 verified items; closure rates use the 137 numeric items,
+conditioned on the keyed value being seen. The figure caption states these denominators.
+
 Usage: python make_fig_evidence_v5_restyled.py <out.pdf> [A|B]      (also writes <out>.png)
 """
 import os
@@ -68,10 +71,10 @@ FAM = {
 # --------------------------------------------------------------------- data (paper macros)
 # per row: (skip report %, closure %) for GPT-5.1 and GPT-5.2
 RATES = [
-    ((0.0, 94.4), (0.0, 95.3)),     # inline (logged run)
-    ((53.0, 85.3), (60.3, 82.4)),   # TOC (three reruns)
-    ((45.9, 81.8), (55.1, 81.5)),   # TOC + rounding hint
-    ((1.6, 99.2), (0.0, 98.8)),     # TOC + report hint
+    ((0.0, 94.37), (0.0, 95.35)),     # inline (logged run)      closure = exact c|s from labels.jsonl
+    ((53.0, 85.34), (60.3, 82.40)),   # TOC (three reruns)
+    ((45.9, 81.82), (55.1, 81.48)),   # TOC + rounding hint
+    ((1.6, 99.22), (0.0, 98.79)),     # TOC + report hint
 ]
 
 W, H = 6.3, 2.75                       # inches; drawn in units of 0.1 in
@@ -229,7 +232,7 @@ for y, (name, sub), (rlab, rval, fam), (ans, ok), note, rate in zip(rows, conds,
         text(NS, yy, "%d" % round(skip), size=T, weight="bold", color=ncol)
         text(NE, yy, "%d" % round(100 - clo), size=T, weight="bold", color=ncol)
 
-text((NS + NE) / 2, 1.5, "all numeric items", size=HD - 0.7, font=HAND, color=HEADC)
+text((NS + NE) / 2, 1.5, "see caption", size=HD - 0.7, font=HAND, color=HEADC)
 
 if os.environ.get("CHECK"):
     # every text must sit inside the smallest box containing its anchor with >= 0.35 units (0.035 in) clearance,
